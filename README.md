@@ -1,43 +1,28 @@
-# Astro Starter Kit: Minimal
+# datapeople-astro
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Marketing-Site von Datapeople — Data & AI Implementation für Schweizer Unternehmen.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Stack: Astro 6, React 19, Tailwind 4, GSAP (ScrollTrigger). Blog via Content Collections (`src/content/blog/*.md`). Fonts self-hosted via `@fontsource` (Spectral, Atkinson Hyperlegible).
 
-## 🚀 Project Structure
+## Commands
 
-Inside of your Astro project, you'll see the following folders and files:
+| Command           | Beschreibung                     |
+| :---------------- | :------------------------------- |
+| `npm install`     | Dependencies installieren        |
+| `npm run dev`     | Dev-Server auf `localhost:4321`  |
+| `npm run build`   | Produktions-Build nach `./dist/` |
+| `npm run preview` | Build lokal vorschauen           |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Deployment
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Automatischer Deploy auf Cloudflare Pages bei Push auf `main` via `.github/workflows/deploy.yml`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Projektstruktur
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `src/pages/` — Routen (Landingpage + Blog)
+- `src/components/` — Astro- und React-Components
+- `src/layouts/Layout.astro` — Base-Layout mit Meta + Paper-Grain
+- `src/data/site.ts` — Zentrale Copy- und Asset-Referenzen
+- `src/content/blog/` — Blog-Posts (Markdown, Schema in `src/content.config.ts`)
+- `src/styles/global.css` — Design-Tokens (Farben, Typo, Spacing)
+- `brand/` — Lokales Design-System (Tokens, Preview-Cards, Brand-Richtlinien)

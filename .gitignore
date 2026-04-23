@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# wrangler (Cloudflare Pages CLI cache)
+.wrangler/
 
 # dependencies
 node_modules/
