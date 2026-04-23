@@ -1,0 +1,120 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const dateFormat = new Intl.DateTimeFormat("de-CH", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<Layout
+  title="Blog — Datapeople"
+  description="Einblicke, Tutorials und Neuigkeiten rund um Data Warehousing, Analytics und moderne Datenarchitekturen."
+>
+  <Navigation />
+  <main id="main-content">
+    <!-- Header -->
+    <section class="px-6 pt-24 pb-16 md:pt-32 md:pb-20">
+      <div class="mx-auto max-w-6xl">
+        <p
+          class="mb-4 font-sans text-sm uppercase tracking-[0.18em] text-[var(--color-ink-muted)]"
+        >
+          Schreibwerkstatt
+        </p>
+        <h1
+          class="max-w-[24ch] font-serif leading-[1.05]"
+          style="font-size: var(--text-display-xl);"
+        >
+          Einblicke, Tutorials und Neuigkeiten.
+        </h1>
+        <p
+          class="mt-6 max-w-[60ch] font-sans text-lg leading-relaxed text-[var(--color-ink-muted)]"
+        >
+          Rund um Data Warehousing, Analytics und moderne Datenarchitekturen.
+        </p>
+      </div>
+    </section>
+
+    <!-- Post list -->
+    <section class="px-6 pb-32">
+      <ul class="mx-auto max-w-5xl measure-none">
+        {
+          posts.map((post, i) => (
+            <li
+              class:list={[
+                "group relative flex flex-col gap-8 border-t border-[var(--color-rule)] py-12 md:flex-row md:items-start md:gap-16 md:py-16",
+                i === posts.length - 1 &&
+                  "border-b border-[var(--color-rule)]",
+              ]}
+            >
+              <a
+                href={`/blog/${post.id}/`}
+                class="absolute inset-0 z-10"
+                aria-label={`Artikel lesen: ${post.data.title}`}
+              />
+
+              <div class="order-2 flex-1 md:order-1">
+                <div
+                  class="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)]"
+                >
+                  <span class="text-[var(--color-accent)]">
+                    {post.data.category}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {dateFormat.format(post.data.pubDate)}
+                  </time>
+                  {post.data.readTime && (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <span>{post.data.readTime} min Lesezeit</span>
+                    </>
+                  )}
+                </div>
+
+                <h2
+                  class="mb-4 font-serif leading-[1.1] text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent)]"
+                  style="font-size: clamp(1.75rem, 2.5vw + 0.75rem, 2.5rem);"
+                >
+                  {post.data.title}
+                </h2>
+
+                <p class="mb-6 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]">
+                  {post.data.description}
+                </p>
+
+                <ul class="flex flex-wrap gap-x-4 gap-y-1 font-sans text-[12px] uppercase tracking-[0.1em] text-[var(--color-ink-muted)]">
+                  {post.data.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="order-1 md:order-2 md:w-64 md:shrink-0 lg:w-80">
+                <div class="overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-surface)]">
+                  <Image
+                    src={post.data.cover}
+                    alt=""
+                    widths={[320, 480, 640]}
+                    sizes="(min-width: 1024px) 320px, (min-width: 768px) 256px, 100vw"
+                    class="aspect-[4/3] w-full object-cover opacity-80 grayscale transition-all duration-700 ease-out group-hover:scale-[1.02] group-hover:opacity-100 group-hover:grayscale-0"
+                  />
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Layout>

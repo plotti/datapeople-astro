@@ -1,0 +1,250 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFormat = new Intl.DateTimeFormat("de-CH", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<Layout title={`${post.data.title} — Datapeople`} description={post.data.description}>
+  <Navigation />
+  <main id="main-content" class="px-6 py-20 md:py-28">
+    <article class="mx-auto max-w-3xl">
+      <!-- Back link -->
+      <a
+        href="/blog/"
+        class="mb-12 inline-flex items-center font-sans text-sm text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+      >
+        <span aria-hidden="true" class="mr-2">←</span> Zurück zur Schreibwerkstatt
+      </a>
+
+      <!-- Meta -->
+      <div
+        class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)]"
+      >
+        <span class="text-[var(--color-accent)]">{post.data.category}</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={post.data.pubDate.toISOString()}>
+          {dateFormat.format(post.data.pubDate)}
+        </time>
+        {
+          post.data.readTime && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{post.data.readTime} min Lesezeit</span>
+            </>
+          )
+        }
+      </div>
+
+      <!-- Title -->
+      <h1
+        class="mb-10 font-serif leading-[1.08] text-[var(--color-ink)]"
+        style="font-size: var(--text-display-lg);"
+      >
+        {post.data.title}
+      </h1>
+
+      <!-- Excerpt / lead -->
+      <p
+        class="mb-12 max-w-[55ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl"
+      >
+        {post.data.description}
+      </p>
+
+      <!-- Cover image -->
+      <div
+        class="mb-16 overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-surface)]"
+      >
+        <Image
+          src={post.data.cover}
+          alt={post.data.title}
+          widths={[640, 960, 1280, 1600]}
+          sizes="(min-width: 768px) 720px, 100vw"
+          class="aspect-[16/9] w-full object-cover"
+        />
+      </div>
+
+      <!-- Body -->
+      <div class="prose-blog">
+        <Content />
+      </div>
+
+      <!-- Tags -->
+      <footer class="mt-20 border-t border-[var(--color-rule)] pt-10">
+        <p
+          class="mb-4 font-sans text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"
+        >
+          Stichworte
+        </p>
+        <ul class="flex flex-wrap gap-x-4 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)]">
+          {post.data.tags.map((tag) => <li>#{tag}</li>)}
+        </ul>
+      </footer>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+  /*
+    Blog body typography — built custom instead of relying on @tailwindcss/typography prose preset,
+    so the result follows our Spectral/Atkinson hierarchy and doesn't feel "templated".
+    Body paragraphs get a single-column measure (~65ch), headings use Spectral,
+    lists and blockquotes get editorial treatment.
+  */
+  .prose-blog {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink);
+  }
+  .prose-blog > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-blog p {
+    max-width: 65ch;
+  }
+  .prose-blog h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.625rem, 2vw + 0.75rem, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-top: 2.5em;
+    margin-bottom: 0.5em;
+    color: var(--color-ink);
+  }
+  .prose-blog h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.25rem, 1vw + 0.9rem, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    color: var(--color-ink);
+  }
+  .prose-blog h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-top: 2em;
+    margin-bottom: 0.25em;
+    color: var(--color-ink);
+  }
+  .prose-blog strong {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+  .prose-blog em {
+    font-style: italic;
+  }
+  .prose-blog a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .prose-blog a:hover {
+    text-decoration-thickness: 2px;
+  }
+  .prose-blog ul,
+  .prose-blog ol {
+    padding-left: 1.5rem;
+    max-width: 65ch;
+  }
+  .prose-blog ul {
+    list-style: none;
+  }
+  .prose-blog ul > li {
+    position: relative;
+    padding-left: 0.5em;
+    margin-top: 0.75em;
+  }
+  .prose-blog ul > li::before {
+    content: "—";
+    position: absolute;
+    left: -1.5rem;
+    color: var(--color-accent);
+  }
+  .prose-blog ol {
+    list-style: decimal;
+  }
+  .prose-blog ol > li {
+    padding-left: 0.5em;
+    margin-top: 0.75em;
+  }
+  .prose-blog blockquote {
+    position: relative;
+    margin: 2.5em 0;
+    padding-left: 2em;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.25em;
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+    max-width: 58ch;
+  }
+  .prose-blog blockquote::before {
+    content: "„";
+    position: absolute;
+    left: 0;
+    top: -0.05em;
+    font-size: 2.25em;
+    line-height: 1;
+    color: var(--color-accent);
+    font-style: normal;
+  }
+  .prose-blog hr {
+    border: 0;
+    height: 1px;
+    background: var(--color-rule);
+    margin: 3em auto;
+    width: 60%;
+  }
+  .prose-blog code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+  .prose-blog pre {
+    background: var(--color-ink);
+    color: var(--color-background);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-card);
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.6;
+  }
+  .prose-blog pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+  .prose-blog img {
+    border-radius: var(--radius-card);
+    margin: 2em 0;
+  }
+</style>

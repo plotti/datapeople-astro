@@ -15,6 +15,7 @@ export const nav = {
   howItWorks: "So funktioniert's",
   services: "Leistungen",
   team: "Team",
+  blog: "Blog",
   cta: "Gespräch vereinbaren",
 };
 
@@ -165,11 +166,12 @@ export const contact = {
 
 export const footerNav = {
   navigation: [
-    { label: "So funktioniert's", href: "#how-it-works" },
-    { label: "Leistungen", href: "#services" },
-    { label: "Team", href: "#team" },
+    { label: "So funktioniert's", href: "/#how-it-works" },
+    { label: "Leistungen", href: "/#services" },
+    { label: "Team", href: "/#team" },
+    { label: "Blog", href: "/blog/" },
   ],
   contact: [
-    { label: "Kontakt", href: "#contact" },
+    { label: "Kontakt", href: "/#contact" },
   ],
 };
