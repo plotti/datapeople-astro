@@ -25,7 +25,7 @@ export const hero = {
   sub: "Datapeople hilft mittelständischen Schweizer Unternehmen, ihre Datenprobleme zu lösen. Kein Hype. Keine Abhängigkeit. Kostenkontrolle.",
   primaryCta: "Gespräch vereinbaren",
   secondaryCta: "So funktioniert's",
-  facts: ["Sechs Monate", "Kostenkontrolle", "Senior-only Team"],
+  facts: ["Planbarer Zeitrahmen", "Kostenkontrolle", "Senior-only Team"],
 };
 
 export const philosophy = {
