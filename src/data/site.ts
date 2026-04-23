@@ -22,10 +22,10 @@ export const nav = {
 export const hero = {
   serifLine: "Making data work for you",
   sansLine: "and your AI.",
-  sub: "Datapeople hilft mittelständischen Schweizer Unternehmen, ihre Datenprobleme zu lösen. Kein Hype. Keine Abhängigkeit. Festpreis.",
+  sub: "Datapeople hilft mittelständischen Schweizer Unternehmen, ihre Datenprobleme zu lösen. Kein Hype. Keine Abhängigkeit. Kostenkontrolle.",
   primaryCta: "Gespräch vereinbaren",
   secondaryCta: "So funktioniert's",
-  facts: ["Sechs Monate", "Festpreis", "Senior-only Team"],
+  facts: ["Sechs Monate", "Kostenkontrolle", "Senior-only Team"],
 };
 
 export const philosophy = {
@@ -38,7 +38,7 @@ export const philosophy = {
 };
 
 export const processIntro = {
-  kicker: "Sechs Monate. Festpreis.",
+  kicker: "Sechs Monate. Kostenkontrolle.",
   title: "Danach läuft es bei Ihnen.",
 };
 
@@ -156,7 +156,7 @@ export const logos: { title: string; lead: string; items: Logo[] } = {
 
 export const contact = {
   title: "Finden wir heraus, ob wir zusammenpassen.",
-  sub: "Festpreis. Keine versteckten Kosten. Keine endlosen Verlängerungen. Wir tragen das Risiko — nicht Sie.",
+  sub: "Kostenkontrolle. Keine versteckten Kosten. Keine endlosen Verlängerungen. Wir tragen das Risiko — nicht Sie.",
   ctaLabel: "Nachricht senden",
   email: "hello@datapeople.ch",
   phone: "+41 77 221 88 62",
