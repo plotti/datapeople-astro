@@ -1,0 +1,92 @@
+---
+import { contact, footerNav } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="relative bg-[var(--color-ink)] px-6 pt-24 pb-12 text-[var(--color-background)]"
+>
+  <div
+    class="mx-auto grid max-w-6xl gap-16 md:grid-cols-[1.4fr_1fr_1fr] md:gap-12"
+  >
+    <div>
+      <p
+        class="mb-4 font-serif text-[28px] leading-tight text-[var(--color-background)]"
+      >
+        Datapeople
+      </p>
+      <p
+        class="max-w-[32ch] font-sans text-[15px] leading-relaxed text-[color:oklch(0.975_0.01_70/0.55)]"
+      >
+        Making data work for you and your AI.
+      </p>
+
+      <address class="mt-8 not-italic font-sans text-[15px] leading-relaxed text-[color:oklch(0.975_0.01_70/0.55)]">
+        <a
+          href={`mailto:${contact.email}`}
+          class="block py-1 transition-colors hover:text-[var(--color-accent)]"
+        >
+          {contact.email}
+        </a>
+        <a
+          href={`tel:${contact.phoneHref}`}
+          class="block py-1 transition-colors hover:text-[var(--color-accent)]"
+        >
+          {contact.phone}
+        </a>
+        <p class="mt-2 max-w-[28ch]">{contact.address}</p>
+      </address>
+    </div>
+
+    <nav aria-label="Footer navigation">
+      <p
+        class="mb-4 font-sans text-[11px] uppercase tracking-[0.22em] text-[color:oklch(0.975_0.01_70/0.4)]"
+      >
+        Navigation
+      </p>
+      <ul class="flex flex-col gap-3">
+        {
+          footerNav.navigation.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="inline-block py-1 font-sans text-[15px] text-[color:oklch(0.975_0.01_70/0.75)] transition-colors hover:text-[var(--color-background)]"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-label="Contact">
+      <p
+        class="mb-4 font-sans text-[11px] uppercase tracking-[0.22em] text-[color:oklch(0.975_0.01_70/0.4)]"
+      >
+        Kontakt
+      </p>
+      <ul class="flex flex-col gap-3">
+        {
+          footerNav.contact.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="inline-block py-1 font-sans text-[15px] text-[color:oklch(0.975_0.01_70/0.75)] transition-colors hover:text-[var(--color-background)]"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div
+    class="mx-auto mt-20 flex max-w-6xl items-center justify-between border-t border-[color:oklch(0.975_0.01_70/0.1)] pt-8 font-sans text-[13px] text-[color:oklch(0.975_0.01_70/0.4)]"
+  >
+    <p>© Datapeople AG {year}</p>
+  </div>
+</footer>

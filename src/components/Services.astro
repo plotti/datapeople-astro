@@ -1,0 +1,56 @@
+---
+import { services } from "../data/site";
+
+/*
+  Asymmetrisches Layout: kein 2×2 Card-Grid wie vorher.
+  Die vier Leistungen werden als editorial-Liste dargestellt —
+  nummerierte Einträge mit Hairline-Trennern, keine Card-Container.
+*/
+---
+
+<section
+  id="services"
+  class="relative bg-[var(--color-muted)] px-6 py-28 md:py-36"
+>
+  <div class="mx-auto max-w-5xl">
+    <h2
+      class="mb-16 max-w-[16ch] font-serif leading-[1.05]"
+      style="font-size: var(--text-display-lg);"
+    >
+      {services.title}
+    </h2>
+
+    <ul class="flex flex-col measure-none">
+      {
+        services.items.map((item, i) => (
+          <li
+            class="group grid grid-cols-[3.5rem_1fr] items-baseline gap-6 border-t border-[var(--color-rule)] py-10 md:grid-cols-[5rem_1fr_auto] md:gap-10 md:py-14"
+          >
+            <span class="font-serif text-2xl text-[var(--color-accent)] tabular-nums md:text-3xl">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+
+            <div>
+              <h3
+                class="mb-3 font-serif leading-[1.15] text-[var(--color-ink)]"
+                style="font-size: clamp(1.5rem, 2vw + 0.75rem, 2.25rem);"
+              >
+                {item.title}
+              </h3>
+              <p class="font-sans text-base leading-relaxed text-[var(--color-ink-muted)] md:text-lg">
+                {item.desc}
+              </p>
+            </div>
+
+            <span
+              aria-hidden="true"
+              class="hidden self-center font-sans text-[var(--color-ink-muted)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block"
+            >
+              →
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

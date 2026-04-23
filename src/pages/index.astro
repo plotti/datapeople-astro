@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Hero from "../components/Hero.astro";
+import Philosophy from "../components/Philosophy.astro";
+import Process from "../components/Process.tsx";
+import Services from "../components/Services.astro";
+import Team from "../components/Team.astro";
+import Testimonial from "../components/Testimonial.astro";
+import Logos from "../components/Logos.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+import { processIntro, processSteps } from "../data/site";
+---
+
+<Layout>
+  <Navigation />
+  <main id="main-content">
+    <Hero />
+    <Philosophy />
+    <Process
+      client:load
+      kicker={processIntro.kicker}
+      title={processIntro.title}
+      steps={processSteps}
+    />
+    <Services />
+    <Team />
+    <Contact />
+    <Testimonial />
+    <Logos />
+  </main>
+  <Footer />
+</Layout>

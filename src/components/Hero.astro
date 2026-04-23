@@ -1,0 +1,68 @@
+---
+import { hero } from "../data/site";
+
+/*
+  Hero — beide Zeilen in Spectral (konsistente Familie statt Serif/Sans-Switch).
+  Hierarchie über Weight: Zeile 1 regular, Zeile 2 bold.
+  Unter den CTAs ein dezenter Fakten-Anker: drei Datenpunkte, die ein Skeptiker
+  sofort sieht, ohne dass wir ein metric-card-template aufziehen.
+*/
+---
+
+<section class="relative px-6 pt-28 pb-24 md:pt-36 md:pb-36">
+  <div class="mx-auto max-w-6xl">
+    <h1 class="mb-8 text-[color:var(--color-ink)] font-serif">
+      <span
+        class="block font-normal leading-[0.98]"
+        style="font-size: var(--text-display-xl);"
+      >
+        {hero.serifLine}
+      </span>
+      <span
+        class="mt-1 block font-bold leading-[1.0] tracking-tight"
+        style="font-size: var(--text-display-xl);"
+      >
+        {hero.sansLine}
+      </span>
+    </h1>
+
+    <p
+      class="mb-10 max-w-[52ch] font-sans text-lg leading-relaxed text-[var(--color-ink-muted)] md:text-xl"
+    >
+      {hero.sub}
+    </p>
+
+    <div class="flex flex-wrap items-center gap-6">
+      <a
+        href="#contact"
+        class="inline-flex items-center rounded-full bg-[var(--color-accent)] px-8 py-4 text-base font-medium text-[var(--color-accent-ink)] transition-transform duration-300 ease-out hover:-translate-y-px"
+      >
+        {hero.primaryCta}
+      </a>
+      <a
+        href="#how-it-works"
+        class="inline-flex items-center py-2 font-sans text-base text-[var(--color-ink-muted)] underline-offset-4 transition-colors hover:text-[var(--color-ink)] hover:underline"
+      >
+        {hero.secondaryCta}
+        <span aria-hidden="true" class="ml-2">→</span>
+      </a>
+    </div>
+
+    <ul
+      class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)] measure-none"
+    >
+      {
+        hero.facts.map((fact, i) => (
+          <>
+            {i > 0 && (
+              <li aria-hidden="true" class="text-[var(--color-rule)]">
+                ·
+              </li>
+            )}
+            <li>{fact}</li>
+          </>
+        ))
+      }
+    </ul>
+  </div>
+</section>

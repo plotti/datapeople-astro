@@ -1,0 +1,31 @@
+---
+import { testimonial } from "../data/site";
+---
+
+<section
+  aria-label="Testimonial"
+  class="relative border-t border-[var(--color-rule)] bg-[var(--color-muted)] px-6 py-24 md:py-32"
+>
+  <figure class="mx-auto max-w-4xl">
+    <blockquote
+      class="font-serif leading-[1.2] text-[var(--color-ink)]"
+      style="font-size: clamp(1.625rem, 2.5vw + 0.75rem, 2.5rem);"
+    >
+      <span
+        aria-hidden="true"
+        class="mr-1 font-serif italic text-[var(--color-accent)]"
+        >„</span
+      >{testimonial.quote}<span
+        aria-hidden="true"
+        class="ml-1 font-serif italic text-[var(--color-accent)]"
+        >“</span
+      >
+    </blockquote>
+
+    <figcaption
+      class="mt-8 font-sans text-sm uppercase tracking-[0.12em] text-[var(--color-ink-muted)]"
+    >
+      — {testimonial.attribution}
+    </figcaption>
+  </figure>
+</section>

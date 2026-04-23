@@ -1,0 +1,47 @@
+---
+import { contact } from "../data/site";
+---
+
+<section
+  id="contact"
+  class="relative border-t border-[var(--color-rule)] bg-[var(--color-background)] px-6 py-24 md:py-28"
+>
+  <div class="mx-auto max-w-3xl text-center">
+    <h2
+      class="mb-6 font-serif leading-[1.05]"
+      style="font-size: var(--text-display-lg);"
+    >
+      {contact.title}
+    </h2>
+
+    <p
+      class="mx-auto mb-12 max-w-[52ch] font-sans text-lg leading-relaxed text-[var(--color-ink-muted)]"
+    >
+      {contact.sub}
+    </p>
+
+    <a
+      href={`mailto:${contact.email}`}
+      class="inline-flex items-center rounded-full bg-[var(--color-accent)] px-10 py-4 font-sans text-base font-medium text-[var(--color-accent-ink)] transition-transform duration-300 ease-out hover:-translate-y-px"
+    >
+      {contact.ctaLabel}
+      <span aria-hidden="true" class="ml-3">→</span>
+    </a>
+
+    <div
+      class="mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 font-sans text-sm text-[var(--color-ink-muted)]"
+    >
+      <a
+        href={`mailto:${contact.email}`}
+        class="inline-block py-2 transition-colors hover:text-[var(--color-ink)]"
+        >{contact.email}</a
+      >
+      <span aria-hidden="true" class="hidden sm:inline">·</span>
+      <a
+        href={`tel:${contact.phoneHref}`}
+        class="inline-block py-2 transition-colors hover:text-[var(--color-ink)]"
+        >{contact.phone}</a
+      >
+    </div>
+  </div>
+</section>

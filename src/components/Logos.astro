@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import { logos } from "../data/site";
+
+/*
+  Logo-Block, ganz am Schluss vor dem Footer.
+  Alle Logos monochrom:
+    - filter: grayscale(1) contrast(1.05)
+    - mix-blend-mode: multiply  → weisse JPG/PNG-Hintergründe verschmelzen
+      mit dem Cream-Background, ohne dass wir jede Datei manuell bearbeiten
+  Dezente Opacity, Hover = volle Sichtbarkeit.
+*/
+---
+
+<section
+  aria-labelledby="logos-title"
+  class="relative border-t border-[var(--color-rule)] bg-[var(--color-background)] px-6 py-24 md:py-32"
+>
+  <div class="mx-auto max-w-6xl">
+    <header class="mb-16 max-w-3xl">
+      <h2
+        id="logos-title"
+        class="mb-4 font-serif leading-[1.08]"
+        style="font-size: var(--text-display-md);"
+      >
+        {logos.title}
+      </h2>
+      <p class="font-sans text-lg leading-relaxed text-[var(--color-ink-muted)]">
+        {logos.lead}
+      </p>
+    </header>
+
+    <ul
+      class="grid grid-cols-2 items-center gap-x-8 gap-y-12 sm:grid-cols-3 md:grid-cols-6 md:gap-x-12"
+    >
+      {
+        logos.items.map((logo) => (
+          <li class="flex h-16 items-center justify-center md:h-20">
+            {typeof logo.src === "string" ? (
+              <img
+                src={logo.src}
+                alt={logo.name}
+                loading="lazy"
+                class="max-h-full max-w-full object-contain opacity-60 grayscale transition-opacity duration-500 ease-out hover:opacity-100"
+                style="mix-blend-mode: multiply; filter: grayscale(1) contrast(1.05);"
+              />
+            ) : (
+              <Image
+                src={logo.src}
+                alt={logo.name}
+                widths={[160, 240, 320]}
+                sizes="(min-width: 768px) 180px, 140px"
+                class="max-h-full max-w-full object-contain opacity-60 grayscale transition-opacity duration-500 ease-out hover:opacity-100"
+                style="mix-blend-mode: multiply; filter: grayscale(1) contrast(1.05);"
+              />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

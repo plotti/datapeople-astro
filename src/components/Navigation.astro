@@ -1,0 +1,91 @@
+---
+import { nav } from "../data/site";
+
+const links = [
+  { href: "#how-it-works", label: nav.howItWorks, id: "how-it-works" },
+  { href: "#services", label: nav.services, id: "services" },
+  { href: "#team", label: nav.team, id: "team" },
+];
+---
+
+<nav
+  aria-label="Primary"
+  class="sticky top-0 z-40 w-full border-b border-[var(--color-rule)] bg-[color-mix(in_oklab,var(--color-background)_92%,transparent)] backdrop-blur-[2px]"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a
+      href="/"
+      class="font-serif text-[22px] tracking-tight text-[var(--color-ink)] leading-none"
+      >Datapeople</a
+    >
+
+    <div class="hidden items-center gap-8 md:flex">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            data-section={link.id}
+            class="nav-link relative inline-block py-2 text-sm text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <a
+      href="#contact"
+      class="inline-flex items-center rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-medium text-[var(--color-accent-ink)] transition-transform duration-300 ease-out hover:-translate-y-px"
+    >
+      {nav.cta}
+    </a>
+  </div>
+</nav>
+
+<style>
+  .nav-link.is-active {
+    color: var(--color-ink);
+  }
+  .nav-link.is-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1.05rem;
+    height: 2px;
+    background: var(--color-accent);
+  }
+</style>
+
+<script>
+  /*
+    Active-section highlighting in the navbar.
+    Watches each section the nav links to, and marks the most-visible one.
+  */
+  const links = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+  const sections = Array.from(links)
+    .map((link) => {
+      const id = link.dataset.section;
+      return id ? document.getElementById(id) : null;
+    })
+    .filter((s): s is HTMLElement => s !== null);
+
+  const setActive = (id: string) => {
+    links.forEach((link) => {
+      link.classList.toggle("is-active", link.dataset.section === id);
+    });
+  };
+
+  if (sections.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    sections.forEach((s) => observer.observe(s));
+  }
+</script>
