@@ -11,6 +11,15 @@ interface Props {
   steps: ProcessStep[];
 }
 
+// Brand palette tritone for the giant decorative numerals — one per step.
+// Builds in intensity: light warm grey → darker warm grey → terracotta
+// climax, peaking on the hand-off step.
+const numColors = [
+  "var(--color-surface)",
+  "var(--color-ink-muted)",
+  "var(--color-accent)",
+];
+
 export default function Process({ kicker, title, steps }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -94,9 +103,10 @@ export default function Process({ kicker, title, steps }: Props) {
                 <span
                   aria-hidden="true"
                   role="presentation"
-                  className="font-serif leading-[0.75] text-[var(--color-surface)] select-none"
+                  className="font-serif leading-[0.75] select-none"
                   style={{
                     fontSize: "clamp(12rem, 22vw, 22rem)",
+                    color: numColors[i % numColors.length],
                   }}
                 >
                   {step.num}

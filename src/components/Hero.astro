@@ -2,27 +2,30 @@
 import { hero } from "../data/site";
 
 /*
-  Hero — beide Zeilen in Spectral (konsistente Familie statt Serif/Sans-Switch).
-  Hierarchie über Weight: Zeile 1 regular, Zeile 2 bold.
-  Unter den CTAs ein dezenter Fakten-Anker: drei Datenpunkte, die ein Skeptiker
-  sofort sieht, ohne dass wir ein metric-card-template aufziehen.
+  Hero — fullpage (min-h 100dvh, content vertikal zentriert).
+  Beide Zeilen in Spectral. Ein Wort in Zeile 2 trägt den Italic-Accent
+  (Brand-Regel: "Ein Wort pro Überschrift darf kursiv und Akzent sein").
 */
 ---
 
-<section class="relative px-6 pt-28 pb-24 md:pt-36 md:pb-36">
-  <div class="mx-auto max-w-6xl">
+<section
+  class="relative flex min-h-[100dvh] items-center px-6 py-16 md:py-20"
+>
+  <div class="mx-auto w-full max-w-6xl">
     <h1 class="mb-8 text-[color:var(--color-ink)] font-serif">
       <span
         class="block font-normal leading-[0.98]"
         style="font-size: var(--text-display-xl);"
       >
-        {hero.serifLine}
+        {hero.line1}
       </span>
       <span
         class="mt-1 block leading-[1.0]"
         style="font-size: var(--text-display-xl);"
       >
-        {hero.sansLine}
+        {hero.line2.before}<em class="italic text-[var(--color-accent)]"
+          >{hero.line2.emphasis}</em
+        >{hero.line2.after}
       </span>
     </h1>
 
@@ -35,7 +38,7 @@ import { hero } from "../data/site";
     <div class="flex flex-wrap items-center gap-6">
       <a
         href="#contact"
-        class="inline-flex items-center rounded-full bg-[var(--color-accent)] px-8 py-4 text-base font-medium text-[var(--color-accent-ink)] transition-transform duration-300 ease-out hover:-translate-y-px"
+        class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-8 py-4 text-base font-medium text-[var(--color-background)] transition-transform duration-300 ease-out hover:-translate-y-px"
       >
         {hero.primaryCta}
       </a>
@@ -47,22 +50,5 @@ import { hero } from "../data/site";
         <span aria-hidden="true" class="ml-2">→</span>
       </a>
     </div>
-
-    <ul
-      class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)] measure-none"
-    >
-      {
-        hero.facts.map((fact, i) => (
-          <>
-            {i > 0 && (
-              <li aria-hidden="true" class="text-[var(--color-rule)]">
-                ·
-              </li>
-            )}
-            <li>{fact}</li>
-          </>
-        ))
-      }
-    </ul>
   </div>
 </section>

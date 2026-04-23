@@ -4,6 +4,7 @@ import { philosophy } from "../data/site";
 
 <section
   aria-labelledby="philosophy-heading"
+  data-fade
   class="relative overflow-hidden bg-[var(--color-ink)] px-6 py-28 md:py-36 text-[var(--color-background)]"
 >
   <h2 id="philosophy-heading" class="sr-only">Unser Ansatz</h2>
@@ -19,12 +20,63 @@ import { philosophy } from "../data/site";
       style="font-size: var(--text-display-lg);"
     >
       {philosophy.statementPlain}
-      <em
-        class="font-serif not-italic text-[var(--color-accent)]"
-        style="font-style: italic;"
-      >
+      <em class="italic text-[var(--color-accent)]">
         {philosophy.statementEmphasis}
       </em>{philosophy.statementEnd}
     </p>
   </div>
 </section>
+
+<style>
+  [data-fade] {
+    opacity: 0;
+    transform: translateY(24px);
+    will-change: opacity, transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-fade] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  const prefersReduce = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const targets = document.querySelectorAll<HTMLElement>("[data-fade]");
+
+  if (prefersReduce) {
+    targets.forEach((el) => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  } else {
+    gsap.registerPlugin(ScrollTrigger);
+
+    targets.forEach((el) => {
+      /*
+        Scroll-linked fade: progress is bound to scroll position via
+        `scrub`, so animation speed = scroll speed. Range: from "element
+        top enters bottom of viewport" to "element top reaches 40%
+        down" — a natural cinematic reveal window.
+      */
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 75%",
+          end: "top 30%",
+          scrub: true,
+        },
+      });
+    });
+  }
+</script>

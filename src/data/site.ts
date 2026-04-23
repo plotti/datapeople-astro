@@ -20,12 +20,11 @@ export const nav = {
 };
 
 export const hero = {
-  serifLine: "Making data work for you",
-  sansLine: "and your AI.",
+  line1: "Making data work for you",
+  line2: { before: "and your ", emphasis: "AI", after: "." },
   sub: "Datapeople hilft mittelständischen Schweizer Unternehmen, ihre Datenprobleme zu lösen. Kein Hype. Keine Abhängigkeit. Kostenkontrolle.",
   primaryCta: "Gespräch vereinbaren",
   secondaryCta: "So funktioniert's",
-  facts: ["Planbarer Zeitrahmen", "Kostenkontrolle", "Senior-only Team"],
 };
 
 export const philosophy = {
