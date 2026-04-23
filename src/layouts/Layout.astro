@@ -34,5 +34,50 @@ const {
       >Zum Inhalt springen</a
     >
     <slot />
+
+    <script>
+      /*
+        Global scroll-linked fade-in for all [data-fade] elements.
+        Forward-only: progress tracks scroll-down position; scrolling back
+        up does NOT reverse the animation (revealed stays revealed).
+      */
+      import gsap from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      const prefersReduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      const targets = document.querySelectorAll<HTMLElement>("[data-fade]");
+
+      if (prefersReduce) {
+        targets.forEach((el) => {
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+      } else {
+        gsap.registerPlugin(ScrollTrigger);
+
+        targets.forEach((el) => {
+          const tween = gsap.fromTo(
+            el,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, ease: "none", paused: true }
+          );
+          let maxProgress = 0;
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top 75%",
+            end: "top 30%",
+            onUpdate: (self) => {
+              if (self.progress > maxProgress) {
+                maxProgress = self.progress;
+                tween.progress(maxProgress);
+              }
+            },
+          });
+        });
+      }
+    </script>
   </body>
 </html>

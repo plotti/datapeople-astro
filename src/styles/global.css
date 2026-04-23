@@ -145,6 +145,21 @@
   }
 }
 
+/* Scroll-linked fade-in — initial state. Elements with [data-fade]
+   start invisible + shifted; a global script (Layout.astro) drives the
+   reveal tied to scroll position, forward-only (no reverse on up). */
+[data-fade] {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-fade] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Paper-grain texture overlay (subtle — 3.5% opacity, soft-light blend).
    Applied once on <body>, not duplicated per-section. */
 .paper-grain::after {

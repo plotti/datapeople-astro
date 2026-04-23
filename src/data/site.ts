@@ -97,7 +97,7 @@ export type TeamMember = {
 };
 
 export const team: { title: string; members: TeamMember[] } = {
-  title: "Nur Seniors. Keine Praktikanten. Keine Übergaben.",
+  title: "Erfahrung zählt.",
   members: [
     {
       name: "Thomas Ebermann",
