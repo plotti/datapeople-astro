@@ -1,7 +1,7 @@
 ---
 title: "Effiziente KI-Implementierung: Welches der 8 führenden Agenten-Frameworks ist optimal für Ihr Projekt?"
 description: "Wir erleben gerade den grössten technologischen Goldrausch seit der Erfindung des Internets, doch das Gold ist diesmal unsichtbare Intelligenz. Diese Übersicht ist Ihre Schatzkarte zu den neun mächtigsten Schaufeln."
-pubDate: 2024-03-10
+pubDate: 2026-02-10
 readTime: 10
 category: "KI Tools"
 tags: ["N8N","Agenten","Orchestration","AI Integration"]

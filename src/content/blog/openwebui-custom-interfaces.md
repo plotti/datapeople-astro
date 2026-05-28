@@ -1,7 +1,7 @@
 ---
 title: "Jenseits von ChatGPT: Die Wahl der richtigen selbstgehosteten LLM-Schnittstelle"
 description: "Die Ära der Grossen Sprachmodelle ist in vollem Gange. Der Ruf nach mehr Kontrolle, Datenschutz und Anpassungsfähigkeit hat einen boomenden Markt für selbstgehostete Web-Oberflächen geschaffen."
-pubDate: 2024-03-05
+pubDate: 2026-01-05
 readTime: 10
 category: "AI Integration"
 tags: ["OpenWebUI","AI","Interface","LLM"]

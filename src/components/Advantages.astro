@@ -1,0 +1,51 @@
+---
+import { advantages } from "../data/site";
+---
+
+<section
+  id="advantages"
+  class="relative bg-[var(--color-background)] px-6 py-28 md:py-36"
+>
+  <div class="mx-auto max-w-5xl">
+    <p
+      class="mb-4 font-sans text-sm uppercase tracking-[0.18em] text-[var(--color-ink-muted)]"
+    >
+      {advantages.kicker}
+    </p>
+    <h2
+      class="mb-16 max-w-[20ch] font-serif leading-[1.05]"
+      style="font-size: var(--text-display-lg);"
+    >
+      {advantages.title}
+    </h2>
+
+    <p class="mb-16 max-w-[52ch] font-sans text-lg leading-relaxed text-[var(--color-ink-muted)]">
+      {advantages.intro}
+    </p>
+
+    <ul class="flex flex-col">
+      {advantages.items.map((item, i) => (
+        <li
+          class="grid grid-cols-[3.5rem_1fr] items-baseline gap-6 border-t border-[var(--color-rule)] py-10"
+        >
+          <span
+            class="font-serif text-2xl text-[var(--color-accent)] tabular-nums"
+          >
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <div>
+            <h3
+              class="mb-3 font-serif leading-[1.15] text-[var(--color-ink)]"
+              style="font-size: clamp(1.5rem, 2vw + 0.75rem, 2.25rem);"
+            >
+              {item.title}
+            </h3>
+            <p class="font-sans text-base leading-relaxed text-[var(--color-ink-muted)]">
+              {item.desc}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

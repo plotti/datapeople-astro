@@ -26,7 +26,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
 <Layout title={`${post.data.title} — Datapeople`} description={post.data.description}>
   <Navigation />
   <main id="main-content" class="px-6 py-20 md:py-28">
-    <article class="mx-auto max-w-3xl">
+    <article class="mx-auto max-w-5xl">
       <!-- Back link -->
       <a
         href="/blog/"
@@ -64,7 +64,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
 
       <!-- Excerpt / lead -->
       <p
-        class="mb-12 max-w-[55ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl"
+        class="mb-12 font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl"
       >
         {post.data.description}
       </p>
@@ -83,7 +83,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
       </div>
 
       <!-- Body -->
-      <div class="prose-blog">
+      <div class="prose-blog measure-none">
         <Content />
       </div>
 
@@ -120,7 +120,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
     margin-top: 1.25em;
   }
   .prose-blog p {
-    max-width: 65ch;
+    max-width: none;
   }
   .prose-blog h2 {
     font-family: var(--font-serif);
@@ -171,7 +171,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
   .prose-blog ul,
   .prose-blog ol {
     padding-left: 1.5rem;
-    max-width: 65ch;
+    max-width: none;
   }
   .prose-blog ul {
     list-style: none;
@@ -203,7 +203,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
     font-size: 1.25em;
     line-height: 1.55;
     color: var(--color-ink-muted);
-    max-width: 58ch;
+    max-width: none;
   }
   .prose-blog blockquote::before {
     content: "„";
@@ -246,5 +246,50 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
   .prose-blog img {
     border-radius: var(--radius-card);
     margin: 2em 0;
+  }
+  /* Table styling */
+  .prose-blog table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-size: 0.95em;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .prose-blog table thead {
+    display: table-header-group;
+  }
+  .prose-blog table tbody {
+    display: table-row-group;
+  }
+  .prose-blog table tr {
+    display: table-row;
+  }
+  .prose-blog table th,
+  .prose-blog table td {
+    display: table-cell;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .prose-blog table th {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-ink);
+    border-bottom: 2px solid var(--color-ink);
+  }
+  .prose-blog table tr:last-child td {
+    border-bottom: none;
+  }
+  .prose-blog table code {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.92em;
   }
 </style>

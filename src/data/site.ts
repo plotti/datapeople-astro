@@ -12,6 +12,7 @@ import logoComparis from "../assets/logos/logo-comparis.png";
 import type { ImageMetadata } from "astro";
 
 export const nav = {
+  about: "Über Data People",
   howItWorks: "So funktioniert's",
   services: "Leistungen",
   team: "Team",
@@ -22,23 +23,21 @@ export const nav = {
 export const hero = {
   line1: "Making data work for you",
   line2: { before: "and your ", emphasis: "AI", after: "." },
-  sub: "Datapeople hilft mittelständischen Schweizer Unternehmen, ihre Datenprobleme zu lösen. Kein Hype. Keine Abhängigkeit. Kostenkontrolle.",
+  sub: "Datapeople ist ein handverlesenes Netzwerk von echten Datenexperten aus Schweizer Unternehmen.",
   primaryCta: "Gespräch vereinbaren",
   secondaryCta: "So funktioniert's",
 };
 
 export const philosophy = {
-  intro:
-    "Sie könnten eine grosse Beratungsfirma beauftragen. Die verkaufen Ihnen einen Fahrplan, drei Workshops und eine Abhängigkeit. Wir machen das anders.",
-  statementPlain: "Wir kommen, bauen das",
-  statementEmphasis: "Fundament",
-  statementEnd:
-    ", befähigen Ihr Team und bleiben der Partner an Ihrer Seite.",
+  intro: "Anders als grosse Beratungen verkaufen wir keine Fahrplan-Werkzeuge und Workshop-Pakete. Als exklusives, einladungsbasiertes Netzwerk von Praktikern verkaufen wir Wissen aus echter Erfahrung — nicht aus Prospekten.",
+  statementPlain: "Wir bauen ",
+  statementEmphasis: "wirklich nur das, was Sie brauchen",
+  statementEnd: ". Weniger ist mehr. Ja zu AI, aber nur auf einem soliden Datenfundament.",
 };
 
 export const processIntro = {
-  kicker: "Sechs Monate. Kostenkontrolle.",
-  title: "Danach läuft es bei Ihnen.",
+  kicker: "",
+  title: "",
 };
 
 export type ProcessStep = {
@@ -86,7 +85,79 @@ export const services = {
       title: "Aufbau & Schulung Ihres Datenteams",
       desc: "Bauen Sie interne Kompetenz auf, damit Sie nie wieder auf externe Berater angewiesen sind.",
     },
+    {
+      title: "Fractional Data Science, Engineering oder Analyse",
+      desc: "Wir integrieren uns 10-20% in Ihr Team und bringen Expertise, ohne dass Sie eine Vollzeit-Stelle erstellen müssen. Ideal für KMUs, die Spezialwissen brauchen.",
+    },
+    {
+      title: "Recruiting & Kandidatenempfehlungen",
+      desc: "Wir kennen den Schweizer Datenmarkt und empfehlen geeignete Kandidaten für Ihr Datenteam. Ohne Headhunter-Vermittlungsgebühren — aus dem Netzwerk für das Netzwerk.",
+    },
+    {
+      title: "Stundenweise Konsultation",
+      desc: "Wie bei einem Anwalt: Sie buchen genau die Zeit, die Sie brauchen. Für Architektur-Reviews, Data-Stack-Modernisierung oder strategische Entscheidungen.",
+    },
+    {
+      title: "Kurzfristige Change-Projekte",
+      desc: "Wir fokussieren uns auf kurzfristige Projekte (max. 3 Monate) oder Fractional-Mandate (max. 50%). Keine monate- oder jahrelangen Abhängigkeiten.",
+    },
   ] satisfies Service[],
+};
+
+export type AboutPoint = { title: string; desc: string };
+
+export const aboutDataPeople = {
+  kicker: "Was ist Data People?",
+  title: "Ein exklusiver Club von Datenexperten",
+  intro: "Data People ist eine moderne Gilde, ein Kollektiv von Data Scientists, Data Engineers und Data Analysten. Alle Mitglieder arbeiten aktiv in Schweizer Unternehmen — von KMUs bis zu Grosskonzernen. Und eines verbindet uns: Die Passion für Daten und solides Craftmanship.",
+  points: [
+    {
+      title: "Vertrauensprinzip",
+      desc: "Wir kennen und empfehlen unsere Mitglieder persönlich. Zugang nur auf Einladung.",
+    },
+    {
+      title: "Aus Leidenschaft",
+      desc: "Wir machen das nicht als primäre Verdienstquelle. Alles, was wir bei Data People tun, geschieht aus Leidenschaft für Technologie. Das ist unser Unterschied zu Beratungen, die Profit vor Qualität stellen.",
+    },
+    {
+      title: "Aktiv in der Praxis",
+      desc: "Unsere Mitglieder arbeiten täglich mit Daten in echten Unternehmen — in KMUs, Mittelschicht und Grosskonzernen. Wir kennen die Realität, nicht nur die Theorie. Wir kennen die Preise, Lizenzmodelle und Fallstricke aus echter Anwendung.",
+    },
+    {
+      title: "Pro Bono für NGOs",
+      desc: "Viele unserer Experten nutzen einen Teil ihrer Zeit für Projekte mit echtem Zweck — für NGOs und Non-Profit-Organisationen, die einen Bedarf an Datenanalyse haben. Wir geben unsere Expertise weiter, wenn es zählt.",
+    },
+    {
+      title: "Regelmässiger Austausch",
+      desc: "Wir treffen uns regelmässig, tauschen Erfahrungen aus und diskutieren neue Entwicklungen. So behalten wir immer einen aktuellen, pragmatischen und tiefen Einblick in die Datenlandschaft — als Netzwerk, nicht als Einzelpersonen.",
+    },
+  ] satisfies AboutPoint[],
+};
+
+export type AdvantagePoint = { title: string; desc: string };
+
+export const advantages = {
+  kicker: "Warum Data People?",
+  title: "Wissen aus echter Anwendung",
+  intro: "Unsere Empfehlungen basieren nicht auf Verkaufsprospekten, sondern auf täglicher Arbeit mit echten Datenproblemen. Als exklusives Netzwerk beraten wir wie keine Einzelperson oder Technologie es kann.",
+  items: [
+    {
+      title: "Netzwerk statt Einzelkämpfer",
+      desc: "Wir kennen die meisten Lösungen nicht nur aus Hochglanz-Prospekten, sondern aus der tatsächlichen Anwendung. Als Kollektiv können wir beraten wie keine einzelne Person — wir haben das Wissen vieler.",
+    },
+    {
+      title: "Echte Preise, echte Modelle",
+      desc: "Wir kennen die Preise, Lizenzmodelle und versteckten Kosten aus erster Hand. Kein Verkaufsblatt kann Ihnen das sagen — nur wer es tatsächlich gekauft und implementiert hat.",
+    },
+    {
+      title: "Vendor-unabhängige Beratung",
+      desc: "Wir können als vendor-unabhängige Agentur beraten. Wir sind nicht an einen bestimmten Hersteller oder Technologie-Stack gebunden — wir empfehlen, was funktioniert, nicht was gut verkäuft.",
+    },
+    {
+      title: "Leidenschaft als Treiber",
+      desc: "Alles, was wir bei Data People tun, geschieht aus Leidenschaft für Technologie und gute Lösungen. Der Profit ist nicht unser Hauptmotiv — die Qualität der Lösung schon. Das ist der Unterschied.",
+    },
+  ] satisfies AdvantagePoint[],
 };
 
 export type TeamMember = {
@@ -96,8 +167,9 @@ export type TeamMember = {
   photo: ImageMetadata;
 };
 
-export const team: { title: string; members: TeamMember[] } = {
+export const team: { title: string; intro: string; members: TeamMember[] } = {
   title: "Erfahrung zählt.",
+  intro: "Datapeople ist der handverlesene Experten-Zirkel, der wie eine moderne Gilde das gebündelte Daten-Know-how der Schweiz vereint.",
   members: [
     {
       name: "Thomas Ebermann",
@@ -134,15 +206,15 @@ export const team: { title: string; members: TeamMember[] } = {
 
 export const testimonial = {
   quote:
-    "Wir hatten jahrelang versucht, unsere Reporting-Landschaft zu konsolidieren — drei Beratungen, drei Roadmaps, kein Ergebnis. Datapeople kam, hat zugehört, und in fünf Monaten stand das Data Warehouse. Danach sind sie gegangen, wie versprochen.",
+    "Wir hatten jahrelang versucht, unsere Dashboarding-Landschaft ohne Ergebnis zu konsolidieren. Als Datapeople kam, haben sie erstmal viel zugehört. Im Grunde ist bei unserem Tech fast alles gleich geblieben. Aber dank dem neuen semantischen Layer können wir endlich viel redundante Arbeit sparen, es ist unglaublich. Danke Jungs.",
   attribution: "CEO, Schweizer Mediaagentur-Gruppe",
 };
 
 export type Logo = { name: string; src: ImageMetadata | string };
 
 export const logos: { title: string; lead: string; items: Logo[] } = {
-  title: "Projekte in führenden Unternehmen",
-  lead: "Unsere Arbeit trägt keine Signatur auf der Oberfläche — wir arbeiten an dem, was darunter liegt.",
+  title: "Wo wir schon tätig waren",
+  lead: "Hier ein paar der Unternehmen, in denen wir viele Jahre Erfahrung mit unterschiedlichen Datenlandschaften, Prozessen und Personen gesammelt haben. Jedes tickt anders — aber viele Herausforderungen und Lösungen sind tatsächlich ähnlich.",
   items: [
     { name: "3+", src: logo3Plus },
     { name: "Omnicom Media Group", src: logoOmnicom },
@@ -155,16 +227,17 @@ export const logos: { title: string; lead: string; items: Logo[] } = {
 
 export const contact = {
   title: "Finden wir heraus, ob wir zusammenpassen.",
-  sub: "Kostenkontrolle. Keine versteckten Kosten. Keine endlosen Verlängerungen. Wir tragen das Risiko — nicht Sie.",
+  sub: "",
   ctaLabel: "Nachricht senden",
   email: "hello@datapeople.ch",
   phone: "+41 77 221 88 62",
   phoneHref: "+41772218862",
-  address: "Bachtelstrasse 25c, 8400 Winterthur, Schweiz",
+  address: "Datapeople GmbH\nGeschäftsführung: Siri Fischer (Vorsitz) & Dr. Thomas Ebermann\nUID MWST: CHE-394.497.750\nBankverbindung: UBS AG\nIBAN: CH31 0022 5225 1209 5001 R\nWildbachstrasse 3, 8008 Zürich",
 };
 
 export const footerNav = {
   navigation: [
+    { label: "Über Data People", href: "/#about" },
     { label: "So funktioniert's", href: "/#how-it-works" },
     { label: "Leistungen", href: "/#services" },
     { label: "Team", href: "/#team" },
