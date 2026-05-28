@@ -71,23 +71,23 @@ export const services = {
   items: [
     {
       title: "Massgeschneiderte Datenarchitektur & Data Warehouse",
-      desc: "Zweckgebaute Data Warehouses, die mit Ihrem Unternehmen wachsen. Keine Herstellerabhängigkeit.",
+      desc: "Wir entwickeln zweckgebaute Data Warehouses, die mit Ihrem Unternehmen wachsen. Wir stellen offene Standards über Herstellerabhängigkeit.",
     },
     {
       title: "KI-Bereitschaft & Umsetzung",
-      desc: "Bringen Sie Ihr Datenfundament in Ordnung, damit KI-Projekte tatsächlich Ergebnisse liefern.",
+      desc: "Wir bringen Ihr Datenfundament in Ordnung, damit KI-Projekte tatsächlich Ergebnisse liefern. Dies beinhaltet Beratung aber auch Umsetzung.",
     },
     {
       title: "Eigenständige Auswertungen & Analysen",
-      desc: "Befähigen Sie Ihr Team, eigene Fragen zu beantworten, ohne auf die IT zu warten.",
+      desc: "Wir befähigen Ihr Team, eigene Fragen zu beantworten. Wir helfen auch als Spot-Resource bei besonders komplexen oder zeitkritischen Projekten.",
     },
     {
       title: "Aufbau & Schulung Ihres Datenteams",
-      desc: "Bauen Sie interne Kompetenz auf, damit Sie nie wieder auf externe Berater angewiesen sind.",
+      desc: "Bauen Sie interne Kompetenz auf, damit Sie nie wieder auf externe Berater angewiesen sind. Vermittlung von komplexen Themen und Fachkenntnissen ist etwas das viele von uns über Jahre an Hochschulen und in Unternehmen angesammelt haben.",
     },
     {
       title: "Fractional Data Science, Engineering oder Analyse",
-      desc: "Wir integrieren uns 10-20% in Ihr Team und bringen Expertise, ohne dass Sie eine Vollzeit-Stelle erstellen müssen. Ideal für KMUs, die Spezialwissen brauchen.",
+      desc: "Wir integrieren uns 10-20% in Ihr Team und bringen Expertise, ohne dass Sie eine Vollzeit-Stelle erstellen müssen. Ideal für KMUs, die einen Bedarf nach spezifischer Expertise haben.",
     },
     {
       title: "Recruiting & Kandidatenempfehlungen",
@@ -99,7 +99,7 @@ export const services = {
     },
     {
       title: "Kurzfristige Change-Projekte",
-      desc: "Wir fokussieren uns auf kurzfristige Projekte (max. 3 Monate) oder Fractional-Mandate (max. 50%). Keine monate- oder jahrelangen Abhängigkeiten.",
+      desc: "Wir fokussieren uns auf kurzfristige Projekte (max. 3 Monate) oder Fractional-Mandate (max. 50%). Wir möchten bewusst Abhängigkeiten vermeiden, stehen jedoch als langfristiger Sparringpartner für Support und Scope-Erweiterungen an Ihrer Seite.",
     },
   ] satisfies Service[],
 };
@@ -108,16 +108,20 @@ export type AboutPoint = { title: string; desc: string };
 
 export const aboutDataPeople = {
   kicker: "Was ist Data People?",
-  title: "Ein exklusiver Club von Datenexperten",
+  title: "Eine Gemeinschaft von Datenexperten",
   intro: "Data People ist eine moderne Gilde, ein Kollektiv von Data Scientists, Data Engineers und Data Analysten. Alle Mitglieder arbeiten aktiv in Schweizer Unternehmen — von KMUs bis zu Grosskonzernen. Und eines verbindet uns: Die Passion für Daten und solides Craftmanship.",
   points: [
     {
-      title: "Vertrauensprinzip",
-      desc: "Wir kennen und empfehlen unsere Mitglieder persönlich. Zugang nur auf Einladung.",
+      title: "Regelmässiger Austausch",
+      desc: "Wir treffen uns regelmässig, tauschen Erfahrungen aus und diskutieren neue Entwicklungen. So behalten wir immer einen aktuellen, pragmatischen und tiefen Einblick in die Datenlandschaft — als Netzwerk, nicht als Einzelpersonen.",
     },
     {
       title: "Aus Leidenschaft",
-      desc: "Wir machen das nicht als primäre Verdienstquelle. Alles, was wir bei Data People tun, geschieht aus Leidenschaft für Technologie. Das ist unser Unterschied zu Beratungen, die Profit vor Qualität stellen.",
+      desc: "Datapeople setzt auch Projekte um. Allerdings nicht als primäre Verdienstquelle. Alles, was wir bei Data People tun, geschieht aus Leidenschaft für Technologie. Das ist unser Unterschied zu Beratungen, die Profit vor Qualität stellen.",
+    },
+    {
+      title: "Vertrauensprinzip",
+      desc: "Wir kennen und empfehlen unsere Mitglieder persönlich. Der Zugang zu Datapeople geschieht auf Einladung.",
     },
     {
       title: "Aktiv in der Praxis",
@@ -126,10 +130,6 @@ export const aboutDataPeople = {
     {
       title: "Pro Bono für NGOs",
       desc: "Viele unserer Experten nutzen einen Teil ihrer Zeit für Projekte mit echtem Zweck — für NGOs und Non-Profit-Organisationen, die einen Bedarf an Datenanalyse haben. Wir geben unsere Expertise weiter, wenn es zählt.",
-    },
-    {
-      title: "Regelmässiger Austausch",
-      desc: "Wir treffen uns regelmässig, tauschen Erfahrungen aus und diskutieren neue Entwicklungen. So behalten wir immer einen aktuellen, pragmatischen und tiefen Einblick in die Datenlandschaft — als Netzwerk, nicht als Einzelpersonen.",
     },
   ] satisfies AboutPoint[],
 };
@@ -229,7 +229,7 @@ export const contact = {
   title: "Finden wir heraus, ob wir zusammenpassen.",
   sub: "",
   ctaLabel: "Nachricht senden",
-  email: "hello@datapeople.ch",
+  email: "info@datapeople.ch",
   phone: "+41 77 221 88 62",
   phoneHref: "+41772218862",
   address: "Datapeople GmbH\nGeschäftsführung: Siri Fischer (Vorsitz) & Dr. Thomas Ebermann\nUID MWST: CHE-394.497.750\nBankverbindung: UBS AG\nIBAN: CH31 0022 5225 1209 5001 R\nWildbachstrasse 3, 8008 Zürich",

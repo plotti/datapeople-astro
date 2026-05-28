@@ -135,5 +135,3 @@ Die Landschaft der KI-Agenten-Frameworks bietet für nahezu jeden Anwendungsfall
 - Für den schnellsten Einstieg ohne Programmierung ist **Flowise** als **No-Code**\-Plattform perfekt für das Prototyping geeignet.
 
 Die richtige Wahl hängt letztendlich von den spezifischen Anforderungen Ihres Projekts, den vorhandenen Kenntnissen Ihres Teams und dem gewünschten Grad an Kontrolle und Flexibilität ab.
-
-Unter uns: Im Oktober 2025 sieht es so aus, als ob **n8n** das Rennen machen würde, vor allem weil sie es schaffen, viel Social-Media-Präsenz zu haben und ihre Community gut zu verwalten. Ob es am Ende aber ein Framework ist, das wirklich langfristig für "Production"-Instanzen taugt, wird nur die Zukunft zeigen.
