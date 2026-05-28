@@ -12,8 +12,8 @@ import logoComparis from "../assets/logos/logo-comparis.png";
 import type { ImageMetadata } from "astro";
 
 export const nav = {
-  about: "Über Data People",
-  howItWorks: "So funktioniert's",
+  about: "Über Datapeople",
+  howItWorks: "Warum Datapeople",
   services: "Leistungen",
   team: "Team",
   blog: "Blog",
