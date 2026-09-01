@@ -67,7 +67,7 @@ export const processSteps: ProcessStep[] = [
 export type Service = { title: string; desc: string };
 
 export const services = {
-  title: "Wie sieht das in der Praxis aus?",
+  title: "Was sind unsere Schwerpunkte?",
   items: [
     {
       title: "Massgeschneiderte Datenarchitektur & Data Warehouse",
@@ -99,7 +99,7 @@ export const services = {
     },
     {
       title: "Kurzfristige Change-Projekte",
-      desc: "Wir fokussieren uns auf kurzfristige Projekte (max. 3 Monate) oder Fractional-Mandate (max. 50%). Wir möchten bewusst Abhängigkeiten vermeiden, stehen jedoch als langfristiger Sparringpartner für Support und Scope-Erweiterungen an Ihrer Seite.",
+      desc: "Wir fokussieren uns auf kurzfristige Change Projekte (max. 3 Monate Laufzeit) und punktuelle Beratungsmandate. Wir möchten bewusst Abhängigkeiten vermeiden, stehen jedoch als langfristiger Sparringpartner für Support und Scope-Erweiterungen an Ihrer Seite.",
     },
   ] satisfies Service[],
 };
