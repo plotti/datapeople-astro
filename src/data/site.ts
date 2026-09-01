@@ -23,7 +23,7 @@ export const nav = {
 export const hero = {
   line1: "Making data work for you",
   line2: { before: "and your ", emphasis: "AI", after: "." },
-  sub: "Datapeople ist ein handverlesenes Netzwerk von echten Datenexperten aus Schweizer Unternehmen.",
+  sub: "Datapeople ist ein handverlesenes Netzwerk von echten Datenexperten aus Schweizer Unternehmen. Wir beraten unabhängig.",
   primaryCta: "Gespräch vereinbaren",
   secondaryCta: "So funktioniert's",
 };
