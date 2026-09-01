@@ -121,7 +121,7 @@ export const aboutDataPeople = {
     },
     {
       title: "Vertrauensprinzip",
-      desc: "Wir kennen und empfehlen unsere Mitglieder persönlich. Der Zugang zu Datapeople geschieht auf Einladung.",
+      desc: "Wir kennen und empfehlen unsere Mitglieder persönlich. Wir sind aber immer offen für neue Mitglieder.",
     },
     {
       title: "Aktiv in der Praxis",
