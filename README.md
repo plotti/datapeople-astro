@@ -1,4 +1,4 @@
-# datapeople-astro
+ # datapeople-astro
 
 Marketing-Site von Datapeople — Data & AI Implementation für Schweizer Unternehmen.
 
