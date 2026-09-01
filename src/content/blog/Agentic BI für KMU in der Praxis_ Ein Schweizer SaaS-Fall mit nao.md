@@ -16,7 +16,7 @@ cover: "../../assets/blog/nao-title.jpg"
 
 ## **TL;DR \- Und wie das Endresultat aussieht**
 
-Agentic BI bedeutet, dass KI-Agenten Geschäftsfragen autonom beantworten, indem sie die richtigen Daten finden, SQL schreiben, Ergebnisse prüfen und begründete Antworten liefern. In diesem Beitrag zeigen wir am konkreten Beispiel der fiktiven PulsCheck AG, wie ein produktionsnaher Aufbau mit dem Open-Source-Framework [nao](https://github.com/getnao/nao) aussieht – inklusive Datenmodell, Context Stack, Test-Suite und typischen Stolperfallen. Anschliessend ordnen wir ein, wann nao die richtige Wahl ist und wann eine der etablierten Alternativen (Snowflake Cortex Analyst, Power BI Copilot, Sigma Computing, ThoughtSpot, Basejump AI oder BlazeSQL) besser passt.
+Agentic BI bedeutet, dass KI-Agenten Geschäftsfragen autonom beantworten, indem sie die richtigen Daten finden, SQL schreiben, Ergebnisse prüfen und begründete Antworten liefern. In diesem Beitrag zeigen wir am konkreten Beispiel der fiktiven PulsCheck AG, wie ein produktionsnaher Aufbau mit dem Open-Source-Framework [nao](https://github.com/getnao/nao) aussieht – inklusive Datenmodell, Context Stack, Test-Suite und typischen Stolperfallen. Anschliessend ordnen wir ein, wann nao die richtige Wahl ist und wann eine der etablierten Alternativen (Snowflake Cortex Analyst, Power BI Copilot, Sigma Computing, ThoughtSpot, Basejump AI oder BlazeSQL) besser passt. Den Code zu dem Beitrag findest du hier auf [Github](https://github.com/plotti/pulscheck-analytics). 
 
 Die Kernerkenntnis vorweg: **Der Agent ist nicht das Schwierige. Der Semantic Layer und der Context Stack sind es.** Wenn diese stehen, läuft der Rest in überschaubarer Zeit.
 
