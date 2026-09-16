@@ -8,6 +8,8 @@ tags: ["Data Literacy", "Data Culture", "Data Strategy", "AI"]
 cover: "../../assets/blog/data-driven-01-light.png"
 ---
 
+**Stand:** May 2026 · **Autor:** Thomas Massie · **Lesedauer:** ca. 4 Minuten
+
 A message lands in the analyst's chat: _“Can you pull the new FTS numbers?”_
 
 It feels like a thirty-second favour. It isn't. Hidden inside that one sentence are half a dozen unasked questions: which metric, which season, which period, compared to what, and, least asked of all, for what decision.
@@ -55,3 +57,5 @@ Pull on any of it and the same knot shows up. The failure is not bad maths. It i
 Frame it, and the rest becomes tractable. Leave it, and AI simply scales the noise.
 
 The [companion post](/blog/2026-06-10-becoming-data-driven-the-fix/) takes up what fixing it actually involves. The full argument, with sources, lives in the long-form article.
+
+*Originally published at [thomassie.me/2026-05-27-becoming-data-driven-the-problem/](https://thomassie.me/2026-05-27-becoming-data-driven-the-problem/)*

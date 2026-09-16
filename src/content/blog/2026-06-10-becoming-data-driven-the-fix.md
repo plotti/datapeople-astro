@@ -8,6 +8,8 @@ tags: ["Data Literacy", "Data Culture", "Leadership", "AI"]
 cover: "../../assets/blog/data-driven-02-light.png"
 ---
 
+**Stand:** June 2026 · **Autor:** Thomas Massie · **Lesedauer:** ca. 5 Minuten
+
 _“Can you pull the new FTS numbers?”_ The message looks like a thirty-second favour. The [first part of this pair](/blog/2026-05-27-becoming-data-driven-the-problem/) followed it downstream, into a wrong number baked into an expensive decision, and landed on a single observation: the recurring failure is a question that was never framed properly before the work began.
 
 The fix is smaller than it sounds. No reorganisation required. Two mirror habits, one on each side of the table, and a structure leadership builds around them.
@@ -63,3 +65,5 @@ Leading the people doing both? Fund a named bridging role rather than hoping som
 None of it costs a new platform. What it buys back is trust in the numbers, which is slow to rebuild and worth more than any dashboard. The next FTS request arrives tomorrow. Whether it stays a thirty-second favour or opens a real conversation depends on which habits got built first.
 
 [Part one](/blog/2026-05-27-becoming-data-driven-the-problem/) lays out the problem; the full argument, with sources, lives in the long-form article.
+
+*Originally published at [thomassie.me/2026-06-10-becoming-data-driven-the-fix/](https://thomassie.me/2026-06-10-becoming-data-driven-the-fix/)*
