@@ -1,7 +1,7 @@
 ---
 title: "Agentic BI für KMU in der Praxis: Ein Schweizer SaaS-Fall mit nao"
 description: "Agentic BI bedeutet, dass KI-Agenten Geschäftsfragen autonom beantworten, indem sie die richtigen Daten finden, SQL schreiben, Ergebnisse prüfen und begründete Antworten liefern. In diesem Beitrag zeigen wir am konkreten Beispiel der fiktiven PulsCheck AG, wie ein produktionsnaher Aufbau mit dem Open-Source-Framework nao aussieht - inklusive Datenmodell, Context Stack, Test-Suite und typischen Stolperfallen."
-pubDate: 2026-14-05
+pubDate: 2026-05-01
 readTime: 30
 category: "AI Integration"
 tags: ["Agentic BI","AI","Interface","LLM"]
