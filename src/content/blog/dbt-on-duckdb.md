@@ -257,3 +257,5 @@ dbt test          # verify data quality
 ```
 
 The entire cycle — from fresh exports to tested, analysis-ready mart tables — runs in seconds for datasets of typical small-to-medium size. No cloud credits, no orchestration infrastructure, no maintenance overhead. For any project where data arrives periodically as flat-file exports, this stack is hard to beat.
+
+*Originally published at [dbt on DuckDB — from raw tables to mart models](https://thomassie.me/dbt-on-duckdb/)*

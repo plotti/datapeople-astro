@@ -129,3 +129,5 @@ DuckDB only allows one process to open the database file at a time. If DBeaver i
 ## What comes next
 
 The raw DWH is useful on its own — you can query it directly, explore it in DBeaver, and build views for common questions. But the real power comes when you add a transformation layer on top. In the next post I'll walk through setting up dbt Core on top of this DuckDB foundation: how the project is structured, what the model layers look like, and how the whole thing connects to version control and your analytics environment of choice.
+
+*Originally published at [A personal data warehouse — free, fast, and local](https://thomassie.me/personal-data-warehouse/)*
