@@ -52,3 +52,5 @@ Auf der anderen Seite steht KI als digitaler Mitarbeiter, als Interpret und Ents
 Es wird klar, dass der Einsatz von KI im ersten Fall einfacher realisierbar ist und meiner Meinung nach sollte auch dieser Teil als erstes erledigt werden. Oder markiger:
 
 **KI als Werkzeug – so oft wie möglich. KI als Mitarbeiter – so selten wie nötig.**
+
+*Originally published at [Braucht es immer KI?](https://bridgebinary.ch/blog/braucht-es-immer-ki/)*

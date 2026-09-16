@@ -64,3 +64,5 @@ Die Frage ist, auf welcher Ebene Unternehmen investieren. Zusammenfassend:
 **Spec-Driven-Development** war schon immer richtig. Mit KI-Agents als Ausführungsschicht wird es noch wichtiger. Auch hybride Teams profitieren von der besseren Qualität der Spezifikationen, da Automatisierung Product Ownern grosse Teile der _Fleissarbeit_ abnimmt. Spec-Driven-Development ist eigentlich nichts anderes als _Next-Level-Prompting_ also eine Art _Meta-Prompting_.
 
 Die Aufgaben in den meisten Unternehmen sind auf diesen Ebenen noch sehr vielfältig.
+
+*Originally published at [KI schreibt bessere Prompts als du](https://bridgebinary.ch/blog/prompt-context-intent-spec-engineering/)*
