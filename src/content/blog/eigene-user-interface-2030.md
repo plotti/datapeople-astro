@@ -198,7 +198,7 @@ Drei Dinge, falls Sie irgendwas bauen:
 2. **Der Burggraben wandert zu den Daten.** Wenn Sie ein Portal betreiben: Ihr Moat ist ob Sie Ihren Nutzern eigene Agenten an saubere, strukturierte, *abfragbare* Daten lassen. Firmen, die ihre Daten öffnen (APIs, MCP-Server, Warehouse-Lesezugriff), überleben als *Orte, an denen Daten leben*, statt als Ort, an dem zufällig ein festes UI steht. Ich würde für eine kleinanzeigen-API bezahlen, die meinen Scraper überflüssig macht. Der Scraper existiert, weil die Tür verschlossen ist.
 3. **Für Einzelpersonen: Ihre Fragen sind legal; nur die Daten sind weggesperrt.** Nichts an meinen Suchkriterien ist exotisch. Millionen Menschen haben genauso spezifische. Die Werkzeuge, sie zu beantworten, kosten jetzt schon nichts mehr. Was fehlt, ist im Grunde der Datenzugang.
 
-## Und jetzt gut zuhören: Was heisst das für mein Unternehmen?
+## Und jetzt gut zuhören: Was heisst das für mein Unternehmen?  
 
 **Ich glaube dass Unternehmen heutzutage bereits jetzt schon genauso Arbeiten können. Sie haben alles was sie brauchen, sie haben ein Datenfundament was sie selbst steuern und aufbauen können und sie haben auch Engineers die mit AI das bauen können was die Abteilungen brauchen. Das bedeutet dass sich das ewige Gleichgewicht von Make vs Buy gerade extrem verschoben hat, aber die meisten Unternehmen den Wakeup-Call nicht mitbekommen haben.**
 
