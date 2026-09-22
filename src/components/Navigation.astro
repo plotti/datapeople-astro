@@ -28,6 +28,7 @@ const links = [
           <a
             href={link.href}
             data-section={link.id}
+            data-navigation-link
             class="nav-link relative inline-block py-2 text-sm text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
           >
             {link.label}
@@ -38,6 +39,7 @@ const links = [
 
     <a
       href="/#contact"
+      data-navigation-cta
       class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm font-medium text-[var(--color-background)] transition-transform duration-300 ease-out hover:-translate-y-px"
     >
       {nav.cta}
@@ -91,4 +93,24 @@ const links = [
     );
     sections.forEach((s) => observer.observe(s));
   }
+</script>
+
+<script is:inline>
+  document.querySelectorAll("[data-navigation-link]").forEach((link) => {
+    link.addEventListener("click", () => {
+      window.posthog?.capture("navigation_link_clicked", {
+        destination_section: link.getAttribute("data-section"),
+        link_location: "primary_navigation",
+      });
+    });
+  });
+
+  document
+    .querySelector("[data-navigation-cta]")
+    ?.addEventListener("click", () => {
+      window.posthog?.capture("consultation_cta_clicked", {
+        cta_location: "primary_navigation",
+        target_section: "contact",
+      });
+    });
 </script>

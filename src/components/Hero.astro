@@ -38,12 +38,14 @@ import { hero } from "../data/site";
     <div class="flex flex-wrap items-center gap-6">
       <a
         href="#contact"
+        data-hero-cta="consultation"
         class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-8 py-4 text-base font-medium text-[var(--color-background)] transition-transform duration-300 ease-out hover:-translate-y-px"
       >
         {hero.primaryCta}
       </a>
       <a
         href="#how-it-works"
+        data-hero-cta="process"
         class="inline-flex items-center py-2 font-sans text-base text-[var(--color-ink-muted)] underline-offset-4 transition-colors hover:text-[var(--color-ink)] hover:underline"
       >
         {hero.secondaryCta}
@@ -52,3 +54,23 @@ import { hero } from "../data/site";
     </div>
   </div>
 </section>
+
+<script is:inline>
+  document
+    .querySelector('[data-hero-cta="consultation"]')
+    ?.addEventListener("click", () => {
+      window.posthog?.capture("consultation_cta_clicked", {
+        cta_location: "hero",
+        target_section: "contact",
+      });
+    });
+
+  document
+    .querySelector('[data-hero-cta="process"]')
+    ?.addEventListener("click", () => {
+      window.posthog?.capture("process_cta_clicked", {
+        cta_location: "hero",
+        target_section: "how_it_works",
+      });
+    });
+</script>

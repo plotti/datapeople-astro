@@ -22,6 +22,7 @@ import { contact } from "../data/site";
 
     <a
       href={`mailto:${contact.email}`}
+      data-contact-link="primary_email"
       class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-10 py-4 font-sans text-base font-medium text-[var(--color-background)] transition-transform duration-300 ease-out hover:-translate-y-px"
     >
       {contact.ctaLabel}
@@ -33,15 +34,44 @@ import { contact } from "../data/site";
     >
       <a
         href={`mailto:${contact.email}`}
+        data-contact-link="email"
         class="inline-block py-2 transition-colors hover:text-[var(--color-ink)]"
         >{contact.email}</a
       >
       <span aria-hidden="true" class="hidden sm:inline">·</span>
       <a
         href={`tel:${contact.phoneHref}`}
+        data-contact-link="phone"
         class="inline-block py-2 transition-colors hover:text-[var(--color-ink)]"
         >{contact.phone}</a
       >
     </div>
   </div>
 </section>
+
+<script is:inline>
+  document
+    .querySelector('[data-contact-link="primary_email"]')
+    ?.addEventListener("click", () => {
+      window.posthog?.capture("consultation_cta_clicked", {
+        cta_location: "contact_section",
+        contact_method: "email",
+      });
+    });
+
+  document
+    .querySelector('[data-contact-link="email"]')
+    ?.addEventListener("click", () => {
+      window.posthog?.capture("contact_email_clicked", {
+        link_location: "contact_section",
+      });
+    });
+
+  document
+    .querySelector('[data-contact-link="phone"]')
+    ?.addEventListener("click", () => {
+      window.posthog?.capture("contact_phone_clicked", {
+        link_location: "contact_section",
+      });
+    });
+</script>

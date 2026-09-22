@@ -58,6 +58,9 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
             >
               <a
                 href={`/blog/${post.id}/`}
+                data-blog-post-link
+                data-post-slug={post.id}
+                data-post-category={post.data.category}
                 class="absolute inset-0 z-10"
                 aria-label={`Artikel lesen: ${post.data.title}`}
               />
@@ -118,3 +121,15 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
   </main>
   <Footer />
 </Layout>
+
+<script is:inline>
+  document.querySelectorAll("[data-blog-post-link]").forEach((link) => {
+    link.addEventListener("click", () => {
+      window.posthog?.capture("blog_post_selected", {
+        article_slug: link.getAttribute("data-post-slug"),
+        article_category: link.getAttribute("data-post-category"),
+        link_location: "blog_listing",
+      });
+    });
+  });
+</script>
