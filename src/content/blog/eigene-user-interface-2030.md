@@ -2,11 +2,13 @@
 title: "Im Jahr 2030 hat jeder sein eigenes User Interface"
 description: "Wie die Zukunft von User Interfaces mit AI aussieht und warum Daten eine zentrale Rolle spielen."
 pubDate: 2026-09-22
-readTime: 14
+readTime: 17
 category: "KI & Strategie"
 tags: ["KI", "OpenStreetMap", "Data Engineering", "Machine Learning", "Immobilien", "User Interface"]
 cover: "../../assets/blog/immo-map-germany.png"
 ---
+
+**Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 17 Minuten
 
 ## Die Prognose
 
