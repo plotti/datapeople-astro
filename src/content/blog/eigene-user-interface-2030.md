@@ -1,6 +1,6 @@
 ---
 title: "Im Jahr 2030 hat jeder sein eigenes User Interface"
-description: "Wie die Zukunft von User Interfaces mit AI aussieht und warum Daten eine zentrale Rolle spielen.
+description: "Wie die Zukunft von User Interfaces mit AI aussieht und warum Daten eine zentrale Rolle spielen."
 pubDate: 2026-09-22
 readTime: 14
 category: "KI & Strategie"
