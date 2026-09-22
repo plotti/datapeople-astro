@@ -2,13 +2,13 @@
 title: "The unreasonable effectiveness of Agentic Dashboards"
 description: "Klassische BI-Tools sind teuer, klicklastig und schwer zu pflegen. Dieser Beitrag zeigt am Beispiel der PulsCheck AG, wie Sie mit Evidence, DuckDB und Claude drei produktive Dashboards als Code bauen – inklusive Context Stack, Stolperfallen, Kostenrechnung und Live-Dashboard."
 pubDate: 2026-09-22
-readTime: 18
+readTime: 28
 category: "AI Integration"
 tags: ["Agentic BI", "Evidence", "Dashboards", "LLM"]
 cover: "../../assets/blog/agentic-dashboards-subscription-health.png"
 ---
 
-**Stand:** September 2026 · **Autor:** Datapeople Datenredaktion · **Lesedauer:** ca. 18 Minuten
+**Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 28 Minuten
 
 **Hinweis zur Fallstudie:** Das im Folgenden beschriebene Unternehmen „PulsCheck AG" ist ein zusammengesetztes Beispiel, das auf wiederkehrenden Mustern aus realen Schweizer KMU-Projekten basiert. Geschäftsmodell, Datenstruktur, Code und Ergebnisse sind plausibel und nachvollziehbar, aber bewusst nicht einer einzelnen Kundin zugeordnet, um Vertraulichkeit zu wahren.
 
