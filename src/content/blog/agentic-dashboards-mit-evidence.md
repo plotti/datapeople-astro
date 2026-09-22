@@ -5,7 +5,7 @@ pubDate: 2026-09-22
 readTime: 18
 category: "AI Integration"
 tags: ["Agentic BI", "Evidence", "Dashboards", "LLM"]
-cover: "../../assets/blog/agentic-dashboards-cover.png"
+cover: "../../assets/blog/agentic-dashboards-subscription-health.png"
 ---
 
 **Stand:** September 2026 · **Autor:** Datapeople Datenredaktion · **Lesedauer:** ca. 18 Minuten
@@ -137,7 +137,7 @@ Diese These ist scharf. Wir wissen, dass sie nicht für alle Konstellationen pas
 
 ## Recap: Wer ist PulsCheck AG?
 
-![PulsCheck AG als Servietten-Skizze](../../assets/blog/agentic-dashboards-cover.png)
+![Die fertige Evidence-Übersichtsseite mit KPI-Header: MRR, aktive Subscriptions, aktive Befragungen, Antworten gesamt](../../assets/blog/agentic-dashboards-home.png)
 
 Damit dieser Beitrag eigenständig lesbar bleibt, eine kurze Wiederholung der Fallstudie aus dem [nao-Beitrag](/blog/agentic-bi-für-kmu-in-der-praxis_-ein-schweizer-saas-fall-mit-nao/).
 
@@ -343,6 +343,10 @@ Zwei Details, die auffallen: Claude qualifiziert alle Tabellen mit dem Schema-Na
 
 **Was beim ersten Versuch daneben lag.** Claude hatte initial eine `<CohortHeatmap>`-Komponente eingefügt, die in Evidence nicht existiert. Wir haben in DASHBOARD_RULES.md ergänzt, dass Cohort-Analysen via DataTable mit Retention-Spalten zu bauen sind, und einen Verweis auf die [Evidence-Component-Doku](https://docs.evidence.dev/components) ergänzt. Beim zweiten Versuch war es korrekt – die finale Seite zeigt die Cohort-Retention als Tabelle mit Kohorten-Grösse, Aktiv-nach-90-Tagen und Retention-Quote.
 
+So sieht das Ergebnis aus:
+
+![Subscription Health Dashboard: MRR Ende April 2026 von 57'331 CHF über 2'868 aktive Subscriptions, MRR-Verlauf und aktive Subscriptions im Zeitverlauf](../../assets/blog/agentic-dashboards-subscription-health.png)
+
 ## Schritt 5: Dashboard 2 – Response Package Sales
 
 Prompt an Claude:
@@ -389,6 +393,10 @@ Der Country-Filter folgt der Konvention aus DASHBOARD_RULES.md: Default `%` und 
 **Was hier interessant war.** Im ersten Generat hatte Claude die Versuchung, den Paket-Umsatz aus der invoices-Tabelle zu joinen statt aus response_packages. Genau das, was die RULES.md als Single-Source-of-Truth-Verletzung explizit verbietet. Weil der Kontext-Stapel die RULES.md enthielt, hat Claude beim zweiten Durchlauf die Korrektur selbst vorgeschlagen, mit Kommentar im Code: „Single Source of Truth für Paket-Umsatz ist response_packages – nicht zusätzlich aus invoices rechnen, sonst Doppelzählung." – Dieser Kommentar steht heute wörtlich im Lead der fertigen Seite.
 
 Das ist exakt der Wert eines gut gepflegten Context Stack: derselbe Fehler, den der nao-Agent in der Iterations-Phase gemacht hatte (siehe vorheriger Beitrag), wird hier vermieden, weil die Regel inzwischen geschrieben steht.
+
+Das fertige Dashboard:
+
+![Response Package Sales Dashboard: Paket-Umsatz April von 16'875 CHF, 1'075 verkaufte Pakete, Umsatzanteile nach Paketgrösse mit M in Führung](../../assets/blog/agentic-dashboards-package-sales.png)
 
 ## Schritt 6: Dashboard 3 – Survey Engagement
 
@@ -438,6 +446,10 @@ order by responses desc
 Der Kommentartext – auf Deutsch, Sie-Form, ohne Marketing-Floskeln – wird von Claude direkt mitgeneriert, weil die Konvention in DASHBOARD_RULES.md festgelegt ist. Das ist ein kleiner Unterschied zu klassischen BI-Tools, der überraschend wirkt: Dashboards bekommen Kontext mitgeliefert, nicht nur Zahlen.
 
 Übrigens auch hier die Konvention aus Schritt 3 in Aktion: Statt einer erfundenen `<EuropeMap>`-Komponente zeigt die Geo-Sektion ein horizontales BarChart mit Country-Codes (`swapXY=true`) – weniger spektakulär, aber reproduzierbar und ohne Custom-Component-Aufwand.
+
+Und so sieht die Seite in der Praxis aus:
+
+![Survey Engagement Dashboard: 2'770 aktive Befragungen, 26'927 Antworten im April, Deutsch dominiert die Sprachverteilung, Geo-Verteilung als horizontales BarChart](../../assets/blog/agentic-dashboards-survey-engagement.png)
 
 ## Schritt 7: Iteration und typische Stolperfallen
 
