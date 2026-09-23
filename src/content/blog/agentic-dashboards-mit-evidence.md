@@ -101,8 +101,6 @@ order by 1
 
 Das war das ganze Dashboard. Markdown, SQL, eine Komponente. Versionierbar, reviewbar, pull-requestbar.
 
-![Die fertige Evidence-Übersichtsseite mit KPI-Header: MRR, aktive Subscriptions, aktive Befragungen, Antworten gesamt](../../assets/blog/agentic-dashboards-home.png)
-
 **Architektur in einem Satz:** dbt + Warehouse → DuckDB als analytische Engine → Evidence-Build (Markdown + SQL → Static Site) → Hosting auf Fly.io, Cloudflare Pages, Vercel oder einem eigenen Reverse-Proxy. Niemand braucht eine Live-Verbindung zur Datenbank, wenn die Page aufgerufen wird – die Daten liegen schon präkompiliert vor. Das macht Evidence schnell und billig zu hosten.
 
 DuckDB als Engine ist [von Evidence nativ unterstützt](https://docs.evidence.dev/core-concepts/data-sources/duckdb) und passt damit nahtlos zu unserem bestehenden Setup aus dem nao-Beitrag. Beide Tools – Evidence und nao – können dieselbe .duckdb-Datei lesen, was den operativen Aufwand minimal hält.
