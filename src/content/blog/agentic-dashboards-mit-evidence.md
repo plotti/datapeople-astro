@@ -18,7 +18,7 @@ cover: "../../assets/blog/agentic-dashboards-hero.png"
 
 ## TL;DR
 
-Klassische Dashboard-Tools wie Tableau, Looker oder Power BI verlangen Klick-Spezialwissen, regelmässige externe Beratung und vier- bis fünfstellige Lizenzkosten – für ein Reporting-Bedürfnis, das sich heute mit weniger Aufwand lösen lässt. Dieser Beitrag zeigt am konkreten Beispiel der Schweizer Survey-SaaS-Firma PulsCheck AG, wie Sie mit dem Open-Source-Tool **Evidence** und einem LLM (in unserem Fall Claude) drei produktive Dashboards bauen, ohne ein einziges GUI zu öffnen. Die These des Beitrags ist klar: **Wer Agentic BI für Ad-hoc-Fragen einsetzt und Agentic Dashboards für wiederkehrende Reports, braucht kein klassisches BI-Tool mehr.** Wir untermauern das mit Code, Zahlen und einer ehrlichen Einordnung der Grenzen dieser Lösung.
+Klassische Dashboard-Tools wie Tableau, Looker oder Power BI verlangen Klick-Spezialwissen, regelmässige externe Beratung und vier- bis fünfstellige Lizenzkosten – für ein Reporting-Bedürfnis, das sich heute mit weniger Aufwand lösen lässt. Dieser Beitrag zeigt am konkreten Beispiel der Schweizer Survey-SaaS-Firma PulsCheck AG, wie Sie mit dem Open-Source-Tool **Evidence** und einem LLM (in unserem Fall Claude) drei produktive Dashboards bauen, ohne ein einziges GUI zu öffnen – und den gesamten Kontext-Stapel zum Schluss als wiederverwendbaren **Claude Skill** verpacken, der neue Dashboards zu einem einzigen Befehl macht. Die These des Beitrags ist klar: **Wer Agentic BI für Ad-hoc-Fragen einsetzt und Agentic Dashboards für wiederkehrende Reports, braucht kein klassisches BI-Tool mehr.** Wir untermauern das mit Code, Zahlen und einer ehrlichen Einordnung der Grenzen dieser Lösung.
 
 ## Warum Dashboards heute zu teuer sind
 
@@ -512,6 +512,49 @@ Für ein echtes Kunden-Setup gehört vorgelagert ein Auth-Layer dazu – zum Bei
 
 Refresh-Strategie ist pro Dashboard unterschiedlich: das Sales-Dashboard nightly, das MRR-Dashboard wöchentlich, ein Operations-Dashboard mit kritischen Live-Daten alle 15 Minuten via Webhook-Trigger.
 
+## Schritt 9: Der Kontext-Stapel als Claude Skill
+
+Nach drei Dashboards fällt etwas auf: Der Ablauf war jedes Mal identisch. Kontext-Stapel laden, Sicht klären, Page schreiben, Build fahren, Fehler jagen. Genau diese Wiederholung ist ein Signal – nicht für eine Beratung, sondern für Automatisierung. Die Antwort ist ein Claude Skill.
+
+Ein Skill ist ein Ordner mit einer `SKILL.md`-Datei: eine kurze Frontmatter-Deklaration (Name plus Beschreibung, **wann** der Skill greift), darunter die Arbeitsanweisung. Claude Code lädt den Skill automatisch, wenn die Beschreibung zur Aufgabe passt, oder auf Abruf als Slash-Befehl. Bei uns liegt er im Projekt unter `.claude/skills/evidence-dashboard/`:
+
+```text
+.claude/skills/evidence-dashboard/
+├── SKILL.md          # Workflow: Kontext-Stapel → Sicht → Page → Verifikation
+└── scripts/
+    ├── schema.sh     # echtes DuckDB-Schema: Tabellen, Spalten, Zeilenzähler
+    └── verify.sh     # Build + Query-Fehler-Jagd im Log
+```
+
+Der Aufruf ist ein Befehl:
+
+```text
+/evidence-dashboard Umsatz nach Ländern und Paketgrösse, monatlicher
+Trend, Top-10-Tabelle. Stichtag April 2026.
+```
+
+Was dann passiert, ist der Prozess aus Schritt 3 bis 7, festgeschrieben:
+
+**Kontext-Stapel laden – verpflichtend.** `DASHBOARD_RULES.md`, `RULES.md` und das Datenmodell-Doc aus dem nao-Setup. Und dann der entscheidende vierte Schritt: `schema.sh` liest das **tatsächliche** Schema aus der DuckDB – Tabellen, Spalten, Zeilenzähler. Docs können altern, die Datenbank nicht. Bei Widerspruch gewinnt die Datenbank.
+
+**Page generieren.** Unter den Konventionen aus `DASHBOARD_RULES.md`: Komponenten-Whitelist statt Halluzinations-Bingo, schema-qualifizierte Tabellennamen, SSOT-Regeln aus `RULES.md`, Filter-Muster mit Default `%` und `like`.
+
+**Verifizieren – nicht optional.** Der wichtigste Teil des Skills ist `verify.sh`, denn wir haben bei PulsCheck selbst erlebt: `evidence build` meldet Erfolg, während halb der Queries mit Catalog Errors durchlaufen. Der Exit-Code lügt. Deshalb grept der Script das Build-Log:
+
+```bash
+ERRORS=$(grep -E "Error in Query|Catalog Error|Parser Error|Binder Error|IO Error" "$LOG" || true)
+
+if [ -n "$ERRORS" ]; then
+	echo "✗ Build lief durch, ABER Queries sind fehlgeschlagen:" >&2
+	echo "$ERRORS" >&2
+	exit 1
+fi
+```
+
+Erst wenn der Script sauber durchläuft, ist die Page fertig. Damit ist der Kreis geschlossen: Was in Schritt 3 als Kontext-Stapel begann und in Schritt 4 bis 7 als Konventionen erarbeitet wurde, ist jetzt ein Befehl, der dieselben Fehler nicht mehr macht – weil jede Regel, die wir unterwegs gelernt haben, geschrieben steht.
+
+**Portabilität.** Projekt-spezifisch sind am Skill genau drei Dinge: die Kontextpfade, der Datenbankpfad in `schema.sh` und der Build-Befehl in `verify.sh`. Das Muster selbst – Conventions-File als Pflichtlektüre, Schema-Grounding gegen die echte Datenbank, Log-Verifizierung statt Exit-Code-Vertrauen – ist universal. `SKILL.md` kopieren, drei Punkte anpassen, fertig.
+
 ## Wann diese Lösung nicht die richtige ist
 
 Damit die These nicht ins "Vendor-Cheerleading" kippt: Diese Lösung passt natürlich nicht überall.
@@ -592,7 +635,7 @@ Zweitens: Agentic BI für Ad-hoc-Fragen plus Agentic Dashboards für kuratierte 
 
 Drittens: Der gesparte Aufwand ist nicht „weg". Er fliesst in Datenmodell und Geschäftslogik. Genau dorthin, wo Schweizer KMU-Datenarbeit ihren grössten Hebel hat. Wer die RULES.md ernst nimmt, gewinnt einen Layer, der unabhängig vom konkreten Modell, Anbieter oder Dashboard-Tool wertvoll bleibt.
 
-Der nächste sinnvolle Schritt ist einfach ein erstes Dashboard, gebaut nach diesem Muster. Das dauert höchstens eine Woche. Sammeln Sie die zehn wichtigsten wiederkehrenden Fragen Ihrer Geschäftsleitung. Schreiben Sie eine erste RULES.md. Setzen Sie ein Evidence-Projekt auf. Lassen Sie das erste Dashboard generieren. Und schauen Sie sich solange an, wie das Ergebnis aussehen kann: [pulscheck-dashboards.fly.dev](https://pulscheck-dashboards.fly.dev/).
+Der nächste sinnvolle Schritt ist einfach ein erstes Dashboard, gebaut nach diesem Muster. Das dauert höchstens eine Woche. Sammeln Sie die zehn wichtigsten wiederkehrenden Fragen Ihrer Geschäftsleitung. Schreiben Sie eine erste RULES.md. Setzen Sie ein Evidence-Projekt auf. Lassen Sie das erste Dashboard generieren. Und wenn das zweite ansteht: packen Sie den Kontext-Stapel in einen Skill – wie in Schritt 9 beschrieben. Und schauen Sie sich solange an, wie das Ergebnis aussehen kann: [pulscheck-dashboards.fly.dev](https://pulscheck-dashboards.fly.dev/).
 
 ---
 
@@ -629,6 +672,10 @@ Der nächste sinnvolle Schritt ist einfach ein erstes Dashboard, gebaut nach die
 - Visivo: [Evidence vs. Looker Studio Comparison](https://visivo.io/comparisons/evidence-dev-looker-studio) – technischer Vergleich
 
 **Hintergrund:**
+
+- Claude Skills: [code.claude.com/docs/en/skills](https://code.claude.com/docs/en/skills) – SKILL.md-Format und Verhalten in Claude Code
+
+- Anthropic Engineering: [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) – der Design-Hintergrund zu Skills
 
 - DuckDB: [duckdb.org](https://duckdb.org/) – analytische Embedded-DB
 
