@@ -35,6 +35,22 @@ export const philosophy = {
   statementEnd: ". Weniger ist mehr. Ja zu AI, aber nur auf einem soliden Datenfundament.",
 };
 
+export const claimBands = {
+  fortune500: {
+    statementPlain: "OpenAI und Anthropic kümmern sich um die Fortune 500. Wir kümmern uns um ",
+    statementEmphasis: "Sie",
+    statementEnd: ".",
+    secondary:
+      "Die grössten KI-Firmen der Welt schicken ihre eigenen Ingenieure in Grosskonzerne, um KI einzuführen und am Laufen zu halten. Die meisten Unternehmen bekommen solche Hilfe nie.",
+  },
+  peopleProblem: {
+    statementPlain: "KI wirkt wie eine Technologiefrage. In Wahrheit ist sie eine ",
+    statementEmphasis: "Menschenfrage",
+    statementEnd: ".",
+    secondary: "",
+  },
+};
+
 export const processIntro = {
   kicker: "",
   title: "",

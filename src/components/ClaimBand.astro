@@ -1,0 +1,40 @@
+---
+/*
+  ClaimBand — dunkle Vollbreiten-Band im Philosophy-Look.
+  Grosser Serif-Claim mit einem kursiv-farbigen Akzentwort (Brand-Regel),
+  optional ein gedämpfter Zweitsatz darunter.
+*/
+interface Props {
+  statementPlain: string;
+  statementEmphasis: string;
+  statementEnd: string;
+  secondary?: string;
+}
+
+const { statementPlain, statementEmphasis, statementEnd, secondary } =
+  Astro.props;
+---
+
+<section
+  data-fade
+  class="relative overflow-hidden bg-[var(--color-ink)] px-6 py-28 md:py-36 text-[var(--color-background)]"
+>
+  <div class="mx-auto max-w-6xl">
+    <p
+      class="font-serif text-[var(--color-background)] leading-[1.05]"
+      style="font-size: var(--text-display-lg);"
+    >
+      {statementPlain}<em class="italic text-[var(--color-accent)]"
+        >{statementEmphasis}</em
+      >{statementEnd}
+    </p>
+
+    {
+      secondary && (
+        <p class="mt-8 max-w-[60ch] font-sans text-base leading-relaxed text-[color:oklch(0.975_0.01_70/0.55)] md:text-lg">
+          {secondary}
+        </p>
+      )
+    }
+  </div>
+</section>
