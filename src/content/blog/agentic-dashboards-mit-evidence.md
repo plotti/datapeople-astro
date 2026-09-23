@@ -267,8 +267,6 @@ NICHT verwenden (Claude erfindet diese gelegentlich – sie existieren nicht):
 
 Dieser Kontext-Stapel wird als Markdown-Files Claude im Konversationsverlauf mitgegeben (oder bei einer API-Integration als System-Prompt-Anhang). Er stellt sicher, dass die generierten Dashboards Konventionen einhalten und konsistent zur Geschäftslogik aus dem nao-Setup sind.
 
-**Cliffhanger:** Wir bauen aus diesem Kontext-Stapel gerade einen wiederverwendbaren **Claude Skill**, der das Generieren von Evidence-Dashboards für PulsCheck als einen einzigen Befehl verfügbar macht. Wie genau ein solcher Skill aufgebaut ist, welches SKILL.md-Format er nutzt und wie er sich auf andere Projekte übertragen lässt, zeigen wir im **nächsten Beitrag**.
-
 ## Schritt 4: Dashboard 1 – Subscription Health
 
 Wir öffnen Claude (in unserem Fall via Claude Code in der Terminal-Session des Projekts) und geben den Kontext-Stapel mit. Dann der Prompt:
@@ -595,8 +593,6 @@ Zweitens: Agentic BI für Ad-hoc-Fragen plus Agentic Dashboards für kuratierte 
 Drittens: Der gesparte Aufwand ist nicht „weg". Er fliesst in Datenmodell und Geschäftslogik. Genau dorthin, wo Schweizer KMU-Datenarbeit ihren grössten Hebel hat. Wer die RULES.md ernst nimmt, gewinnt einen Layer, der unabhängig vom konkreten Modell, Anbieter oder Dashboard-Tool wertvoll bleibt.
 
 Der nächste sinnvolle Schritt ist einfach ein erstes Dashboard, gebaut nach diesem Muster. Das dauert höchstens eine Woche. Sammeln Sie die zehn wichtigsten wiederkehrenden Fragen Ihrer Geschäftsleitung. Schreiben Sie eine erste RULES.md. Setzen Sie ein Evidence-Projekt auf. Lassen Sie das erste Dashboard generieren. Und schauen Sie sich solange an, wie das Ergebnis aussehen kann: [pulscheck-dashboards.fly.dev](https://pulscheck-dashboards.fly.dev/).
-
-**Cliffhanger:** All das, was wir hier in DASHBOARD_RULES.md, Beispiel-Queries und Konventionen für Claude beschrieben haben, lässt sich als wiederverwendbarer **Claude Skill** verpacken. Mit einem definierten SKILL.md-File, klar deklarierten Inputs und einem reproduzierbaren Generierungs-Pfad. Wie das im Detail aussieht, welche Dateien hineingehören, und warum das die nächste Stufe der „Agentic Dashboards"-Idee ist – darum geht es im **nächsten Beitrag dieser Reihe**.
 
 ---
 
