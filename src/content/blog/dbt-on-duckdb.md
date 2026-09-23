@@ -1,6 +1,6 @@
 ---
-title: "dbt on DuckDB — from raw tables to mart models"
-description: "In the previous post I described how to load Parquet exports into a local DuckDB database — a fast, free, file-based data warehouse you can have running in an afternoon. The raw tables are queryable straight away. But to turn them into something reliable, documented, and ready for an analytics environment, you need a transformation layer. That is what dbt Core provides."
+title: "dbt on DuckDB – from raw tables to mart models"
+description: "In the previous post I described how to load Parquet exports into a local DuckDB database – a fast, free, file-based data warehouse you can have running in an afternoon. The raw tables are queryable straight away. But to turn them into something reliable, documented, and ready for an analytics environment, you need a transformation layer. That is what dbt Core provides."
 pubDate: 2026-04-04
 readTime: 8
 category: "Data Engineering"
@@ -10,11 +10,11 @@ cover: "../../assets/blog/dbt-core.jpg"
 
 **Stand:** April 2026 · **Autor:** Thomas Massie · **Lesedauer:** ca. 10 Minuten
 
-In the previous post I described how to load Parquet exports into a local DuckDB database — a fast, free, file-based data warehouse you can have running in an afternoon. The raw tables are queryable straight away. But to turn them into something reliable, documented, and ready for an analytics environment, you need a transformation layer. That is what __dbt Core__ provides.
+In the previous post I described how to load Parquet exports into a local DuckDB database – a fast, free, file-based data warehouse you can have running in an afternoon. The raw tables are queryable straight away. But to turn them into something reliable, documented, and ready for an analytics environment, you need a transformation layer. That is what __dbt Core__ provides.
 
 ## What dbt does
 
-dbt (data build tool) takes the messy work of SQL transformations — renaming columns, joining tables, applying business logic, calculating metrics — and turns it into a versioned, testable, documented codebase. Each transformation is a plain `.sql` file. dbt compiles them, resolves dependencies, and runs them in the right order. The result is a set of clean, analysis-ready tables and views in your database.
+dbt (data build tool) takes the messy work of SQL transformations – renaming columns, joining tables, applying business logic, calculating metrics – and turns it into a versioned, testable, documented codebase. Each transformation is a plain `.sql` file. dbt compiles them, resolves dependencies, and runs them in the right order. The result is a set of clean, analysis-ready tables and views in your database.
 
 The open-source version, __dbt Core__, is free and runs entirely from the command line. A DuckDB adapter connects it to your `.duckdb` file with minimal configuration.
 
@@ -34,13 +34,13 @@ dbt --version
 
 ## Initialising the project
 
-Navigate to the folder where you want the dbt project to live — not inside the DWH folder — and run:
+Navigate to the folder where you want the dbt project to live – not inside the DWH folder – and run:
 
 ```bash
 dbt init your_project_name
 ```
 
-The wizard will ask for a project name (lowercase letters, digits, and underscores only) and a database type — select `duckdb`. This creates the project folder structure and writes a starter `profiles.yml` to `~/.dbt/profiles.yml`.
+The wizard will ask for a project name (lowercase letters, digits, and underscores only) and a database type – select `duckdb`. This creates the project folder structure and writes a starter `profiles.yml` to `~/.dbt/profiles.yml`.
 
 ## Configuring the connection
 
@@ -55,7 +55,7 @@ your_project_name:
       path: /absolute/path/to/your/dwh.duckdb
 ```
 
-The path must be the full absolute path — relative paths will not work reliably across terminal sessions. Test the connection with:
+The path must be the full absolute path – relative paths will not work reliably across terminal sessions. Test the connection with:
 
 ```bash
 dbt debug
@@ -84,7 +84,7 @@ The `models/` directory is where all transformation logic lives. Everything else
 
 ## The three-layer architecture
 
-dbt projects conventionally follow a three-tier model structure. The tiers are not enforced by dbt itself — they are a well-established pattern that keeps transformations clean, maintainable, and easy to reason about.
+dbt projects conventionally follow a three-tier model structure. The tiers are not enforced by dbt itself – they are a well-established pattern that keeps transformations clean, maintainable, and easy to reason about.
 
 ### 1. Staging (`models/staging/`)
 
@@ -130,7 +130,7 @@ renamed AS (
 SELECT * FROM renamed
 ```
 
-The `` macro is more than a table reference — it creates an explicit dependency that dbt uses to build the lineage graph and surface data freshness information.
+The `` macro is more than a table reference – it creates an explicit dependency that dbt uses to build the lineage graph and surface data freshness information.
 
 ### 2. Intermediate (`models/intermediate/`)
 
@@ -149,7 +149,7 @@ FROM {{ ref('stg_orders') }} o
 LEFT JOIN {{ ref('stg_customers') }} c ON c.customer_id = o.customer_id
 ```
 
-The `ref` macro — like `{{ source('main', 'orders') }}` — creates tracked dependencies. dbt will always run referenced models before the models that depend on them.
+The `ref` macro – like `{{ source('main', 'orders') }}` – creates tracked dependencies. dbt will always run referenced models before the models that depend on them.
 
 ### 3. Marts (`models/marts/`)
 
@@ -208,7 +208,7 @@ Run all tests with:
 dbt test
 ```
 
-Failed tests show exactly which rows violated which constraints — invaluable for catching data quality issues before they reach your analytics layer.
+Failed tests show exactly which rows violated which constraints – invaluable for catching data quality issues before they reach your analytics layer.
 
 ## Generating documentation
 
@@ -219,7 +219,7 @@ dbt docs generate
 dbt docs serve
 ```
 
-The docs site includes a __lineage graph__ that shows every model, source, and mart as nodes, with edges showing how data flows between them. It is the clearest visual representation of what the data warehouse actually does — and it stays up to date automatically as models change.
+The docs site includes a __lineage graph__ that shows every model, source, and mart as nodes, with edges showing how data flows between them. It is the clearest visual representation of what the data warehouse actually does – and it stays up to date automatically as models change.
 
 ## Working in Positron with dbt Power User
 
@@ -242,7 +242,7 @@ git add .
 git commit -m "Initial dbt project setup"
 ```
 
-After each meaningful change — a new model, a new test, updated documentation — commit via the terminal or Positron's built-in Source Control panel. Keeping the history clean makes it easy to see what changed and why, and to roll back if something breaks.
+After each meaningful change – a new model, a new test, updated documentation – commit via the terminal or Positron's built-in Source Control panel. Keeping the history clean makes it easy to see what changed and why, and to roll back if something breaks.
 
 One important note: __never commit `profiles.yml` to Git__. It lives in `~/.dbt/` outside the project folder and contains local file paths. It should stay local.
 
@@ -256,6 +256,6 @@ dbt run           # rebuild all transformed models
 dbt test          # verify data quality
 ```
 
-The entire cycle — from fresh exports to tested, analysis-ready mart tables — runs in seconds for datasets of typical small-to-medium size. No cloud credits, no orchestration infrastructure, no maintenance overhead. For any project where data arrives periodically as flat-file exports, this stack is hard to beat.
+The entire cycle – from fresh exports to tested, analysis-ready mart tables – runs in seconds for datasets of typical small-to-medium size. No cloud credits, no orchestration infrastructure, no maintenance overhead. For any project where data arrives periodically as flat-file exports, this stack is hard to beat.
 
-*Originally published at [dbt on DuckDB — from raw tables to mart models](https://thomassie.me/dbt-on-duckdb/)*
+*Originally published at [dbt on DuckDB – from raw tables to mart models](https://thomassie.me/dbt-on-duckdb/)*

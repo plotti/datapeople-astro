@@ -40,7 +40,7 @@ Intent lässt sich nicht einfach aus einer Datenbank einspeisen. Er wird ständi
 
 ### 4. Spec-Driven-Development: die Methoden-Ebene
 
-Das ist keine neue Disziplin. Es ist — oder sollte es zumindest sein — die Essenz guter Arbeit seit jeher: Business-Anforderungen, Domänenwissen und Umsetzung in eine Form bringen, die ausführbar ist. Für ein IT-Team ebenso wie für KI-Agenten, beziehungsweise die heute schon gültige hybride Realität.
+Das ist keine neue Disziplin. Es ist – oder sollte es zumindest sein – die Essenz guter Arbeit seit jeher: Business-Anforderungen, Domänenwissen und Umsetzung in eine Form bringen, die ausführbar ist. Für ein IT-Team ebenso wie für KI-Agenten, beziehungsweise die heute schon gültige hybride Realität.
 
 Die Analogie ist simpel: Kein Bauunternehmen fängt zu bauen an ohne Architekturplan. Ein KI-Agent braucht dieselbe Klarheit. Er führt aus, was spezifiziert ist, nicht was gemeint war. Wenn er erraten muss, was gemeint war, wird das gewünschte Resultat nicht erreicht (wie übrigens auch bei Menschen).
 

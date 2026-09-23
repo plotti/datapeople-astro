@@ -18,11 +18,11 @@ cover: "../../assets/blog/agentic-dashboards-hero.png"
 
 ## TL;DR
 
-Klassische Dashboard-Tools wie Tableau, Looker oder Power BI verlangen Klick-Spezialwissen, regelmässige externe Beratung und vier- bis fünfstellige Lizenzkosten – für ein Reporting-Bedürfnis, das sich heute mit weniger Aufwand lösen lässt. Dieser Beitrag zeigt am konkreten Beispiel der Schweizer Survey-SaaS-Firma PulsCheck AG, wie Sie mit dem Open-Source-Tool **Evidence** und einem LLM (in unserem Fall Claude) drei produktive Dashboards bauen, ohne ein einziges GUI zu öffnen – und den gesamten Kontext-Stapel zum Schluss als wiederverwendbaren **Claude Skill** verpacken, der neue Dashboards zu einem einzigen Befehl macht. Die These des Beitrags ist klar: **Wer Agentic BI für Ad-hoc-Fragen einsetzt und Agentic Dashboards für wiederkehrende Reports, braucht kein klassisches BI-Tool mehr.** Wir untermauern das mit Code, Zahlen und einer ehrlichen Einordnung der Grenzen dieser Lösung.
+Klassische Dashboard-Tools wie Tableau, Looker oder Power BI verlangen Klick-Spezialwissen, regelmässige externe Beratung und vier- bis fünfstellige Lizenzkosten – für ein Reporting-Bedürfnis, das sich heute mit weniger Aufwand lösen lässt. Dieser Beitrag zeigt am konkreten Beispiel der Schweizer Survey-SaaS-Firma PulsCheck AG, wie Sie mit dem Open-Source-Tool **Evidence** und einem LLM (in unserem Fall Claude) drei produktive Dashboards bauen, ohne ein einziges GUI zu öffnen – und den gesamten Kontext-Stapel zum Schluss als wiederverwendbaren **Claude Skill** verpacken, der neue Dashboards zu einem einzigen Befehl macht (na gut – nachdem wir dem LLM das Halluzinieren von Komponenten abgewöhnt haben, dazu unten mehr). Die These des Beitrags ist klar: **Wer Agentic BI für Ad-hoc-Fragen einsetzt und Agentic Dashboards für wiederkehrende Reports, braucht kein klassisches BI-Tool mehr.** Wir untermauern das mit Code, Zahlen und einer ehrlichen Einordnung der Grenzen dieser Lösung.
 
 ## Warum Dashboards heute zu teuer sind
 
-Es gibt ein wiederkehrendes Muster in Schweizer KMU-Datenprojekten: Eine Geschäftsleitung möchte Reports. IT oder ein Data Analyst beginnt mit Tableau, Looker oder Power BI. Nach drei Monaten ist klar, dass das Selbst-Bauen länger dauert als erwartet, also wird eine externe Tableau-Beratung beauftragt. Diese baut zehn schöne Dashboards. Sechs Monate später passt die Hälfte nicht mehr, weil sich Datenquellen oder Geschäftsregeln verändert haben. Die Beratung kommt zurück. Und wieder. Und wieder.
+Kommt Ihnen das bekannt vor? Es gibt ein Muster, das sich in fast jedem Schweizer KMU-Datenprojekt wiederholt: Eine Geschäftsleitung möchte Reports. IT oder ein Data Analyst beginnt mit Tableau, Looker oder Power BI. Nach drei Monaten ist klar, dass das Selbst-Bauen länger dauert als erwartet, also wird eine externe Tableau-Beratung beauftragt. Diese baut zehn schöne Dashboards. Sechs Monate später passt die Hälfte nicht mehr, weil sich Datenquellen oder Geschäftsregeln verändert haben. Die Beratung kommt zurück. Und wieder. Und wieder.
 
 Das ist nicht zwingend so. Theoretisch können diese Dashboards auch intern entwickelt und gepflegt werden – das ist sogar oft die saubere Lösung. In der Praxis ist die interne Velocity bei klassischen BI-Tools allerdings einfach zu langsam: Eine Anpassung, die in der Sitzung beschlossen wurde, dauert zwei Wochen statt zwei Stunden, weil der eine Tableau-versierte Mensch im Team gerade an drei anderen Themen sitzt. So entstehen die Beratungs-Eskalationen, nicht weil das Inhouse-Modell falsch wäre, sondern weil das Tooling es ausbremst.
 
@@ -30,15 +30,15 @@ Das ist nicht zwingend so. Theoretisch können diese Dashboards auch intern entw
 
 <img src="/agentic-dashboards-hero.svg" alt="Animation: Links klickt ein Cursor träge durch ein ausgegrautes BI-GUI (klicken, warten, beraten lassen), rechts tippt ein Terminal npm run build und ein Dashboard mit MRR-Kennzahl entsteht (beschreiben, bauen, fertig)" style="width:100%;height:auto;border-radius:12px;" />
 
-Der grössere Folgeschaden liegt auf der Recruiting-Seite. Wer Analyst:innen sucht, weil „wir Power BI machen" oder „wir sind ein Tableau-Shop", optimiert auf das falsche Profil. Was Schweizer KMU brauchen, sind Menschen, die geschäftlich denken, sauber SQL schreiben, Datenmodelle verstehen und mit dem jeweils geeignetsten Werkzeug arbeiten. Toolagnostisch, nicht plattformreligiös. Wer Stellen ausschreibt, die ein bestimmtes BI-Tool zur Voraussetzung machen, schliesst genau die Talente aus, die in zwei Jahren mit dem nächsten Werkzeug genauso produktiv wären – und holt sich stattdessen Spezialwissen, das mit dem Tool wieder veraltet.
+Der grössere Folgeschaden liegt auf der Recruiting-Seite. Wer Analyst:innen sucht, weil „wir Power BI machen" oder „wir sind ein Tableau-Shop", optimiert auf das falsche Profil. Was Schweizer KMU brauchen, sind Menschen, die geschäftlich denken, sauber SQL schreiben, Datenmodelle verstehen und mit dem jeweils geeignetsten Werkzeug arbeiten. Toolagnostisch, nicht plattformreligiös. Wer Stellen ausschreibt, die ein bestimmtes BI-Tool voraussetzen, schliesst genau die falschen Leute aus. Nämlich die, die in zwei Jahren mit dem nächsten Werkzeug genauso produktiv wären. Und holt sich dafür Spezialwissen ins Haus, das mit dem Tool wieder veraltet.
 
-**Versionierung und Übertragbarkeit.** Ein Tableau-Workbook ist ein binäres .twbx-File. Diff, Pull Request, Code Review, Branch-Merge – alles, was in der Software-Entwicklung seit zwanzig Jahren Standard ist – funktioniert hier nur sehr eingeschränkt. Wenn zwei Analyst:innen am selben Dashboard arbeiten, überschreibt eine die Arbeit der anderen. Das ist 2026 nicht mehr zeitgemäss.
+**Versionierung und Übertragbarkeit.** Ein Tableau-Workbook ist ein binäres .twbx-File – stellen Sie sich vor, Sie mergen zwei Word-Dokumente ohne „Änderungen nachverfolgen". Diff, Pull Request, Code Review, Branch-Merge – alles, was in der Software-Entwicklung seit zwanzig Jahren Standard ist – funktioniert hier nur sehr eingeschränkt. Wenn zwei Analyst:innen am selben Dashboard arbeiten, überschreibt eine die Arbeit der anderen. Das ist 2026 nicht mehr zeitgemäss.
 
 **Definitionen driften.** Ohne expliziten Semantic Layer rechnet jedes Dashboard seinen eigenen Umsatz. „Aktiver Kunde" heisst im Sales-Dashboard eine andere Definition als im Operations-Dashboard. Der Streit darüber, welche Zahl in der Vorstandssitzung stimmt, ist wöchentlicher Standard.
 
 **Die Lizenzkostenrechnung kommt obendrauf.** Aktuelle Listenpreise von Tableau Cloud Standard: Creator USD 75/Monat, Explorer USD 42/Monat, Viewer USD 15/Monat – jeweils jährlich. Tableau Cloud Enterprise erhöht auf USD 115 / 70 / 35. Looker startet bei USD 5'000/Monat. Power BI Pro bei USD 10/User/Monat plus die nötigen Microsoft-365-Lizenzen.
 
-Die Lizenz ist ohnehin nur die sichtbare Spitze. Wer intern entwickelt, zahlt einen vollen FTE für Setup, Betrieb und Anpassung – in der Schweiz schnell CHF 120'000 bis 160'000 pro Jahr für eine BI-Engineer-Rolle, plus Lohnnebenkosten. Wer extern beauftragt, zahlt die oben erwähnten Tagessätze über das Jahr aufaddiert. In beiden Fällen entstehen die wahren Kosten nicht beim Lizenz-Klick, sondern bei der Arbeitsstunde, die in das Tool fliesst – und die fliesst bei klassischen BI-Plattformen reichlich.
+Die Lizenz ist ohnehin nur die sichtbare Spitze. Wer intern entwickelt, zahlt einen vollen FTE für Setup, Betrieb und Anpassung – in der Schweiz schnell CHF 120'000 bis 160'000 pro Jahr für eine BI-Engineer-Rolle, plus Lohnnebenkosten. Wer extern beauftragt, zahlt die oben erwähnten Tagessätze über das Jahr aufaddiert. Die wahren Kosten stecken in beiden Fällen nicht im Lizenz-Klick. Sie stecken in den Arbeitsstunden, die ins Tool fliessen – und die fliessen bei klassischen BI-Plattformen reichlich.
 
 Das Ganze ist nicht falsch. Es ist nur disproportional teuer für das, was die meisten Schweizer KMU tatsächlich brauchen: ein paar saubere, regelmässig aktualisierte Reports.
 
@@ -101,6 +101,8 @@ order by 1
 
 Das war das ganze Dashboard. Markdown, SQL, eine Komponente. Versionierbar, reviewbar, pull-requestbar.
 
+![Die fertige Evidence-Übersichtsseite mit KPI-Header: MRR, aktive Subscriptions, aktive Befragungen, Antworten gesamt](../../assets/blog/agentic-dashboards-home.png)
+
 **Architektur in einem Satz:** dbt + Warehouse → DuckDB als analytische Engine → Evidence-Build (Markdown + SQL → Static Site) → Hosting auf Fly.io, Cloudflare Pages, Vercel oder einem eigenen Reverse-Proxy. Niemand braucht eine Live-Verbindung zur Datenbank, wenn die Page aufgerufen wird – die Daten liegen schon präkompiliert vor. Das macht Evidence schnell und billig zu hosten.
 
 DuckDB als Engine ist [von Evidence nativ unterstützt](https://docs.evidence.dev/core-concepts/data-sources/duckdb) und passt damit nahtlos zu unserem bestehenden Setup aus dem nao-Beitrag. Beide Tools – Evidence und nao – können dieselbe .duckdb-Datei lesen, was den operativen Aufwand minimal hält.
@@ -137,9 +139,9 @@ Das Argument im Detail:
 
 Diese These ist scharf. Wir wissen, dass sie nicht für alle Konstellationen passt – die Sektion „Wann diese Lösung nicht die richtige ist" weiter unten benennt die Ausnahmen. Aber für den typischen Schweizer KMU-Fall mit zehn bis dreissig Power-Usern ist sie haltbar.
 
-## Recap: Wer ist PulsCheck AG?
+So, und jetzt schauen wir uns an, wie das Ganze eigentlich funktioniert – und wie man das recht einfach selbst bauen kann.
 
-![Die fertige Evidence-Übersichtsseite mit KPI-Header: MRR, aktive Subscriptions, aktive Befragungen, Antworten gesamt](../../assets/blog/agentic-dashboards-home.png)
+## Recap: Wer ist PulsCheck AG?
 
 Damit dieser Beitrag eigenständig lesbar bleibt, eine kurze Wiederholung der Fallstudie aus dem [nao-Beitrag](/blog/agentic-bi-für-kmu-in-der-praxis_-ein-schweizer-saas-fall-mit-nao/).
 
@@ -613,7 +615,7 @@ Plus initiale Implementierung. Für drei produktive Dashboards in einer typische
 
 Plus Engineering-Aufwand für initiales Setup und Pflege: realistisch 12–25 Tage/Jahr internes Engineering. Wenn intern geleistet, fällt das in das ohnehin anwesende Engineering-Budget. Wenn extern eingekauft (z. B. via Datapeople-Beratung), entspricht das CHF 18'000–60'000/Jahr für das gesamte Datenfundament inkl. Dashboards.
 
-Der Vergleich ist eindeutig: Im KMU-Segment spart die Evidence + nao + Claude-Lösung über drei Jahre fünf- bis sechsstellige Beträge gegenüber Tableau und sogar gegenüber Power BI mit Beratungsbedarf.
+Der Vergleich ist aus meiner Sicht eindeutig: Im KMU-Segment spart die Evidence + nao + Claude-Lösung über drei Jahre fünf- bis sechsstellige Beträge gegenüber Tableau – und sogar gegenüber Power BI mit Beratungsbedarf.
 
 Die ehrliche Einordnung: Das gesparte Geld ist nicht „weg" und landet auch nicht direkt in der Kasse. Es fliesst in die Datenarchitektur, in die Pflege der RULES.md, in den Reifegrad des Datenmodells. Genau dorthin, wo es Wert schafft – statt in GUI-Konfiguration.
 

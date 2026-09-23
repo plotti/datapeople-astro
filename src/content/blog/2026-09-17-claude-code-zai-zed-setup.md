@@ -187,7 +187,7 @@ Die [Modellbeschreibung von Qwen](https://huggingface.co/Qwen/Qwen3.5-27B) verö
 
 [Unsloth nennt rund 17 GB Speicherbedarf für die 4-Bit-Ausführung](https://unsloth.ai/docs/models/qwen3.5). Damit ist die RTX 3090 ein plausibler Kandidat. Laufzeitumgebung und Kontext-Cache benötigen zusätzlich Speicher; das maximal beworbene Kontextfenster ist auf einer einzelnen 24-GB-Karte nicht selbstverständlich nutzbar. Geschwindigkeit und Tool-Zuverlässigkeit müsste ich selbst testen.
 
-Wirtschaftlich hängt viel davon ab, ob die Hardware bereits vorhanden ist. Ein hypothetischer Kauf für 600 US-Dollar würde bei vollständig eingesparten Abos von 30 US-Dollar monatlich erst nach 20 Monaten den Kaufpreis ausgleichen — noch ohne Strom, Einrichtung und Wartung. Bleibt ein Abo bestehen, dauert es länger.
+Wirtschaftlich hängt viel davon ab, ob die Hardware bereits vorhanden ist. Ein hypothetischer Kauf für 600 US-Dollar würde bei vollständig eingesparten Abos von 30 US-Dollar monatlich erst nach 20 Monaten den Kaufpreis ausgleichen – noch ohne Strom, Einrichtung und Wartung. Bleibt ein Abo bestehen, dauert es länger.
 
 Lokaler Betrieb kann wegen Datenschutz, Offline-Nutzung und Unabhängigkeit sinnvoll sein. Günstiger ist er nicht automatisch.
 
@@ -195,4 +195,4 @@ Lokaler Betrieb kann wegen Datenschutz, Offline-Nutzung und Unabhängigkeit sinn
 
 Z.ai löst für mich das Kapazitätsproblem von Claude Pro, ohne dass ich sofort einen grösseren Claude-Tarif brauche. Der manuelle Wechsel reicht aus; ein gemeinsamer Agent oder Proxy brachte mir keinen dauerhaften Vorteil.
 
-Die klarste Einsparung war die Kündigung von Cursor. Für meine verbleibenden 30 US-Dollar nutze ich jetzt beide Modellzugänge bewusst. Lokales Qwen bleibt ein Testkandidat — eine neue Grafikkarte kaufe ich dafür aber erst, wenn Qualität, Geschwindigkeit und Kostenrechnung stimmen.
+Die klarste Einsparung war die Kündigung von Cursor. Für meine verbleibenden 30 US-Dollar nutze ich jetzt beide Modellzugänge bewusst. Lokales Qwen bleibt ein Testkandidat – eine neue Grafikkarte kaufe ich dafür aber erst, wenn Qualität, Geschwindigkeit und Kostenrechnung stimmen.

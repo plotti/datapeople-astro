@@ -1,6 +1,6 @@
 ---
 title: "Why 'becoming data-driven' keeps falling short"
-description: "A message lands in the analyst's chat: “Can you pull the new FTS numbers?” It feels like a thirty-second favour. It isn't. Hidden inside that one sentence are half a dozen unasked questions: which metric, which season, which period, compared to what and — least asked of all — for what decision."
+description: "A message lands in the analyst's chat: “Can you pull the new FTS numbers?” It feels like a thirty-second favour. It isn't. Hidden inside that one sentence are half a dozen unasked questions: which metric, which season, which period, compared to what and – least asked of all – for what decision."
 pubDate: 2026-05-27
 readTime: 4
 category: "Data Strategy"

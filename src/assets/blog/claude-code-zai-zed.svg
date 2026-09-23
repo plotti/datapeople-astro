@@ -69,7 +69,7 @@
     <circle cx="822" cy="334" r="7" fill="#E5484D"/>
     <circle cx="846" cy="334" r="7" fill="#F5C044"/>
     <circle cx="870" cy="334" r="7" fill="#3DD68C"/>
-    <text x="1100" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" fill="#8FA3BF">main.rs — Zed</text>
+    <text x="1100" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" fill="#8FA3BF">main.rs – Zed</text>
 
     <text x="812" y="402" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" fill="#3B5378">1</text>
     <rect x="846" y="390" width="200" height="11" rx="5.5" fill="#5B7CAD"/>
