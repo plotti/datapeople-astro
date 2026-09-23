@@ -565,6 +565,43 @@ npx degit plotti/pulscheck-dashboards/.claude/skills/evidence-dashboard .claude/
 
 Danach in Claude Code `/evidence-dashboard` aufrufen – und die drei projektspezifischen Pfade in der `SKILL.md` auf Ihr Projekt anpassen (Kontextfiles, Datenbank, Build-Befehl). Ohne Anpassung fragt der Skill nach, statt zu raten.
 
+## Schritt 10: Der erste Erweiterungs-Zyklus – CalendarHeatmap und DimensionGrid
+
+Einen Tag nach dem Live-Gang kam die erste echte Erweiterungsanfrage. Nicht von einer Beratung, nicht aus einem Workshop – sondern beim Benutzen: Zwei Fragen liessen sich mit den bestehenden drei Dashboards nur umständlich beantworten. Erstens: Wie verteilt sich die Antwort-Aktivität übers Jahr? Zweitens: Warum muss man für "nur die XL-Pakete" ein Dropdown bedienen, statt direkt auf die Zahl zu klicken?
+
+Die Antwort sind zwei Evidence-Komponenten, die in der Komponenten-Whitelist aus Schritt 3 bemerkenswerterweise nicht vorkommen: `CalendarHeatmap` und `DimensionGrid`.
+
+**CalendarHeatmap** zeichnet jeden Tag als Kachel, im GitHub-Contribution-Graph-Stil. Auf der Survey-Engagement-Seite zeigt sie die abgeschlossenen Antworten pro Tag über zwölf Monate (89'850 Antworten, Spanne von 55 bis 2'437 pro Tag):
+
+![Calendar Heatmap im Survey-Engagement-Dashboard: Antworten pro Tag von Mai 2025 bis April 2026 als GitHub-Style-Kalender, Wochenenden und Kampagnen-Spitzen sichtbar](../../assets/blog/agentic-dashboards-calendar-heatmap.png)
+
+**DimensionGrid** ist der interessantere Fall: klickbare Kacheln pro Dimensionswert, die als Cross-Filter auf die darunterliegenden Sektionen wirken. Auf der Sprache-Sektion der gleichen Seite – de 16'843, fr 5'170, it 2'787, en 2'127 Antworten im April – genügt ein Klick auf `fr`, und Geografie sowie aktivste Befragungen grenzen sich ein. Dass die Antworten auf Französisch mehrheitlich aus Frankreich kommen (3'070 von 5'170), vor Frankreich die Schweiz (1'573) und Belgien (527), sieht man jetzt ohne einen einzigen Dropdown-Klick:
+
+![DimensionGrid auf der Survey-Engagement-Seite: Kachel fr ist angewählt, die Geografie darunter zeigt nur noch FR, CH und BE](../../assets/blog/agentic-dashboards-dimension-grid-language.png)
+
+Auf der Package-Sales-Seite das gleiche Muster mit der Paketgrösse: Klick auf XL, und der Umsatz-Trend zeigt nur noch die XL-Kurve – kombiniert mit dem weiterhin aktiven Länder-Filter von oben:
+
+![DimensionGrid auf der Package-Sales-Seite: XL angewählt, der monatliche Umsatz-Trend darunter zeigt nur noch die XL-Serie](../../assets/blog/agentic-dashboards-dimension-grid-packages-xl.png)
+
+**Der interessante Teil ist nicht die Komponente, sondern die Verifizierung.** In Schritt 7 war die Lektion gewesen: Claude erfindet nicht-existierende Komponenten. Die naive Konsequenz wäre: nie wieder eine Komponente anfassen, die nicht auf der Liste steht. Die richtige Konsequenz ist differenzierter: Komponenten nicht **erfinden** – aber eine Komponente **verwenden** und sie vorher **zu verifizieren** sind verschiedene Paar Schuhe. Bevor die beiden neuen Komponenten benutzt wurden, haben wir in der installierten Bibliothek nachgeschaut (`node_modules/@evidence-dev/core-components`, Version 5.4.2) und die Props aus dem Source gelesen statt aus der Legacy-Doku abgeschrieben. Dieselbe Philosophie wie bei `schema.sh` in Schritt 9: Docs können altern, die installierte Version nicht.
+
+Dabei fand sich ein Detail, das uns ein halbes Dutzend Build-Fehler gespart hätte: Das DimensionGrid verhält sich anders als ein Dropdown. Ein Dropdown liefert `${inputs.country.value}` – einen einzelnen Wert, den man selbst in ein `like` einbaut. Das DimensionGrid setzt `${inputs.lang}` dagegen direkt auf ein fertiges SQL-Fragment, etwa `( "sprache" in ('fr') )` oder – ohne Auswahl – `( true )`. Wer das API aus der Doku rät und `.value` anhängt, baut eine Query, die zur Build-Zeit durchläuft und zur Laufzeit leer bleibt. Steht so im Source, steht so nicht in der Legacy-Doku.
+
+Danach der übliche Kreis: Die Whitelist in `DASHBOARD_RULES.md` wurde erweitert (der Auszug oben in Schritt 3 zeigt bewusst den Stand des ersten Builds):
+
+```text
+- Heatmap, Histogram, CalendarHeatmap (Tageswerte über ein Jahr;
+  braucht date- und value-Spalte)
+- Dropdown, DropdownOption (für Filter)
+- DimensionGrid (klickbarer Cross-Filter über eine VARCHAR-Dimension;
+  setzt name als fertiges WHERE-Fragment, konsumiert via
+  where ${inputs.<name>} – nicht .value)
+```
+
+Damit generiert der Skill aus Schritt 9 dieselben Komponenten reproduzierbar nach. Der Erweiterungs-Zyklus von heute – Bedürfnis bemerkt, Komponente gegen die installierte Version verifiziert, gebaut, Konvention nachgeschrieben – ist genau die Schleife, die bei Tableau eine Beratungstranche gewesen wäre.
+
+Übrigens relativiert das die grösste Schwäche aus unserer ehrlichen Liste oben ("Statisches Output"): Sie ist real, aber kleiner geworden. Kuratiert heisst nicht starr – ein grosser Teil der Ad-hoc-Exploration lässt sich mit zwei, drei gut platzierten Cross-Filtern abdecken. Was darüber hinausgeht, bleibt beim nao-Agenten im Chat.
+
 ## Wann diese Lösung nicht die richtige ist
 
 Damit die These nicht ins "Vendor-Cheerleading" kippt: Diese Lösung passt natürlich nicht überall.
