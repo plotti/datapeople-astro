@@ -14,7 +14,7 @@ cover: "../../assets/blog/agentic-dashboards-hero.png"
 
 **Tools, die in diesem Beitrag verwendet werden:** [Evidence](https://github.com/evidence-dev/evidence) als Open-Source Dashboard-Framework (MIT-Lizenz), [Claude](https://claude.com) für die Code-Generierung, [DuckDB](https://duckdb.org/) als analytische Engine. Vergleichspunkte: Tableau, Looker, Microsoft Power BI.
 
-**Das Ergebnis dieser Fallstudie läuft live:** Die drei gebauten Dashboards können Sie direkt unter [pulscheck-dashboards.fly.dev](https://pulscheck-dashboards.fly.dev/) anschauen – inklusive der im Beitrag beschriebenen Konventionen und Zahlen.
+**Das Ergebnis dieser Fallstudie läuft live:** Die drei gebauten Dashboards können Sie direkt unter [pulscheck-dashboards.fly.dev](https://pulscheck-dashboards.fly.dev/) anschauen – inklusive der im Beitrag beschriebenen Konventionen und Zahlen. Den kompletten Code – Pages, Kontext-Files und den Claude Skill – finden Sie im [Begleit-Repo auf GitHub](https://github.com/plotti/pulscheck-dashboards).
 
 ## TL;DR
 
@@ -555,6 +555,14 @@ Erst wenn der Script sauber durchläuft, ist die Page fertig. Damit ist der Krei
 
 **Portabilität.** Projekt-spezifisch sind am Skill genau drei Dinge: die Kontextpfade, der Datenbankpfad in `schema.sh` und der Build-Befehl in `verify.sh`. Das Muster selbst – Conventions-File als Pflichtlektüre, Schema-Grounding gegen die echte Datenbank, Log-Verifizierung statt Exit-Code-Vertrauen – ist universal. `SKILL.md` kopieren, drei Punkte anpassen, fertig.
 
+**Selbst ausprobieren.** Der komplette Skill liegt im [Begleit-Repo](https://github.com/plotti/pulscheck-dashboards). Importieren genügt ein Befehl im Projektordner Ihrer Wahl:
+
+```bash
+npx degit plotti/pulscheck-dashboards/.claude/skills/evidence-dashboard .claude/skills/evidence-dashboard
+```
+
+Danach in Claude Code `/evidence-dashboard` aufrufen – und die drei projektspezifischen Pfade in der `SKILL.md` auf Ihr Projekt anpassen (Kontextfiles, Datenbank, Build-Befehl). Ohne Anpassung fragt der Skill nach, statt zu raten.
+
 ## Wann diese Lösung nicht die richtige ist
 
 Damit die These nicht ins "Vendor-Cheerleading" kippt: Diese Lösung passt natürlich nicht überall.
@@ -641,9 +649,11 @@ Der nächste sinnvolle Schritt ist einfach ein erstes Dashboard, gebaut nach die
 
 ## Quellen und weiterführende Ressourcen
 
-**Live-Dashboard dieser Fallstudie:**
+**Live-Dashboard und Code dieser Fallstudie:**
 
 - [pulscheck-dashboards.fly.dev](https://pulscheck-dashboards.fly.dev/) – die drei im Beitrag gebauten Dashboards, live
+
+- [github.com/plotti/pulscheck-dashboards](https://github.com/plotti/pulscheck-dashboards) – Begleit-Repo: Pages, Kontext-Files, Claude Skill, Fly.io-Setup
 
 **Open Source Evidence:**
 
