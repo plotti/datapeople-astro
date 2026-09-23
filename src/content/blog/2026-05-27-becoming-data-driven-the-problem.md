@@ -56,6 +56,6 @@ Pull on any of it and the same knot shows up. The failure is not bad maths. It i
 
 Frame it, and the rest becomes tractable. Leave it, and AI simply scales the noise.
 
-The [companion post](/blog/2026-06-10-becoming-data-driven-the-fix/) takes up what fixing it actually involves. The full argument, with sources, lives in the long-form article.
+The [companion post](/blog/2026-06-10-becoming-data-driven-the-fix/) takes up what fixing it actually involves. The full argument, with sources, lives in the [long-form article](/blog/2026-06-24-becoming-data-driven-two-way-relationship/).
 
 *Originally published at [thomassie.me/2026-05-27-becoming-data-driven-the-problem/](https://thomassie.me/2026-05-27-becoming-data-driven-the-problem/)*
