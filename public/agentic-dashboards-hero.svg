@@ -1,0 +1,285 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="ui-sans-serif, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Animation: Links klickt ein Cursor träge durch ein ausgegrautes BI-GUI, rechts tippt ein Terminal npm run build und ein Dashboard entsteht">
+  <!--
+    Agentic Dashboards – Hero «Klick vs. Code»
+    Reines CSS, kein JS. Loop 10s.
+    Konvention: Markup zeigt den ENDZUSTAND; die Animationen laufen vom
+    Startzustand dorthin. Bei prefers-reduced-motion bleibt der Endzustand stehen.
+  -->
+  <style>
+    /* ---------- Alle Loop-Animationen teilen sich 10s ---------- */
+    #typeCurtain, #caret1, #caret2, #check1, #check2, #chartCard, #mrrLine,
+    #bar1, #bar2, #bar3, #bar4, #kpi, #cursor, #ripple1, #ripple2,
+    #dropdown, #ghostChart, #resetFade {
+      animation-duration: 10s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease;
+    }
+
+    /* ---------- rechte Seite: Terminal ---------- */
+
+    /* Typewriter: Vorhang (Terminal-HG) zieht sich schrittweise rechts weg */
+    #typeCurtain {
+      transform-box: fill-box;
+      transform-origin: left;
+      animation-timing-function: steps(12, end);
+      animation-name: typeCurtain;
+    }
+    @keyframes typeCurtain {
+      0%, 5%    { transform: scaleX(1); }
+      25%, 100% { transform: scaleX(0); }
+    }
+
+    /* Caret am Zeilenanfang: nur vor dem Tippen (und nach dem Loop-Reset) */
+    #caret1 { animation-name: caret1; }
+    @keyframes caret1 {
+      0%, 4%   { opacity: 1; }
+      6%, 93%  { opacity: 0; }
+      96%, 100% { opacity: 1; }
+    }
+    /* Caret am Befehlsende: ab fertigem Befehl */
+    #caret2 { animation-name: caret2; }
+    @keyframes caret2 {
+      0%, 25%  { opacity: 0; }
+      27%, 92% { opacity: 1; }
+      95%, 100% { opacity: 0; }
+    }
+
+    #check1 { opacity: 0; animation-name: check1; }
+    #check2 { opacity: 0; animation-name: check2; }
+    @keyframes check1 { 0%, 24% { opacity: 0; } 27%, 92% { opacity: 1; } 95%, 100% { opacity: 0; } }
+    @keyframes check2 { 0%, 28% { opacity: 0; } 31%, 92% { opacity: 1; } 95%, 100% { opacity: 0; } }
+
+    /* Chart-Karte hebt sich an */
+    #chartCard { opacity: 0; animation-name: cardIn; }
+    @keyframes cardIn {
+      0%, 30% { opacity: 0; transform: translateY(14px); }
+      36%, 92% { opacity: 1; transform: translateY(0); }
+      95%, 100% { opacity: 0; }
+    }
+
+    /* MRR-Linie zeichnet sich (pathLength="1") */
+    #mrrLine { stroke-dasharray: 1; stroke-dashoffset: 0; animation-name: lineDraw; }
+    @keyframes lineDraw {
+      0%, 34% { stroke-dashoffset: 1; }
+      52%, 92% { stroke-dashoffset: 0; }
+      95%, 100% { stroke-dashoffset: 1; }
+    }
+
+    /* Balken wachsen gestaffelt von ihrer Basis */
+    #bar1, #bar2, #bar3, #bar4 {
+      transform-box: fill-box;
+      transform-origin: bottom;
+    }
+    #bar1 { animation-name: bar1; } #bar2 { animation-name: bar2; }
+    #bar3 { animation-name: bar3; } #bar4 { animation-name: bar4; }
+    @keyframes bar1 { 0%, 38% { transform: scaleY(0.04); } 46%, 92% { transform: scaleY(1); } 95%, 100% { transform: scaleY(0.04); } }
+    @keyframes bar2 { 0%, 41% { transform: scaleY(0.04); } 49%, 92% { transform: scaleY(1); } 95%, 100% { transform: scaleY(0.04); } }
+    @keyframes bar3 { 0%, 44% { transform: scaleY(0.04); } 52%, 92% { transform: scaleY(1); } 95%, 100% { transform: scaleY(0.04); } }
+    @keyframes bar4 { 0%, 47% { transform: scaleY(0.04); } 55%, 92% { transform: scaleY(1); } 95%, 100% { transform: scaleY(0.04); } }
+
+    /* KPI-Wert */
+    #kpi { animation-name: kpiIn; }
+    @keyframes kpiIn {
+      0%, 50% { opacity: 0; transform: translateY(6px); }
+      56%, 92% { opacity: 1; transform: translateY(0); }
+      95%, 100% { opacity: 0; }
+    }
+
+    /* ---------- linke Seite: GUI ---------- */
+
+    /* Cursor wandert träge: Menü → Dropdown → Ghost-Chart-Schleifen */
+    #cursor { animation-name: cursorPath; }
+    @keyframes cursorPath {
+      0%    { transform: translate(0px, 0px); }
+      12%   { transform: translate(0px, 0px); }
+      20%   { transform: translate(96px, 10px); }
+      30%   { transform: translate(96px, 10px); }
+      42%   { transform: translate(118px, 66px); }
+      50%   { transform: translate(118px, 66px); }
+      66%   { transform: translate(-70px, 122px); }
+      80%   { transform: translate(-44px, 136px); }
+      90%, 100% { transform: translate(-44px, 136px); }
+    }
+
+    #ripple1, #ripple2 { opacity: 0; }
+    #ripple1 { animation-name: ripple1; }
+    #ripple2 { animation-name: ripple2; }
+    @keyframes ripple1 { 0%, 28% { opacity: 0; } 31% { opacity: 0.9; } 38%, 100% { opacity: 0; } }
+    @keyframes ripple2 { 0%, 48% { opacity: 0; } 51% { opacity: 0.9; } 58%, 100% { opacity: 0; } }
+
+    /* Dropdown klappt nach Klick 1 auf */
+    #dropdown { animation-name: dropOpen; transform-box: fill-box; transform-origin: top; }
+    @keyframes dropOpen {
+      0%, 29% { opacity: 0; transform: scaleY(0.6); }
+      33%, 47% { opacity: 1; transform: scaleY(1); }
+      52%, 100% { opacity: 0; transform: scaleY(0.9); }
+    }
+
+    /* Spinner: eigener schneller Dreh, Sichtbarkeit im 10s-Loop */
+    #spinner {
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: spinWait 10s ease infinite, spinnerRot 1.3s linear infinite;
+    }
+    @keyframes spinWait { 0%, 49% { opacity: 0; } 53%, 90% { opacity: 1; } 93%, 100% { opacity: 0; } }
+    @keyframes spinnerRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Ghost-Chart bleibt nach dem Drag schief liegen */
+    #ghostChart { animation-name: ghostDrag; }
+    @keyframes ghostDrag {
+      0%, 64% { transform: translate(0, 0); }
+      82%, 92% { transform: translate(14px, 10px) rotate(0.6deg); }
+      95%, 100% { transform: translate(0, 0); }
+    }
+
+    /* Sanfter Reset zum Loop-Ende */
+    #resetFade { opacity: 0; animation-name: resetFade; pointer-events: none; }
+    @keyframes resetFade {
+      0%, 92% { opacity: 0; }
+      99%, 100% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* Standbild vom Endzustand: fertig gebaut */
+      * { animation: none !important; }
+      #typeCurtain, #caret1, #caret2, #ripple1, #ripple2,
+      #dropdown, #spinner, #cursor, #resetFade { display: none; }
+      #check1, #check2, #chartCard, #kpi { opacity: 1; }
+      #mrrLine { stroke-dashoffset: 0; }
+      #bar1, #bar2, #bar3, #bar4 { transform: none; }
+    }
+  </style>
+
+  <!-- ================= Hintergrund ================= -->
+  <rect width="1200" height="630" fill="#fbf6f0"/>
+
+  <!-- ================= vs. ================= -->
+  <text x="600" y="308" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="42" fill="#6e6760">vs.</text>
+
+  <!-- ================= LINKS: das GUI ================= -->
+  <g>
+    <rect x="60" y="78" width="480" height="430" rx="14" fill="#f1e9de" stroke="#ddd2c3" stroke-width="1.5"/>
+    <rect x="60" y="78" width="480" height="38" rx="14" fill="#e6dccd"/>
+    <rect x="60" y="100" width="480" height="16" fill="#e6dccd"/>
+    <circle cx="84" cy="97" r="5" fill="#cfc4b3"/>
+    <circle cx="102" cy="97" r="5" fill="#cfc4b3"/>
+    <circle cx="120" cy="97" r="5" fill="#cfc4b3"/>
+    <text x="300" y="102" text-anchor="middle" font-size="12.5" fill="#8a8177">Q4_Report_final_v3.twbx</text>
+
+    <!-- Menüleiste -->
+    <g font-size="13" fill="#8a8177">
+      <text x="84" y="142">Datei</text>
+      <text x="138" y="142">Bearbeiten</text>
+      <text x="222" y="142">Daten ▾</text>
+      <text x="300" y="142">Analyse</text>
+    </g>
+    <line x1="72" y1="156" x2="528" y2="156" stroke="#ddd2c3" stroke-width="1"/>
+
+    <!-- Skeleton-Toolbar -->
+    <g fill="#e3d8c8">
+      <rect x="84" y="172" width="90" height="20" rx="5"/>
+      <rect x="184" y="172" width="60" height="20" rx="5"/>
+      <rect x="254" y="172" width="74" height="20" rx="5"/>
+    </g>
+
+    <!-- Ghost-Chart (flat, grau) -->
+    <g id="ghostChart">
+      <rect x="84" y="212" width="432" height="220" rx="10" fill="#ede4d6" stroke="#ddd2c3"/>
+      <line x1="112" y1="236" x2="112" y2="404" stroke="#d5c9b8" stroke-width="1.5"/>
+      <line x1="112" y1="404" x2="488" y2="404" stroke="#d5c9b8" stroke-width="1.5"/>
+      <polyline points="128,362 176,358 224,364 272,356 320,360 368,354 416,359 464,356"
+                fill="none" stroke="#b9ad9b" stroke-width="2.5" stroke-linecap="round"/>
+      <g fill="#c6baa8">
+        <rect x="128" y="330" width="34" height="74" rx="3"/>
+        <rect x="196" y="326" width="34" height="78" rx="3"/>
+        <rect x="264" y="333" width="34" height="71" rx="3"/>
+        <rect x="332" y="328" width="34" height="76" rx="3"/>
+      </g>
+    </g>
+
+    <!-- Dropdown nach Klick 1 -->
+    <g id="dropdown">
+      <rect x="216" y="152" width="150" height="72" rx="8" fill="#faf4ea" stroke="#cfc4b3"/>
+      <text x="230" y="174" font-size="12.5" fill="#8a8177">Datenquelle…</text>
+      <text x="230" y="194" font-size="12.5" fill="#8a8177">Blatt duplizieren</text>
+      <text x="230" y="214" font-size="12.5" fill="#8a8177">Berechnetes Feld…</text>
+    </g>
+
+    <!-- Spinner (wartet…) -->
+    <g id="spinner">
+      <circle cx="480" cy="236" r="11" fill="none" stroke="#b9ad9b" stroke-width="3"
+              stroke-dasharray="46 24" stroke-linecap="round"/>
+    </g>
+
+    <!-- Klick-Ripples -->
+    <circle id="ripple1" cx="243" cy="137" r="12" fill="none" stroke="#b9ad9b" stroke-width="2"/>
+    <circle id="ripple2" cx="264" cy="196" r="12" fill="none" stroke="#b9ad9b" stroke-width="2"/>
+
+    <!-- Cursor -->
+    <g id="cursor">
+      <path d="M 252 128 l 0 26 l 7 -6 l 5 11 l 6 -3 l -5 -11 l 9 -1 z"
+            fill="#262321" stroke="#fbf6f0" stroke-width="1.5"/>
+    </g>
+
+    <!-- Caption -->
+    <text x="300" y="548" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="16.5" fill="#8a8177">klicken · warten · beraten lassen</text>
+  </g>
+
+  <!-- ================= RECHTS: das Terminal ================= -->
+  <g>
+    <rect x="660" y="78" width="480" height="430" rx="14" fill="#262321"/>
+    <rect x="660" y="78" width="480" height="38" rx="14" fill="#1d1b19"/>
+    <rect x="660" y="100" width="480" height="16" fill="#1d1b19"/>
+    <circle cx="684" cy="97" r="5" fill="#4a4744"/>
+    <circle cx="702" cy="97" r="5" fill="#4a4744"/>
+    <circle cx="720" cy="97" r="5" fill="#4a4744"/>
+    <text x="900" y="102" text-anchor="middle" font-size="12.5" fill="#9a938b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">pulscheck-dashboards — zsh</text>
+
+    <!-- Prompt + getippter Befehl (Endzustand: sichtbar, Vorhang im Weg beim Loop-Start) -->
+    <text x="688" y="152" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15.5" fill="#b25438">$</text>
+    <text x="706" y="152" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15.5" fill="#f1e9de">npm run build</text>
+    <rect id="typeCurtain" x="704" y="138" width="150" height="20" fill="#262321"/>
+    <rect id="caret1" x="706" y="140" width="8" height="16" fill="#f1e9de"/>
+    <rect id="caret2" x="854" y="140" width="8" height="16" fill="#f1e9de"/>
+
+    <!-- Checkmarks -->
+    <g id="check1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14.5">
+      <text x="688" y="184" fill="#7fb069">✓</text>
+      <text x="710" y="184" fill="#9a938b">sources</text>
+    </g>
+    <g id="check2" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14.5">
+      <text x="688" y="210" fill="#7fb069">✓</text>
+      <text x="710" y="210" fill="#9a938b">build — 12 pages</text>
+    </g>
+
+    <!-- Chart-Karte im Terminal -->
+    <g id="chartCard">
+      <rect x="688" y="232" width="424" height="238" rx="10" fill="#2e2a27"/>
+      <text id="kpi" x="712" y="266" font-size="15" fill="#9a938b" letter-spacing="0.5">MRR ENDE APRIL <tspan fill="#f1e9de" font-weight="700" font-size="19">57'331 CHF</tspan></text>
+
+      <!-- MRR-Linie -->
+      <polyline id="mrrLine" pathLength="1"
+                points="712,404 764,392 816,396 868,378 920,368 972,352 1024,344 1088,318"
+                fill="none" stroke="#4f8bff" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="1088" cy="318" r="4.5" fill="#4f8bff"/>
+
+      <!-- Sparkbars (Basisebene y=440) -->
+      <g fill="#2f6fe4">
+        <rect id="bar1" x="712" y="376" width="30" height="64" rx="3"/>
+        <rect id="bar2" x="758" y="362" width="30" height="78" rx="3"/>
+        <rect id="bar3" x="804" y="388" width="30" height="52" rx="3"/>
+        <rect id="bar4" x="850" y="352" width="30" height="88" rx="3"/>
+      </g>
+
+      <!-- Fusszeile -->
+      <text x="712" y="460" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#6e6760">subscription_health.md · built in 3.2s</text>
+    </g>
+
+    <!-- Caption -->
+    <text x="900" y="548" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="16.5" fill="#262321">beschreiben · bauen · fertig</text>
+  </g>
+
+  <!-- Reset-Overlay (blendet zum Loop-Ende sanft auf Creme) -->
+  <rect id="resetFade" width="1200" height="630" fill="#fbf6f0"/>
+</svg>

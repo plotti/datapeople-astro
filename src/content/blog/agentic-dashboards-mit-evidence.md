@@ -5,7 +5,7 @@ pubDate: 2026-09-22
 readTime: 28
 category: "AI Integration"
 tags: ["Agentic BI", "Evidence", "Dashboards", "LLM"]
-cover: "../../assets/blog/agentic-dashboards-subscription-health.png"
+cover: "../../assets/blog/agentic-dashboards-hero.png"
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 28 Minuten
@@ -27,6 +27,8 @@ Es gibt ein wiederkehrendes Muster in Schweizer KMU-Datenprojekten: Eine Geschä
 Das ist nicht zwingend so. Theoretisch können diese Dashboards auch intern entwickelt und gepflegt werden – das ist sogar oft die saubere Lösung. In der Praxis ist die interne Velocity bei klassischen BI-Tools allerdings einfach zu langsam: Eine Anpassung, die in der Sitzung beschlossen wurde, dauert zwei Wochen statt zwei Stunden, weil der eine Tableau-versierte Mensch im Team gerade an drei anderen Themen sitzt. So entstehen die Beratungs-Eskalationen, nicht weil das Inhouse-Modell falsch wäre, sondern weil das Tooling es ausbremst.
 
 **Das Klick-Problem.** Tableau, Power BI und Looker haben hochkomplexe GUIs, die Spezialwissen erfordern. Es gibt Tableau-Berater:innen mit Tagessätzen zwischen CHF 1'500 und 2'500, die genau dieses Klick-Wissen verkaufen. Nichts gegen das Geschäftsmodell – aber für ein KMU mit fünf bis fünfzehn Reports ist das ein steiles Preisschild für ein Bedienproblem.
+
+<img src="/agentic-dashboards-hero.svg" alt="Animation: Links klickt ein Cursor träge durch ein ausgegrautes BI-GUI (klicken, warten, beraten lassen), rechts tippt ein Terminal npm run build und ein Dashboard mit MRR-Kennzahl entsteht (beschreiben, bauen, fertig)" style="width:100%;height:auto;border-radius:12px;" />
 
 Der grössere Folgeschaden liegt auf der Recruiting-Seite. Wer Analyst:innen sucht, weil „wir Power BI machen" oder „wir sind ein Tableau-Shop", optimiert auf das falsche Profil. Was Schweizer KMU brauchen, sind Menschen, die geschäftlich denken, sauber SQL schreiben, Datenmodelle verstehen und mit dem jeweils geeignetsten Werkzeug arbeiten. Toolagnostisch, nicht plattformreligiös. Wer Stellen ausschreibt, die ein bestimmtes BI-Tool zur Voraussetzung machen, schliesst genau die Talente aus, die in zwei Jahren mit dem nächsten Werkzeug genauso produktiv wären – und holt sich stattdessen Spezialwissen, das mit dem Tool wieder veraltet.
 
