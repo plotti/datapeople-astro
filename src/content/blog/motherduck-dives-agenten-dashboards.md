@@ -1,6 +1,6 @@
 ---
 title: "Agenten-Dashboards mit MotherDuck Dives: React + SQL statt BI-GUI"
-description: "Mein Evidence-Setup hat eine ehrliche Schwäche: Die Zahlen sind so alt wie der letzte Build. MotherDuck Dives drehen das Prinzip um – die Queries laufen beim Öffnen live gegen die Datenbank, die Facettierung danach im Browser. Dieser Beitrag erklärt den Unterschied zwischen Build-Zeit und Lauf-Zeit am konkreten Beispiel, rechnet die Kosten durch (Spoiler: ein Abo braucht es, aber kein Per-Seat-Modell) und zeigt einen eigenbau Dive, der dieselben Zahlen liefert wie meine Evidence-Version."
+description: "Mein Evidence-Setup hat eine ehrliche Schwäche: Die Zahlen sind so alt wie der letzte Build. MotherDuck Dives drehen das Prinzip um – die Queries laufen beim Öffnen live gegen die Datenbank, die Facettierung danach im Browser. Dieser Beitrag erklärt den Unterschied zwischen Build-Zeit und Lauf-Zeit, rechnet die Kosten durch und zeigt einen live deployten Eigenbau-Dive mit echtem MotherDuck-Backend – 300 Zeilen React + SQL, kein BI-Tool."
 pubDate: 2026-09-24
 readTime: 14
 category: "AI Integration"
@@ -12,52 +12,46 @@ cover: "../../assets/blog/motherduck-dives-cover.png"
 
 ## TL;DR
 
-In meinem [letzten Beitrag](/blog/agentic-dashboards-mit-evidence/) habe ich gezeigt, wie Sie mit Evidence, DuckDB und Claude Dashboards als Code bauen – open source, Hosting nahe null, versioniert wie Software. Und ich habe dort eine Schwäche eingeräumt, die ich heute zum Hauptthema mache: **Ein Evidence-Dashboard ist so aktuell wie sein letzter Build.** Dazwischen ist es ein Foto.
+In meinem [letzten Beitrag](/blog/agentic-dashboards-mit-evidence/) habe ich gezeigt, wie Sie mit Evidence, DuckDB und Claude Dashboards als Code bauen – open source, mit Hosting Kosten die nahe null sind und versioniert wie Software. Und ich habe dort eine Schwäche eingeräumt, die ich heute zum Hauptthema mache: **Ein Evidence-Dashboard ist eben leider nur so aktuell wie sein letzter Deploy.** Es ist statisch, und wird nicht aktualisiert.
 
-Genau hier setzen [MotherDuck Dives](https://motherduck.com/product/dives/) an: Dashboards, deren Queries beim Öffnen **live** gegen die Datenbank laufen und deren Facettierung dann im Browser des Anwenders in Millisekunden rechnet. Ich habe das Prinzip selbst nachgebaut und mit meiner Evidence-Version gegen denselben Datensatz laufen lassen – identische Zahlen, 15 Millisekunden Abfragezeit. Dieser Beitrag erklärt den Architektur-Unterschied ohne Marketing-Ton, rechnet durch, was Dives kosten (ja, ein Abo braucht es – aber kein Per-Seat-Modell), und sagt ehrlich, wann ich welches Werkzeug einsetzen würde.
+Genau hier setzen [MotherDuck Dives](https://motherduck.com/product/dives/) an: Dives sind auch in Code geschreibene Dashboards, deren Queries beim Öffnen **live** gegen die Datenbank laufen und deren Facettierung dann im Browser des Anwenders in Millisekunden rechnet. Dieser Beitrag erklärt den Architektur-Unterschied zwischen den beiden Dashboard und rechnet durch, was Dives kosten (ja, ein Abo braucht es – aber kein Per-Seat-Modell), und sagt ehrlich, wann ich welches Werkzeug einsetzen würde.
 
 ## Die eine Schwäche, die mein Evidence-Setup hat
 
-Zur Erinnerung, wie das Evidence-Setup aus dem letzten Beitrag funktioniert: Ein Dashboard ist eine Markdown-Datei mit SQL-Blöcken. Beim `npm run build` läuft jede Query **einmalig** gegen die Datenquelle, die Resultate landen als Parquet-Dateien in der statischen Site, und der Browser zeigt diese vorkompilierten Daten an. Die [Deployment-Doku von Evidence](https://docs.evidence.dev/deployment/overview) sagt es unausweichlich: Daten werden aktuell, indem Sie **neu bauen**. Der Evidence-Mitgründer formuliert es auf Hacker News noch knapper: Queries laufen zur Build-Zeit und werden als Parquet gespeichert – Evidence ist ein Static-Site-Generator.
+Zur Erinnerung, wie das Evidence-Setup aus dem letzten Beitrag funktioniert: Ein Dashboard ist eine Markdown-Datei mit SQL-Blöcken. Beim `npm run build` läuft jede Query **einmalig** gegen die Datenquelle, die Resultate landen als Parquet-Dateien in der statischen Site, und der Browser zeigt diese vorkompilierten Daten an. Die [Deployment-Doku von Evidence](https://docs.evidence.dev/deployment/overview) sagt es auch ganz direkt: Die Daten werden nur dann aktuell, wenn man sie **neu baut**. Evidence ist im Grunde ein Static-Site-Generator. Das hat natürlich auch manchmal Vorteile: In der Vorstandssitzung will niemand die Zahl, die sich zwischen Folie 3 und Folie 7 ändert. Und mit Build-Crons (nightly, wöchentlich) ist der Datenstand praktisch gut genug.
 
-In meiner PulsCheck-Fallstudie war das eine bewusste Entscheidung: Die Seed-Daten enden am 30. April 2026, fixe Stichtage machen die Dashboards **reproduzierbar** – in der Vorstandssitzung will niemand die Zahl, die sich zwischen Folie 3 und Folie 7 ändert. Und mit Build-Crons (nightly, wöchentlich) ist der Datenstand praktisch gut genug.
+Aber es hat eban auch Nachteile:
 
-Aber ehrlich bleibt ehrlich: Das Dashboard ist ein Foto. Schön belichtet, sauber gerahmt – aber ein Foto. Drei Dinge kann ein Foto nicht:
-
-- **Alt sein vermeiden.** Zwischen Build und Öffnen liegen Stunden bis Tage. Wer um 16:47 wissen will, was heute Morgen verkauft wurde, schaut in die Röhre.
-- **Frei drillen.** Die Filter, die ich eingebaut habe, funktionieren – aber sie rechnen nur auf der eingefrorenen Datenmenge umher. Eine neue Schnitt-Dimension (etwa «Umsatz nach Kanton statt Land») ist ein Code-Change plus Build, kein Klick.
-- **Wachsen mit der Frage.** Jede neue Frage der Geschäftsleitung landet erst im Chat-Verlauf (bei uns: der [nao-Agent](/blog/agentic-bi-für-kmu-in-der-praxis_-ein-schweizer-saas-fall-mit-nao/)) und wird erst beim nächsten Build zum Dashboard.
-
-Wie gesagt: Reproduzierbar ist auch eine Tugend. Aber wenn ich ehrlich bin, habe ich beim Bau der Evidence-Dashboards immer wieder den Moment vermisst, in dem das Dashboard **mitgeht**, wenn man eine Frage stellen will, die man beim Build noch nicht kannte.
+- **Alt sein vermeiden.** Zwischen Build und Öffnen liegen Stunden bis Tage. Wer um 16:47 wissen will, was heute Morgen verkauft wurde, schaut dann in die Röhre.
+- **Frei drillen.** Die Filter, die ich eingebaut habe, funktionieren – aber sie rechnen nur auf der eingefrorenen Datenmenge umher. Eine neue Schnitt-Dimension (etwa «Umsatz nach Kanton statt Land») ist ein dann eben Code-Change plus Build und kein Klick. Das kann als nervig empfunden werden.
+- **Wachsen mit der Frage.** Jede neue Frage der Geschäftsleitung landet erst im Chat-Verlauf (z.B. beim [nao-Agent](/blog/agentic-bi-für-kmu-in-der-praxis_-ein-schweizer-saas-fall-mit-nao/)) und wird erst beim nächsten Build zum Dashboard. 
 
 ## Was Dives anders machen: Build-Zeit vs. Lauf-Zeit
 
-Und genau das ist der Unterschied, der wirklich zählt – nicht Charts, nicht Styling, nicht die Agent-Geschichte. Die Architektur:
+Die Architektur unterscheidet sich also bei beiden Dashboards:
 
-**Evidence (Build-Zeit):** Query läuft beim Build. Resultat wird eingefroren. Jeder Seitenaufruf zeigt dasselbe eingefrorene Resultat. Die Daten sind so frisch wie der letzte Deploy.
+**Evidence (Build-Zeit):** Hier läuft die Query Build, das Resultat wird dann eingefroren. Jeder Seitenaufruf zeigt dann dasselbe eingefrorene Resultat. Die Daten sind dann eben so frisch wie der letzte Deploy.
 
-**Dive (Lauf-Zeit):** Beim Öffnen des Dives laufen die Queries **live** auf dem MotherDuck-Compute gegen den aktuellen Stand des Warehouse. Die Resultate werden in eine DuckDB-Instanz im Browser gestreamt – DuckDB als WebAssembly, dieselbe Engine, die wir lokal lieben, nur eben in der Browser-Sandbox. Und jetzt der entscheidende Trick: **Die Facettierung läuft danach lokal.** Zeitfenster wechseln, Land filtern, in einen Bereich hineinzoomen – alles rechnet gegen den frisch geladenen Datensatz im eigenen Browser, in einstelligen Millisekunden, ohne einen einzigen Roundtrip zur Datenbank.
+**Dive (Lauf-Zeit):** Beim Öffnen des Dives laufen die Queries **live** auf dem MotherDuck-Compute gegen den aktuellen Stand des Warehouse. Die Resultate werden in eine DuckDB-Instanz im Browser gestreamt – DuckDB als WebAssembly, dieselbe Engine, die wir lokal lieben, nur eben in der Browser-Sandbox. **Die Facettierung läuft danach lokal.** d.h. das Zeitfenster wechseln, Land filtern, in einen Bereich hineinzoomen – alles rechnet gegen den frisch geladenen Datensatz im eigenen Browser, in einstelligen Millisekunden, ohne einen einzigen Roundtrip zur Datenbank. Das ist schon recht cool.
 
-Das Ergebnis dieser Zweiteilung ist bemerkenswert: Das Dashboard ist beim Öffnen **nie stale** (Datenabruf live), aber die Interaktion kostet **trotzdem kein Warehouse-Compute pro Klick** (Facettierung lokal). MotherDuck nennt das [Dual Execution](https://motherduck.com/product/dives/), und in meinen eigenen Tests mit rund 200'000 Zeilen bleibt ein kompletter Filter-Durchlauf unter 20 Millisekunden – dazu unten mehr. Praktisch bedeutet es auch: Neue Schnitt-Dimensionen sind kein Rebuild, sondern ein Klick. Wer tiefer drillen will, als ich beim Bauen geplant habe, kann das einfach tun.
-
-Nun die Gegenrechnung, denn Live hat einen Preis, und der ist nicht nur der Abo-Betrag:
+Das Ergebnis dieser Zweiteilung ist bemerkenswert: Das Dashboard ist beim Öffnen **nie stale** (Datenabruf live), aber die Interaktion kostet **trotzdem kein Warehouse-Compute pro Klick** (Facettierung lokal). MotherDuck nennt das [Dual Execution](https://motherduck.com/product/dives/), und in meinen eigenen Tests mit rund 200'000 Zeilen bleibt ein kompletter Filter-Durchlauf unter 20 Millisekunden – dazu unten mehr. Das alles hat auch einen Preis, und der ist nicht nur der Abo-Betrag:
 
 - **Compute bei jedem Öffnen.** Ein statisches Evidence-Dashboard kostet pro View exakt nichts. Ein Dive verbraucht Warehouse-Compute, sobald jemand es öffnet. Im Gratis-Plan sind das 10 Compute-Stunden pro Monat – für ein internes Dashboard reicht das, für 500 Kunden-Embeddings natürlich nicht (dazu gleich).
 - **Die Zahlen verändern sich unter Ihren Füssen.** Der Vorstand sieht 09:00 einen Wert, um 11:00 einen anderen. Reproduzierbarkeit muss man sich bei Live-Daten anders sichern – etwa mit fixen Stichtagen *in* den Queries.
-- **Daten liegen in der Cloud.** Ein Dive zeigt nur, was im MotherDuck-Warehouse liegt. Wer On-Prem-Pflicht hat, für den ist die Diskussion hier zu Ende – Evidence auf eigener Infrastruktur bleibt die Antwort.
+- **Daten liegen in der Cloud.** Ein Dive zeigt nur, was im MotherDuck-Warehouse liegt. Wer On-Prem-Pflicht hat, für den ist die Diskussion hier zu Ende – Evidence auf eigener Infrastruktur ist dann wieder attraktiv.
 
-Und weil es fair ist: Auch Evidence selbst hat die Konvergenz Richtung Live längst vollzogen. Auf der [Homepage](https://evidence.dev) verkauft die Firma inzwischen einen Analytics Agent (live im Chat, per Slack und MCP) und eine Embedded-Analytics-API – live queryt auch dort. Der Unterschied ist feiner geworden: Evidence setzt Live **neben** das statische Dashboard (Agent und API), MotherDuck setzt Live **in** das Dashboard selbst. Das Foto wird in beiden Häusern zum Video – sie packen es nur in verschiedene Rahmen.
+Auch Evidence selbst hat die Konvergenz Richtung Live längst vollzogen. Auf der [Homepage](https://evidence.dev) verkauft die Firma inzwischen einen Analytics Agent (live im Chat, per Slack und MCP) und eine Embedded-Analytics-API.
 
 ## Was ein Dive überhaupt ist
 
-Kurz zum Produkt selbst, weil die Bedeutung im Hype untergeht: Ein Dive ist eine interaktive Data App, bestehend aus – halten Sie sich fest – **React und SQL**. Kein proprietäres JSON-Chart-Format wie bei klassischem BI, sondern ein React-File mit eingebetteten, auditierbaren SQL-Queries. Versionierbar in Git, reviewbar per Pull Request, deploybar mit CI. Das ist exakt die «BI-as-Code»-Philosophie aus meinem Evidence-Beitrag, nur mit mehr Interaktivität unter der Haube.
+Kurz zum Produkt selbst, weil die Bedeutung im Hype untergeht: Ein Dive ist eine interaktive Data App, bestehend aus **React und SQL**. Kein proprietäres JSON-Chart-Format wie bei klassischem BI, sondern ein React-File mit eingebetteten, auditierbaren SQL-Queries. Versionierbar in Git, reviewbar per Pull Request, deploybar mit CI. Das ist exakt die «BI-as-Code»-Philosophie aus meinem Evidence-Beitrag, nur mit mehr Interaktivität unter der Haube.
 
 Der Bauablauf ist agentenbasiert: Über den MotherDuck MCP Server sagt man dem Agenten der Wahl (Claude Code, ChatGPT, Cursor), was man sehen will, iteriert in natürlicher Sprache («Ersetze die Pie-Charts durch Sparklines») und publiziert den Dive in den Workspace. Wichtig für Skeptiker: Der Agent generiert den Code **einmalig** – was dann läuft, ist deterministische Web-App-Software mit nachvollziehbaren Queries, kein LLM, das bei jedem Seitenaufruf neu fantasiiert. Die Charts laufen standardmässig auf Recharts, D3 ist inklusive, und Libraries werden ins Sandbox-Bundle gepackt statt live aus dem Internet nachgeladen – verständlich, wenn die App mit einer Warehouse-Verbindung im Browser hantiert.
 
 Zwei Einordnungspunkte noch:
 
-- **Embedding ist der eigentliche Hebel.** Dives lassen sich als gesandboxtes iframe in die eigene App einbetten. Das eigene Backend hält den Admin-Token und stellt pro Session einen kurzlebigen Token aus – danach redet der Browser direkt mit MotherDuck, ohne Middleware-Server dazwischen. Kein eigenes Charting-Frontend, das man pflegt, und (siehe unten) keine Per-Viewer-Lizenz.
-- **Die Grenzen sind auch React.** In der [Dive Gallery](https://motherduck.com/dive-gallery/) finden Sie Beispiele, die kein Click-and-Drag-BI-Tool abbilden würde: ein Pivot-Explorer mit einem im Dive generierten Semantic Model in Malloy, oder ein interaktiver Globus, über den man Erdbeben zeitlich scrubt und Regionen cross-filtert. Das schöne daran: keine Werkzeug-Grenze, nur eine Aufwandsgrenze. Das weniger schöne: Der Aufwand, ein eigenes React-App-Design zu pflegen, ist eben auch nicht null – wobei sich der Agent darum kümmern soll, nicht Sie.
+- **Embedding.** Dives lassen sich als gesandboxtes iframe in die eigene App einbetten. Das eigene Backend hält den Admin-Token und stellt pro Session einen kurzlebigen Token aus – danach redet der Browser direkt mit MotherDuck, ohne Middleware-Server dazwischen. Kein eigenes Charting-Frontend, das man pflegt, und (siehe unten) keine Per-Viewer-Lizenz.
+- **React.** In der [Dive Gallery](https://motherduck.com/dive-gallery/) finden Sie Beispiele, die kein Click-and-Drag-BI-Tool abbilden würde: ein Pivot-Explorer mit einem im Dive generierten Semantic Model in Malloy, oder ein interaktiver Globus, über den man Erdbeben zeitlich scrubt und Regionen cross-filtert. Das schöne daran: Es gibt keine Werkzeug-Grenze, eher nur eine Aufwandsgrenze. Das weniger schöne: Der Aufwand, ein eigenes React-App-Design zu pflegen, ist eben auch nicht null – wobei sich der Agent darum kümmern soll, nicht Sie. 
 
 ## Was es kostet: ja, ein Abo braucht es – aber kein Per-Seat-Modell
 
@@ -69,15 +63,11 @@ Dives sind kein Open Source. Das Feature hängt an MotherDucks Infrastruktur (se
 | **Business** | **ab USD 250/Org./Monat + Usage** | 10 interne User, Storage 0.04 USD/GB, Compute ab 0.60 USD/Stunde. **Embedded Dives** (für Ihre eigene App) laufen ab hier bzw. Enterprise. |
 | **Enterprise** | individuell | Unbeschränkte User, PrivateLink, Fixpreis-Kapazität. |
 
-Das Wichtigste ist das Modell, nicht die Zahl: **keine Per-Seat-Lizenzen.** Klassisches Embedded-BI rechnet pro Viewer – wenn Ihre App wächst oder Sie viele Kleinkunden haben, explodiert die Rechnung. Bei MotherDuck zahlen Sie Compute und Storage, und der Browser des Anwenders erledigt die Interaktion auf eigener Hardware, gratis. MotherDuck berichtet von einem Kunden, der einen eingebetteten Proof-of-Concept in 20 Minuten gebaut hat – derselbe PoC in einem klassischen Click-and-Drag-Embedded-BI-Tool hätte über 10 Stunden eingeplant.
-
-Für den Einstieg reicht die Gratis-Testphase (ohne Kreditkarte), Startups kriegen über [motherduck.com/startups](https://motherduck.com/startups/) Credits. Und für alle, die Dives für mehrere Kunden bauen: pro Kunde einen eigenen MotherDuck-User mit gleich benannter Database – serverseitig wird pro User isoliert gerechnet, und da die Plattform serverless ist, kostet ein stiller Kunden-Account nichts.
+Das Wichtigste ist im Modell dass es **keine Per-Seat-Lizenzen.** hat. Klassisches Embedded-BI rechnet pro Viewer ab d.h. wenn Ihre App wächst oder Sie viele Kleinkunden haben, explodiert die Rechnung. Bei MotherDuck zahlen Sie Compute und Storage, und der Browser des Anwenders erledigt die Interaktion auf eigener Hardware, gratis. Für den Einstieg reicht die Gratis-Testphase (ohne Kreditkarte), Startups kriegen [motherduck.com/startups](https://motherduck.com/startups/) gratis Credits. Und für alle, die Dives für mehrere Kunden bauen: pro Kunde einen eigenen MotherDuck-User mit gleich benannter Database – serverseitig wird pro User isoliert gerechnet, und da die Plattform serverless ist, kostet ein stiller Kunden-Account nichts.
 
 ## Selbst ausprobieren: ein Dive im Eigenbau
 
-Theorie ist schön – aber funktioniert das auch? Ich wollte es wissen und habe das Dive-Prinzip lokal nachgebaut: dieselben PulsCheck-Demodaten wie im Evidence-Beitrag (rund 207'000 Zeilen über 6 Tabellen), diesmal als React-App mit DuckDB-WASM im Browser. Die Architektur entspricht dem Dual-Execution-Muster, nur ohne MotherDuck-Server: Die 6 Tabellen werden als Parquet exportiert (rund 10 MB), einmal in den Browser geladen und als Views unter den gewohnten Namen registriert – danach läuft jedes SQL lokal.
-
-Das Herzstück ist eine einzige Datei mit sämtlichen Queries – auditierbar, versionierbar, exakt die Dive-Philosophie:
+Theorie ist schön, aber funktioniert das auch? Ich wollte es wissen und habe das Dive-Prinzip lokal nachgebaut: dieselben PulsCheck-Demodaten wie im Evidence-Beitrag (rund 200'000 Zeilen über 5 Tabellen), diesmal als React-App mit DuckDB-WASM im Browser. Das Herzstück ist eine einzige Datei mit sämtlichen Queries – auditierbar, versionierbar, exakt die Dive-Philosophie:
 
 ```sql
 -- src/queries.js (Auszug): KPIs im gewählten Zeitfenster
@@ -91,13 +81,19 @@ select
   ...
 ```
 
-Das UI: Zeitfenster-Umschalter (7/30/90/365 Tage), Länder-Filter, fünf KPI-Kacheln, Zeitreihen-Charts (Recharts, wie bei Dives üblich), klickbare Paketgrössen-Chips als Cross-Filter, Geo- und Top-Kunden-Sichten. Und das grüne Badge oben rechts, das ich aus reiner Eitelkeit eingebaut habe, weil es den ganzen Punkt beweist:
+Das UI: Zeitfenster-Umschalter (7/30/90/365 Tage), Länder-Filter, fünf KPI-Kacheln, Zeitreihen-Charts (Recharts, wie bei Dives üblich), klickbare Paketgrössen-Chips als Cross-Filter, Geo- und Top-Kunden-Sichten.  
 
 ![Animierter Rundgang durch den selbstgebauten PulsCheck-Dive: Zeitfenster von 30 auf 90 Tage und 12 Monate umgeschaltet, Land auf Schweiz gefiltert, Paketgrösse M als Cross-Filter angeklickt – jede Änderung rechnet in wenigen Millisekunden lokal im Browser](../../assets/blog/motherduck-dives-demo.gif)
 
-**Alle 9 Queries in 15 Millisekunden.** Bei rund 207'000 Zeilen, auf einem Laptop, ohne Server-Roundtrip. Zeitfenster umschalten, Land filtern, Chip klicken – alles fühlt sich so an wie MotherDucks Demo-Versprechen: Dashboard anschauen wird zu Daten erkunden.
+**Alle 9 Queries in 15 Millisekunden** – nach dem ersten Laden. Zeitfenster umschalten, Land filtern, Chip klicken: alles rechnet lokal im Browser, ohne Roundtrip.
 
-**Und eine ehrliche Abgrenzung, damit der Eigenbau nicht mehr verspricht, als er hält:** Die Live-Komponente fehlt hier bewusst. Meine App lädt einen Parquet-Snapshot – die Daten sind also genau so alt wie beim Evidence-Dashboard, nur das Flüssigkeits-Gefühl der Facettierung ist identisch (das kommt vom WASM, nicht vom Warehouse). Der Eigenbau zeigt, dass die Interaktions-Architektur keine Magie ist, sondern rund 300 Zeilen eigener Code. Was fehlt, ist der Teil, für den man MotherDuck bezahlt: die frischen Daten beim Öffnen, das Embedding mit Token-Management, der Workspace. 
+**Der Eigenbau ist inzwischen live** – und läuft tatsächlich mit echten MotherDuck-Daten: **[pulscheck-dive.fly.dev](https://pulscheck-dive.fly.dev/)**. Was sich gegenüber der Parquet-Version geändert hat – und was das über die Architektur aussagt:
+
+Der Browser verbindet sich beim Öffnen via `@motherduck/wasm-client` direkt mit dem MotherDuck-Workspace. Die 9 initialen Queries laufen gegen das Live-Warehouse (Compute auf MotherDucks Seite), das Resultat wird in die Browser-WASM-Engine gestreamt. Danach – jeder Filterwechsel, jeder Chip-Klick – rechnet wieder lokal in einstelligen Millisekunden. Das ist exakt das Dual-Execution-Prinzip, nur selbst zusammengesteckt statt aus der Dive-Plattform.
+
+Das Token-Management ist bewusst einfach gehalten: Ein langlebiger PAT liegt als Fly.io-Secret, ein kleines Entrypoint-Script schreibt ihn beim Container-Start als `window.MOTHERDUCK_TOKEN` in eine statische `config.js`, die die React-App beim Laden einliest. Kein eigenes Backend, keine Middleware. Für interne Tools – wo man den Token nicht vor dem eigenen Team verstecken muss – reicht das. Für Kunden-Embedding bräuchte man das Token-Refresh-Modell von MotherDuck, das kurzlebige Tokens serverseitig ausstellt.
+
+**Was der Eigenbau zeigt:** Die Interaktions-Architektur ist keine Magie, sondern rund 300 Zeilen eigener Code. Was er *nicht* zeigt: den Workspace, den Agenten-Builder, die Dive Gallery, das polierte Embedding-SDK. Dafür zahlt man bei MotherDuck – nicht für den WASM-Teil, der ist DuckDB und damit quelloffen.
 
 **Und weil man ja nie ohne Stolperstein davonkommt:** Der erste Render crashte mit `TypeError: can't convert BigInt to number`. Ursache: DuckDB liefert `count(*)`-Resultate über Apache Arrow als BigInt, und mein Zahlenformatter rief `isNaN()` darauf an – was bei BigInt eine Exception wirft. Zwei Zeilen Normalisierung an der Arrow-Grenze später lief alles. (Stellt sich übrigens die Frage, warum ein 14-Minuten-Beitrag über Dashboards-als-Code nicht auf den 15-Milliardsten-Bug in der Numerik-Serialisierung hinweisen kann. Nun – jetzt tut er es. :))
 
