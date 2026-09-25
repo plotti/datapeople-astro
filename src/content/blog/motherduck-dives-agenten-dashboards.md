@@ -85,13 +85,11 @@ Das UI: Zeitfenster-Umschalter (7/30/90/365 Tage), Länder-Filter, fünf KPI-Kac
 
 ![Animierter Rundgang durch den selbstgebauten PulsCheck-Dive: Zeitfenster von 30 auf 90 Tage und 12 Monate umgeschaltet, Land auf Schweiz gefiltert, Paketgrösse M als Cross-Filter angeklickt – jede Änderung rechnet in wenigen Millisekunden lokal im Browser](../../assets/blog/motherduck-dives-demo.gif)
 
-**Alle 9 Queries in 15 Millisekunden** – nach dem ersten Laden. Zeitfenster umschalten, Land filtern, Chip klicken: alles rechnet lokal im Browser, ohne Roundtrip.
+Der Eigenbau läuft live unter **[pulscheck-dive.fly.dev](https://pulscheck-dive.fly.dev/)** – mit echten MotherDuck-Daten.
 
-**Der Eigenbau ist inzwischen live** – und läuft tatsächlich mit echten MotherDuck-Daten: **[pulscheck-dive.fly.dev](https://pulscheck-dive.fly.dev/)**. Was sich gegenüber der Parquet-Version geändert hat – und was das über die Architektur aussagt:
+Der Browser verbindet sich beim Öffnen via `@motherduck/wasm-client` direkt mit dem MotherDuck-Workspace. Die 9 initialen Queries laufen gegen das Live-Warehouse (Compute auf MotherDucks Seite), das Resultat wird in die Browser-WASM-Engine gestreamt. Danach – jeder Filterwechsel, jeder Chip-Klick – rechnet lokal in einstelligen Millisekunden, ohne Roundtrip. Das ist exakt das Dual-Execution-Prinzip, nur selbst zusammengesteckt statt aus der Dive-Plattform.
 
-Der Browser verbindet sich beim Öffnen via `@motherduck/wasm-client` direkt mit dem MotherDuck-Workspace. Die 9 initialen Queries laufen gegen das Live-Warehouse (Compute auf MotherDucks Seite), das Resultat wird in die Browser-WASM-Engine gestreamt. Danach – jeder Filterwechsel, jeder Chip-Klick – rechnet wieder lokal in einstelligen Millisekunden. Das ist exakt das Dual-Execution-Prinzip, nur selbst zusammengesteckt statt aus der Dive-Plattform.
-
-Das Token-Management ist bewusst einfach gehalten: Ein langlebiger PAT liegt als Fly.io-Secret, ein kleines Entrypoint-Script schreibt ihn beim Container-Start als `window.MOTHERDUCK_TOKEN` in eine statische `config.js`, die die React-App beim Laden einliest. Kein eigenes Backend, keine Middleware. Für interne Tools – wo man den Token nicht vor dem eigenen Team verstecken muss – reicht das. Für Kunden-Embedding bräuchte man das Token-Refresh-Modell von MotherDuck, das kurzlebige Tokens serverseitig ausstellt.
+Das Token-Management ist bewusst einfach gehalten: Ein langlebiger PAT liegt als Fly.io-Secret, ein kleines Entrypoint-Script schreibt ihn beim Container-Start als `window.MOTHERDUCK_TOKEN` in eine statische `config.js`, die die React-App beim Laden einliest. Kein eigenes Backend, keine Middleware. Für interne Tools reicht das. Für Kunden-Embedding bräuchte man das Token-Refresh-Modell von MotherDuck, das kurzlebige Tokens serverseitig ausstellt.
 
 **Was der Eigenbau zeigt:** Die Interaktions-Architektur ist keine Magie, sondern rund 300 Zeilen eigener Code. Was er *nicht* zeigt: den Workspace, den Agenten-Builder, die Dive Gallery, das polierte Embedding-SDK. Dafür zahlt man bei MotherDuck – nicht für den WASM-Teil, der ist DuckDB und damit quelloffen.
 
