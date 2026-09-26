@@ -85,21 +85,14 @@ Das UI: Zeitfenster-Umschalter (7/30/90/365 Tage), Länder-Filter, fünf KPI-Kac
 
 ![Animierter Rundgang durch den selbstgebauten PulsCheck-Dive: Zeitfenster von 30 auf 90 Tage und 12 Monate umgeschaltet, Land auf Schweiz gefiltert, Paketgrösse M als Cross-Filter angeklickt – jede Änderung rechnet in wenigen Millisekunden lokal im Browser](../../assets/blog/motherduck-dives-demo.gif)
 
-Der Eigenbau läuft live unter **[pulscheck-dive.fly.dev](https://pulscheck-dive.fly.dev/)** – mit echten MotherDuck-Daten. Und dann kam die Erkenntnis, dass das alles gar nicht nötig gewesen wäre.
 
-Der Browser verbindet sich beim Öffnen via `@motherduck/wasm-client` direkt mit dem MotherDuck-Workspace. Die 9 initialen Queries laufen gegen das Live-Warehouse (Compute auf MotherDucks Seite), das Resultat wird in die Browser-WASM-Engine gestreamt. Danach – jeder Filterwechsel, jeder Chip-Klick – rechnet lokal in einstelligen Millisekunden, ohne Roundtrip. Das ist exakt das Dual-Execution-Prinzip, nur selbst zusammengesteckt statt aus der Dive-Plattform.
+Der Browser verbindet sich beim Öffnen via `@motherduck/wasm-client` direkt mit dem MotherDuck-Workspace. Die 9 initialen Queries laufen gegen das Live-Warehouse (Compute auf MotherDucks Seite), das Resultat wird in die Browser-WASM-Engine gestreamt. Danach – jeder Filterwechsel, jeder Chip-Klick – rechnet lokal in einstelligen Millisekunden, ohne Roundtrip. Das ist exakt das Dual-Execution-Prinzip. 
 
-Das Token-Management ist bewusst einfach gehalten: Ein langlebiger PAT liegt als Fly.io-Secret, ein kleines Entrypoint-Script schreibt ihn beim Container-Start als `window.MOTHERDUCK_TOKEN` in eine statische `config.js`, die die React-App beim Laden einliest. Kein eigenes Backend, keine Middleware. Für interne Tools reicht das. Für Kunden-Embedding bräuchte man das Token-Refresh-Modell von MotherDuck, das kurzlebige Tokens serverseitig ausstellt.
+Der für mich wichtigste Befund: **Die Zahlen sind deckungsgleich mit der Evidence-Version.** 26'927 abgeschlossene Antworten im April, 16'875 CHF Paket-Umsatz, 57'331 CHF MRR zum Stichtag – beide Implementierungen, dieselben Queries in der Logik, identisches Resultat. Das ist die eigentliche Message: Es ist egal, ob Evidence, Dive oder eigenes React-Frontend – wer ein sauberes Query-Set und klare Geschäftsregeln hat (bei uns die RULES.md), kann das Frontend beliebig austauschen.
 
-**Was der Eigenbau zeigt:** Wer MotherDuck als Warehouse hat, kann die Dual-Execution-Architektur auch ohne den Dive-Builder nutzen – `@motherduck/wasm-client` ist eine npm-Library, kein Plattform-Lock. Das eigene React-Frontend kostet rund 300 Zeilen Code. Was man dabei aufgibt: den Agenten-Builder, die Dive Gallery, das polierte Embedding-SDK mit kurzlebigen Tokens pro Session. Was man behält: volle Kontrolle über UI, Deployment und Query-Set.
+## Statt Fly.io Deployment auf der Motherduck Platform
 
-**Und weil man ja nie ohne Stolperstein davonkommt:** Der erste Render crashte mit `TypeError: can't convert BigInt to number`. Ursache: DuckDB liefert `count(*)`-Resultate über Apache Arrow als BigInt, und mein Zahlenformatter rief `isNaN()` darauf an – was bei BigInt eine Exception wirft. Zwei Zeilen Normalisierung an der Arrow-Grenze später lief alles. (Stellt sich übrigens die Frage, warum ein 14-Minuten-Beitrag über Dashboards-als-Code nicht auf den 15-Milliardsten-Bug in der Numerik-Serialisierung hinweisen kann. Nun – jetzt tut er es. :))
-
-Der für mich wichtigste Befund: **Die Zahlen sind deckungsgleich mit der Evidence-Version.** 26'927 abgeschlossene Antworten im April, 16'875 CHF Paket-Umsatz, 57'331 CHF MRR zum Stichtag – beide Implementierungen, dieselben Queries in der Logik, identisches Resultat. Das ist die eigentliche Message: Es ist egal, ob Evidence, Dive oder eigenes React-Frontend – wer ein sauberes Query-Set und klare Geschäftsregeln hat (bei uns die RULES.md), kann das Frontend austauschen wie eine Jacke.
-
-## Kein Fly.io mehr: Deploy in einem MCP-Aufruf
-
-Der Weg über Fly.io war alles andere als trivial. Damit der Eigenbau überhaupt funktionierte, brauchte es: ein Dockerfile mit Multi-Stage-Build, eine nginx-Konfiguration mit COOP/COEP-Headern (DuckDB-WASM braucht `SharedArrayBuffer`, der Browser verlangt dafür spezifische Cross-Origin-Policies), ein Entrypoint-Script, das den MotherDuck-Token zur Laufzeit in eine `config.js` schreibt, `fly secrets set` für den Token, und schliesslich `fly deploy`. Und natürlich mindestens einen Debugging-Rundgang: Bei mir sorgte ein `types {}`-Block in der nginx-Konfiguration dafür, dass der Browser die gesamte App als Binary-Download behandelte statt sie zu rendern – weil er damit sämtliche Standard-MIME-Typen überschrieben hatte. Klassisches Infrastruktur-Yak-Shaving, das mit dem eigentlichen Dashboard nichts zu tun hat.
+Ich habe zunächst beim Deployment auf Fly.io gesetzt. Doch das war alles andere als trivial. Damit es überhaupt funktionierte, brauchte es: ein Dockerfile mit Multi-Stage-Build, eine nginx-Konfiguration mit COOP/COEP-Headern (DuckDB-WASM braucht `SharedArrayBuffer`, der Browser verlangt dafür spezifische Cross-Origin-Policies), ein Entrypoint-Script, das den MotherDuck-Token zur Laufzeit in eine `config.js` schreibt, `fly secrets set` für den Token, und schliesslich `fly deploy`. Und natürlich mindestens einen Debugging-Rundgang. 
 
 Die native Alternative existiert, und sie ist radikal einfacher: Ein Dive lebt in einer einzigen TypeScript-Datei. Lokale Iteration läuft mit `npm run dev` (Vite, Hot Reload, echte MotherDuck-Verbindung), Publishing läuft mit einem einzigen MCP-Tool-Call – `save_dive`. MotherDuck übernimmt das Hosting, setzt die richtigen COOP/COEP-Header und verwaltet die Token-Ausstellung. Kein Server, kein Docker, kein `fly.toml`.
 
@@ -114,11 +107,9 @@ Das hat auch etwas mit dem Agenten-Workflow zu tun. Claude Code schreibt die Div
 
 Der native Dive läuft direkt in MotherDuck: **[PulsCheck – Product Metrics Dive →](https://app.motherduck.com/dives/dive-ef03793e-30cc-4b33-a267-e509092c629e)**
 
-Was man dabei aufgibt: Fly.io bietet Custom Domains, volle Kontrolle über den Auth-Layer, und das Hosting läuft auf der eigenen Infrastruktur. Die native Dive-URL lebt auf `app.motherduck.com`. Für interne Tools ist das kein Nachteil. Für ein gebrandetes Kunden-Portal nimmt man das iframe-Embed – aber dann ist das Token-Management ohnehin anders gestaltet, und der Fly.io-Ansatz wäre auch dort nicht die richtige Antwort.
+Was man dabei evtl. aufgibt: Fly.io bietet Custom Domains, volle Kontrolle über den Auth-Layer, und das Hosting läuft auf der eigenen Infrastruktur. Die native Dive-URL lebt auf `app.motherduck.com`. Für interne Tools ist das kein Nachteil. Für ein gebrandetes Kunden-Portal nimmt man das iframe-Embed – aber dann ist das Token-Management ohnehin anders gestaltet. Die Lektion: Den Fly.io-Weg zu gehen war lehrreich – er hat gezeigt, wie die Dual-Execution-Architektur unter der Haube funktioniert. Aber als Produktionsweg für jemanden, der MotherDuck bereits als Warehouse nutzt, ist er unnötig. Wer schnell iterieren will, nimmt den nativen Dive-Weg.
 
-Die Lektion: Den Fly.io-Weg zu gehen war lehrreich – er hat gezeigt, wie die Dual-Execution-Architektur unter der Haube funktioniert. Aber als Produktionsweg für jemanden, der MotherDuck bereits als Warehouse nutzt, ist er unnötig. Wer schnell iterieren will, nimmt den nativen Dive-Weg.
-
-## Dives vs. Evidence: die ehrliche Matrix
+## Dives vs. Evidence
 
 | | **Evidence** (Open Source) | **MotherDuck Dives** |
 |---|---|---|
@@ -134,26 +125,20 @@ Die Lektion: Den Fly.io-Weg zu gehen war lehrreich – er hat gezeigt, wie die D
 
 Aus meiner Sicht ist die erste Zeile die einzige, die eine Kaufentscheidung wirklich trägt. Alle anderen Zeilen sind entweder Folgen der ersten (Compute pro View gibt es nur, weil live geöffnet wird) oder Details, die beide Werkzeuge ähnlich gut lösen.
 
-## Wann was?
-
-Meine Arbeitshypothese nach dem zweiten Bau-Durchlauf:
-
-- **Kuratierte interne Reports mit fixen Stichtagen, Kosten nahe null, Daten bleiben im Haus:** Evidence. Bleibt meine Open-Source-Antwort für das klassische Reporting-KMU – die Reproduzierbarkeit ist dort ein Feature, kein Bug.
-- **Interne Exploration, wenn die Frage beim Build noch nicht bekannt war:** Dives im Lite-Plan ausprobieren – gratis, und das WASM-Gefühl muss man einmal erlebt haben, um zu verstehen, was ich meine.
+- **Kuratierte interne Reports mit fixen Stichtagen, Kosten nahe null, Daten bleiben im Haus:** Evidence. Bleibt meine Open-Source-Antwort für das klassische Reporting-KMU – die Reproduzierbarkeit ist dort ein Feature. 
+- **Interne Exploration, wenn die Frage beim Build noch nicht bekannt war:** Dives sollte man im Lite-Plan ausprobieren, das geht sogar gratis, und das WASM-Gefühl muss man einmal erlebt haben, um zu verstehen, was ich meine.
 - **Kunden-facing Analytics im eigenen Produkt:** Hier hat Dives für mich das beste Gesamtkonzept – iframe-Embed mit kurzlebigen Tokens, kein Per-Seat, keine eigene Charting-Wartung. Voraussetzungen: Die Daten dürfen ins MotherDuck-Warehouse, und ein Business-Abo ist eingeplant. Die Alternative aus dem Evidence-Lager (Embedded-API) ist einen Blick wert, relativ jung ebenfalls.
 - **Regulatorisch kritische Daten, die die Firma nicht verlassen dürfen:** Beide Cloud-Optionen fallen aus. Evidence on-prem bleibt die entspannteste Antwort.
 
-## Fazit: Das Foto und der Live-Stream
+## Fazit: Snapshot vs. Live-Stream
 
 Drei Erkenntnisse zum Mitnehmen:
 
-Erstens: **Die Datentabelle ist nicht das Dashboard.** Meine Evidence-Dashboards und mein Eigenbau-Dive teilen sich dasselbe SQL, dieselben Geschäftsregeln, dieselben Zahlen – was sie unterscheidet, ist ausschliesslich, *wann* die Queries laufen. Build-Zeit heisst reproduzierbar und gratis, Lauf-Zeit heisst aktuell und interaktiv. Wählen Sie bewusst, nicht aus Gewohnheit.
+Erstens: **Die Datentabelle ist nicht das Dashboard.** Meine Evidence-Dashboards und mein Eigenbau-Dive teilen sich dasselbe SQL, dieselben Geschäftsregeln, dieselben Zahlen – was sie unterscheidet, ist ausschliesslich, *wann* die Queries laufen. Build-Zeit heisst reproduzierbar und gratis, Lauf-Zeit heisst aktuell und interaktiv. 
 
 Zweitens: **React + SQL ist das Markdown des Dashboards.** Beide Tools bestätigen denselben Trend: Dashboards sind Code, Agenten schreiben den Code, Menschen reviewen ihn. Was sich ändert, ist nur das Ausführungsmodell – statischer Build hier, Browser-WASM mit Live-Datenabruf dort.
 
 Drittens: **Der Context Stack bleibt der eigentliche Hebel.** Ob Evidence oder Dive – die Qualität des Resultats hing bei uns nie vom Charting-Tool ab, sondern von der RULES.md, dem Datenmodell und dem Realitätscheck gegen die echte Datenbank. Der kann in eine Dive genauso einziehen wie in eine Evidence-Pipeline.
-
-Was kommt als Nächstes? Ich vermute, dass die Foto-gegen-Live-Stream-Frage sich in zwölf Monaten erledigt haben wird – in beide Richtungen. Statische Generatoren lernen Live-Komponenten, Live-Tools lernen Snapshots, und wir diskutieren dann über andere Dinge. Bis dahin: Probieren Sie den Lite-Plan aus (ohne Kreditkarte), und wenn Sie es ganz ohne Abo wollen – das Eigenbau-Muster oben passt in einen Nachmittag.
 
 Ich freue mich auf Ihre Kommentare und Anregungen!
 
