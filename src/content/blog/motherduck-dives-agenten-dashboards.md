@@ -107,6 +107,8 @@ Das hat auch etwas mit dem Agenten-Workflow zu tun. Claude Code schreibt die Div
 
 Der native Dive läuft direkt in MotherDuck: **[PulsCheck – Product Metrics Dive →](https://app.motherduck.com/dives/dive-ef03793e-30cc-4b33-a267-e509092c629e)**
 
+Der vollständige Quellcode – `dive.tsx`, der lokale Preview-Shim `md-sdk.tsx` und das Vite-Scaffold – liegt öffentlich auf **[github.com/plotti/pulscheck-dashboards](https://github.com/plotti/pulscheck-dashboards)** im Verzeichnis `.dive-preview/src/`. Der Fly.io-Eigenbau (Dockerfile, nginx, queries.js) liegt im selben Repo unter `dive/`.
+
 Was man dabei evtl. aufgibt: Fly.io bietet Custom Domains, volle Kontrolle über den Auth-Layer, und das Hosting läuft auf der eigenen Infrastruktur. Die native Dive-URL lebt auf `app.motherduck.com`. Für interne Tools ist das kein Nachteil. Für ein gebrandetes Kunden-Portal nimmt man das iframe-Embed – aber dann ist das Token-Management ohnehin anders gestaltet. Die Lektion: Den Fly.io-Weg zu gehen war lehrreich – er hat gezeigt, wie die Dual-Execution-Architektur unter der Haube funktioniert. Aber als Produktionsweg für jemanden, der MotherDuck bereits als Warehouse nutzt, ist er unnötig. Wer schnell iterieren will, nimmt den nativen Dive-Weg.
 
 ## Dives vs. Evidence
@@ -155,6 +157,7 @@ Ich freue mich auf Ihre Kommentare und Anregungen!
 
 - [PulsCheck – Product Metrics Dive (live)](https://app.motherduck.com/dives/dive-ef03793e-30cc-4b33-a267-e509092c629e) – der native Dive aus diesem Beitrag
 - [PulsCheck Eigenbau auf Fly.io (live)](https://pulscheck-dive.fly.dev/) – die Fly.io-Version zum Vergleich
+- [Quellcode auf GitHub](https://github.com/plotti/pulscheck-dashboards) – `.dive-preview/src/` (nativer Dive) und `dive/` (Fly.io-Eigenbau)
 - [Dives Product Page](https://motherduck.com/product/dives/) – Überblick, Live-Dive, Dual-Execution-Beschreibung, FAQ
 - [Dive Gallery](https://motherduck.com/dive-gallery/) – Community-Dives zum Hineinkopieren
 - [MotherDuck Pricing](https://motherduck.com/pricing/) – Pläne, Limits, Compute-Preise (Stand September 2026)
