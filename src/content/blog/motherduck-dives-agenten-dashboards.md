@@ -2,7 +2,7 @@
 title: "Agenten-Dashboards mit MotherDuck Dives: React + SQL statt BI-GUI"
 description: "Mein Evidence-Setup hat eine ehrliche Schwäche: Die Zahlen sind so alt wie der letzte Build. MotherDuck Dives drehen das Prinzip um – die Queries laufen beim Öffnen live gegen die Datenbank, die Facettierung danach im Browser. Dieser Beitrag erklärt den Unterschied zwischen Build-Zeit und Lauf-Zeit, rechnet die Kosten durch und zeigt einen live deployten Eigenbau-Dive mit echtem MotherDuck-Backend – 300 Zeilen React + SQL, kein BI-Tool."
 pubDate: 2026-09-24
-readTime: 14
+readTime: 16
 category: "AI Integration"
 tags: ["MotherDuck", "DuckDB", "Dashboards", "LLM", "Embedded Analytics"]
 cover: "../../assets/blog/motherduck-dives-cover.png"
@@ -85,7 +85,7 @@ Das UI: Zeitfenster-Umschalter (7/30/90/365 Tage), Länder-Filter, fünf KPI-Kac
 
 ![Animierter Rundgang durch den selbstgebauten PulsCheck-Dive: Zeitfenster von 30 auf 90 Tage und 12 Monate umgeschaltet, Land auf Schweiz gefiltert, Paketgrösse M als Cross-Filter angeklickt – jede Änderung rechnet in wenigen Millisekunden lokal im Browser](../../assets/blog/motherduck-dives-demo.gif)
 
-Der Eigenbau läuft live unter **[pulscheck-dive.fly.dev](https://pulscheck-dive.fly.dev/)** – mit echten MotherDuck-Daten.
+Der Eigenbau läuft live unter **[pulscheck-dive.fly.dev](https://pulscheck-dive.fly.dev/)** – mit echten MotherDuck-Daten. Und dann kam die Erkenntnis, dass das alles gar nicht nötig gewesen wäre.
 
 Der Browser verbindet sich beim Öffnen via `@motherduck/wasm-client` direkt mit dem MotherDuck-Workspace. Die 9 initialen Queries laufen gegen das Live-Warehouse (Compute auf MotherDucks Seite), das Resultat wird in die Browser-WASM-Engine gestreamt. Danach – jeder Filterwechsel, jeder Chip-Klick – rechnet lokal in einstelligen Millisekunden, ohne Roundtrip. Das ist exakt das Dual-Execution-Prinzip, nur selbst zusammengesteckt statt aus der Dive-Plattform.
 
@@ -96,6 +96,27 @@ Das Token-Management ist bewusst einfach gehalten: Ein langlebiger PAT liegt als
 **Und weil man ja nie ohne Stolperstein davonkommt:** Der erste Render crashte mit `TypeError: can't convert BigInt to number`. Ursache: DuckDB liefert `count(*)`-Resultate über Apache Arrow als BigInt, und mein Zahlenformatter rief `isNaN()` darauf an – was bei BigInt eine Exception wirft. Zwei Zeilen Normalisierung an der Arrow-Grenze später lief alles. (Stellt sich übrigens die Frage, warum ein 14-Minuten-Beitrag über Dashboards-als-Code nicht auf den 15-Milliardsten-Bug in der Numerik-Serialisierung hinweisen kann. Nun – jetzt tut er es. :))
 
 Der für mich wichtigste Befund: **Die Zahlen sind deckungsgleich mit der Evidence-Version.** 26'927 abgeschlossene Antworten im April, 16'875 CHF Paket-Umsatz, 57'331 CHF MRR zum Stichtag – beide Implementierungen, dieselben Queries in der Logik, identisches Resultat. Das ist die eigentliche Message: Es ist egal, ob Evidence, Dive oder eigenes React-Frontend – wer ein sauberes Query-Set und klare Geschäftsregeln hat (bei uns die RULES.md), kann das Frontend austauschen wie eine Jacke.
+
+## Kein Fly.io mehr: Deploy in einem MCP-Aufruf
+
+Der Weg über Fly.io war alles andere als trivial. Damit der Eigenbau überhaupt funktionierte, brauchte es: ein Dockerfile mit Multi-Stage-Build, eine nginx-Konfiguration mit COOP/COEP-Headern (DuckDB-WASM braucht `SharedArrayBuffer`, der Browser verlangt dafür spezifische Cross-Origin-Policies), ein Entrypoint-Script, das den MotherDuck-Token zur Laufzeit in eine `config.js` schreibt, `fly secrets set` für den Token, und schliesslich `fly deploy`. Und natürlich mindestens einen Debugging-Rundgang: Bei mir sorgte ein `types {}`-Block in der nginx-Konfiguration dafür, dass der Browser die gesamte App als Binary-Download behandelte statt sie zu rendern – weil er damit sämtliche Standard-MIME-Typen überschrieben hatte. Klassisches Infrastruktur-Yak-Shaving, das mit dem eigentlichen Dashboard nichts zu tun hat.
+
+Die native Alternative existiert, und sie ist radikal einfacher: Ein Dive lebt in einer einzigen TypeScript-Datei. Lokale Iteration läuft mit `npm run dev` (Vite, Hot Reload, echte MotherDuck-Verbindung), Publishing läuft mit einem einzigen MCP-Tool-Call – `save_dive`. MotherDuck übernimmt das Hosting, setzt die richtigen COOP/COEP-Header und verwaltet die Token-Ausstellung. Kein Server, kein Docker, kein `fly.toml`.
+
+Der Vergleich in Zahlen:
+
+| Weg | Was man anfasst | Zeit bis «es läuft» |
+|---|---|---|
+| **Fly.io Eigenbau** | Dockerfile, nginx.conf, entrypoint.sh, fly.toml, fly secrets, MIME-Bug-Debugging | 1–2 Stunden |
+| **Nativer Dive** | `dive.tsx`, `npm run dev`, `save_dive` via MCP | < 10 Minuten |
+
+Das hat auch etwas mit dem Agenten-Workflow zu tun. Claude Code schreibt die Dive-Komponente direkt gegen die echte MotherDuck-API (via MCP-Server), iteriert lokal, und speichert mit einem einzigen Tool-Call in den Workspace. Der gesamte Prozess – vom ersten Query bis zum live deployten Dashboard – lief ohne einen einzigen manuellen Terminal-Befehl ausser `npm run dev`. Das ist die eigentliche Produktivitätsdifferenz: Bei Fly.io debuggt man Infrastruktur, bei nativen Dives debuggt man das Dashboard.
+
+Der native Dive läuft direkt in MotherDuck: **[PulsCheck – Product Metrics Dive →](https://app.motherduck.com/dives/dive-ef03793e-30cc-4b33-a267-e509092c629e)**
+
+Was man dabei aufgibt: Fly.io bietet Custom Domains, volle Kontrolle über den Auth-Layer, und das Hosting läuft auf der eigenen Infrastruktur. Die native Dive-URL lebt auf `app.motherduck.com`. Für interne Tools ist das kein Nachteil. Für ein gebrandetes Kunden-Portal nimmt man das iframe-Embed – aber dann ist das Token-Management ohnehin anders gestaltet, und der Fly.io-Ansatz wäre auch dort nicht die richtige Antwort.
+
+Die Lektion: Den Fly.io-Weg zu gehen war lehrreich – er hat gezeigt, wie die Dual-Execution-Architektur unter der Haube funktioniert. Aber als Produktionsweg für jemanden, der MotherDuck bereits als Warehouse nutzt, ist er unnötig. Wer schnell iterieren will, nimmt den nativen Dive-Weg.
 
 ## Dives vs. Evidence: die ehrliche Matrix
 
@@ -147,6 +168,8 @@ Ich freue mich auf Ihre Kommentare und Anregungen!
 
 **MotherDuck Dives:**
 
+- [PulsCheck – Product Metrics Dive (live)](https://app.motherduck.com/dives/dive-ef03793e-30cc-4b33-a267-e509092c629e) – der native Dive aus diesem Beitrag
+- [PulsCheck Eigenbau auf Fly.io (live)](https://pulscheck-dive.fly.dev/) – die Fly.io-Version zum Vergleich
 - [Dives Product Page](https://motherduck.com/product/dives/) – Überblick, Live-Dive, Dual-Execution-Beschreibung, FAQ
 - [Dive Gallery](https://motherduck.com/dive-gallery/) – Community-Dives zum Hineinkopieren
 - [MotherDuck Pricing](https://motherduck.com/pricing/) – Pläne, Limits, Compute-Preise (Stand September 2026)
