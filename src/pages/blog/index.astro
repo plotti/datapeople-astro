@@ -4,8 +4,30 @@ import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
+import landscapeCover from "../../assets/blog/ai-agent-tooling-landscape.png";
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+const collectionPosts = (await getCollection("blog", ({ data }) => !data.draft)).map(p => ({
+  ...p,
+  href: `/blog/${p.id}/`,
+}));
+
+const manualPosts = [
+  {
+    id: "ai-agent-tooling-landscape",
+    href: "/blog/ai-agent-tooling-landscape/",
+    data: {
+      title: "AI Agent Tooling Landscape",
+      description: "Rund 100 Tools zum Entwickeln mit KI-Agenten, sortiert in 14 Kategorien entlang des Stacks. Jede Kategorie gerankt nach Hacker-News- und Reddit-Diskussionen, ergänzt durch GitHub-Sternzahlen – mit Kosten, Lizenz und einem Link zu jedem Tool.",
+      pubDate: new Date("2026-09-30"),
+      readTime: null as number | null,
+      category: "KI Tools",
+      tags: ["AI Agents", "Claude Code", "Tooling", "Hacker News"],
+      cover: landscapeCover,
+    },
+  },
+];
+
+const posts = [...manualPosts, ...collectionPosts].sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
 
@@ -57,7 +79,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
               ]}
             >
               <a
-                href={`/blog/${post.id}/`}
+                href={post.href}
                 data-blog-post-link
                 data-post-slug={post.id}
                 data-post-category={post.data.category}

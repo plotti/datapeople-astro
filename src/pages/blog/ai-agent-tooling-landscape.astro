@@ -1,0 +1,926 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout
+  title="AI Agent Tooling Landscape – Datapeople"
+  description="~100 tools for building software with AI agents, ranked by Hacker News and Reddit sentiment across 14 categories: editors, agents, orchestrators, sandboxes, code review and more."
+>
+  <Navigation />
+  <main id="main-content">
+    <div class="wrap lscape-root">
+  <a href="/blog/" class="back-link"><span aria-hidden="true">←</span> Zurück zur Schreibwerkstatt</a>
+  <header>
+    <span class="eyebrow">Research notes · 29 Sep 2026 · <a href="/#team" class="eyebrow-link">Thomas Ebermann</a></span>
+    <h1>AI Agent Tooling Landscape</h1>
+    <p class="lede">Rund 100 Tools zum Entwickeln mit KI-Agenten, sortiert in 14 Kategorien entlang des Stacks – vom Editor, in dem man tippt, bis zum Review-Bot, der das Ergebnis prüft. Jede Kategorie ist nach dem gerankt, was Hacker News und Reddit über die einzelnen Tools im vergangenen Jahr geschrieben haben, ergänzt durch GitHub-Sternzahlen – mit Kosten, Lizenz, aktuellen Statusänderungen und einem Link zu jedem Tool.</p>
+  </header>
+
+<figure class="diagram" id="how-it-fits"><div class="dg-scroll"><svg viewBox="0 0 1000 486" role="img" aria-label="Layered map of how the 14 tool categories connect: you work through editors, terminals or remote control; optionally delegate to orchestrators or control planes; those run coding agents, which get instructions from spec and memory tools, call models through routers, run code in sandboxes and drive browsers, and open pull requests that pass code review before reaching your repo. Hosted platforms and cloud agents bundle the agent, sandbox and models on vendor servers."><defs><marker id="dg-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs><text class="dg-band" x="8" y="34">YOU</text><text class="dg-band" x="8" y="110">INTERFACES</text><text class="dg-band" x="8" y="210">COORDINATION</text><text class="dg-band" x="8" y="318">AGENTS</text><text class="dg-band" x="8" y="452">OUTPUT</text><line class="dg-rule" x1="8" y1="62" x2="992" y2="62"/><line class="dg-rule" x1="8" y1="160" x2="800" y2="160"/><line class="dg-rule" x1="8" y1="262" x2="800" y2="262"/><line class="dg-rule" x1="8" y1="404" x2="992" y2="404"/><rect class="dg-you" x="370" y="12" width="140" height="36" rx="18"/><text class="dg-t" x="440" y="35" text-anchor="middle">You</text><a href="#lane-g"><rect class="dg-box" x="130" y="80" width="190" height="52" rx="5" style="stroke:var(--lane-g)"/><text class="dg-t" x="225.0" y="103.0" text-anchor="middle">AI editors</text><text class="dg-s" x="225.0" y="119.0" text-anchor="middle">Cursor, Zed, Antigravity</text></a><a href="#lane-f"><rect class="dg-box" x="345" y="80" width="190" height="52" rx="5" style="stroke:var(--lane-f)"/><text class="dg-t" x="440.0" y="103.0" text-anchor="middle">Agent terminals</text><text class="dg-s" x="440.0" y="119.0" text-anchor="middle">tmux, Herdr, cmux</text></a><a href="#lane-k"><rect class="dg-box" x="560" y="80" width="190" height="52" rx="5" style="stroke:var(--lane-k)"/><text class="dg-t" x="655.0" y="103.0" text-anchor="middle">Remote control</text><text class="dg-s" x="655.0" y="119.0" text-anchor="middle">Omnara, Paseo</text></a><a href="#lane-b"><rect class="dg-box" x="400" y="180" width="180" height="56" rx="5" style="stroke:var(--lane-b)"/><text class="dg-t" x="490.0" y="205.0" text-anchor="middle">Parallel orchestrators</text><text class="dg-s" x="490.0" y="221.0" text-anchor="middle">Conductor, Superset</text></a><a href="#lane-c"><rect class="dg-box" x="600" y="180" width="180" height="56" rx="5" style="stroke:var(--lane-c)"/><text class="dg-t" x="690.0" y="205.0" text-anchor="middle">Control planes</text><text class="dg-s" x="690.0" y="221.0" text-anchor="middle">OpenClaw, CrewAI</text></a><a href="#lane-a"><rect class="dg-box" x="350" y="284" width="200" height="76" rx="5" style="stroke:var(--lane-a)"/><text class="dg-t" x="450.0" y="319.0" text-anchor="middle">Coding agents</text><text class="dg-s" x="450.0" y="335.0" text-anchor="middle">OpenCode, Claude Code, Codex</text></a><a href="#lane-e"><rect class="dg-box" x="120" y="280" width="170" height="38" rx="5" style="stroke:var(--lane-e)"/><text class="dg-t" x="205.0" y="303.0" text-anchor="middle">Spec & workflow</text></a><a href="#lane-l"><rect class="dg-box" x="120" y="326" width="170" height="38" rx="5" style="stroke:var(--lane-l)"/><text class="dg-t" x="205.0" y="349.0" text-anchor="middle">Memory & skills</text></a><a href="#lane-m"><rect class="dg-box" x="600" y="272" width="180" height="28" rx="5" style="stroke:var(--lane-m)"/><text class="dg-t" x="690.0" y="290.0" text-anchor="middle">Models via routers</text></a><a href="#lane-j"><rect class="dg-box" x="600" y="306" width="180" height="28" rx="5" style="stroke:var(--lane-j)"/><text class="dg-t" x="690.0" y="324.0" text-anchor="middle">Sandboxes</text></a><a href="#lane-n"><rect class="dg-box" x="600" y="340" width="180" height="28" rx="5" style="stroke:var(--lane-n)"/><text class="dg-t" x="690.0" y="358.0" text-anchor="middle">Browser agents</text></a><rect class="dg-hosted" x="812" y="172" width="178" height="200" rx="8"/><text class="dg-band" x="901" y="192" text-anchor="middle">ON VENDOR SERVERS</text><a href="#lane-d"><rect class="dg-box" x="826" y="202" width="150" height="50" rx="5" style="stroke:var(--lane-d)"/><text class="dg-t" x="901.0" y="224.0" text-anchor="middle">Hosted platforms</text><text class="dg-s" x="901.0" y="240.0" text-anchor="middle">n8n, Manus</text></a><a href="#lane-h"><rect class="dg-box" x="826" y="262" width="150" height="50" rx="5" style="stroke:var(--lane-h)"/><text class="dg-t" x="901.0" y="284.0" text-anchor="middle">Cloud agents</text><text class="dg-s" x="901.0" y="300.0" text-anchor="middle">Cursor, Devin</text></a><text class="dg-s" x="901" y="336" text-anchor="middle">bundle agent, sandbox</text><text class="dg-s" x="901" y="352" text-anchor="middle">and models for you</text><a href="#lane-i"><rect class="dg-box" x="350" y="422" width="200" height="52" rx="5" style="stroke:var(--lane-i)"/><text class="dg-t" x="450.0" y="445.0" text-anchor="middle">Code review</text><text class="dg-s" x="450.0" y="461.0" text-anchor="middle">Bugbot, CodeRabbit, no-mistakes</text></a><rect class="dg-you" x="600" y="428" width="180" height="40" rx="5"/><text class="dg-t" x="690" y="453" text-anchor="middle">Your repo</text><path class="dg-arrow" d="M440,48 V78" marker-end="url(#dg-head)"/><text class="dg-l" x="448" y="68" text-anchor="start">watch &amp; steer</text><path class="dg-arrow" d="M510,30 H901 V170" marker-end="url(#dg-head)"/><text class="dg-l" x="700" y="24" text-anchor="middle">or hand off a whole task</text><path class="dg-arrow" d="M490,132 V178" marker-end="url(#dg-head)"/><text class="dg-l" x="498" y="158" text-anchor="start">delegate a crew</text><path class="dg-arrow" d="M362,132 V282" marker-end="url(#dg-head)"/><text class="dg-l" x="354" y="250" text-anchor="end">or run one</text><text class="dg-l" x="354" y="264" text-anchor="end">agent directly</text><path class="dg-arrow" d="M490,236 V282" marker-end="url(#dg-head)"/><text class="dg-l" x="498" y="262" text-anchor="start">spawn &amp; assign</text><path class="dg-arrow" d="M690,236 L546,282" marker-end="url(#dg-head)"/><path class="dg-arrow" d="M290,322 H348" marker-end="url(#dg-head)"/><text class="dg-l" x="319" y="314" text-anchor="middle">feed</text><path class="dg-arrow" d="M550,320 H598" marker-end="url(#dg-head)"/><text class="dg-l" x="574" y="312" text-anchor="middle">use</text><path class="dg-arrow" d="M450,360 V420" marker-end="url(#dg-head)"/><text class="dg-l" x="458" y="394" text-anchor="start">opens PR</text><path class="dg-arrow" d="M550,448 H598" marker-end="url(#dg-head)"/><text class="dg-l" x="574" y="440" text-anchor="middle">merge</text><path class="dg-arrow" d="M901,372 V392 H520 V420" marker-end="url(#dg-head)"/><text class="dg-l" x="760" y="386" text-anchor="middle">opens PR</text></svg></div><figcaption><b>Wie die Teile zusammenpassen.</b> Von oben nach unten: Du arbeitest durch einen Editor, ein Terminal oder eine Handy-App, übergibst optional die Arbeit an einen Orchestrator oder ein Control Plane, und ein Coding-Agent erledigt die Arbeit – gespeist von Spec- und Memory-Tools, nutzt Modelle, Sandboxes und Browser. Seine Pull Requests durchlaufen Code-Review. Hosted Platforms und Cloud-Agenten überspringen die mittleren Ebenen, indem sie alles auf ihren eigenen Servern ausführen. Klicke auf eine Box, um zu dieser Kategorie zu springen.</figcaption></figure>
+
+  <section class="origin">
+    <h2>Warum es das gibt</h2>
+    <p>Mein aktuelles Setup ist: <strong>Zed</strong> als Editor, <strong>Claude Code</strong> als Agent, eine handgeschriebene <strong>agents.md</strong>-Datei, die jede neue Session mit dem Projekt vertraut macht, <strong>tmux</strong> um Sessions am Leben zu erhalten, und mein eigenes <strong>n8n</strong>-Deployment für die handvoll Aufgaben, die sich regelmässig wiederholen. Keine Remote-Control-App, kein Control Plane, keine parallelen Orchestratoren – auch wenn ich ein Wochenende mit Firstmate verbracht habe und die Idee überzeugend fand, auch wenn sie sich noch früh angefühlt hat. Für Modelle jenseits von Claude leite ich gelegentlich über <strong>OpenRouter</strong>, wenn ich etwas Neues ausprobieren möchte, zum Beispiel Jev. Code Review mache ich noch von Hand.</p>
+    <p>Das Setup funktioniert gut für mich. Aber der Tooling-Space bewegt sich schnell genug, dass ich immer wieder zweifelte: Übersehe ich etwas Offensichtliches? Ich sah einen Thread auf Hacker News, öffnete fünf Tabs, las die Hälfte davon und schloss den Browser – ohne klüger zu sein als vorher. Das Signal steckte irgendwo in diesen Kommentar-Threads und Reddit-Diskussionen – es war nur nicht organisiert. Also entschied ich mich, es richtig zu machen: alle Tools zu katalogisieren, die ich finden konnte, zu prüfen, was die Communities über jedes einzelne im vergangenen Jahr wirklich gesagt hatten, und sie nach diesem Signal zu ranken – nicht nach Marketing-Texten oder Sternzahlen.</p>
+    <p>Was mich am meisten überraschte, war, wie schnell es sich zusammenfügte. Systematisch ein Jahr lang Hacker-News- und Reddit-Diskussionen über rund hundert Tools zu lesen, Sentiment-Scores zu vergeben, GitHub-Zahlen gegenzuprüfen und die Zusammenfassungen zu schreiben – das wäre als Solo-Rechercheprojekt wochenlange Abende gewesen. Mit KI-Unterstützung bei der Suche, der Synthese und der repetitiven Datenarbeit dauerte es ein paar intensive Tage. Diese Lücke ist das eigentliche Argument für die Tools auf dieser Seite.</p>
+  </section>
+
+  <section class="origin">
+    <h2>Wie das Ranking entstand</h2>
+    <p>Jedes Tool wird auf zwei Dimensionen bewertet – <strong>Popularität</strong> und <strong>Sentiment</strong> – aus zwei Communities über dasselbe Einjahresfenster: <strong>29. Sep. 2025 – 29. Sep. 2026</strong>. Hacker News wurde über seine öffentliche Algolia-API durchsucht; Reddit über seine öffentliche JSON-API, beschränkt auf Subreddits, in denen das Tool tatsächlich diskutiert wird (r/ClaudeAI, r/LocalLLaMA, r/cursor, r/programming, r/n8n und ähnliche).</p>
+    <p><strong>Popularität (0–4 Punkte für HN, 0–3 für Reddit)</strong> misst, wie viel die Community über ein Tool gesprochen hat. Für HN ist das ein Verbundwert aus drei Signalen: Stories, in denen das Tool das Thema war, alle Kommentare in diesen Threads und Erwähnungen des Tool-Namens in Kommentaren anderswo. Die Summe dieser drei Zahlen wird dann in Punkte umgerechnet – über 5.000 ergibt vier Punkte, über 1.000 ergibt drei, und so weiter. Bei Reddit werden einfach dedizierte Posts gezählt. Fahre mit der Maus über das Label <span class="method-lbl">Popularität</span> auf einer Karte, um die genauen Schwellenwerte zu sehen.</p>
+    <p><strong>Sentiment (0–4 Punkte)</strong> ist eine Ermessensentscheidung: Ein LLM hat pro Tool 15–40 aktuelle Kommentare gelesen, dazu die Top-Level-Kommentare der grössten Threads, und daraus eine Punktzahl von sehr negativ (0) bis sehr positiv (4) abgeleitet. Jedes Zitat auf einer Karte verlinkt zurück auf den Originalkommentar, damit man die Bewertung selbst prüfen kann. Fahre mit der Maus über das Label <span class="method-lbl">Sentiment</span> auf einer Karte für die vollständige Skala.</p>
+    <p><strong>Rank = Sentiment + Popularität.</strong> Bei Gleichstand gewinnt das Tool mit mehr Diskussion, weil mehr Kommentare die Sentiment-Bewertung zuverlässiger machen. Tools mit dem Flag <em>Thin data</em> haben nur eine Handvoll relevante Kommentare und sollten mit Vorsicht behandelt werden. Tools ohne verwertbares Material erscheinen am Ende ihrer Kategorie als ungerankt.</p>
+    <p><strong>Praxisbeispiel – Cursor.</strong> Rund 1.000 HN-Stories im Beobachtungszeitraum plus ein hohes Volumen an Kommentar-Erwähnungen ergibt Popularität ●●●● (Gesamtwert über 5.000). Die Durchsicht der Threads zeigt einen dominant positiven Ton – schnell, ausgereift, der Massstab, an dem andere gemessen werden – aber die SpaceX-Übernahme und der anschliessende Rückzug der OpenAI-Modelle lösten genug «Was jetzt?»-Unsicherheit aus, um bei Sentiment ●●●○ (Positiv statt Sehr positiv) zu bleiben. HN-Rank: 3 + 4 = 7. Auf Reddit hat r/cursor (158K Mitglieder) einen stetigen Strom an Tipps und Vergleichen mit wärmerem Ton als HN: Reddit-Popularität ●●● und Sentiment ●●●○.</p>
+    <p>Ein wichtiger Vorbehalt: Kurze oder gebräuchliche Namen blähen die HN-Zahlen auf. <em>Manus</em> trifft auch lateinische Texte, <em>Conductor</em> trifft ein anderes Produkt, und CrewAI taucht stark in Job-Suchenden-Skill-Listen auf, nicht in echten Nutzungsdiskussionen. Die HN-API begrenzt auch die tiefe Paginierung, sodass sehr hohe Gesamtwerte Untergrenzen sind, keine exakten Zahlen.</p>
+  </section>
+
+  <div class="filters" role="group" aria-label="Filter tools">
+    <button class="chip" id="f-all" data-lane="all" aria-pressed="true">All lanes</button>
+    <button class="chip" id="f-g" data-lane="g" aria-pressed="false">AI editors</button>
+    <button class="chip" id="f-f" data-lane="f" aria-pressed="false">Agent terminals</button>
+    <button class="chip" id="f-k" data-lane="k" aria-pressed="false">Remote control</button>
+    <button class="chip" id="f-b" data-lane="b" aria-pressed="false">Parallel orchestrators</button>
+    <button class="chip" id="f-c" data-lane="c" aria-pressed="false">Agent-company control planes</button>
+    <button class="chip" id="f-a" data-lane="a" aria-pressed="false">Coding agents</button>
+    <button class="chip" id="f-h" data-lane="h" aria-pressed="false">Cloud agents</button>
+    <button class="chip" id="f-d" data-lane="d" aria-pressed="false">Hosted platforms</button>
+    <button class="chip" id="f-e" data-lane="e" aria-pressed="false">Spec &amp; workflow</button>
+    <button class="chip" id="f-l" data-lane="l" aria-pressed="false">Memory &amp; skills</button>
+    <button class="chip" id="f-m" data-lane="m" aria-pressed="false">Model routers</button>
+    <button class="chip" id="f-j" data-lane="j" aria-pressed="false">Sandboxes</button>
+    <button class="chip" id="f-n" data-lane="n" aria-pressed="false">Browser agents</button>
+    <button class="chip" id="f-i" data-lane="i" aria-pressed="false">Code review</button>
+    <span class="sep" aria-hidden="true"></span>
+    <label class="tog"><input type="checkbox" id="only-oss"><span>Open source only</span></label>
+    <span class="count" id="count"></span>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:16px" id="ranking">
+    <span class="eyebrow">Community ranking · Hacker News + Reddit, 29 Sep 2025 – 29 Sep 2026</span>
+    <div class="rank-grid" id="rank-grid"></div>
+  </section>
+
+
+</div>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+
+.back-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-body);font-size:0.875rem;color:var(--muted);text-decoration:none;margin:0 0 24px;transition:color .15s}
+.back-link:hover{color:var(--ink)}
+
+/* Layout: diagram of the stack, lane map ordered by layer, filters, HN ranking per lane, full tool lists, watch-outs, sources. */
+:root{
+  --bg:oklch(0.975 0.010 70); --surface:oklch(0.998 0.003 70); --ink:oklch(0.200 0.015 55); --muted:oklch(0.520 0.025 55); --line:oklch(0.890 0.014 70); --accent:oklch(0.515 0.140 37);
+  --lane-a:#0F6E74; --lane-b:#A5531C; --lane-c:#5747A8; --lane-d:#2E7A3A; --lane-e:#A63A6B; --lane-f:#2F62A8; --lane-g:#8A6400; --lane-h:#4B4FB8; --lane-i:#B0302A; --lane-j:#4E6B3A; --lane-k:#0A7599; --lane-l:#7B3F8C; --lane-m:#8A4B2A; --lane-n:#666600;
+  --ok:#2E7A3A; --warn:#A06A00; --bad:#B03A2E; --pick:#FFF6DA; --pick-line:#E3C875; --reddit:#FF4500;
+  --f-display:"Spectral","EB Garamond",Georgia,serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:ui-monospace,"SFMono-Regular",monospace;
+}
+
+
+
+*{box-sizing:border-box}
+.lscape-root{color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;background:var(--bg)}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:20px;padding-block:36px 64px;display:flex;flex-direction:column;gap:40px}
+.lscape-root h1,.lscape-root h2,.lscape-root h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+.lscape-root h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.05}
+.lscape-root h2{font-size:24px;font-weight:700}
+.lscape-root h3{font-size:17px;font-weight:600}
+.lscape-root p{margin:0}
+.lscape-root a{color:var(--accent)}
+.lscape-root a:focus-visible,.lscape-root button:focus-visible,.lscape-root input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow-link{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.lede{max-width:66ch;color:var(--muted);font-size:16px}
+.origin{display:flex;flex-direction:column;gap:1.25em;margin:32px 0}
+.origin h2{font-family:var(--f-display);font-size:clamp(1.4rem,2vw + 0.75rem,1.75rem);font-weight:400;letter-spacing:-0.012em;margin:0;color:var(--ink)}
+.origin p{font-family:var(--f-body);font-size:1.0625rem;line-height:1.75;color:var(--ink);margin:0}
+header{display:flex;flex-direction:column;gap:12px}
+
+/* lane map */
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font:500 13px var(--f-body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sep{width:1px;height:22px;background:var(--line);margin-inline:4px}
+.tog{display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none}
+.tog input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+.count{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-left:auto}
+
+/* lanes */
+.lane{display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.lane-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.lane-head h2{color:var(--c)}
+.lane-head p{color:var(--muted);font-size:14px;max-width:70ch}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:8px 24px;padding:14px 18px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row.is-pick{background:var(--pick);box-shadow:inset 3px 0 0 var(--pick-line)}
+@media (max-width:640px){.row{grid-template-columns:1fr}}
+.row .name{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.row .name h3{font-family:var(--f-body)}
+.row .desc{font-size:14px;color:var(--muted);margin-top:4px;max-width:62ch}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:13px;align-content:start;min-width:0}
+.meta dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.meta dd{margin:0;font-variant-numeric:tabular-nums;min-width:0}
+.badge{font:500 11px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.b-add{color:var(--accent)}
+.b-pick{color:var(--ink);background:var(--pick-line);border-color:var(--pick-line)}
+.b-warn{color:var(--warn)}
+.b-bad{color:var(--bad)}
+.b-pre{color:var(--muted)}
+.empty{padding:16px 18px;color:var(--muted);font-size:14px}
+
+/* watch-outs */
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.notes{grid-template-columns:1fr}}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.note .when{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.note p{font-size:14px}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:24px;margin-top:8px}
+
+figure.diagram{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.dg-scroll{overflow-x:auto}
+.diagram svg a{color:var(--ink)}
+.dg-scroll svg{display:block;width:100%;min-width:720px;height:auto;color:var(--ink);font-family:var(--f-body)}
+.dg-box{fill:var(--surface);stroke-width:1.5}
+.dg-box.pick{fill:var(--pick);stroke-width:2.5}
+.diagram a:hover .dg-box,.diagram a:focus-visible .dg-box{fill:var(--bg)}
+.dg-you{fill:var(--bg);stroke:currentColor;stroke-width:1.2}
+.dg-hosted{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 4}
+.dg-t{font-size:13px;font-weight:600;fill:currentColor}
+.dg-s{font-size:11px;fill:var(--muted)}
+.dg-l{font-size:11px;fill:var(--muted);font-style:italic}
+.dg-band{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;fill:var(--muted)}
+.dg-rule{stroke:var(--line);stroke-width:1}
+.dg-arrow{fill:none;stroke:currentColor;stroke-width:1.3}
+figure.diagram figcaption{font-size:14px;color:var(--muted);max-width:80ch}
+a.tool-link{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+a.tool-link:hover{color:var(--accent);border-bottom-color:var(--accent)}
+a.tool-link .ext{font-family:var(--f-mono);font-size:.72em;color:var(--muted);margin-left:3px;vertical-align:1px}
+
+/* community ranking */
+.takeaways{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px}
+@media (max-width:820px){.takeaways{grid-template-columns:1fr}}
+.take{border-left:3px solid var(--accent);padding:4px 0 4px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.take b{font-family:var(--f-display);font-size:16px;font-weight:600}
+.take p{font-size:14px;color:var(--muted)}
+.rank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+@media (max-width:900px){.rank-grid{grid-template-columns:1fr}}
+.rank-lane{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:6px;min-width:0}
+.rank-lane > header{padding:14px 18px 10px;display:flex;flex-direction:column;gap:4px}
+.rank-lane > header h3{font-family:var(--f-display);font-size:18px;color:var(--c);margin:0}
+.rank-lane > header .lane-blurb{font-size:13px;color:var(--muted);margin:0;line-height:1.45}
+.rk{display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 10px;padding:12px 18px;border-top:1px solid var(--line)}
+.rk.is-pick{background:var(--pick);box-shadow:inset 3px 0 0 var(--pick-line)}
+.rk .n{font:500 20px/1.1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.rk .top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.rk .top h4{margin:0;font:600 15px var(--f-body)}
+.scales{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.scale-row{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.scale-src{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;min-width:38px;flex:none}
+.scale-lbl{font-size:10px;color:var(--muted);letter-spacing:.03em;flex:none}
+.reddit-members{font-size:10px;color:var(--muted);font-family:var(--f-mono)}
+.stat-tip{position:relative;display:inline-flex;align-items:center}
+.stat-tip-icon{font-size:11px;color:var(--muted);cursor:help;opacity:.6}
+.stat-tip-text{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:5px 10px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:20;pointer-events:none;font-family:var(--f-mono)}
+.stat-tip:hover .stat-tip-icon{opacity:1}
+.stat-tip:hover .stat-tip-text{display:block}
+.tip-wrap{position:relative;display:inline-flex;align-items:center}
+.tip-trigger{cursor:help;border-bottom:1px dotted var(--muted);text-decoration:none}
+.tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:var(--ink);color:var(--bg);padding:12px 14px;border-radius:6px;font-size:12px;line-height:1.6;white-space:normal;width:320px;z-index:30;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.tip-box code{font-family:var(--f-mono);opacity:.85;font-size:11px}
+.tip-wrap:hover .tip-box{display:block}
+.dots{letter-spacing:2px;color:var(--c);font-size:11px}
+.dots i{font-style:normal;color:var(--line)}
+.sent{font-weight:600;color:var(--ink)}
+.gh-stars{font-variant-numeric:tabular-nums;color:var(--muted)}
+.gh-stars .star{color:#e3b341}
+.q{font-size:13.5px;margin-top:6px;display:flex;gap:8px;min-width:0}
+.q .m{font:600 12px var(--f-mono);width:12px;flex:none;padding-top:1px}
+.q .pos{color:var(--ok)} .q .neg{color:var(--bad)} .q .neu{color:var(--muted)}
+.q span.t{min-width:0;overflow-wrap:anywhere}
+.q a{font-family:var(--f-mono);font-size:11px;white-space:nowrap;margin-left:4px}
+.q .src{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.unranked{padding:12px 18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.rk-desc{font-size:13px;color:var(--muted);margin-top:3px;margin-bottom:4px;max-width:58ch;line-height:1.45}
+.rk-meta{font-size:11px;color:var(--muted);font-family:var(--f-mono);margin-top:5px;padding-top:4px;border-top:1px solid var(--line)}
+.rk .top .rk-meta-top{margin-left:auto;font-size:11px;color:var(--muted);font-family:var(--f-mono);white-space:nowrap;line-height:1.4}
+.method-lbl{font-size:inherit;border-bottom:1px dotted var(--muted);cursor:default}
+.b-thin{color:var(--muted);border-style:dashed}
+@media (prefers-reduced-motion:no-preference){.lane-card{transition:border-color .15s}}
+
+
+/* Datapeople integration overrides */
+.lscape-root {
+  padding-top: 48px;
+  padding-bottom: 80px;
+}
+</style>
+
+<script is:inline>
+
+const LANES = {
+  a:{name:"Coding agents", q:"The agent that writes the code.", layer:"Agents", color:"var(--lane-a)",
+     blurb:"Einzelagenten, die ein Repository lesen, Befehle ausführen und Pull Requests öffnen. Orchestratoren und Control Planes verwenden diese; sie ersetzen sie nicht."},
+  b:{name:"Parallel orchestrators", q:"One developer, many coding agents in worktrees.", layer:"Coordination", color:"var(--lane-b)",
+     blurb:"Tools, die mehrere Coding-Agenten starten, jedem einen isolierten Git-Worktree geben und beim Review und Mergen helfen."},
+  c:{name:"Agent-company control planes", q:"Many agents run as an organisation.", layer:"Coordination", color:"var(--lane-c)",
+     blurb:"Organigramme, Budgets, Freigaben und Audit-Trails für Agenten aller Art – oder Frameworks zum Selbstbauen."},
+  d:{name:"Hosted platforms", q:"No setup, agents in the cloud, pay per use.", layer:"Agents", color:"var(--lane-d)",
+     blurb:"Verwaltete Produkte für Teams, die nichts selbst hosten wollen. Closed Source, nach Plan, Credits oder Sitzen abgerechnet."},
+  e:{name:"Spec & workflow", q:"How the agent plans before it codes.", layer:"Context", color:"var(--lane-e)",
+     blurb:"Frameworks, die einen Agenten zuerst ein Proposal, Spec oder eine Aufgabenliste schreiben lassen, bevor er baut. Meist Markdown-Dateien und Slash-Commands, die in jedem Coding-Agenten funktionieren."},
+  f:{name:"Agent terminals", q:"Where the running sessions live.", layer:"Interfaces", color:"var(--lane-f)",
+     blurb:"Terminals und Multiplexer, die viele Agenten-Sessions am Leben erhalten, zeigen, welche Aufmerksamkeit braucht, und einen geschlossenen Laptop überleben. Orchestratoren wie Firstmate und Gas Town laufen ihre Agenten darin."},
+  g:{name:"AI editors", q:"The IDE with the agent built in.", layer:"Interfaces", color:"var(--lane-g)",
+     blurb:"Editoren, in denen der Agent direkt neben dem Code lebt: Tab-Completion, Chat und zunehmend die Möglichkeit, Terminal-Agenten wie Claude Code darin zu starten."},
+  h:{name:"Cloud agents", q:"Hand over a ticket, get back a pull request.", layer:"Agents", color:"var(--lane-h)",
+     blurb:"Agenten, die auf fremden Servern laufen, per Issue, Slack oder Telefon angestossen werden und einen PR als Ergebnis liefern. Kein Terminal nötig."},
+  i:{name:"Code review", q:"Who checks the agent's work.", layer:"Output", color:"var(--lane-i)",
+     blurb:"Bots und Gates, die Pull Requests prüfen oder einen Push blockieren, bis Tests, Lint und ein KI-Review bestanden sind. Wichtiger, je mehr Code Agenten schreiben."},
+  j:{name:"Sandboxes", q:"Where agent code runs safely.", layer:"Infrastructure", color:"var(--lane-j)",
+     blurb:"Isolierte VMs und Container, die in Sekunden starten, damit Agenten Code ausführen können, ohne die eigene Maschine zu berühren. Paperclip, OpenHands und die Cloud-Agenten bauen darauf auf."},
+  k:{name:"Remote control", q:"Steer agents away from your desk.", layer:"Interfaces", color:"var(--lane-k)",
+     blurb:"Apps, mit denen man eine laufende Session vom Handy oder Browser aus prüfen, einen Schritt freigeben oder eine neue Aufgabe starten kann."},
+  l:{name:"Memory & skills", q:"What the agent knows between sessions.", layer:"Context", color:"var(--lane-l)",
+     blurb:"Instruction-Dateien, Skill-Pakete, Doku-Feeds und Memory-Stores, die einem Agenten Kontext geben, den er sonst vergessen würde."},
+  m:{name:"Model routers", q:"One key, many models.", layer:"Infrastructure", color:"var(--lane-m)",
+     blurb:"Gateways, die viele Modellanbieter hinter einer API vereinen, damit Harnesses wie OpenCode, Pi oder Kilo auf günstigere Modelle wechseln können."},
+  n:{name:"Browser agents", q:"Agents that use the web.", layer:"Infrastructure", color:"var(--lane-n)",
+     blurb:"Bibliotheken und gehostete Browser, mit denen ein Agent Seiten öffnen, klicken, Formulare ausfüllen und die gerade gebaute UI prüfen kann."}
+};
+
+// oss: true/false.  status: "" | warn | bad | pre
+const TOOLS = [
+  // A — coding agents
+  {lane:"a",name:"OpenHands",gh:89599,oss:true,desc:"Autonomous, sandboxed coding agent; now ships as Agent Canvas plus an SDK and CLI.",lic:"MIT",cost:"Free; cloud tier free up to 10 conversations/day",trac:"89.5k ★ (29 Sep)"},
+  {lane:"a",name:"OpenCode",gh:211055,oss:true,desc:"The default provider-agnostic terminal agent and the usual open-source answer to Claude Code. Supports local models. Anthropic blocked Claude subscriptions in it and took legal action in March 2026.",lic:"MIT",cost:"Free + model costs",trac:"~202k ★ (29 Aug)"},
+  {lane:"a",name:"Claude Code",gh:148652,oss:false,desc:"Anthropic's terminal agent; the most-discussed coding agent on Hacker News.",lic:"Closed source",cost:"Claude subscription or API",trac:"~140k ★ (3 Aug)"},
+  {lane:"a",name:"Codex CLI",gh:127351,oss:true,desc:"OpenAI's sandboxed terminal agent, tuned for OpenAI models.",lic:"Apache-2.0",cost:"ChatGPT plan or API",trac:"~119k ★ (29 Aug)"},
+  {lane:"a",name:"DeepSeek Harness",gh:240799,oss:true,status:"pre",statusText:"Preview",desc:"Launched 13 Aug 2026 and took the star lead in two weeks. Everything is a plugin, including the agent loop.",lic:"MIT",cost:"Free + model costs",trac:"~203k ★ (29 Aug)"},
+  {lane:"a",name:"Pi",gh:110629,oss:true,desc:"Lean, token-efficient, hackable agent with an extension system.",lic:"MIT",cost:"Free + model costs",trac:"~98k ★ (29 Aug)"},
+  {lane:"a",name:"Aider",gh:49292,oss:true,desc:"Terminal pair programmer that commits every edit to git.",lic:"Open source",cost:"Free + model costs",trac:"—"},
+  {lane:"a",name:"Cline",gh:69597,oss:true,desc:"Autonomous coding agent as an IDE extension, CLI or embeddable SDK.",lic:"Open source",cost:"Free + model costs",trac:"—"},
+  {lane:"a",name:"Kilo Code",gh:27453,oss:true,desc:"VS Code, JetBrains and CLI agent with cloud and parallel agents. Kilo also hosts Gas Town. Acquired by Anaconda in July 2026.",lic:"MIT",cost:"Free + model costs",trac:"—"},
+  {lane:"a",name:"Goose",gh:54805,oss:true,desc:"General on-machine agent with CLI and desktop apps; strong at coding, reaches beyond the editor.",lic:"Open source",cost:"Free + model costs",trac:"—"},
+  {lane:"a",name:"Gemini CLI",gh:107196,oss:true,status:"bad",statusText:"Discontinued",desc:"Google's open-source terminal agent stopped working on 18 June 2026. Its successor is Antigravity CLI (agy).",lic:"Apache-2.0",cost:"—",trac:"—"},
+  {lane:"a",name:"SWE-agent",gh:20449,oss:true,desc:"Research-lineage issue solver from Princeton and Stanford; OpenHands is the productised cousin.",lic:"Open source",cost:"Free + model costs",trac:"—"},
+
+  // B — parallel orchestrators
+  {lane:"b",name:"Firstmate",gh:7357,oss:true,desc:"Talk to one agent; it runs a crew of coding agents in worktrees and hands back PRs.",lic:"MIT",cost:"Free + harness subscription",trac:"7.2k ★ (29 Sep)"},
+  {lane:"b",name:"Conductor",oss:false,desc:"Free Mac app from Melty Labs that runs Claude Code and Codex in isolated workspaces with review and merge built in.",lic:"Free app, BYOK",cost:"Free + model costs",trac:"macOS"},
+  {lane:"b",name:"Gas Town",gh:18219,oss:true,status:"warn",statusText:"Caution",desc:"Steve Yegge's orchestrator for 20–30 agents with Beads memory and named roles (Mayor, Polecats, Refinery). Hosted version by Kilo since May 2026.",lic:"Open source",cost:"Free, or hosted via Kilo",trac:"~17.8k ★ (Aug)"},
+  {lane:"b",name:"Composio Agent Orchestrator",gh:12560,oss:true,desc:"Plans tasks, spawns agents in worktrees, and handles CI fixes, merge conflicts and reviews itself.",lic:"Open source",cost:"Free + model costs",trac:"—"},
+  {lane:"b",name:"Vibe Kanban",gh:28221,oss:true,status:"bad",statusText:"Sunset",desc:"Kanban where each card is a worktree and an agent; supports 10+ agents. Company shut down; community-maintained since April.",lic:"Apache-2.0",cost:"Free",trac:"—"},
+  {lane:"b",name:"Symphony",gh:27483,oss:true,desc:"OpenAI's reference implementation of \"harness engineering\". Baton is a Go port.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"b",name:"Superset",gh:14764,oss:false,desc:"Desktop workspace for working alongside coding agents instead of managing them from a dashboard.",lic:"Commercial",cost:"See vendor",trac:"—"},
+  {lane:"b",name:"Bernstein",gh:1325,oss:true,status:"pre",statusText:"Beta",desc:"Deterministic orchestrator for 40+ CLI agents. No model in the coordination loop, so runs replay identically.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"b",name:"Nimbalyst",gh:1805,oss:false,desc:"Workspace built around parallel sessions, worktrees and non-code artifacts.",lic:"See vendor",cost:"See vendor",trac:"—"},
+  {lane:"b",name:"OpenHands Agent Canvas",gh:89599,oss:true,desc:"OpenHands' control center runs OpenHands, Claude Code, Codex or Gemini across local, remote and cloud backends.",lic:"MIT",cost:"Free",trac:"see OpenHands"},
+  {lane:"b",name:"Orca",gh:82031,oss:true,desc:"Stably AI's agent development environment: parallel agents in git worktrees with built-in terminals, diff review and GitHub/Linear tasks.",lic:"MIT",cost:"Free + model costs",trac:"73.1k ★ (29 Sep)"},
+
+  // C — control planes
+  {lane:"c",name:"Paperclip",gh:95015,oss:true,desc:"Self-hosted control plane: org charts, budgets, approvals and heartbeats for any agent.",lic:"MIT",cost:"Free + model costs",trac:"84.1k ★ (29 Sep)"},
+  {lane:"c",name:"OpenClaw",gh:390835,oss:true,desc:"The single agent Paperclip was built to manage (\"OpenClaw is the employee, Paperclip is the company\"). Lives in Telegram, WhatsApp, Discord and Signal.",lic:"Open source, OpenAI-backed",cost:"Free + model costs",trac:"1,605 HN stories in 12 months"},
+  {lane:"c",name:"CrewAI",gh:59216,oss:true,desc:"Python framework for writing your own multi-agent orchestration. The code-first alternative, with no org-chart UI or approval inbox.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"c",name:"Microsoft Agent Framework",gh:13877,oss:true,desc:"AutoGen and Semantic Kernel merged into one multi-agent framework for .NET and Python.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"c",name:"Gas City",oss:true,desc:"Configurable engine for building \"software factories\" from the Gas Town community, led by Chris Sells.",lic:"Open source",cost:"Free",trac:"500+ contributors across Gas Town projects"},
+  {lane:"c",name:"Multica",gh:51737,oss:true,desc:"Managed-agents platform that turns coding agents into teammates you assign tasks to and track.",lic:"Open source",cost:"Free",trac:"—"},
+
+  // D — hosted
+  {lane:"d",name:"Hyperagent",oss:false,desc:"Howie Liu's cloud agent platform with skills, fleets and LLM-judged runs. Spun out of Airtable into its own company before Bending Spoons bought Airtable in August 2026.",lic:"Closed",cost:"$20–$10,000/mo, paid back as credit",trac:"Launched Feb–Apr 2026"},
+  {lane:"d",name:"Manus",oss:false,status:"warn",statusText:"Ownership change",desc:"Autonomous single agent for research and execution. Independent again since August 2026, after China blocked Meta's acquisition.",lic:"Closed",cost:"Free 300 credits/day; Pro from $20/mo",trac:"—"},
+  {lane:"d",name:"Lindy",oss:false,desc:"No-code \"AI employee\" templates for email, calendar and meetings, with 3,000+ integrations.",lic:"Closed",cost:"From $49.99/mo",trac:"400k+ paying users (Apr)"},
+  {lane:"d",name:"Genspark",oss:false,desc:"Agent suite that produces finished slides, sheets, research briefs and calls from one prompt.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"d",name:"Globster",oss:false,desc:"Personal agents built on OpenClaw with a NemoClaw security layer; interface resembles Hyperagent's.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"d",name:"Viktor",oss:false,desc:"Autonomous coworker that lives in Slack and Microsoft Teams.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"d",name:"Gumloop",oss:false,desc:"Visual canvas for AI workflows. You build the logic yourself instead of delegating it.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"d",name:"Zapier Agents",oss:false,desc:"Agents on top of Zapier's 7,000+ app connections.",lic:"Closed",cost:"~$33/mo add-on",trac:"—"},
+  {lane:"d",name:"Relevance AI",oss:false,desc:"No-code and API agents aimed at sales and ops teams.",lic:"Closed",cost:"Free tier",trac:"—"},
+  {lane:"d",name:"Dust",gh:1476,oss:false,desc:"Internal knowledge agents over Notion, Slack and Drive.",lic:"Closed",cost:"Limited free tier",trac:"—"},
+  {lane:"d",name:"n8n",gh:206347,oss:true,desc:"Self-hostable workflow platform with 1,000+ integrations; the route for data sovereignty.",lic:"Source available",cost:"Free self-hosted",trac:"—"},
+
+  // E — spec & workflow
+  {lane:"e",name:"OpenSpec",gh:70753,oss:true,desc:"Lightweight spec layer kept in the repo. Agents propose a change, write specs and tasks, apply them, then archive. Works in 30+ coding agents.",lic:"MIT",cost:"Free",trac:"66.9k ★ (29 Sep)"},
+  {lane:"e",name:"Superpowers",gh:293260,oss:true,desc:"Jesse Vincent's skills pack: brainstorm, plan, then execute with test-driven development and review between tasks. Works in Claude Code, Cursor, Copilot and more.",lic:"MIT",cost:"Free",trac:"292k ★ (29 Sep)"},
+  {lane:"e",name:"GitHub Spec Kit",gh:139504,oss:true,desc:"GitHub's toolkit for spec-driven development: constitution, spec, plan and tasks as Markdown, driven by slash commands in your agent.",lic:"MIT",cost:"Free",trac:"139k ★ (29 Sep)"},
+  {lane:"e",name:"Kiro",oss:false,desc:"Amazon's spec-first IDE and CLI. Turns a prompt into requirements, a design and a task checklist before coding.",lic:"Proprietary",cost:"Free 50 credits; $20–$200/mo",trac:"—"},
+  {lane:"e",name:"BMAD Method",gh:53660,oss:true,desc:"Agile-style method with predefined personas (analyst, PM, architect, developer) that hand documents to each other.",lic:"MIT",cost:"Free",trac:"53.6k ★ (29 Sep)"},
+  {lane:"e",name:"Task Master",gh:28113,oss:true,status:"warn",statusText:"Telemetry",desc:"Turns a PRD into a task list your editor's agent works through, via MCP or CLI. An HN user reported that default telemetry sends full prompts.",lic:"MIT + Commons Clause",cost:"Free + model costs",trac:"28k ★ (29 Sep)"},
+  {lane:"e",name:"Beads",gh:27535,oss:true,desc:"Steve Yegge's issue tracker and memory for coding agents; the base layer of Gas Town.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"e",name:"Agent OS",gh:5458,oss:true,desc:"Captures your codebase's conventions as standards and feeds them into specs. Version 3 (Jan 2026) moved to lighter, per-task planning.",lic:"MIT",cost:"Free",trac:"5.1k ★ (29 Sep)"},
+  {lane:"e",name:"Tessl",oss:false,status:"pre",statusText:"Beta",desc:"Spec-as-source platform from Snyk's founder, plus a registry that scores agent skills with evals.",lic:"Proprietary",cost:"Closed beta",trac:"$125M raised"},
+
+  // F — agent terminals
+  {lane:"f",name:"Herdr",gh:41583,oss:true,desc:"Terminal multiplexer built for agents. Shows which session is working, blocked or done, keeps sessions alive over SSH and across machines. Joined Y Combinator in August and switched from AGPL to Apache.",lic:"Apache-2.0",cost:"Free",trac:"41.3k ★ (29 Sep)"},
+  {lane:"f",name:"tmux",gh:49580,oss:true,desc:"The classic multiplexer and still the default; many agent orchestrators and session managers build on it.",lic:"ISC",cost:"Free",trac:"—"},
+  {lane:"f",name:"cmux",gh:27518,oss:true,desc:"Native macOS terminal built on Ghostty, with vertical tabs, notification rings when an agent needs you, and an embedded browser.",lic:"GPL-3.0",cost:"Free",trac:"26.4k ★ (29 Sep)"},
+  {lane:"f",name:"Zellij",gh:35598,oss:true,desc:"Modern multiplexer with good defaults, a web client and WebAssembly plugins.",lic:"MIT",cost:"Free",trac:"34.5k ★ (29 Sep)"},
+  {lane:"f",name:"Agent of Empires",gh:3303,oss:true,desc:"tmux-based session manager for Claude Code, OpenCode and others, with worktrees, sandboxes and a web and phone view.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"f",name:"Warp",oss:true,desc:"Terminal with its own coding agent and cloud orchestration. The client went open source in April 2026.",lic:"AGPL-3.0 client",cost:"Free + paid AI plans",trac:"~65k ★ (Aug)"},
+  {lane:"f",name:"Ghostty",gh:61729,oss:true,desc:"Fast general-purpose terminal, now run by a non-profit. Not agent-specific, but cmux and several agent tools build on it.",lic:"MIT",cost:"Free",trac:"—"},
+  // G — AI editors
+  {lane:"g",name:"Cursor",oss:false,status:"warn",statusText:"Ownership change",desc:"VS Code-based AI editor with its own Composer models, cloud agents and the Bugbot reviewer. SpaceX agreed to buy it for $60B (announced April 2026); OpenAI then withdrew its models.",lic:"Closed",cost:"Free tier; paid plans",trac:"≈1,000 HN stories in 12 months"},
+  {lane:"g",name:"VS Code + GitHub Copilot",oss:false,desc:"Microsoft's editor with Copilot chat, agent mode and completions. Copilot moved to usage-based AI credits on 1 June 2026.",lic:"MIT editor; Copilot closed",cost:"Free tier; paid Copilot plans",trac:"—"},
+  {lane:"g",name:"Zed",gh:91099,oss:true,desc:"Fast Rust editor with a built-in agent panel that can also host outside agents like Claude Code or OpenCode over ACP.",lic:"Open source (GPL)",cost:"Free; paid AI plan",trac:"—"},
+  {lane:"g",name:"Antigravity",oss:false,desc:"Google's agent-first IDE; its CLI replaced Gemini CLI. Users protested when free quotas turned into paid plans.",lic:"Closed",cost:"Free tier; Google AI plans",trac:"Launch drew 1,088 pts on HN"},
+  {lane:"g",name:"Devin Desktop (formerly Windsurf)",oss:false,desc:"Cognition's editor, renamed from Windsurf on 2 June 2026.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"g",name:"JetBrains Air",oss:false,desc:"JetBrains' agentic development environment. Public preview in March 2026, full launch in September. Runs agents such as Claude and OpenCode over ACP.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"g",name:"Void",gh:28780,oss:true,status:"bad",statusText:"Archived",desc:"Open-source VS Code fork with AI features; archived in June 2026.",lic:"Apache-2.0",cost:"—",trac:"—"},
+
+  // H — cloud agents
+  {lane:"h",name:"Cursor cloud agents",oss:false,desc:"Cursor's agents that run in the cloud, started from the editor, Slack, Linear or a phone.",lic:"Closed",cost:"Part of Cursor plans",trac:"—"},
+  {lane:"h",name:"Devin",oss:false,desc:"Cognition's autonomous engineer: works in its own cloud machine and opens pull requests.",lic:"Closed",cost:"Paid plans",trac:"—"},
+  {lane:"h",name:"Claude Managed Agents",oss:false,desc:"Anthropic's hosted runtime for Claude agents with sandboxes and skills, launched April 2026.",lic:"Closed",cost:"Usage-based",trac:"Launch 169 pts"},
+  {lane:"h",name:"Jules",oss:false,desc:"Google's asynchronous coding agent: works on a GitHub repo in a cloud VM and returns a PR.",lic:"Closed",cost:"Free tier; Google AI plans",trac:"—"},
+  {lane:"h",name:"Codex cloud",oss:false,desc:"OpenAI's cloud version of Codex, running tasks in containers from ChatGPT.",lic:"Closed",cost:"ChatGPT plans",trac:"—"},
+  {lane:"h",name:"Copilot coding agent",oss:false,desc:"GitHub's agent that takes an assigned issue and opens a PR, running in GitHub Actions.",lic:"Closed",cost:"Copilot plans",trac:"—"},
+  {lane:"h",name:"Tembo",gh:1267,oss:false,desc:"Managed platform for running coding agents across many repos without hosting an orchestrator.",lic:"Closed",cost:"See vendor",trac:"—"},
+
+  // I — code review
+  {lane:"i",name:"Cursor Bugbot",oss:false,desc:"Cursor's pull-request reviewer; now runs on Cursor's own Composer model.",lic:"Closed",cost:"Cursor add-on",trac:"—"},
+  {lane:"i",name:"Greptile",oss:false,desc:"AI code review that indexes the whole codebase; publishes its own review benchmarks.",lic:"Closed",cost:"See vendor",trac:"\"AI code review bubble\" post: 351 pts"},
+  {lane:"i",name:"GitHub Copilot code review",oss:false,desc:"Copilot reviews pull requests on GitHub. Since April 2026 each review also uses GitHub Actions minutes.",lic:"Closed",cost:"Copilot plans + Actions minutes",trac:"—"},
+  {lane:"i",name:"Graphite",oss:false,desc:"Stacked pull requests and a review inbox, with an AI reviewer on top.",lic:"Closed",cost:"Free tier; paid AI reviews",trac:"—"},
+  {lane:"i",name:"CodeRabbit",oss:false,desc:"Widely installed AI reviewer for GitHub and GitLab pull requests.",lic:"Closed",cost:"See vendor",trac:"—"},
+  {lane:"i",name:"no-mistakes",gh:8695,oss:true,desc:"Kun Chen's local git proxy: runs AI review, tests, docs and lint before a push reaches GitHub.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"i",name:"Qodo",oss:false,desc:"AI code review (formerly CodiumAI) with its own review benchmark.",lic:"Closed",cost:"See vendor",trac:"—"},
+
+  // J — sandboxes
+  {lane:"j",name:"Modal",oss:false,desc:"Serverless cloud with fast-starting sandboxes; reports scaling to 1M concurrent sandboxes.",lic:"Closed",cost:"Usage-based",trac:"—"},
+  {lane:"j",name:"Cloudflare Sandbox SDK",oss:false,desc:"Run agent code in isolated containers on Cloudflare's network.",lic:"Closed",cost:"Usage-based",trac:"Launch 256 pts"},
+  {lane:"j",name:"E2B",gh:14046,oss:true,desc:"Cloud sandboxes built for agents; used by benchmarks and products such as boxes.dev.",lic:"Apache-2.0 SDK",cost:"Free tier; usage-based",trac:"—"},
+  {lane:"j",name:"Daytona",gh:71681,oss:false,status:"warn",statusText:"Went closed",desc:"Sandbox platform for agent code. Moved development to a private codebase in June 2026; the Nightona fork continues its last AGPL release.",lic:"Closed (was AGPL)",cost:"Usage-based",trac:"—"},
+  {lane:"j",name:"Boxes.dev",oss:false,desc:"Cloud dev boxes that run Claude Code and Codex, one copy of your main box per task. Built on E2B.",lic:"Closed",cost:"See vendor",trac:"Show HN 105 pts"},
+  {lane:"j",name:"Vercel Sandbox",oss:false,desc:"Short-lived sandboxes on Vercel's infrastructure.",lic:"Closed",cost:"Usage-based",trac:"—"},
+
+  // K — remote control
+  {lane:"k",name:"Claude Code Remote Control",oss:false,desc:"Continue a local Claude Code session from the Claude phone or web app (Feb 2026). Needs telemetry turned on.",lic:"Closed",cost:"Claude plans",trac:"Launch 544 pts"},
+  {lane:"k",name:"Omnara",gh:2880,oss:false,desc:"Run and watch Claude Code and Codex from web and phone (YC S25). No end-to-end encryption as of its February launch.",lic:"Closed",cost:"Free tier; paid plans",trac:"Launch HN 147 pts"},
+  {lane:"k",name:"Paseo",gh:19071,oss:true,desc:"Open-source desktop, phone and CLI front end that wraps each lab's own agent harness.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"k",name:"Happy",oss:true,desc:"MIT-licensed mobile and web client for Claude Code and Codex.",lic:"MIT",cost:"Free",trac:"—"},
+  {lane:"k",name:"Remote-OpenCode",gh:214,oss:true,desc:"Control OpenCode sessions from Discord, including voice.",lic:"Open source",cost:"Free",trac:"—"},
+  {lane:"k",name:"Termrover",oss:false,desc:"Phone terminal that people pair with Tailscale and Herdr to reach agent sessions.",lic:"See vendor",cost:"See vendor",trac:"—"},
+
+  // L — memory & skills
+  {lane:"l",name:"AGENTS.md",gh:24697,oss:true,desc:"Open standard instruction file for agents, now under the Linux Foundation's Agentic AI Foundation. Claude Code reads it since September 2026.",lic:"Open standard",cost:"Free",trac:"Top thread 740 pts"},
+  {lane:"l",name:"Claude Code plugins",oss:false,desc:"Marketplaces that bundle skills, commands and hooks for Claude Code and keep them updated.",lic:"Mixed",cost:"Free",trac:"—"},
+  {lane:"l",name:"Context7",gh:62552,oss:false,desc:"Serves current library documentation to agents over MCP.",lic:"See vendor",cost:"See vendor",trac:"—"},
+  {lane:"l",name:"Mem0",gh:66363,oss:true,desc:"Memory layer that stores and retrieves facts for agents across sessions.",lic:"Open source + cloud",cost:"Free; paid cloud",trac:"—"},
+  {lane:"l",name:"skills.sh",gh:32823,oss:true,desc:"Vercel's public index of agent skills, installed with npx skills add.",lic:"Open index",cost:"Free",trac:"—"},
+  {lane:"l",name:"Letta",gh:24981,oss:true,desc:"Stateful agents with long-term memory (formerly MemGPT), plus Letta Code, a coding agent that learns.",lic:"Open source",cost:"Free; paid cloud",trac:"—"},
+
+  // M — model routers
+  {lane:"m",name:"OpenRouter",oss:false,desc:"One API and one bill for hundreds of models from many providers. Announced in August 2026 that it is joining Stripe.",lic:"Closed",cost:"Model price + fee on credits",trac:"≈470 HN stories in 12 months"},
+  {lane:"m",name:"LiteLLM",gh:59917,oss:true,status:"warn",statusText:"Security incident",desc:"Open-source Python proxy and SDK that puts 100+ providers behind one OpenAI-style API. Two PyPI releases shipped a credential stealer in March 2026.",lic:"Open source",cost:"Free; paid enterprise",trac:"—"},
+  {lane:"m",name:"Portkey",gh:13114,oss:true,desc:"AI gateway with routing, caching and logs; open-sourced its gateway in April 2026.",lic:"Open source gateway",cost:"Free tier; paid plans",trac:"—"},
+  {lane:"m",name:"Vercel AI Gateway",oss:false,desc:"Vercel's gateway to many model providers.",lic:"Closed",cost:"Usage-based",trac:"—"},
+  {lane:"m",name:"Cloudflare AI Gateway",oss:false,desc:"Cloudflare's gateway with caching, logs and spend limits (added June 2026).",lic:"Closed",cost:"Fee on unified billing",trac:"—"},
+
+  // N — browser agents
+  {lane:"n",name:"Playwright MCP",gh:37714,oss:true,desc:"Microsoft's MCP server that lets an agent drive a real browser through Playwright.",lic:"Apache-2.0",cost:"Free",trac:"—"},
+  {lane:"n",name:"Browser Use",gh:116790,oss:true,desc:"Open-source Python library and cloud for browser agents. Telemetry is on by default.",lic:"MIT",cost:"Free; paid cloud",trac:"—"},
+  {lane:"n",name:"Browserbase",oss:false,desc:"Hosted headless browsers for agents; makers of Stagehand.",lic:"Closed",cost:"Free tier; usage-based",trac:"—"},
+  {lane:"n",name:"Stagehand",gh:25483,oss:true,desc:"Browserbase's open-source framework for act, extract and observe on web pages. Version 4 dropped its built-in agent.",lic:"MIT",cost:"Free",trac:"—"},
+  {lane:"n",name:"Hyperbrowser HyperAgent",gh:1581,oss:true,desc:"Playwright with AI commands, plus a hosted browser cloud. Not the Airtable Hyperagent.",lic:"Open source",cost:"Free; paid cloud",trac:"—"},
+  {lane:"n",name:"Steel",gh:7712,oss:true,desc:"Open-source browser API for agents.",lic:"Open source",cost:"Free; paid cloud",trac:"—"}
+];
+
+// Community ranking. s = sentiment 0–4, v = HN volume 0–4, tot = stories + comments on them + comment mentions.
+// q: [kind, text, HN comment id, optional source label]
+const URLS = {"OpenHands": "https://github.com/All-Hands-AI/OpenHands", "Paperclip": "https://github.com/paperclipai/paperclip", "Firstmate": "https://github.com/kunchenguid/firstmate", "Hyperagent": "https://www.hyperagent.com", "OpenCode": "https://github.com/anomalyco/opencode", "Claude Code": "https://github.com/anthropics/claude-code", "Codex CLI": "https://github.com/openai/codex", "DeepSeek Harness": "https://github.com/deepseek-ai/deepseek-harness", "Pi": "https://github.com/earendil-works/pi", "Aider": "https://github.com/Aider-AI/aider", "Cline": "https://github.com/cline/cline", "Kilo Code": "https://github.com/Kilo-Org/kilocode", "Goose": "https://github.com/aaif-goose/goose", "Gemini CLI": "https://github.com/google-gemini/gemini-cli", "SWE-agent": "https://github.com/SWE-agent/SWE-agent", "Conductor": "https://www.conductor.build", "Gas Town": "https://github.com/gastownhall/gastown", "Composio Agent Orchestrator": "https://github.com/ComposioHQ/agent-orchestrator", "Vibe Kanban": "https://github.com/BloopAI/vibe-kanban", "Symphony": "https://github.com/openai/symphony", "Superset": "https://github.com/superset-sh/superset", "Bernstein": "https://github.com/sipyourdrink-ltd/bernstein", "Nimbalyst": "https://github.com/Nimbalyst/nimbalyst", "OpenHands Agent Canvas": "https://github.com/OpenHands/OpenHands", "Orca": "https://github.com/stablyai/orca", "Claude Squad": "https://github.com/smtg-ai/claude-squad", "OpenClaw": "https://github.com/openclaw/openclaw", "CrewAI": "https://github.com/crewAIInc/crewAI", "Microsoft Agent Framework": "https://github.com/microsoft/agent-framework", "Gas City": "https://github.com/gastownhall", "Multica": "https://github.com/multica-ai/multica", "Manus": "https://manus.im", "Lindy": "https://www.lindy.ai", "Genspark": "https://www.genspark.ai", "Globster": "https://globster.ai", "Viktor": "https://www.getviktor.com", "Gumloop": "https://www.gumloop.com", "Zapier Agents": "https://zapier.com/agents", "Relevance AI": "https://relevanceai.com", "Dust": "https://github.com/dust-tt/dust", "n8n": "https://github.com/n8n-io/n8n", "OpenSpec": "https://github.com/Fission-AI/OpenSpec", "Superpowers": "https://github.com/obra/superpowers", "GitHub Spec Kit": "https://github.com/github/spec-kit", "Kiro": "https://kiro.dev", "BMAD Method": "https://github.com/bmad-code-org/BMAD-METHOD", "Task Master": "https://github.com/eyaltoledano/claude-task-master", "Beads": "https://github.com/steveyegge/beads", "Agent OS": "https://github.com/buildermethods/agent-os", "Tessl": "https://tessl.io", "Herdr": "https://github.com/herdrdev/herdr", "tmux": "https://github.com/tmux/tmux", "cmux": "https://github.com/manaflow-ai/cmux", "Zellij": "https://github.com/zellij-org/zellij", "Agent of Empires": "https://github.com/agent-of-empires/agent-of-empires", "Warp": "https://www.warp.dev", "Ghostty": "https://github.com/ghostty-org/ghostty", "Cursor": "https://cursor.com", "VS Code + GitHub Copilot": "https://code.visualstudio.com", "Zed": "https://github.com/zed-industries/zed", "Antigravity": "https://antigravity.google", "Devin Desktop (formerly Windsurf)": "https://devin.ai/desktop", "JetBrains Air": "https://www.jetbrains.com/air/", "Void": "https://github.com/voideditor/void", "Cursor cloud agents": "https://cursor.com/docs/cloud-agent", "Devin": "https://devin.ai", "Claude Managed Agents": "https://platform.claude.com/docs/en/managed-agents/overview", "Jules": "https://jules.google", "Codex cloud": "https://chatgpt.com/codex", "Copilot coding agent": "https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent", "Tembo": "https://github.com/tembo/tembo", "Cursor Bugbot": "https://cursor.com/bugbot", "Greptile": "https://www.greptile.com", "GitHub Copilot code review": "https://docs.github.com/en/copilot/concepts/agents/code-review", "Graphite": "https://graphite.com", "CodeRabbit": "https://www.coderabbit.ai", "no-mistakes": "https://github.com/kunchenguid/no-mistakes", "Qodo": "https://www.qodo.ai", "Modal": "https://modal.com", "Cloudflare Sandbox SDK": "https://developers.cloudflare.com/sandbox/", "E2B": "https://github.com/e2b-dev/E2B", "Daytona": "https://github.com/daytonaio/daytona", "Boxes.dev": "https://boxes.dev", "Vercel Sandbox": "https://vercel.com/docs/sandbox", "Claude Code Remote Control": "https://code.claude.com/docs/en/remote-control", "Omnara": "https://github.com/omnara-ai/omnara", "Paseo": "https://github.com/getpaseo/paseo", "Happy": "https://happy.engineering", "Remote-OpenCode": "https://github.com/RoundTable02/remote-opencode", "Termrover": "https://termrover.sh", "AGENTS.md": "https://github.com/agentsmd/agents.md", "Claude Code plugins": "https://code.claude.com/docs/en/plugins", "Context7": "https://github.com/upstash/context7", "Mem0": "https://github.com/mem0ai/mem0", "skills.sh": "https://github.com/vercel-labs/skills", "Letta": "https://github.com/letta-ai/letta", "OpenRouter": "https://openrouter.ai", "LiteLLM": "https://github.com/BerriAI/litellm", "Portkey": "https://github.com/Portkey-AI/gateway", "Vercel AI Gateway": "https://vercel.com/ai-gateway", "Cloudflare AI Gateway": "https://developers.cloudflare.com/ai-gateway/", "Playwright MCP": "https://github.com/microsoft/playwright-mcp", "Browser Use": "https://github.com/browser-use/browser-use", "Browserbase": "https://www.browserbase.com", "Stagehand": "https://github.com/browserbase/stagehand", "Hyperbrowser HyperAgent": "https://github.com/hyperbrowserai/HyperAgent", "Steel": "https://github.com/steel-dev/steel-browser"};
+function nameLink(n){ const u=URLS[n]; return u?`<a class="tool-link" href="${u}" target="_blank" rel="noopener">${esc(n)}<span class="ext" aria-hidden="true">↗</span></a>`:esc(n); }
+const SENT = ["Negative","Mostly negative","Mixed","Mostly positive","Positive"];
+const RANK = {
+ a:{ranked:[
+  {name:"OpenCode",gh:211055,s:3,v:4,tot:7529,st:"581 stories · 4,593 comment mentions · top story 1,274 pts",
+   q:[["pos","This replaced Aider for me a couple months back.","47461326"],
+      ["neg","Just remember, OpenCode is sending telemetry to their own servers, even when you're using your own locally hosted models.","47461554"]],
+   rs:3,rv:2,rst:"dedicated posts in r/LocalLLaMA",
+   rq:[["pos","Its the best local model so far IMO. On a 5090, the speed gives an overall unmatched experience to any cloud model.",null],
+       ["neg","I ran it on my Spark and it got itself totally flummoxed on just basic f…",null,"on a small local model"]]},
+  {name:"Claude Code",gh:148652,s:2,v:4,tot:58028,st:"6,094 stories · 22,814 comment mentions · top story 2,445 pts",
+   q:[["pos","Claude Code and Claude Design would like to have a word. Absolute killer products.","49899912"],
+      ["neg","Something worse than a bad model is an inconsistent model.","47663194"],
+      ["neu","Praised for code quality; the top complaint is usage limits that push people from the $20 plan to Max.",null,"Reddit, secondhand"]],
+   rs:4,rv:3,rst:"hundreds of posts in r/ClaudeAI",
+   rq:[["pos","I used Claude Code to reverse engineer a 13-year-old game binary and crack a restriction nobody else could — this is what AI-assisted development can do.",null],
+       ["neu","Claude code source code has been leaked via a map file — within hours Reddit fixed bugs Anthropic hadn't.",null]]},
+  {name:"Codex CLI",gh:127351,s:3,v:3,tot:1970,st:"156 stories · 704 comment mentions · top story 587 pts",
+   q:[["pos","Codex CLI does not have this problem, nor does OpenCode","49740120"],
+      ["neg","The last time I used codex CLI it gave me a summary in Chinese lol","49856632"],
+      ["neu","Preferred for daily use because limits last longer and it uses 2–3× fewer tokens; seen as slightly weaker on code quality.",null,"Reddit, secondhand"]],
+   rs:3,rv:2,rst:"comparison posts in r/ClaudeAI",
+   rq:[["pos","I use Codex to audit everything that Claude Code produces — it's been quite effective.",null],
+       ["pos","I've been using Codex when I exhaust my Claude weekly limit, and vice-versa. So far so good for $40/mo.",null]]},
+  {name:"Pi",gh:110629,s:4,v:2,tot:183,st:"34 stories · 136 comment mentions",
+   q:[["pos","to be amazing and i use it daily.","49506634"],
+      ["pos","I'm a https://pi.dev man myself.","47461565"]],
+   rs:3,rv:0,rst:"thin — sparse mentions",
+   rq:[["pos","Small but devoted user base; consistently positive in the few threads that mention it.",null,"thin"]]},
+  {name:"DeepSeek Harness",gh:240799,s:3,v:2,tot:437,st:"37 stories · 72 comment mentions · launch hit 747 pts",
+   q:[["pos","The speed is insane. Like 200 tokens/second is the norm","49808112"],
+      ["neg","47mb downloaded, 1.5gb after build, wtf?","49287890"]],
+   rs:2,rv:1,rst:"launch post in r/LocalLLaMA + r/DeepSeek",
+   rq:[["neg","How the hell does this have 20k stars already? edit: 30k in an hour. Bots for sure.",null],
+       ["pos","Why is every harness written in TypeScript? The speed is impressive though.",null]]},
+  {name:"Kilo Code",gh:27453,s:3,v:2,tot:166,st:"21 stories · 73 comment mentions",
+   q:[["pos","Outside claude and codex, I use kilo code and its good so far","49045950"],
+      ["neg","If you can explain how to make compaction not suck in opencode or Kilo Code, I would love to know how.","49487233"]],
+   rs:3,rv:1,rst:"use posts in r/LocalLLaMA",
+   rq:[["pos","Once your AGENTS.md and rules.md are clear enough, Kimi K2 thinking + Kilo Code really seems to work.",null],
+       ["neg","Kimi K2-Thinking fails in Roo, fails in Cline and fails in Kilo Code in my case.",null]]},
+  {name:"Aider",gh:49292,s:2,v:2,tot:499,st:"45 stories · 361 comment mentions",
+   q:[["pos","Aider pioneered this with the \"repo map\" which works tremendously well.","49572514"],
+      ["neg","Cursor and aider were definitely compelling two years ago.","49774116"]],
+   rs:3,rv:1,rst:"benchmark posts in r/LocalLLaMA",
+   rq:[["pos","Same 9B Qwen weights: 19.1% in Aider vs 45.6% with a scaffold adapted to small models — harness matters more than model.",null],
+       ["neu","Roo Code seems to be the best of the bunch. Aider used as benchmark baseline across comparisons.",null,"Pattern"]]},
+  {name:"SWE-agent",gh:20449,s:3,v:1,tot:140,thin:true,st:"9 stories · 34 comment mentions",
+   q:[["pos","there aren't too many benchmarks where the more complicated harnesses consistently outperform extremely simple agents.","49755993"]],
+   rs:3,rv:0,rst:"thin — academic / research mentions",
+   rq:[["pos","Cited positively as a research baseline in SWE-bench comparisons.",null,"thin"]]},
+  {name:"Cline",gh:69597,s:1,v:2,tot:510,st:"71 stories · 342 comment mentions (includes an unrelated author)",
+   q:[["neg","I usually use Cline but I'm giving up on it for this exact reason.","49569161"],
+      ["neg","I've noticed 0 improvement. If anything a downgrade.","49569890"]],
+   rs:1,rv:1,rst:"security PSA in r/LocalLLaMA",
+   rq:[["neg","Recent Cline release had a prompt-injection security vulnerability via AI-triaged issues.",null],
+       ["neg","Ever since the mods of r/Cline, who are Cline Inc. employees, removed a high-upvote critical post…",null]]},
+  {name:"OpenHands",gh:89599,sl:"Neutral",s:2,v:1,tot:68,thin:true,st:"19 stories · 43 comment mentions · top story 5 pts",
+   q:[["neu","If you're interested in driving coding agents with code, check out the OpenHands Software Agent SDK","48055940"],
+      ["neu","Mentioned mostly in passing, as a sandbox or SDK option and for running local models.",null,"Pattern"]],
+   rs:2,rv:0,rst:"thin — research/benchmark posts only",
+   rq:[["neu","Mostly appears in homelab setups and benchmark datasets, not as a daily driver.",null,"Pattern"]]}
+ ], unranked:"Gemini CLI (discontinued in June), Goose (most matches were the word \"goose\")"},
+ b:{ranked:[
+  {name:"Conductor",s:3,v:2,tot:505,st:"38 stories · 83 comment mentions (name is noisy)",
+   q:[["pos","I do almost no direct git work myself these days. Using claude in Conductor.","47875492"],
+      ["neg","I switched over to Superset from Conductor a few months ago and haven't looked back","48239050"]],
+   rs:2,rv:1,rst:"thin — passing mentions in r/LocalLLaMA",
+   rq:[["neu","Mostly named as a worktree manager in setup posts, rarely as a primary recommendation.",null,"Pattern"]]},
+  {name:"Superset",gh:14764,s:3,v:2,tot:239,st:"Launch HN 108 pts / 135 comments · Show HN 96 pts / 90 comments",
+   q:[["pos","I've been using this for the past few months, and I love it!","48237253"],
+      ["neg","How many \"IDEs for the agentic era\" do we need?","48238096"]],
+   rs:3,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["pos","Praised in passing as a cleaner Conductor replacement.",null,"thin"]]},
+  {name:"Gas Town",gh:18219,s:1,v:3,tot:1738,st:"43 stories · 465 comment mentions · top story 403 pts / 433 comments",
+   q:[["pos","Gas Town has a very clear \"mad scientist/performance art\" sort of thing going on, and I love that.","46734996"],
+      ["neg","It sounds like a Gas Town situation, that you invented an exponential token burning machine.","49556237"]],
+   rs:1,rv:1,rst:"thin — r/LocalLLaMA skeptical",
+   rq:[["neg","Mostly cited as a cautionary example of token-burning orchestration — entertaining but expensive.",null,"Pattern"]]},
+  {name:"Orca",gh:82031,s:3,v:1,tot:30,thin:true,st:"1 Show HN (21 pts) · a few comment mentions · 73k GitHub stars",
+   q:[["pos","Huge fan of Orca too.","49237309"],
+      ["pos","I liked being able to manage git worktrees from the UI","49103047"]],
+   rs:3,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["pos","Git worktree UI praised in the few mentions it appears in.",null,"thin"]]},
+  {name:"Firstmate",gh:7357,s:4,v:0,tot:8,thin:true,st:"3 stories (5 pts max) · 5 comment mentions, all positive",
+   q:[["pos","It's like a sane version of gastown, essentially a meta-harness of sorts.","49187254"],
+      ["pos","Been giving firstmate a try this week and have to say I'm loving it.","49266395"]],
+   rs:4,rv:0,rst:"thin — sparse mentions",
+   rq:[["pos","The few people who found it love it as a saner alternative to Gas Town.",null,"thin"]]},
+  {name:"Vibe Kanban",gh:28221,s:2,v:1,tot:42,st:"6 stories · 35 comment mentions",
+   q:[["pos","Vibe Kanban is indeed a treasure trove in terms of useful features.","48241963"],
+      ["neg","But then it IIRC went in some weird directions.","49282565"]],
+   rs:2,rv:0,rst:"thin — r/LocalLLaMA"},
+  {name:"Nimbalyst",gh:1805,s:2,v:1,tot:40,thin:true,st:"9 stories · 18 comment mentions (several from its team)",
+   q:[["pos","Nimbalyst does a pretty good job. Some gaps but I can manage multiple agents across multiple projects well enough.","48717781"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Symphony",gh:27483,sl:"Neutral",s:2,v:1,tot:24,thin:true,st:"7 stories · 10 comment mentions",
+   q:[["neu","I built my own software factory based loosely on the OpenAI Symphony pattern","49151706"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Claude Squad",gh:8551,s:3,v:0,tot:9,thin:true,st:"3 stories · 5 comment mentions",
+   q:[["pos","Claude Squad is great for parallelizing raw agents and interacting with them from a single terminal window.","48735913"]],
+   rs:3,rv:0,rst:"thin — sparse mentions",
+   rq:[["pos","Recommended for parallelising raw agents from a single terminal window.",null,"thin"]]}
+ ], unranked:"Composio Agent Orchestrator (almost every match was unrelated; the one relevant comment came from its builder), Bernstein (one 3-point story)"},
+ c:{ranked:[
+  {name:"OpenClaw",gh:390835,s:2,v:4,tot:15026,st:"1,605 stories · 4,823 comment mentions · top story 1,349 pts",
+   q:[["neg","this looks as risky as openclaw, which I also won't use.","49898223"],
+      ["neu","Its biggest threads are about access fights: Anthropic and Google restricting subscriptions used through OpenClaw.",null,"Pattern"]],
+   rs:0,rv:3,rst:"959pt thread in r/LocalLLaMA",
+   rq:[["neg","Steinberger is famous for guerilla marketing tactics — most OpenClaw users are astroturf.",null],
+       ["neg","Far too risky from a security standpoint. The number one skill on its marketplace is almost surely malware.",null]]},
+  {name:"CrewAI",gh:59216,sl:"Neutral",s:2,v:2,tot:508,st:"115 stories · 157 comment mentions (many are job-seeker skill lists)",
+   q:[["neu","I think I first saw it being used in CrewAI [0] almost 2 years ago","49625124"]],
+   rs:2,rv:1,rst:"r/LangChain + r/LocalLLaMA posts",
+   rq:[["neu","People use it as a quick starting point but typically graduate away from it once they hit edge cases.",null,"Pattern"]]},
+  {name:"Microsoft Agent Framework",gh:13877,sl:"Neutral",s:2,v:1,tot:55,thin:true,st:"20 stories · 7 comment mentions · launch 58 pts",
+   q:[["pos","I would use Microsoft Agent Framework. It is open source.","47696015"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Paperclip",gh:95015,sl:"Neutral",s:2,v:1,tot:30,thin:true,st:"≈12 stories (best 6 pts) · ≈15 relevant comments",
+   q:[["neu","Paperclip does the org chart and the orchestration but it depends on other runtimes to actually run the agents.","49633643"],
+      ["neg","does it support multiple humans? A lot of these tools (paperclip) don't","47908137"],
+      ["neu","That April complaint is out of date: Paperclip's roadmap now lists multiple human users as shipped.",null,"Update"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Gas City",s:1,v:1,tot:77,st:"3 stories · 18 comment mentions · launch 33 pts / 55 comments",
+   q:[["pos","i have a 512gb ram m3 ultra mac studio setup with a gas city that runs one of my companies.","49532605"],
+      ["neg","If I want to create a furnace into which I can shovel tokens (ie: money) I dont think I can do it quite as elegantly as Gas City.","48015578"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Multica",gh:51737,sl:"Neutral",s:2,v:0,tot:14,thin:true,st:"5 stories · 7 comment mentions",
+   q:[["neu","There are more of these Kanban for Agents eg Multica, PlateSpinner, KitKot, Kanbots.","48827199"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"}
+ ], unranked:""},
+ d:{ranked:[
+  {name:"n8n",gh:206347,s:3,v:3,tot:1201,st:"210 stories · 537 comment mentions · $180M raise drew 235 pts",
+   q:[["pos","Running on my mac mini: Local LLM and n8n","49771088"]],
+   rs:3,rv:2,rst:"active r/n8n community + r/selfhosted",
+   rq:[["pos","r/n8n is genuinely helpful and the self-hosted route is solid if you want to own your data.",null],
+       ["neu","A recurring gripe is that the licensing flip to a custom license in 2024 surprised many users.",null,"Pattern"]]},
+  {name:"Manus",s:1,v:3,tot:1068,st:"97 stories, mostly about the Meta deal · 206 comment mentions (noisy)",
+   q:[["neg","I found it worse than alternatives in the similar space (Claude, genspark, kagi research, etc.)","49260310"]],
+   rs:1,rv:2,rst:"r/singularity + r/OpenAI threads",
+   rq:[["neg","The viral launch was pure hype — hands-on reports are consistently disappointed.",null,"Pattern"]]},
+  {name:"Genspark",sl:"Neutral",s:2,v:1,tot:20,thin:true,st:"9 stories · 7 comment mentions",
+   q:[["neu","Named as a better option than Manus in the one comment that compares them.",null,"Pattern"]],
+   rs:2,rv:0,rst:"thin — sparse mentions",
+   rq:[["neu","Named as a better option than Manus in passing comparison posts.",null,"thin"]]},
+  {name:"Hyperagent",sl:"Too little to judge",s:2,v:0,tot:5,thin:true,st:"3 stories (2 pts max) · 1 comment",
+   q:[["neu","Feels like the founding team is moving on to a different product entirely, they were building something called hyperagent","49168114"]],
+   rs:1,rv:0,rst:"thin — shill-post suspicions in r/LocalLLaMA",
+   rq:[["neg","The only substantive Reddit mention was someone flagging its launch posts as coordinated promotion.",null]]}
+ ], unranked:"Lindy, Dust, Viktor, Gumloop, Globster, Zapier Agents, Relevance AI (almost no HN discussion; \"Lindy\" matches mostly the Lindy effect)"},
+ e:{ranked:[
+  {name:"Superpowers",gh:293260,s:3,v:2,tot:222,st:"20 stories · 179 comment mentions",
+   q:[["pos","I've been using superpowers:brainstorming skill with claude for a while and have found the process to work well for me.","49856911"],
+      ["neg","With the Superpowers skill (which I am trying to get rid of), it designs expensive models","49382227"]],
+   rs:2,rv:1,rst:"r/ClaudeAI threads",
+   rq:[["neu","Sentiment is warm but the skills extension model is being called obsolete now that Claude Code has native hooks.",null,"Pattern"]]},
+  {name:"Kiro",s:2,v:2,tot:760,st:"87 stories · 487 comment mentions (inflated: KIRO is also a Seattle TV station)",
+   q:[["pos","This is a checklist that Opus has to check off. Try Kiro.","46841664"],
+      ["neg","They took a page from AWS on whatever the hell a Kiro token is supposed to represent.","49571602"]],
+   rs:1,rv:1,rst:"r/aws + r/programming threads",
+   rq:[["neg","We all hate Kiro. It's AWS invading the IDE space with their usual pricing opacity.",null],
+       ["neg","The hook system and spec runner are clever but the token model makes it DOA for indie devs.",null]]},
+  {name:"OpenSpec",gh:70753,s:2,v:2,tot:274,st:"18 stories · 128 comment mentions · launch 204 pts / 100 comments",
+   q:[["pos","Plan mode is not dead, it just moved to OpenSpec and other similar tools.","49857525"],
+      ["neg","my org at work adopted openspec, and i strongly dislike it.","49736016"],
+      ["neu","long-lived specs in the repo are useless, but the OpenSpec change process is super valuable for keeping agents on track","49739689"]],
+   rs:2,rv:0,rst:"thin — r/programming",
+   rq:[["neu","Reddit discussion is minimal — mostly team devs announcing updates with little organic engagement.",null,"Pattern"]]},
+  {name:"GitHub Spec Kit",gh:139504,s:2,v:2,tot:195,st:"20 stories · 89 comment mentions",
+   q:[["neg","speckit which was ok but not great.","47994926"],
+      ["neu","Imm overwhelmed with a variety of SDD tools out there.","48421309"]],
+   rs:1,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["neg","Feels like waterfall design dressed up as AI-native planning.",null]]},
+  {name:"Beads",gh:27535,s:2,v:1,tot:120,st:"≈20 stories · 48 comment mentions",
+   q:[["pos","Yegge's Beads is a genuinely good design","46801230"],
+      ["neg","everything about the whole stack is designed to burn tokens.","47785763"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Tessl",s:2,sl:"Neutral",v:1,tot:98,thin:true,st:"22 stories · 12 comment mentions",
+   q:[["neu","Most comments come from Tessl's own team, about using evals to test agent skills.",null,"Pattern"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Agent OS",gh:5458,s:3,v:0,tot:5,thin:true,st:"5 comment mentions",
+   q:[["pos","with Claude code’s $100 plan and it is pretty darn great.","46570793"]],
+   rs:3,rv:0,rst:"thin — sparse mentions"},
+  {name:"BMAD Method",gh:53660,s:1,v:1,tot:63,st:"10 stories · 40 comment mentions",
+   q:[["pos","my go to is the BMAD method","48711862"],
+      ["neg","I just spent a week training up in spec driven development through bmad, which was awful","47994926"]],
+   rs:2,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["neu","Appears in setup posts as a lightweight planning shorthand, but no dedicated subreddit or community formed around it.",null,"Pattern"]]},
+  {name:"Task Master",gh:28113,s:1,v:1,tot:30,thin:true,st:"2 stories · 8 comment mentions",
+   q:[["neg","DEFAULT Sentry telemetry exfiltrates 100% of full AI prompts/responses with sendDefaultPii:true","47643931"],
+      ["neg","I've seen a fair number of obvious astro-turfing posts on reddit promoting task master.","46752250"]],
+   rs:1,rv:1,rst:"r/LocalLLaMA shill-post reports",
+   rq:[["neg","The subreddit mods flagged multiple Task Master posts as coordinated promotion from the same account cluster.",null]]}
+ ], unranked:""},
+ f:{ranked:[
+  {name:"tmux",gh:49580,s:3,v:3,tot:1035,st:"132 agent-related stories · 403 comment mentions",
+   q:[["pos","I tried herdr recently, and I missed many tmux features I really liked.","49109773"],
+      ["pos","I'm happy with tmux - can use it on my phone.","48824931"]],
+   rs:3,rv:1,rst:"r/tmux — AI orchestration post hit 318 pts",
+   rq:[["pos","'Built an agent orchestrator within tmux' — 318 pts in r/tmux, showing real-world adoption for multi-agent workflows.",null],
+       ["pos","Beloved for its stability and SSH-over-mobile use cases; the agent community adopted it as a no-nonsense backbone.",null,"Pattern"]]},
+  {name:"Herdr",gh:41583,s:3,v:2,tot:899,st:"37 stories · 261 comment mentions · launch 404 pts",
+   q:[["pos","I switched from tmux to Herdr about six weeks ago. It's a great bit of software","49201901"],
+      ["neg","I still don't fully get the additional value over tmux, beside notification regarding the agent status?","48823176"]],
+   rs:3,rv:1,rst:"r/tmux + r/commandline",
+   rq:[["pos","The mobile push-notification model sold me — knowing when an agent finishes without staring at a terminal is genuinely useful.",null]]},
+  {name:"Zellij",gh:35598,s:3,v:2,tot:388,st:"27 stories · 225 comment mentions",
+   q:[["pos","This is basically my setup but I'm using tailscale and zellij.","49899225"],
+      ["neu","What does this solve that isn't already solved by Tmux, Zellij or Herdr?","49640462"]],
+   rs:3,rv:1,rst:"r/commandline + r/unixporn",
+   rq:[["pos","Zellij's built-in layout serialization and floating pane model make it noticeably nicer for juggling many agent windows.",null]]},
+  {name:"cmux",gh:27518,s:3,v:2,tot:344,st:"26 stories · 137 comment mentions · Show HN 198 pts",
+   q:[["pos","This is pretty slick, man.","47080435"],
+      ["neg","the answer: cmux gui is broken, use cmux-tui in a single tab","49286758"]],
+   rs:4,rv:1,rst:"r/LocalLLaMA very positive",
+   rq:[["pos","Best multi-agent terminal manager I've tried. The session naming and split-view are intuitive right away.",null],
+       ["pos","cmux-tui just works out of the box — took me 10 minutes to set up and I haven't looked back.",null]]},
+  {name:"Agent of Empires",gh:3303,s:4,v:1,tot:74,st:"6 stories · 18 comment mentions · Show HN 118 pts",
+   q:[["pos","Incredibly, agent-of-empires has become my daily driver.","47698407"],
+      ["pos","My daily driver is Agent of Empires","49106151"]],
+   rs:4,rv:0,rst:"thin — sparse mentions",
+   rq:[["pos","Daily-driver praise is consistent in the handful of HN threads that mention it.",null,"thin"]]},
+  {name:"Warp",s:2,v:2,tot:560,st:"Open-sourcing drew 373 + 237 pts · ≈150 comment mentions",
+   q:[["neu","Warp is still a terminal, but it also has a coding agent.","47940967"],
+      ["neg","As they've been scrambling to find a way to monetize and riding the AI train","47947878"]],
+   rs:2,rv:1,rst:"thin — r/terminal + r/programming",
+   rq:[["neu","Used mainly as a terminal; the AI features get mixed reception — polished UX but slow to gain trust for agentic use.",null,"Pattern"]]}
+ ], unranked:"Ghostty (huge HN following, including a 3,521-point story, but it is a general terminal rather than an agent tool)"},
+ g:{ranked:[
+  {name:"Cursor",s:2,v:3,tot:3687,st:"≈1,000 stories · ≈2,000 comment mentions · Composer 2.5 drew 290 pts",
+   q:[["pos","Composer 2.5 is cheap, fast, and very effective","48567240"],
+      ["neg","Cursor was pretty amazing until it started going to shit.","49668359"]],
+   rs:3,rv:3,rst:"r/cursor — 1.1k-top post community; mixed on SpaceX acquisition",
+   rq:[["pos","Love Cursor day to day — the autocomplete and agent mode are second to none.",null],
+       ["neg","SpaceX acquisition created a wave of cancellations and uncertainty around the OpenAI partnership.",null,"Pattern"]]},
+  {name:"VS Code + GitHub Copilot",s:2,v:3,tot:1502,st:"66 stories · 275 comment mentions · top story 1,513 pts",
+   q:[["pos","Copilot is _amazing_.","47643811"],
+      ["neu","The biggest thread (1,513 pts) was about VS Code adding \"Co-Authored-by Copilot\" to commits regardless of usage.",null,"Pattern"]],
+   rs:2,rv:2,rst:"r/vscode + r/github — Copilot authorship debate 1.6k pts",
+   rq:[["neu","'Copilot is a co-author, so this code belongs to Copilot' sparked a 1.6k-pt debate about AI attribution in r/vscode.",null,"Pattern"],
+       ["neg","Copilot inserting promotional AI tips into PRs drew backlash in r/github.",null,"Pattern"]]},
+  {name:"Zed",gh:91099,s:2,v:3,tot:1196,st:"29 stories · 600 comment mentions",
+   q:[["pos","I've been \"guide coding\" in my editor (Zed / VSCode) for a while now and it's really enjoyable.","49472559"],
+      ["neg","I've lost faith in their editor and GPUI - you were the one, Zed!","49754583"]],
+   rs:2,rv:0,rst:"thin — r/ZedEditor small; bulk of discussion on HN",
+   rq:[["pos","The open-source announcement drew genuine excitement, even if the subreddit never grew into a real community.",null,"thin"]]},
+  {name:"Antigravity",s:1,v:3,tot:4806,st:"261 stories · 1,518 comment mentions · launch 1,088 pts",
+   q:[["neg","Antigravity is garbage","49872138"],
+      ["neu","Its other big threads: \"Google's Antigravity bait and switch\" (771 pts) and a prompt-injection data leak (768 pts).",null,"Pattern"]],
+   rs:1,rv:2,rst:"r/cursor + r/programming",
+   rq:[["neg","Google's aggressive context-window limits and the data-leak incident poisoned goodwill fast.",null],
+       ["neg","Switched off after the bait-and-switch on free tier. Hard to trust them again.",null]]},
+  {name:"Devin Desktop (formerly Windsurf)",s:1,v:3,tot:1197,st:"134 stories · 389 comment mentions (as Windsurf)",
+   q:[["neg","I used Windsurf for quite long and they're basically dead for now after they became Devin.","49652815"]],
+   rs:1,rv:2,rst:"r/windsurf — 'Upvote if cancelled' dominated at 633 pts",
+   rq:[["neg","'Upvote if you cancelled your subscription' topped the subreddit at 633 pts after the quota overhaul.",null],
+       ["neg","The Devin rebrand felt like a betrayal of the Windsurf identity to its core users.",null,"Pattern"]]},
+  {name:"JetBrains Air",s:3,v:1,tot:137,st:"4 stories · 12 comment mentions · launch 74 pts / 120 comments",
+   q:[["pos","Jetbrains Air is a great agentic coding harness","49487660"],
+      ["pos","I've been greatly enjoying jetbrain's air IDE for some tasks.","47700164"]],
+   rs:2,rv:2,rst:"r/JetBrains + r/programming",
+   rq:[["neu","The JetBrains userbase is divided — long-time IntelliJ users are confused by the subscription model change, while new users mostly like it.",null,"Pattern"]]}
+ ], unranked:"Void (archived in June 2026)"},
+ h:{ranked:[
+  {name:"Cursor cloud agents",s:4,v:1,tot:130,st:"18 stories · 58 comment mentions",
+   q:[["pos","At my dayjob we are big users of Cursor's Cloud Agents.","49487264"],
+      ["pos","Cursor Cloud Agents are pretty great","49494618"]],
+   rs:4,rv:1,rst:"thin — r/cursor positive mentions",
+   rq:[["pos","Cloud Agents let you fire off complex tasks and come back to results — the best async workflow Cursor offers.",null,"thin"]]},
+  {name:"Devin",s:2,v:2,tot:940,st:"81 stories · 533 comment mentions (the name is noisy)",
+   q:[["pos","Overall I've been really impressed with Devin.","46712069"],
+      ["neg","Junior engineer, Senior Invoice","49839235"]],
+   rs:2,rv:1,rst:"thin — comparison posts in r/LocalLLaMA + r/programming",
+   rq:[["neu","Mostly appears in benchmark comparison charts alongside Jules and Codex cloud.",null,"Pattern"]]},
+  {name:"Claude Managed Agents",s:2,v:2,tot:335,st:"32 stories · 36 comment mentions · launch 169 pts",
+   q:[["pos","I have been using claude managed agents with custom rules and skills to solve open source bugs and perf problems.","49406174"],
+      ["neg","Anthropic seem to be 'AWS-ifying'.","47694848"]],
+   rs:3,rv:0,rst:"thin — r/ClaudeAI",
+   rq:[["pos","Long-horizon tasks handled hands-free; positively received in r/ClaudeAI threads.",null,"thin"]]},
+  {name:"Jules",s:3,v:1,tot:141,st:"12 stories · 52 comment mentions · API launch 223 pts",
+   q:[["pos","I've noticed a big jump when they switched to Gemini 3.1 Pro and it really became useful.","48089704"],
+      ["neg","it was embarrassing how often it flubbed tool calls","49792258"]],
+   rs:3,rv:1,rst:"thin — r/Gemini + r/LocalLLaMA",
+   rq:[["pos","Improved significantly after the Gemini 3.1 Pro upgrade — users noticed a real jump in usefulness.",null,"thin"]]},
+  {name:"Codex cloud",s:2,v:1,tot:40,thin:true,st:"3 stories · 37 comment mentions",
+   q:[["pos","the past month I had been using Codex cloud and it was working great writing Rust modules.","49057553"],
+      ["neu","The same user says a change the following week made it worse.",null,"Pattern"]],
+   rs:2,rv:0,rst:"thin — passing r/ChatGPT + r/OpenAI mentions"},
+  {name:"Copilot coding agent",s:1,v:1,tot:21,thin:true,st:"5 stories · 16 comment mentions",
+   q:[["neu","Tim from the Copilot coding agent team here. We've now disabled these tips in pull requests created by or touched by Copilot","47573233"],
+      ["neu","Most discussion was about ad-like \"tips\" it inserted into pull requests in March.",null,"Pattern"]],
+   rs:1,rv:0,rst:"thin — r/github PR-tips backlash",
+   rq:[["neg","Made headlines for inserting Copilot-promotion tips into PRs it had never contributed to.",null,"Pattern"]]}
+ ], unranked:"Tembo (one story, no comments)"},
+ i:{ranked:[
+  {name:"Cursor Bugbot",s:4,v:2,tot:161,st:"11 stories · 50 comment mentions",
+   q:[["pos","Yeah, I've tried many scanners and Cursor Bugbot is easily the best","48559411"],
+      ["pos","We use the bugbot. Best code review agent we've seen.","48555164"]],
+   rs:3,rv:1,rst:"r/cursor positive",
+   rq:[["pos","Catches real bugs the IDE linter misses without flooding you with false positives.",null]]},
+  {name:"Greptile",s:3,v:2,tot:500,st:"≈10 relevant stories · 63 comment mentions · \"AI code review bubble\" 351 pts",
+   q:[["pos","I got to see greptile and it had a pretty decent code review, somewhat like a static analysis tool without a lot of time wasting nonsense/false positives.","48550125"]],
+   rs:1,rv:0,rst:"thin — skeptical mentions in r/programming",
+   rq:[["neg","Feels like a product looking for a problem. My team tried it and went back to CodeRabbit within a week.",null]]},
+  {name:"GitHub Copilot code review",s:2,v:2,tot:236,st:"11 stories · 16 comment mentions · billing thread 312 pts",
+   q:[["neu","I find GitHub copilot code review valuable, but painful.","46922259"],
+      ["neg","The biggest thread was about reviews starting to consume GitHub Actions minutes.",null,"Pattern"]],
+   rs:2,rv:1,rst:"r/github — billing + quality concerns",
+   rq:[["neg","The discovery that AI reviews silently burn GitHub Actions minutes was poorly communicated and sparked real anger.",null,"Pattern"]]},
+  {name:"Graphite",s:3,v:1,tot:61,st:"3 stories · 57 comment mentions",
+   q:[["pos","The Graphite review UI/UX is at least 3x better than GitHub","46333875"],
+      ["neg","Except for the undismissable \"Pay use more to enable AI reviews\" nag","46331770"]],
+   rs:3,rv:0,rst:"thin — r/programming",
+   rq:[["pos","PR stacking with Graphite is legitimately faster once the team adopts the workflow.",null,"thin"]]},
+  {name:"CodeRabbit",s:1,v:2,tot:711,st:"64 stories · 133 comment mentions",
+   q:[["neg","As recently as yesterday, CodeRabbit was absolutely ridiculously bad.","49875076"]],
+   rs:1,rv:1,rst:"r/programming complaints",
+   rq:[["neg","The free tier is useless for any real codebase and the paid tier surprised our team with a huge invoice.",null],
+       ["neg","CR leaves dozens of nitpick comments per PR. The noise-to-signal ratio is terrible.",null]]},
+  {name:"no-mistakes",gh:8695,s:2,sl:"Neutral",v:1,tot:30,thin:true,st:"Show HN 19 pts · a few comments",
+   q:[["neu","Why did you implement git push no-mistakes as a local Git remote proxy instead of building it as a GitHub Action or a pre-push hook?","48696651"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Qodo",s:1,v:1,tot:49,thin:true,st:"6 stories · 15 comment mentions",
+   q:[["neg","My team tried coderabbit and qodo and they are both trash compared to a tool we quickly built in-house","48407230"]],
+   rs:1,rv:0,rst:"thin — r/programming",
+   rq:[["neg","Team tried it, found it noisy, and went back to simpler tools within a week.",null,"thin"]]}
+ ], unranked:""},
+ j:{ranked:[
+  {name:"Modal",s:3,v:2,tot:192,st:"25 stories · 53 comment mentions",
+   q:[["pos","discovering how Ramp team use Modal for sandboxed dev environment just saved us weeks of custom infra development","46617644"],
+      ["pos","Modal has a lot of small niceties that made them easy to implement, such as filesystem snapshots","49159154"]],
+   rs:3,rv:0,rst:"thin — r/selfhosted + r/LocalLLaMA",
+   rq:[["pos","Modal's serverless GPU model is the easiest path to running fine-tuned models on demand without managing infra.",null,"thin"]]},
+  {name:"Cloudflare Sandbox SDK",s:2,v:2,tot:378,st:"34 stories · 111 comment mentions · launch 256 pts",
+   q:[["pos","For deploying Claude Code as agent, Cloudflare is also an interesting option.","46691707"],
+      ["neu","who is the target market for this?","47799165"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"E2B",gh:14046,s:3,v:1,tot:120,st:"counts mixed up with Google's Gemma \"E2B\" model; ≈20 relevant mentions",
+   q:[["pos","For boxes.dev we use E2B - they had everything we needed at the time.","49162181"]],
+   rs:3,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["pos","E2B is the default choice for sandboxed agent execution — reliable and well-documented.",null,"thin"]]},
+  {name:"Boxes.dev",s:2,v:1,tot:92,st:"Show HN 105 pts / 79 comments",
+   q:[["neu","The launch thread was mostly practical questions about VM sizes, templates and pricing.",null,"Pattern"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Daytona",gh:71681,s:1,v:1,tot:60,st:"≈25 stories · ≈30 relevant mentions (name is noisy)",
+   q:[["neg","Their platform was OSS for a long time but they decided to go closed source recently.","49159407"]],
+   rs:1,rv:0,rst:"thin — r/selfhosted; closed-source pivot criticised",
+   rq:[["neg","Pivoting from open source to closed source frustrated the self-hosted community.",null,"Pattern"]]}
+ ], unranked:"Vercel Sandbox (almost no HN discussion)"},
+ k:{ranked:[
+  {name:"Claude Code Remote Control",s:3,v:2,tot:577,st:"41 stories · 74 comment mentions · launch 544 pts",
+   q:[["pos","I use remote-control every day and haven't had many issues with it","48143779"],
+      ["neg","Claude Code Remote control only works with telemetry enabled too.","49815642"]],
+   rs:3,rv:0,rst:"thin — r/ClaudeAI",
+   rq:[["pos","Runs Claude Code headlessly over SSH and Tailscale — praised for stability and zero configuration.",null,"thin"]]},
+  {name:"Omnara",gh:2880,s:3,v:2,tot:256,st:"6 stories · 45 comment mentions · Launch HN 147 pts / 161 comments",
+   q:[["pos","I have been using Omnara now some months, on desktop and mobile.","48142849"],
+      ["neg","your pricing doesn't make sense to me.","47003215"]],
+   rs:3,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["pos","Solid remote-control setup for Claude Code. Works well over Tailscale.",null]]},
+  {name:"Paseo",gh:19071,s:3,v:2,tot:156,st:"9 stories · 83 comment mentions · Show HN 92 pts",
+   q:[["pos","I’ve recently tried it and liked it a lot.","49892293"],
+      ["neg","i liked paseo too but its not optimized at all. let alone the feature bloat.","49608002"]],
+   rs:3,rv:0,rst:"thin — r/ClaudeAI",
+   rq:[["pos","Solid remote-control alternative; well-liked in the few hands-on reports.",null,"thin"]]},
+  {name:"Happy",s:2,v:1,tot:32,thin:true,st:"7 stories · 20 comment mentions",
+   q:[["pos","I recommend https://happy.engineering/ . It is very easy to set up.","46520561"],
+      ["neg","I believe Happy has been abandoned.","47002215"]],
+   rs:2,rv:0,rst:"thin — may be abandoned"},
+  {name:"Remote-OpenCode",gh:214,s:2,sl:"Neutral",v:0,tot:11,thin:true,st:"4 stories · 3 comment mentions",
+   q:[["neu","I mostly wanted a \"send a task now, check results later\" flow when I’m away from my desk.","47087345","Builder"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"}
+ ], unranked:"Termrover (a handful of mentions, all as part of someone's setup)"},
+ l:{ranked:[
+  {name:"AGENTS.md",gh:24697,s:3,v:3,tot:3572,st:"237 stories · 1,885 comment mentions",
+   q:[["neu","Top threads: \"AGENTS.md outperforms skills in our agent evals\" (524 pts) and \"Claude Code now reads AGENTS.md\" (740 pts).",null,"Pattern"],
+      ["pos","the AGENTS.md references the cf docs and instructs the agent to leave a change log","49886859"]],
+   rs:2,rv:1,rst:"r/LocalLLaMA + r/ClaudeAI",
+   rq:[["neu","Consensus is it helps, but the format is fragile — agents can ignore or misread it when context gets long.",null,"Pattern"]]},
+  {name:"Claude Code plugins",s:3,v:2,tot:1835,st:"counts are noisy; many Show HN plugins",
+   q:[["pos","the only ones {i use,claude decides to use} regularly come with claude code plugins so they automatically update.","49595719"]],
+   rs:3,rv:1,rst:"r/ClaudeAI — plugin launch posts warmly received",
+   rq:[["pos","Claude Code plugins like the Slack integration and custom skill hooks are the ecosystem glue many setups rely on.",null,"Pattern"]]},
+  {name:"Context7",gh:62552,s:3,v:2,tot:151,st:"26 stories · 95 comment mentions",
+   q:[["pos","I've been using it with a couple of tools (like context7) as a documentation/helper","48729549"]],
+   rs:2,rv:1,rst:"r/LocalLLaMA positive",
+   rq:[["pos","Plugging context7 into Claude Code stopped it hallucinating outdated API calls almost completely.",null]]},
+  {name:"Mem0",gh:66363,s:2,v:2,tot:155,st:"55 stories · 53 comment mentions",
+   q:[["pos","Feels genuinely useful and more than a toy","48966541"],
+      ["neu","Most threads are new memory tools asking how they differ from Mem0.",null,"Pattern"]],
+   rs:2,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["neu","Keeps coming up as a reference point when people discuss memory tools, but hands-on reports are sparse.",null,"Pattern"]]},
+  {name:"skills.sh",gh:32823,s:2,sl:"Neutral",v:1,tot:138,st:"33 stories · 45 comment mentions",
+   q:[["neu","I am using skills.sh to find skills.","49595484"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Letta",gh:24981,s:2,v:1,tot:127,st:"25 stories · 50 comment mentions · Letta Code launch 83 pts",
+   q:[["neg","Doesn't the memory in letta become very expensive considering that LLMs are stateless","48489197"],
+      ["pos","It’s a much more coworker-like experience because it can learn","48485951","Team member"]],
+   rs:2,rv:0,rst:"thin — r/LocalLLaMA",
+   rq:[["neg","Memory costs raise eyebrows — the stateless-LLM overhead makes it expensive at scale.",null,"thin"],
+       ["pos","The coworker-like persistent memory model is the differentiator people remember.",null,"thin"]]}
+ ], unranked:""},
+ m:{ranked:[
+  {name:"OpenRouter",s:3,v:4,tot:7080,st:"471 stories · 3,407 comment mentions · joining Stripe: 964 pts",
+   q:[["pos","The way I use openrouter is I find a model/provider combination I like then pin all requests for that model to that single provider.","49899696"],
+      ["neg","OpenRouter isn’t capable of caching as effectively as DeepSeek is because they will, for instance, switch inference providers in the middle of a session","49899647"]],
+   rs:3,rv:2,rst:"active r/LocalLLaMA + r/OpenRouter",
+   rq:[["pos","OpenRouter is the single best quality-of-life upgrade for anyone running multiple AI tools. One key, every model.",null],
+       ["neu","The main concern is that routing decisions are opaque — you pay for a model but don’t always know which provider ran it.",null]]},
+  {name:"LiteLLM",gh:59917,s:1,v:3,tot:1438,st:"127 stories · 366 comment mentions · compromise thread 938 pts",
+   q:[["neg","LiteLLM and LangChain are AWFUL pieces of software","49672696"],
+      ["neu","Its biggest thread was the compromised PyPI release in March 2026.",null,"Pattern"]],
+   rs:0,rv:2,rst:"r/LocalLLaMA security incident coverage",
+   rq:[["neg","The supply-chain compromise was the final straw. We ripped it out of prod the same day.",null],
+       ["neg","Dependency hell plus the PyPI incident. Just use the official SDKs directly.",null]]},
+  {name:"Portkey",gh:13114,s:3,v:1,tot:27,thin:true,st:"11 stories · 5 comment mentions",
+   q:[["pos","I had this exact same issue and switched to Portkey.","47506280"]],
+   rs:3,rv:0,rst:"thin — sparse mentions",
+   rq:[["pos","Switched to Portkey and solved the exact same issue — the most common positive pattern in mentions.",null,"thin"]]},
+  {name:"Vercel AI Gateway",s:2,v:1,tot:67,thin:true,st:"24 stories · 26 comment mentions",
+   q:[["neg","the apparent requirement of a credit card (Vercel AI Gateway) and lack of transparency in how to avoid that ever being used is a big fat nope.","49373804"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Cloudflare AI Gateway",s:2,v:1,tot:46,thin:true,st:"9 stories · 30 comment mentions",
+   q:[["neu","Free? They take the same 5% fee as OpenRouter does.","48346648"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"}
+ ], unranked:"OmniRoute, Requesty (almost no HN discussion)"},
+ n:{ranked:[
+  {name:"Playwright MCP",gh:37714,s:3,v:2,tot:515,st:"33 stories · 123 comment mentions",
+   q:[["pos","there is a Playwright MCP available and works right out of the box","49811652"],
+      ["neg","I’ve found it to be faster than playwright MCP.","49145187"]],
+   rs:3,rv:1,rst:"r/LocalLLaMA + r/ClaudeAI — positive setup posts",
+   rq:[["pos","Works right out of the box with Claude Code for browser testing and automation tasks.",null,"Pattern"],
+       ["pos","The Playwright MCP server is the most commonly cited MCP tool in Claude Code setup threads.",null,"Pattern"]]},
+  {name:"Browser Use",gh:116790,s:2,v:2,tot:1110,st:"86 stories · 233 comment mentions (phrase is noisy)",
+   q:[["neg","the (enabled by default) telemetry","49752572"]],
+   rs:3,rv:1,rst:"r/LocalLLaMA — popular agent automation library",
+   rq:[["pos","Browser Use is the go-to Python library for giving agents real browser control — appears in most agentic setup posts.",null,"Pattern"],
+       ["neg","Default telemetry was flagged as a concern in several threads.",null,"Pattern"]]},
+  {name:"Browserbase",s:2,v:2,tot:221,st:"37 stories · 62 comment mentions · \"Playwright 2x faster\" 155 pts",
+   q:[["neu","Do I need to pay for Browserbase to use this?","49757218"],
+      ["neg","All this happens due to companies like browserbase, Hyperbrowser, Scrapefly.","49503278"]],
+   rs:2,rv:0,rst:"thin — sparse mentions"},
+  {name:"Stagehand",gh:25483,s:2,v:2,tot:208,st:"15 stories · 43 comment mentions",
+   q:[["neg","Why use Stagehand when agents can write CDP / Playwright on the fly for browser use","49834078"]],
+   rs:2,rv:1,rst:"thin — r/LocalLLaMA comparison posts",
+   rq:[["neu","Appears in comparison posts as the managed-infrastructure alternative to self-hosted Playwright.",null,"Pattern"]]}
+ ], unranked:"Hyperbrowser HyperAgent, Steel (almost no HN discussion)"}
+};
+
+const TOOL_META = {};
+TOOLS.forEach(t => { TOOL_META[t.name] = t; });
+
+function dots(n){ return "●".repeat(n) + `<i>${"●".repeat(4-n)}</i>`; }
+
+const TIP_HN_POP = `<b>HN Popularity — 0–4 dots</b><br>Composite of three signals from the HN Algolia search API (hn.algolia.com), 29 Sep 2025 – 29 Sep 2026:<br><br>1. <b>Stories</b> — submissions where the tool name appears in the title or URL<br>2. <b>Story comments</b> — all comments in threads where the tool was the subject<br>3. <b>Comment mentions</b> — tool name appearing in comments across all other threads<br><br><code>tot = stories + story-comments + comment-mentions</code><br><br>●●●● 4 = tot &gt; 5,000<br>●●●<i style='opacity:.3'>●</i> 3 = tot &gt; 1,000<br>●●<i style='opacity:.3'>●●</i> 2 = tot &gt; 150<br>●<i style='opacity:.3'>●●●</i> 1 = tot &gt; 15<br><i style='opacity:.3'>●●●●</i> 0 = tot ≤ 15<br><br>Counts are approximate; common names inflate results.`;
+
+const TIP_HN_SENT = `<b>HN Sentiment — 0–4 dots</b><br>A judgement call based on reading 15–40 recent comments per tool plus the top-level comments of its largest threads.<br><br>●●●● 4 = Very positive<br>●●●<i style='opacity:.3'>●</i> 3 = Positive<br>●●<i style='opacity:.3'>●●</i> 2 = Neutral / mixed<br>●<i style='opacity:.3'>●●●</i> 1 = Negative<br><i style='opacity:.3'>●●●●</i> 0 = Very negative<br><br>Every quoted comment links to its source on HN.`;
+
+const TIP_RD_POP = `<b>Reddit Popularity — 0–3 dots</b><br>Count of dedicated posts about the tool in relevant subreddits (r/ClaudeAI, r/LocalLLaMA, r/cursor, r/programming and similar), same one-year window.<br><br>●●● 3 = dedicated community or many posts<br>●●<i style='opacity:.3'>●</i> 2 = regular posts<br>●<i style='opacity:.3'>●●</i> 1 = occasional posts<br><i style='opacity:.3'>●●●</i> 0 = no dedicated discussion`;
+
+const TIP_RD_SENT = `<b>Reddit Sentiment — 0–4 dots</b><br>Derived from top posts and comments that specifically discuss the tool in its subreddit(s). Same scale as HN sentiment.<br><br>●●●● 4 = Very positive<br>●●●<i style='opacity:.3'>●</i> 3 = Positive<br>●●<i style='opacity:.3'>●●</i> 2 = Neutral / mixed<br>●<i style='opacity:.3'>●●●</i> 1 = Negative<br><i style='opacity:.3'>●●●●</i> 0 = Very negative`;
+
+function tipLbl(label, content){ return `<span class='tip-wrap'><span class='scale-lbl tip-trigger'>${label}</span><span class='tip-box'>${content}</span></span>`; }
+function fmtStars(n){ return n>=1000 ? (n/1000).toFixed(n>=10000?0:1).replace(/\.0$/,"")+"k" : String(n); }
+function renderRanking(){
+  const grid = document.getElementById("rank-grid");
+  grid.innerHTML = LANE_ORDER.map(k=>[k,RANK[k]]).filter(([k])=>state.lane==="all"||state.lane===k).map(([k,r])=>{
+    const l = LANES[k];
+    const list = rankedList(k).filter(t=>!state.onlyOss||(TOOL_META[t.name]?.oss));
+    const rows = list.map((t,i)=>{ const meta=TOOL_META[t.name]||{}; return `
+      <div class="rk">
+        <div class="n">${i+1}</div>
+        <div style="min-width:0">
+          <div class="top"><h4>${nameLink(t.name)}</h4>${badge(meta)}${t.thin?'<span class="badge b-thin">Thin data</span>':""}${(meta.lic||meta.cost)?`<small class="rk-meta-top">${[meta.lic,meta.cost].filter(Boolean).join(" · ")}</small>`:""}</div>
+          ${meta.desc?`<p class="rk-desc">${esc(meta.desc)}</p>`:""}
+          <div class="scales">
+            <div class="scale-row"><span class="scale-src">HN</span>${tipLbl("popularity",TIP_HN_POP)}<span class="dots" aria-hidden="true">${dots(t.v)}</span>${tipLbl("sentiment",TIP_HN_SENT)}<span class="dots" aria-hidden="true">${dots(t.s)}</span><span class="sent">${t.sl||SENT[t.s]}</span><span class="stat-tip"><span class="stat-tip-icon">ℹ</span><span class="stat-tip-text">HN ${esc(t.st)}</span></span></div>
+            ${t.rs!=null?`<div class="scale-row" style="--c:var(--reddit)"><span class="scale-src" style="color:var(--reddit)">REDDIT</span>${tipLbl("popularity",TIP_RD_POP)}<span class="dots" aria-hidden="true">${dots(t.rv||0)}</span>${tipLbl("sentiment",TIP_RD_SENT)}<span class="dots" aria-hidden="true">${dots(t.rs)}</span><span class="sent">${SENT[t.rs]}</span><span>${linkReddit(t.rst||"")}</span></div>`:""}
+            ${t.gh!=null?`<div class="scale-row"><span class="scale-src">GH</span><span class="gh-stars"><span class="star" aria-hidden="true">★</span> ${fmtStars(t.gh)}</span></div>`:""}
+          </div>
+          ${t.q.map(([kind,txt,id,src])=>`<div class="q"><span class="m ${kind}" aria-label="${kind==="pos"?"praise":kind==="neg"?"complaint":"note"}">${kind==="pos"?"+":kind==="neg"?"−":"·"}</span><span class="t">${src?`<span class="src">${esc(src)}</span>`:""}${id?"\u201C"+esc(txt)+"\u201D":esc(txt)}${id?` <a href="https://news.ycombinator.com/item?id=${id}">HN ↗</a>`:""}</span></div>`).join("")}
+          ${(t.rq||[]).map(([kind,txt,url,src])=>`<div class="q"><span class="m ${kind}" aria-label="${kind==="pos"?"praise":kind==="neg"?"complaint":"note"}">${kind==="pos"?"+":kind==="neg"?"−":"·"}</span><span class="t"><span class="src" style="color:var(--reddit)">${esc(src||"Reddit")}</span>${esc(txt)}${url?` <a href="${url}" target="_blank" rel="noopener">↗</a>`:""}</span></div>`).join("")}
+        </div>
+      </div>`; }).join("");
+    return `<section class="rank-lane" id="lane-${k}" style="--c:${l.color}">
+      <header><h3>${esc(l.name)}</h3><p class="lane-blurb">${esc(l.blurb)}</p></header>
+      ${rows}
+      ${r.unranked?`<div class="unranked"><b>Unranked:</b> ${esc(r.unranked)}</div>`:""}
+    </section>`;
+  }).join("");
+}
+
+const LANE_ORDER = ["g","f","k","b","c","a","h","d","e","l","m","j","n","i"];
+function rankedList(k){ const r=RANK[k]; return r?[...r.ranked].sort((a,b)=>(b.s+b.v)-(a.s+a.v) || b.v-a.v || b.s-a.s || b.tot-a.tot):[]; }
+const state = {lane:"all", onlyOss:false};
+try{ const s = JSON.parse(localStorage.getItem("atl-filters")||"null"); if(s){ state.lane = LANES[s.lane]||s.lane==="all" ? s.lane : "all"; state.onlyOss=!!s.onlyOss; } }catch(e){}
+
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const REDDIT_MEMBERS={ChatGPT:11654274,programming:6923563,singularity:3998742,OpenAI:2875322,ClaudeAI:1162885,ClaudeCode:428650,selfhosted:849460,LocalLLaMA:837687,aws:396100,n8n:258298,vscode:224957,github:214475,cursor:158036,DeepSeek:142174,commandline:132418,LangChain:108305,Gemini:50528,JetBrains:37893,Jetbrains:37893,tmux:31540,OpenRouter:21395,Cline:20500,windsurf:16057,zed_editor:5,ZedEditor:33000};
+function fmtMembers(n){ return n>=1e6?(n/1e6).toFixed(1).replace(/\.0$/,"")+"M":n>=1000?Math.round(n/1000)+"K":String(n); }
+function linkReddit(s){ return esc(s).replace(/r\/([A-Za-z0-9_]+)/g,(m,n)=>{ const c=REDDIT_MEMBERS[n]; return `<a href="https://reddit.com/r/${n}" target="_blank" rel="noopener">${m}</a>${c?` <span class="reddit-members">${fmtMembers(c)}</span>`:""}`;  }); }
+
+
+function badge(t){
+  let b = "";
+  if(t.status==="warn") b += `<span class="badge b-warn">${esc(t.statusText)}</span>`;
+  if(t.status==="bad") b += `<span class="badge b-bad">${esc(t.statusText)}</span>`;
+  if(t.status==="pre") b += `<span class="badge b-pre">${esc(t.statusText)}</span>`;
+  return b;
+}
+
+function render(){
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", String(c.dataset.lane===state.lane)));
+  document.getElementById("only-oss").checked = state.onlyOss;
+  const shown = LANE_ORDER.filter(k=>state.lane==="all"||state.lane===k)
+    .reduce((sum,k)=>{const r=RANK[k]; return sum+(r?r.ranked.filter(t=>!state.onlyOss||TOOL_META[t.name]?.oss).length:0);},0);
+  renderRanking();
+  document.getElementById("count").textContent = `${shown} tools shown`;
+  try{ localStorage.setItem("atl-filters", JSON.stringify(state)); }catch(e){}
+}
+
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{state.lane=c.dataset.lane;render();}));
+document.getElementById("only-oss").addEventListener("change",e=>{state.onlyOss=e.target.checked;render();});
+render();
+
+</script>

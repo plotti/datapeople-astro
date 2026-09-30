@@ -17,6 +17,7 @@ export const nav = {
   services: "Leistungen",
   team: "Team",
   blog: "Blog",
+  aiOverview: "AI Landscape",
   cta: "Gespräch vereinbaren",
 };
 
@@ -258,6 +259,7 @@ export const footerNav = {
     { label: "Leistungen", href: "/#services" },
     { label: "Team", href: "/#team" },
     { label: "Blog", href: "/blog/" },
+    { label: "AI Landscape", href: "/blog/ai-agent-tooling-landscape/" },
   ],
   contact: [
     { label: "Kontakt", href: "/#contact" },
