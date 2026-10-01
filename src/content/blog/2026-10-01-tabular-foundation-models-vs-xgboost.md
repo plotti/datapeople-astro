@@ -5,7 +5,7 @@ pubDate: 2026-10-01
 readTime: 14
 category: "Machine Learning"
 tags: ["Machine Learning", "TabPFN", "XGBoost", "scikit-learn", "Foundation Models", "Immobilien", "Benchmark"]
-cover: "../../assets/blog/immo-map-germany.png"
+cover: "../../assets/blog/tabular-models-cover.jpg"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
