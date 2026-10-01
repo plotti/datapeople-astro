@@ -45,22 +45,22 @@ Zuerst die Modelle, die gemütlich auf einer Laptop-CPU laufen. Das ist die eige
 
 | Modell | MAE | Median AE | R² (log) | MdAPE | Trainingszeit |
 |---|---:|---:|---:|---:|---:|
-| **ExtraTrees** | 100'477 € | **56'928 €** | 0.704 | **14.5%** | 14 s |
-| **HistGradientBoosting** | **97'136 €** | 59'870 € | **0.736** | 15.1% | 63 s |
-| RandomForest | 107'372 € | 63'262 € | 0.674 | 16.0% | 22 s |
-| XGBoost *(meine Produktiv-Config)* | 103'460 € | 65'716 € | 0.707 | 16.6% | 3 s |
-| Ridge (linear) | – | 94'604 € | – | 23.7% | 0 s |
+| **ExtraTrees** | 100'738 € | **57'179 €** | 0.704 | **14.7%** | 160 s |
+| **HistGradientBoosting** | **97'339 €** | 59'447 € | **0.736** | 15.2% | 21 s |
+| RandomForest | 107'692 € | 63'739 € | 0.674 | 16.2% | 297 s |
+| XGBoost *(plain vanilla, kein Tuning)* | 103'446 € | 66'229 € | 0.707 | 16.7% | 4 s |
+| Ridge (linear) | – | 94'455 € | – | 23.7% | 0 s |
 
 Zwei Dinge zum Mitnehmen:
 
-1. **scikit-learns `HistGradientBoostingRegressor` und `ExtraTreesRegressor` schlagen beide mein getuntes XGBoost** – ExtraTrees um ~13% beim Median-Fehler, HistGB mit dem besten R² im ganzen Feld. Die Gradient-Boosting-Krone gehört also nicht automatisch XGBoost.
+1. **scikit-learns `HistGradientBoostingRegressor` und `ExtraTreesRegressor` schlagen beide mein Plain-Vanilla-XGBoost** – ExtraTrees um ~14% beim Median-Fehler, HistGB mit dem besten R² im ganzen Feld. Die Gradient-Boosting-Krone gehört also nicht automatisch XGBoost.
 2. **Lineare Regression fällt auseinander.** Ridges R² auf dem log-Ziel rutscht steil ins Negative und der MAE überläuft in blanken Unsinn – ein lineares Modell, das im Log-Raum extrapoliert, produziert am Preis-Langschwanz absurde Euro-Werte. Eine schöne Erinnerung daran, *warum* bei solchen Daten alle zu Bäumen greifen.
 
 ## Auftritt der Foundation Models
 
 Jetzt der Realitäts-Check aus dem Betrieb: **TabPFN und TabICL brauchen eine GPU.** Die In-Context-Attention von TabPFN skaliert mit der Grösse des Trainingssatzes, auf einer CPU ist das jenseits von ein paar hundert Zeilen hoffnungslos – auf meinem M-Serie-Laptop wurde ein einziger Fold mit 2'400 Zeilen schlicht nie fertig. Das ist kein Vorwurf an das Modell; es ist genau der Grund, warum das begleitende Notebook auf eine Colab-GPU setzt.
 
-Und weil die Foundation Models bei ≤10k Zeilen am glücklichsten sind und der faire Vergleich jedes Modell auf *demselben* Arbeitsdatensatz braucht, lässt das Notebook alle sieben Modelle zusätzlich zu diesen Volldaten-Zahlen auf einem gemeinsamen Subsample (standardmässig 4'000 Zeilen) laufen.
+Mit einer GPU verschwindet das Fairness-Problem allerdings komplett: jedes Modell – klassisch *und* Foundation – läuft auf **denselben vollen 11'168 Häusern**, den gleichen Folds, in einem Rutsch. Das ist das Ranking weiter unten.
 
 ## Der Haken mit der Lizenz – und der ist gross
 
@@ -70,51 +70,43 @@ Und die Lizenz selbst ist **nicht-kommerziell**. Ab TabPFN-2.5 stehen die Modell
 
 Und was kostet das? **Weiss öffentlich niemand.** Prior Labs listet Free-/Pro-/Max-API-Stufen und kommerzielle On-Prem-/Private-Cloud-Lizenzen auf, veröffentlicht aber **keine Preise** – jede kommerzielle Stufe ist ein „Contact Sales". Die Gratis-Stufe hat unspezifizierte „tägliche & monatliche Limits". Die ehrliche Antwort auf „Kann ich das in Produktion nutzen, und was kostet es?" ist also: *vielleicht, und Sie müssen ihr Sales-Team anmailen, um es rauszufinden.* Für ein so gutes Modell ist das echt schade.
 
-Das Token schaltet allerdings einen richtig schönen Weg frei: die **gehostete API** (`pip install tabpfn-client`). Setzen Sie `TABPFN_TOKEN`, und `.fit()`/`.predict()` laufen auf den GPUs von Prior Labs – die standardmässig **TabPFN v3.5** ausliefern und das Zeilen-Limit auf ~1'000'000 hochschrauben. Genau so bin ich ohne lokale GPU an die Volldaten-Zahlen für v3.5 weiter unten gekommen: der komplette Lauf über 11k Häuser mit 5-fach-CV kam in 29 Sekunden zurück. Super zum Evaluieren – aber es bleibt dieselbe nicht-kommerzielle Lizenz, solange Sie nicht auf einer Bezahlstufe sind, und jetzt verlassen Ihre Daten Ihre Maschine.
+Das Token schaltet allerdings einen richtig schönen Weg frei: die **gehostete API** (`pip install tabpfn-client`). Setzen Sie `TABPFN_TOKEN`, und `.fit()`/`.predict()` laufen auf den GPUs von Prior Labs – die standardmässig **TabPFN v3.5** ausliefern und das Zeilen-Limit auf ~1'000'000 hochschrauben. Genau so habe ich v3.5 ohne lokale GPU auf dem vollen Datensatz laufen lassen: der komplette Lauf über 11k Häuser mit 5-fach-CV kam in 46 Sekunden zurück. Super zum Evaluieren – aber es bleibt dieselbe nicht-kommerzielle Lizenz, solange Sie nicht auf einer Bezahlstufe sind, und jetzt verlassen Ihre Daten Ihre Maschine.
 
 Zwei Notausgänge, die man kennen sollte:
 
 - Die **älteren TabPFN-2-Gewichte** stehen unter der freizügigeren *Prior Labs License* (Apache 2.0 + Attribution) – kommerzielle Nutzung ist okay. Nur eben nicht ganz so stark wie 2.5+.
 - **Bei TabICL ist die Geschichte umgekehrt.** Das Modell [soda-inria/tabicl](https://github.com/soda-inria/tabicl) steht unter **BSD-3-Clause – komplett frei für kommerzielle Nutzung**, kein Token, kein Konto, kein Sales-Call. Wenn ein Foundation Model in Produktion gehen soll, kann dieser Unterschied allein die Entscheidung kippen – egal, wer hier um ein paar hundert Euro besser abschneidet.
 
-## Die Resultate – alle sieben, dieselben 4'000 Häuser
+## Die Resultate – alle acht, dieselben 11'168 Häuser
 
-Hier der Apples-to-Apples-Lauf: jedes Modell auf demselben 4'000-Zeilen-Subsample, den gleichen Folds, auf einer Colab-T4-GPU. Sortiert nach Median-Fehler, das Beste oben.
-
-| Modell | MAE | Median AE | R² (log) | MdAPE | Zeit |
-|---|---:|---:|---:|---:|---:|
-| **🥇 TabPFN v2** | **94'503 €** | **55'895 €** | **0.743** | **14.1%** | 63 s |
-| TabPFN v3.5 *(API)* | 94'509 € | 55'742 € | 0.743 | 14.1% | 20 s |
-| **🥈 TabICL** | 100'845 € | 61'824 € | 0.714 | 15.3% | 20 s |
-| HistGradientBoosting | 109'460 € | 67'980 € | 0.681 | 16.8% | 15 s |
-| XGBoost *(produktiv)* | 110'865 € | 70'767 € | 0.677 | 17.8% | 3 s |
-| ExtraTrees | 117'369 € | 70'954 € | 0.634 | 18.1% | 59 s |
-| RandomForest | 123'698 € | 75'393 € | 0.597 | 19.2% | 106 s |
-| Ridge (linear) | Overflow | 99'189 € | −40.1 | 24.8% | 0 s |
-
-**Die Foundation Models haben die Spitzenplätze abgeräumt – mit null Tuning.**
-
-- **TabPFN gewinnt klar.** Sein Median-Fehler von **55'895 €** schlägt das beste klassische Modell (HistGradientBoosting) um ~18% und mein produktives XGBoost um ~21%. Dazu das beste R² (0.743) und der engste typische Prozentfehler (14.1%). Keine Hyperparameter-Suche, keine Feature-Skalierung – ein Forward-Pass pro Fold.
-- **Das neuere TabPFN v3.5** (über die gehostete API von Prior Labs, die v3.5 standardmässig ausliefert) landet bei dieser Grösse praktisch gleichauf mit v2 – 55'742 € Median – hat aber noch ein Ass im Ärmel, das die anderen nicht haben; dazu gleich mehr.
-- **TabICL wird Zweiter** unter den lokalen Modellen, ~10% vor HistGradientBoosting, und das in **20 s** – dreimal schneller als TabPFN v2, weil seine Architektur auf Skalierung gebaut ist.
-- Bei den klassischen Modellen führt wieder HistGradientBoosting, und XGBoost landet im Mittelfeld. (Kleiner Hinweis: auf diesem kleineren 4'000-Zeilen-Subsample verschiebt sich die Baum-Reihenfolge leicht gegenüber dem Volldaten-Lauf oben – ExtraTrees braucht mehr Daten, um zu glänzen – aber die Kernaussage, dass *XGBoost nicht automatisch der beste Baum ist*, hält in beiden Läufen.)
-- Ridge explodiert nach wie vor: ein R² von **−40** auf dem log-Ziel. Lineare Modelle und schiefe Preise vertragen sich einfach nicht.
-
-### TabPFN v3.5 auf *allen* 11'168 Häusern
-
-Das 4'000-Zeilen-Limit gab es nur, weil TabPFN v2 und TabICL in-context arbeiten und auf einer Laptop-GPU jenseits von ~10k Zeilen unhandlich werden. Aber TabPFN **v3.5 über die gehostete API verkraftet bis zu einer Million Zeilen** – also habe ich es auf den vollen Datensatz losgelassen, dieselbe 5-fach-CV:
+Hier der komplett faire Lauf: **jedes Modell auf dem vollen Datensatz**, derselbe 5-fach-Split, auf einer Colab-T4-GPU. Sortiert nach Median-Fehler, das Beste oben.
 
 | Modell | MAE | Median AE | R² (log) | MdAPE | Zeit |
 |---|---:|---:|---:|---:|---:|
-| **TabPFN v3.5 – alle 11'168 Häuser** | **82'357 €** | **46'529 €** | **0.784** | **11.6%** | 29 s |
+| **🥇 TabPFN v3.5 *(API)*** | **82'452 €** | **45'061 €** | **0.784** | **11.4%** | 46 s |
+| **🥈 TabPFN v2** | 82'465 € | 45'266 € | 0.784 | 11.4% | 138 s |
+| **🥉 TabICL** | 87'483 € | 49'708 € | 0.760 | 12.6% | 47 s |
+| ExtraTrees | 100'738 € | 57'179 € | 0.704 | 14.7% | 160 s |
+| HistGradientBoosting | 97'339 € | 59'447 € | 0.736 | 15.2% | 21 s |
+| RandomForest | 107'692 € | 63'739 € | 0.674 | 16.2% | 297 s |
+| XGBoost *(plain vanilla)* | 103'446 € | 66'229 € | 0.707 | 16.7% | 4 s |
+| Ridge (linear) | Overflow | 94'455 € | −10.5 | 23.7% | 0 s |
 
-Das ist eine andere Liga: **46'529 €** Median-Fehler und **R² 0.784**, gegenüber ~56'000 € / 0.74 auf dem 4k-Subsample und ~68'000 € beim besten klassischen Modell. Mehr Daten haben das Foundation Model schlicht besser gemacht – und es war trotzdem in unter 30 Sekunden durch, weil die Schwerarbeit auf den GPUs von Prior Labs läuft, nicht auf meinen. Bei der reinen Genauigkeit kommt in diesem Test nichts anderes auch nur in die Nähe.
+**Die Foundation Models haben das ganze Podest abgeräumt – mit null Tuning.**
+
+- **Alle drei Foundation Models schlagen jedes klassische Modell.** TabPFN v3.5 und v2 liegen an der Spitze praktisch gleichauf (**45'061 €** vs. 45'266 € Median-Fehler, beide R² 0.784), TabICL wird Dritter. Der beste Baum, ExtraTrees, liegt pro Haus rund 12'000 € Median-Fehler hinter den Spitzenreitern. Keine Hyperparameter-Suche, keine Feature-Skalierung – ein Forward-Pass pro Fold.
+- **TabPFN v3.5 über die API ist der pragmatische Griff unter den dreien:** identische Genauigkeit wie das lokale v2, aber in **46 s** gelaufen statt 138 s – und auf der Hardware von Prior Labs, nicht meiner.
+- **TabICL ist der Schnelle** – dritter Platz, aber in **47 s** und ganz ohne Token oder Konto. Warum das zählt, dazu gleich im Fazit mehr.
+- Bei den klassischen Modellen ist die Reihenfolge die gewohnte: **ExtraTrees und HistGradientBoosting schlagen beide mein Plain-Vanilla-XGBoost** (ganz ohne Tuning, Default-Parameter), das im Mittelfeld landet – obwohl es mit 4 s am schnellsten trainiert. Die Gradient-Boosting-Krone gehört nicht automatisch XGBoost.
+- Ridge explodiert nach wie vor: ein R² von **−10.5** auf dem log-Ziel, der Euro-Fehler überläuft in Unsinn. Lineare Modelle und schiefe Preise vertragen sich einfach nicht.
+
+Um die Schlagzeile einzuordnen: das beste klassische Modell liegt bei einem typischen Haus um ~57'000 € daneben; die Foundation Models drücken das auf ~45'000 € – eine **Reduktion des Median-Fehlers um ~21%**, gratis und ohne Tuning. Bei der reinen Genauigkeit kommt nichts Klassisches auch nur in die Nähe.
 
 ## Probieren Sie es selbst aus
 
-Der ganze Benchmark ist ein einziges, kommentiertes Colab-Notebook. Es installiert die Libraries, lädt die exakt hier verwendete Feature-Matrix, jagt alle sieben Modelle durch dieselbe CV-Maschinerie, zeichnet die Vergleichs-Charts und generiert sogar einen Blogpost-Entwurf aus Ihren eigenen Zahlen.
+Der ganze Benchmark ist ein einziges, kommentiertes Colab-Notebook. Es installiert die Libraries, lädt die exakt hier verwendete Feature-Matrix, jagt alle acht Modelle durch dieselbe CV-Maschinerie, zeichnet die Vergleichs-Charts und generiert sogar einen Blogpost-Entwurf aus Ihren eigenen Zahlen.
 
-- **▶️ In Colab öffnen:** [Benchmark-Notebook starten](https://colab.research.google.com/drive/1BbOUrao09E6oYhPL4dEDHfWSPxrtNtlh)
+- **▶️ In Colab öffnen:** [Benchmark-Notebook starten](https://colab.research.google.com/drive/14nzIRyFmveoLyAVFmco5sQa9lbfBCeFC)
 - **Repo:** [github.com/plotti/tabular-models-vs-xgboost](https://github.com/plotti/tabular-models-vs-xgboost)
 - **Daten:** [`house_xy.npz`](https://github.com/plotti/tabular-models-vs-xgboost/blob/main/house_xy.npz) (11'168 × 70, plus das log-Preis-Ziel)
 
@@ -124,18 +116,18 @@ Der ganze Benchmark ist ein einziges, kommentiertes Colab-Notebook. Es installie
 
 Zwei Erkenntnisse, eine für jede Hälfte des Felds.
 
-**Unter den klassischen Modellen ist XGBoost nicht der automatische Sieger.** scikit-learns `HistGradientBoostingRegressor` schlägt mein getuntes Produktiv-XGBoost sowohl auf den vollen 11k Zeilen als auch auf dem 4'000-Zeilen-Subsample, und auf den Volldaten war `ExtraTreesRegressor` sogar der Beste von allen. Wenn XGBoost Ihr Reflex ist, war ein Fünf-Minuten-Wechsel zu HistGB oder ExtraTrees hier ~4–13% beim Median-Fehler wert – gratis Genauigkeit, die in einer Library sitzt, die Sie ohnehin schon installiert haben.
+**Unter den klassischen Modellen ist XGBoost nicht der automatische Sieger.** Auf den vollen 11'168 Zeilen war `ExtraTreesRegressor` der beste Baum und `HistGradientBoostingRegressor` dicht dahinter – beide vor einem Plain-Vanilla-XGBoost ohne jedes Tuning. Wenn XGBoost Ihr Reflex ist, war ein Fünf-Minuten-Wechsel zu HistGB oder ExtraTrees hier ~4–14% beim Median-Fehler wert – gratis Genauigkeit, die in einer Library sitzt, die Sie ohnehin schon installiert haben.
 
-**Aber die Foundation Models haben wirklich gewonnen.** Im ausgeglichenen 4'000-Zeilen-Feld holten sich TabPFN und TabICL die Spitzenplätze, beide vor jedem klassischen Modell, beide mit **null Tuning**. Und als ich **TabPFN v3.5 über die API auf alle 11'168 Häuser** losliess, zog es komplett davon – **46'529 € Median-Fehler, R² 0.784**, gegenüber ~68'000 € beim besten Baum. Für ein Modell, das null fittet und einfach in einem Forward-Pass vorhersagt, ist das ein bemerkenswertes Resultat. Der Hype ist, zumindest auf diesem Datensatz, verdient.
+**Aber die Foundation Models haben wirklich gewonnen.** Auf den vollen 11'168 Häusern schlagen alle drei – TabPFN v3.5, TabPFN v2 und TabICL – jedes klassische Modell, alle mit **null Tuning**. Die Spitzenreiter landen bei **~45'000 € Median-Fehler (R² 0.784)**, gegenüber ~57'000 € beim besten Baum – ein Minus von ~21%. Für Modelle, die null fitten und einfach in einem Forward-Pass vorhersagen, ist das ein bemerkenswertes Resultat. Der Hype ist, zumindest auf diesem Datensatz, verdient.
 
 Der Haken ist: „beste Genauigkeit" und „in meinem Produkt einsetzbar" sind zwei verschiedene Fragen:
 
-- **Sie brauchen eine GPU – lokal oder über die API.** TabPFNs In-Context-Attention skaliert mit dem Trainingssatz und wurde auf meiner Laptop-CPU mit keinem einzigen Fold fertig; die gehostete API löst das (so kam der Volldaten-Lauf von v3.5 zustande), aber dann verlassen Ihre Daten Ihre Maschine. HistGradientBoosting trainiert in 15 Sekunden auf allem, offline.
+- **Sie brauchen eine GPU – lokal oder über die API.** TabPFNs In-Context-Attention skaliert mit dem Trainingssatz und wurde auf meiner Laptop-CPU mit keinem einzigen Fold fertig; eine Colab-GPU (oder die gehostete API) löst das, aber die API heisst, dass Ihre Daten Ihre Maschine verlassen. HistGradientBoosting trainiert in 21 Sekunden auf allem, offline.
 - **TabPFNs Lizenz könnte es komplett ausschliessen.** Es ist das genaueste Modell in diesem Test *und* genau das, das ich rechtlich nicht hinter meine Haus-Karte setzen dürfte – die nicht-kommerzielle Lizenz verbietet exakt das (API inklusive, solange Sie nicht auf einer Bezahlstufe sind), und der kommerzielle Preis ist ein „Contact Sales"-Mysterium.
 
-Mein persönliches Fazit für die kleinanzeigen-Karte lautet also: **HistGradientBoosting ist heute das pragmatische Upgrade gegenüber XGBoost** (besser, gratis, CPU-freundlich, keine Fallstricke). Und wenn ich Foundation-Model-Genauigkeit will und dabei kommerziell sauber bleibe, ist **TabICL** – hier Zweiter, BSD-lizenziert, kein Token, 3× schneller als TabPFN – das, was ich tatsächlich ausliefern würde. TabPFN gewinnt den Benchmark; TabICL gewinnt den Trade-off.
+Mein persönliches Fazit für die kleinanzeigen-Karte lautet also: **HistGradientBoosting ist heute das pragmatische Upgrade gegenüber XGBoost** (besser, gratis, CPU-freundlich, keine Fallstricke). Und wenn ich Foundation-Model-Genauigkeit will und dabei kommerziell sauber bleibe, ist **TabICL** – hier Dritter, aber nur ein Wimpernschlag dahinter, BSD-lizenziert, kein Token, und schneller als TabPFN v2 – das, was ich tatsächlich ausliefern würde. TabPFN gewinnt den Benchmark; TabICL gewinnt den Trade-off.
 
-*Alle Zahlen oben sind echte 5-fach Out-of-Fold-Resultate – klassische Modelle auf den vollen 11'168 Häusern; das Sieben-Modelle-Ranking auf einem identischen 4'000-Zeilen-Subsample (Colab-T4-GPU); und TabPFN v3.5 sowohl auf dem 4k-Subsample als auch auf den vollen 11'168 Häusern über die gehostete API von Prior Labs.*
+*Alle Zahlen oben sind echte 5-fach Out-of-Fold-Resultate – jedes Modell auf den vollen 11'168 Häusern, dieselben Folds, auf einer Colab-T4-GPU (TabPFN v3.5 über die gehostete API von Prior Labs).*
 
 ---
 
