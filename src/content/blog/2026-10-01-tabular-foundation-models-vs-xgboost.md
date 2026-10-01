@@ -1,6 +1,6 @@
 ---
-title: "Wie gut sind Tabular Foundation Models wirklich – schlagen TabPFN und TabICL das gute alte XGBoost?"
-description: "Ein direkter Vergleich auf ~11'000 echten deutschen Hausinseraten: XGBoost und die besten Regressoren aus scikit-learn gegen die neuen Tabular Foundation Models TabPFN v2, v3.5 und TabICL. Gleiche Features, gleiche Folds, ehrliche Zahlen – plus ein Colab-Notebook zum Nachspielen."
+title: "Tabular Foundation Models – der kleine Bruder der LLMs für tabellarische Daten"
+description: "Ich habe für über 10 tausend echte Hausinserate untersucht, welches Machine-Learning-Modell am besten die Preise voraussagen kann. Sogenannte Tabular Foundation Models schlagen die alten Machine-Learning-Modelle um Längen – eine kleine Revolution. Lesen Sie weiter, wenn Sie dies für Ihre Daten nachmachen möchten."
 pubDate: 2026-10-01
 readTime: 14
 category: "Machine Learning"
@@ -110,7 +110,7 @@ Der ganze Benchmark ist ein einziges, kommentiertes Colab-Notebook. Es installie
 - **Repo:** [github.com/plotti/tabular-models-vs-xgboost](https://github.com/plotti/tabular-models-vs-xgboost)
 - **Daten:** [`house_xy.npz`](https://github.com/plotti/tabular-models-vs-xgboost/blob/main/house_xy.npz) (11'168 × 70, plus das log-Preis-Ziel)
 
-Öffnen Sie es in Google Colab, stellen Sie die Runtime auf eine **T4-GPU** und lassen Sie es von oben bis unten durchlaufen. Tauschen Sie Ihre eigene `house_xy.npz` rein, und dasselbe Protokoll benchmarkt jede beliebige tabellarische Regressionsaufgabe – es ist komplett datensatz-agnostisch.
+Öffnen Sie es in Google Colab, stellen Sie die Runtime auf eine **T4-GPU** und lassen Sie es von oben bis unten durchlaufen. Für die TabPFN-Modelle brauchen Sie einen (kostenlosen) API-Key von Prior Labs: einfach auf [priorlabs.ai](https://priorlabs.ai) registrieren, Token kopieren und im Notebook einsetzen. TabICL, XGBoost und die scikit-Modelle laufen auch ohne Key.
 
 ## Fazit
 
