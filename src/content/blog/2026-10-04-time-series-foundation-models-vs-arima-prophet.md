@@ -42,23 +42,35 @@ Das ist der Apples-to-Apples-Lauf: Jedes Modell unten auf denselben 14 Schnittpu
 | Modell | MAE | MASE | Pinball | Coverage |
 |---|---:|---:|---:|---:|
 | **🥇 Chronos-2 ＋cov** | **146** | **0.495** | **46.7** | 0.79 |
-| **🥈 Chronos-2 base** | 150 | 0.511 | 49.2 | 0.76 |
-| **🥉 TabPFN-TS ＋cov** | 173 | 0.589 | 55.7 | 0.77 |
+| **🥈 Chronos-2 base** | **150** | **0.511** | **49.2** | 0.76 |
+| **🥉 TabPFN-TS ＋cov** | **173** | **0.589** | **55.7** | 0.77 |
 | TabPFN-TS base | 183 | 0.624 | 57.1 | 0.84 |
 | TimesFM base | 206 | 0.700 | 69.3 | 0.66 |
+| ARIMA base | 221 | 0.751 | 85.5 | 0.93 |
 | TimesFM ＋cov | 222 | 0.754 | 77.2 | 0.55 |
 | LightGBM ＋cov | 279 | 0.953 | 98.7 | 0.54 |
+| ARIMA ＋cov | 290 | 0.987 | 96.7 | 0.87 |
+| AutoETS base | 303 | 1.029 | 119.4 | 0.57 |
 | LightGBM base | 305 | 1.034 | 94.9 | 0.74 |
 | Prophet base | 333 | 1.124 | 100.6 | 0.77 |
+| SeasonalNaive base | 351 | 1.188 | 129.2 | 0.81 |
 | Prophet ＋cov | 359 | 1.213 | 111.7 | 0.73 |
 
 *(Moirai fehlt mit Absicht: Ich habe wiederholt versucht, es zum Laufen zu bringen, aber seine `uni2ts`-Library pinnt ein älteres torch, das mit Chronos-2 und TimesFM kollidiert, und es scheitert zuverlässig in einer gemeinsamen Umgebung – eine Aufgabe für ein andermal.)*
 
+### Wie sieht das konkret aus?
+
+Zahlen in einer Tabelle sind das eine – aber schauen wir uns ein einzelnes Fenster an. Hier ein ganz normaler Werktag: links der Verlauf der letzten Tage, rechts der Schnittpunkt, ab dem das Modell nur noch raten kann. Die schwarze Linie ist, was tatsächlich passierte, die rote gestrichelte, was ARIMA vorausgesagt hat (mit seinem 80%-Unsicherheitsband), die blaue gepunktete die simple „gleich wie letzte Woche"-Baseline:
+
+![Day-Ahead Velo-Prognose für einen Werktag in Zürich: der tatsächliche Verlauf mit dem charakteristischen Pendler-Doppelgipfel, daneben die ARIMA-Prognose, die den Verlauf eng nachzeichnet, mit Unsicherheitsband, und die deutlich schwächere Seasonal-Naive-Baseline](../../assets/blog/time-series-forecast-example.png)
+
+Schön zu sehen: Der charakteristische Doppelgipfel (Morgen- und Abendpendler) ist da, ARIMA zeichnet ihn erstaunlich eng nach und trifft sogar die Höhe der Spitzen ganz ordentlich, während Seasonal-Naive systematisch zu tief liegt. (Die Foundation Models liegen im Notebook noch näher dran – die rendere ich hier aus Platzgründen nicht, aber im [Colab](https://colab.research.google.com/drive/1M-dcTiYkaDA48D1S0aMqBD19686xS26i) können Sie sich die Kurve für jedes Modell selbst zeichnen lassen.)
+
 Drei Dinge stechen heraus:
 
-1. **Die Foundation Models räumen die Spitze ab.** Die vier besten Zeilen sind alle zero-shot Foundation Models. Chronos-2 prognostiziert die Velo-Anzahl des nächsten Tages mit einem Median-Fehler von ~146/Stunde (MASE 0.495) – die *Hälfte* des Fehlers von saisonal-naive – mit **TabPFN-TS** (dem Zeitreihen-Cousin des Modells, das [den tabellarischen Benchmark](https://github.com/plotti/tabular-models-vs-xgboost) gewonnen hat) dicht dahinter. Alle schlagen die klassische Riege mit grossem Abstand: LightGBM kratzt gerade so an „gleich wie letzte Woche" vorbei (MASE 0.95), und **Prophet verliert glatt dagegen** (MASE > 1) – ein ernüchterndes Ergebnis für das berühmteste Open-Source-Forecasting-Tool.
+1. **Die Foundation Models räumen die Spitze ab.** Die drei besten Zeilen sind alle zero-shot Foundation Models. Chronos-2 prognostiziert die Velo-Anzahl des nächsten Tages mit einem Median-Fehler von ~146/Stunde (MASE 0.495) – die *Hälfte* des Fehlers von saisonal-naive – mit **TabPFN-TS** (dem Zeitreihen-Cousin des Modells, das [den tabellarischen Benchmark](https://github.com/plotti/tabular-models-vs-xgboost) gewonnen hat) dicht dahinter. Interessant ist, wer sich dazwischenschiebt: das **gute alte ARIMA** (MASE 0.751) landet im Mittelfeld und schlägt sowohl LightGBM als auch Prophet – Letzteres verliert sogar glatt gegen „gleich wie letzte Woche" (MASE > 1), ein ernüchterndes Ergebnis für das berühmteste Open-Source-Forecasting-Tool. Wenn Sie schon eine klassische Baseline wollen, nehmen Sie ARIMA, nicht Prophet.
 
-2. **Covariates haben kaum etwas gebracht – und oft geschadet.** Das ist die eigentliche Überraschung. Im tabellarischen Projekt hat das richtige Feature (die Energieeffizienzklasse) klar geholfen. Hier verbesserten die Wetter-Covariates nur **3 von 5** Modellen, und das nur minimal (Chronos-2 −3%, TabPFN-TS −6%, LightGBM −8%), während sie TimesFM (+8% Fehler) und Prophet (+8%) aktiv **schadeten**. Der wahrscheinliche Grund: Der Tages-/Wochenrhythmus kodiert bereits das meiste von dem, was Temperatur und Regen beitragen – um 3 Uhr morgens ist es kalt und nass, und da fährt sowieso niemand Velo – ein gutes saisonales Modell hat das Wetter also schon „eingepreist". Das exogene Signal, das im Explorationsplot so stark aussah, erweist sich als weitgehend redundant mit dem Kalender.
+2. **Covariates haben kaum etwas gebracht – und oft geschadet.** Das ist die eigentliche Überraschung. Die Wetter-Covariates halfen nur einer Handvoll Modelle, und das nur minimal (Chronos-2 −3%, TabPFN-TS −6%, LightGBM −8%), während sie TimesFM (+8% Fehler), Prophet (+8%) und ARIMA (+31%!) aktiv **schadeten**. Der wahrscheinliche Grund: Der Tages-/Wochenrhythmus kodiert bereits das meiste von dem, was Temperatur und Regen beitragen – um 3 Uhr morgens ist es kalt und nass, und da fährt sowieso niemand Velo – ein gutes saisonales Modell hat das Wetter also schon „eingepreist".
 
 3. **Null Tuning, und auch noch schneller.** Chronos-2 produzierte jede Prognose in **~1–2 Sekunden**, komplett ohne Training – schneller als der Prophet-Fit pro Fenster. (TabPFN-TS ist mit ~60s/Konfiguration langsamer, weil es pro Fenster eine gehostete API aufruft.) Das Foundation-Model-Versprechen – ein Forward-Pass, keine Pipeline pro Zeitreihe – hält operativ, nicht nur bei der Genauigkeit.
 
@@ -70,7 +82,8 @@ Es lohnt sich, bei Erkenntnis #2 kurz zu verweilen, denn sie ist das Gegenteil v
 
 Der ganze Benchmark ist ein kommentiertes Colab-Notebook – es installiert alles, lädt den Zürcher Datensatz automatisch, jagt die volle Leiter durch den Rolling-Backtest mit und ohne Covariates und druckt die Resultat-Tabelle plus einen Blogpost-Entwurf.
 
-- **▶️ Notebook & Repo:** [github.com/plotti/time-foundation-models](https://github.com/plotti/time-foundation-models)
+- **▶️ In Colab öffnen:** [Benchmark-Notebook starten](https://colab.research.google.com/drive/1M-dcTiYkaDA48D1S0aMqBD19686xS26i)
+- **Repo:** [github.com/plotti/time-foundation-models](https://github.com/plotti/time-foundation-models)
 - **Daten:** [`zurich_bikes.parquet`](https://github.com/plotti/time-foundation-models/blob/main/data/zurich_bikes.parquet) (43'762 stündliche Zeilen)
 
 Öffnen Sie es in Colab, stellen Sie die Runtime auf eine **T4-GPU** und lassen Sie es von oben bis unten durchlaufen. Für das TabPFN-TS-Modell brauchen Sie einen kostenlosen API-Key von [priorlabs.ai](https://priorlabs.ai); der Rest läuft ohne.
@@ -79,11 +92,11 @@ Der ganze Benchmark ist ein kommentiertes Colab-Notebook – es installiert alle
 
 Zwei Erkenntnisse auf diesem Datensatz, und beide haben sich sauber vom tabellarischen Experiment übertragen – eine wie erwartet, eine nicht.
 
-**Time Series Foundation Models schlagen die klassische Riege wirklich.** Chronos-2 halbierte den Fehler von saisonal-naive mit null Tuning und schlug sowohl Prophet als auch ein getuntes LightGBM um rund das Doppelte, und alle vier Foundation-Model-Zeilen stehen über jeder klassischen. Wenn Sie aus Gewohnheit zu Prophet oder einem handgebauten LightGBM greifen: Ein zero-shot Aufruf von Chronos-2 war hier genauer *und* schneller. Das spiegelt die tabellarische Geschichte exakt: Vortrainierte Modelle fressen still und leise die Standard-Toolbox auf.
+**Time Series Foundation Models schlagen die klassische Riege wirklich.** Chronos-2 halbierte den Fehler von saisonal-naive mit null Tuning und schlug sowohl Prophet als auch ein getuntes LightGBM um rund das Doppelte. Die drei Spitzenplätze gehen alle an Foundation Models, und sie führen das Feld klar an. Der einzige klassische Lichtblick ist das gute alte ARIMA, das sich ins Mittelfeld schiebt – aber auch das kostet rund 17 Minuten Rechenzeit pro Fenster, während Chronos-2 in **1–2 Sekunden** fertig ist. Wenn Sie aus Gewohnheit zu Prophet oder einem handgebauten LightGBM greifen: Ein zero-shot Aufruf von Chronos-2 war hier genauer *und* schneller. Das spiegelt die tabellarische Geschichte exakt: Vortrainierte Modelle fressen still und leise die Standard-Toolbox auf.
 
 **Aber die Covariates waren das Gegenteil von dem, was ich erwartet hatte.** Auf der tabellarischen Seite half das richtige Feature (die Energieeffizienzklasse) klar. Hier – auf einem Datensatz, den ich *ausgesucht* habe, weil Regen das Velofahren so offensichtlich treibt – bewegten die Wetter-Covariates kaum die Nadel und schadeten oft. Der Grund ist subtil, aber allgemein: Ein starkes saisonales Modell fängt den Wettereffekt bereits indirekt ein, über die Stunden- und Jahreszeit-Muster, denen das Wetter folgt. Covariates verdienen ihr Geld, wenn sie etwas tragen, das der Kalender nicht kann. Manchmal lautet das ehrliche Ergebnis „genau das, von dem man sicher war, dass es zählt, tat es nicht" – und genau deshalb macht man den Benchmark, statt zu raten. :)
 
-*Zahlen aus einem 14-Fenster-Rolling-Backtest auf 43'762 stündlichen Beobachtungen (Open Data der Stadt Zürich, 2019–2023), gelaufen auf einer Colab-T4-GPU. Die klassischen Baselines (Seasonal-Naive, ETS, ARIMA) wurden in diesem Lauf nicht fertig und würden sich nahe dem unteren Ende einsortieren – über Prophet, unter den Foundation Models.*
+*Zahlen aus einem 14-Fenster-Rolling-Backtest auf 43'762 stündlichen Beobachtungen (Open Data der Stadt Zürich, 2019–2023). Foundation Models und die intermediate Modelle liefen auf einer Colab-T4-GPU; die klassischen Baselines (Seasonal-Naive, ETS, ARIMA) auf der CPU – AutoARIMA braucht rund 17 Minuten pro Fenster, daher getrennt gerechnet und hier eingefügt.*
 
 ---
 
