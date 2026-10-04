@@ -24,7 +24,7 @@ Ich brauchte einen Zielwert, der wirklich von Covariates getrieben wird – also
 - **Covariates:** Temperatur, Regen, Luftfeuchtigkeit, Strahlung, Wind, Luftdruck (Wetter) + Stunde, Wochentag, Monat, Wochenende, ein Covid-Lockdown-Flag (Kalender).
 - **43'762 stündliche Zeilen**, 2019–2023.
 
-Und das Signal ist genau das, was man sich erhofft: ein scharfer **Pendler-Doppelgipfel** (8 Uhr und 17–18 Uhr an Werktagen), eine starke Trennung zwischen Wochentag und Wochenende, und – der Clou – **Regen senkt das Velofahren in den Pendlerstunden um ~30%**. Wenn Wetter-Covariates *hier* nicht helfen, dann nirgends.
+Und das Signal ist genau das, was man sich erhofft: ein scharfer **Pendler-Doppelgipfel** (8 Uhr und 17–18 Uhr an Werktagen), eine starke Trennung zwischen Wochentag und Wochenende, und der Klassiker: **Regen senkt das Velofahren in den Pendlerstunden um ~30%**. Auch ich hab keine Lust aufs Velo, wenn es regnet. Wenn Wetter-Covariates *hier* nicht helfen, dann nirgends.
 
 ## Die Spielregeln
 
@@ -32,8 +32,8 @@ Zeitreihen kann man nicht einfach durchmischen, also nehmen wir statt k-fold Cro
 
 Wir berichten **beides**:
 
-- **Punkt-Genauigkeit** – MAE in Velos/Stunde und **MASE** (skaliert gegen eine saisonale Naive-Prognose; **MASE < 1 heisst, Sie schlagen „gleich wie letzte Woche"**, die einzige Baseline, die wirklich zählt).
-- **Probabilistische Qualität** – **Pinball Loss** über die Quantile P10/P50/P90 und **Coverage** (enthält das 80%-Band auch wirklich ~80% der Wahrheit?). Foundation Models sind von Haus aus probabilistisch, also zeigt sich hier ihr eigentlicher Wert.
+- **Punkt-Genauigkeit** – MAE in Velos/Stunde und **MASE** (MASE versucht zu erklären, wie viel besser das Modell ist als ein faules Modell, das einfach sagt: Das Aufkommen wird morgen genauso sein wie letzte Woche zur gleichen Stunde. **MASE < 1 heisst, wir sind besser als die faule Methode.**).
+- **Probabilistische Qualität** – **Pinball Loss** (der Pinball Loss hingegen ist ein intelligenter Fehler, der asymmetrisch straft: Unterschätzen können wir anders gewichten als Überschätzen) über die Quantile P10/P50/P90 und **Coverage** (enthält das 80%-Band auch wirklich ~80% der Wahrheit?). Foundation Models sind von Haus aus probabilistisch, also zeigt sich hier ihr eigentlicher Wert.
 
 ## Die Resultate – 14-Fenster-Backtest
 
@@ -68,7 +68,7 @@ Probieren Sie mal einen Werktag (Mo–Fr) gegen ein Wochenende – der charakter
 
 Drei Dinge stechen heraus:
 
-1. **Die Foundation Models räumen die Spitze ab.** Die drei besten Zeilen sind alle zero-shot Foundation Models. Chronos-2 prognostiziert die Velo-Anzahl des nächsten Tages mit einem Median-Fehler von ~146/Stunde (MASE 0.495) – die *Hälfte* des Fehlers von saisonal-naive – mit **TabPFN-TS** (dem Zeitreihen-Cousin des Modells, das [den tabellarischen Benchmark](https://github.com/plotti/tabular-models-vs-xgboost) gewonnen hat) dicht dahinter. Interessant ist, wer sich dazwischenschiebt: das **gute alte ARIMA** (MASE 0.751) landet im Mittelfeld und schlägt sowohl LightGBM als auch Prophet – Letzteres verliert sogar glatt gegen „gleich wie letzte Woche" (MASE > 1), ein ernüchterndes Ergebnis für das berühmteste Open-Source-Forecasting-Tool. Wenn Sie schon eine klassische Baseline wollen, nehmen Sie ARIMA, nicht Prophet.
+1. **Die Foundation Models räumen die Spitze ab.** Die drei besten Zeilen sind alle zero-shot Foundation Models. Chronos-2 prognostiziert die Velo-Anzahl des nächsten Tages mit einem Median-Fehler von ~146/Stunde (MASE 0.495) – die *Hälfte* des Fehlers von saisonal-naive – mit **TabPFN-TS** (dem Zeitreihen-Cousin des Modells, das [den tabellarischen Benchmark](https://github.com/plotti/tabular-models-vs-xgboost) gewonnen hat) dicht dahinter. Interessant ist, wer sich dazwischenschiebt: das **gute alte ARIMA** (MASE 0.751) landet im Mittelfeld und schlägt sowohl LightGBM als auch Prophet – Letzteres verliert sogar glatt gegen „gleich wie letzte Woche" (MASE > 1), ein ernüchterndes Ergebnis für das berühmteste Open-Source-Forecasting-Tool. Wenn Sie schon eine klassische Baseline wollen, nehmen Sie ARIMA, nicht Prophet. Wundert mich eigentlich, wenn ich ehrlich bin.
 
 2. **Covariates haben kaum etwas gebracht – und oft geschadet.** Das ist die eigentliche Überraschung. Die Wetter-Covariates halfen nur einer Handvoll Modelle, und das nur minimal (Chronos-2 −3%, TabPFN-TS −6%, LightGBM −8%), während sie TimesFM (+8% Fehler), Prophet (+8%) und ARIMA (+31%!) aktiv **schadeten**. Der wahrscheinliche Grund: Der Tages-/Wochenrhythmus kodiert bereits das meiste von dem, was Temperatur und Regen beitragen – um 3 Uhr morgens ist es kalt und nass, und da fährt sowieso niemand Velo – ein gutes saisonales Modell hat das Wetter also schon „eingepreist".
 
