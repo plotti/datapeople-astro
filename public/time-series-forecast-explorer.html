@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Velo-Prognose Explorer</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a2e; --muted:#6b7280; --border:#e5e7eb; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         color:var(--fg); background:var(--bg); }
+  .wrap { max-width:960px; margin:0 auto; padding:14px; }
+  .controls { display:flex; flex-wrap:wrap; gap:14px 22px; align-items:flex-start;
+              margin-bottom:10px; }
+  .ctl label { font-size:12px; color:var(--muted); display:block; margin-bottom:4px;
+               text-transform:uppercase; letter-spacing:.04em; }
+  select { font-size:14px; padding:6px 8px; border:1px solid var(--border);
+           border-radius:8px; background:#fff; min-width:230px; }
+  .models { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { font-size:12.5px; padding:5px 10px; border:1px solid var(--border);
+          border-radius:999px; cursor:pointer; user-select:none; background:#fff;
+          display:inline-flex; align-items:center; gap:6px; transition:.12s; }
+  .chip .dot { width:9px; height:9px; border-radius:50%; background:currentColor; }
+  .chip.off { opacity:.4; }
+  .chip.actual { font-weight:600; }
+  #chart { width:100%; height:440px; }
+  .hint { font-size:12px; color:var(--muted); margin-top:4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="controls">
+    <div class="ctl">
+      <label for="win">Fenster (Tag)</label>
+      <select id="win"></select>
+    </div>
+    <div class="ctl" style="flex:1 1 320px">
+      <label>Modelle (klicken zum Ein-/Ausblenden)</label>
+      <div class="models" id="models"></div>
+    </div>
+  </div>
+  <div id="chart"></div>
+  <div class="hint" id="hint"></div>
+</div>
+<script>
+const DATA_URL = "time-series-forecast-explorer-data.json";
+// fixed, readable colors per model
+const COLORS = {
+  "Chronos-2 ＋cov":"#e63946","Chronos-2 base":"#f1808e",
+  "TabPFN-TS ＋cov":"#2a9d8f","TabPFN-TS base":"#80c7bd",
+  "TimesFM base":"#e76f51","TimesFM ＋cov":"#f0a58f",
+  "ARIMA base":"#9b5de5","ARIMA ＋cov":"#c3a0ef",
+  "LightGBM ＋cov":"#457b9d","LightGBM base":"#9ab8cc",
+  "Prophet base":"#e9c46a","Prophet ＋cov":"#f0d89a",
+  "AutoETS base":"#8d99ae","SeasonalNaive base":"#adb5bd"
+};
+// models shown by default (the interesting ones); others start hidden
+const DEFAULT_ON = new Set(["Chronos-2 ＋cov","ARIMA base","Prophet base","SeasonalNaive base"]);
+let D = null, active = new Set(), curWin = 0;
+const WD = ["Mo","Di","Mi","Do","Fr","Sa","So"];
+
+fetch(DATA_URL).then(r=>r.json()).then(d=>{ D=d; init(); });
+
+function init(){
+  const winSel = document.getElementById("win");
+  D.windows.forEach(w=>{
+    const o=document.createElement("option");
+    const dt=new Date(w.start.replace(" ","T"));
+    o.value=w.idx; o.textContent=`#${w.idx+1} · ${w.start.slice(0,10)} (${WD[w.weekday]})`;
+    winSel.appendChild(o);
+  });
+  winSel.onchange=()=>{ curWin=+winSel.value; draw(); };
+
+  const names = Object.keys(D.forecasts).sort();
+  const box = document.getElementById("models");
+  names.forEach(n=>{
+    if (DEFAULT_ON.has(n)) active.add(n);
+    const c=document.createElement("span");
+    c.className="chip"+(active.has(n)?"":" off");
+    c.style.color=COLORS[n]||"#555";
+    c.innerHTML=`<span class="dot"></span><span style="color:var(--fg)">${n}</span>`;
+    c.onclick=()=>{ active.has(n)?active.delete(n):active.add(n); c.classList.toggle("off"); draw(); };
+    box.appendChild(c);
+  });
+  draw();
+}
+
+function draw(){
+  const w = D.windows[curWin];
+  const traces = [];
+  // history
+  traces.push({x:w.hist_ts, y:w.hist_y, mode:"lines", name:"Verlauf",
+    line:{color:"#9aa0a6",width:1.5}, hoverinfo:"skip", showlegend:false});
+  // actual (always on, bold black)
+  traces.push({x:w.fut_ts, y:w.actual, mode:"lines", name:"tatsächlich",
+    line:{color:"#111",width:3}, hovertemplate:"tatsächlich: %{y:.0f}<extra></extra>"});
+  // each active model: p50 line (+ band for the single best model if alone-ish)
+  [...active].sort().forEach(n=>{
+    const f = D.forecasts[n][curWin] || D.forecasts[n][String(curWin)];
+    if (!f) return;
+    const col = COLORS[n]||"#555";
+    traces.push({x:w.fut_ts, y:f.p50, mode:"lines", name:n,
+      line:{color:col,width:2,dash:"dash"},
+      hovertemplate:n+": %{y:.0f}<extra></extra>"});
+  });
+  const layout = {
+    margin:{l:48,r:12,t:10,b:36},
+    xaxis:{showgrid:false},
+    yaxis:{title:"Velos / Stunde", rangemode:"tozero", gridcolor:"#eef0f2"},
+    shapes:[{type:"line", x0:w.fut_ts[0], x1:w.fut_ts[0], y0:0, y1:1, yref:"paper",
+             line:{color:"#bbb",width:1,dash:"dot"}}],
+    legend:{orientation:"h", y:1.08, font:{size:11}},
+    hovermode:"x unified", plot_bgcolor:"#fff", paper_bgcolor:"#fff"
+  };
+  Plotly.react("chart", traces, layout, {displayModeBar:false, responsive:true});
+  const mases = [...active].filter(n=>D.mase&&D.mase[n])
+     .map(n=>`${n} ${D.mase[n]}`).join(" · ");
+  document.getElementById("hint").textContent =
+    "Gestrichelt = Median-Prognose (P50) je Modell · schwarz = was tatsächlich passierte"
+    + (mases?" · MASE: "+mases:"");
+}
+</script>
+</body>
+</html>

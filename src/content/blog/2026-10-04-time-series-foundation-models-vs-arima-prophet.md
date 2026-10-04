@@ -60,11 +60,13 @@ Das ist der Apples-to-Apples-Lauf: Jedes Modell unten auf denselben 14 Schnittpu
 
 ### Wie sieht das konkret aus?
 
-Zahlen in einer Tabelle sind das eine – aber schauen wir uns ein einzelnes Fenster an. Hier ein ganz normaler Werktag: links der Verlauf der letzten Tage, rechts der Schnittpunkt, ab dem das Modell nur noch raten kann. Die schwarze Linie ist, was tatsächlich passierte, die rote gestrichelte, was ARIMA vorausgesagt hat (mit seinem 80%-Unsicherheitsband), die blaue gepunktete die simple „gleich wie letzte Woche"-Baseline:
+Zahlen in einer Tabelle sind das eine – aber am spannendsten wird es, wenn Sie selbst herumspielen. Unten können Sie **jedes der 14 Fenster durchblättern** und **jedes Modell ein- und ausblenden**, um zu sehen, was es vorausgesagt hat gegenüber dem, was tatsächlich passierte (die dicke schwarze Linie). Wählen Sie oben links einen Tag, klicken Sie die Modelle an und ab:
 
-![Day-Ahead Velo-Prognose für einen Werktag in Zürich: der tatsächliche Verlauf mit dem charakteristischen Pendler-Doppelgipfel, daneben die ARIMA-Prognose, die den Verlauf eng nachzeichnet, mit Unsicherheitsband, und die deutlich schwächere Seasonal-Naive-Baseline](../../assets/blog/time-series-forecast-example.png)
+<iframe src="/time-series-forecast-explorer.html" title="Interaktiver Velo-Prognose-Explorer" style="width:100%;height:560px;border:1px solid #e5e7eb;border-radius:10px;" loading="lazy"></iframe>
 
-Schön zu sehen: Der charakteristische Doppelgipfel (Morgen- und Abendpendler) ist da, ARIMA zeichnet ihn erstaunlich eng nach und trifft sogar die Höhe der Spitzen ganz ordentlich, während Seasonal-Naive systematisch zu tief liegt. (Die Foundation Models liegen im Notebook noch näher dran – die rendere ich hier aus Platzgründen nicht, aber im [Colab](https://colab.research.google.com/drive/1M-dcTiYkaDA48D1S0aMqBD19686xS26i) können Sie sich die Kurve für jedes Modell selbst zeichnen lassen.)
+Probieren Sie mal einen Werktag (Mo–Fr) gegen ein Wochenende – der charakteristische Pendler-Doppelgipfel ist nur unter der Woche da, und man sieht sofort, welche Modelle ihn treffen und welche danebenliegen. ARIMA zeichnet den Verlauf erstaunlich eng nach, während Seasonal-Naive systematisch zu tief liegt.
+
+*(Hinweis: Chronos-2, TimesFM und TabPFN-TS liefen auf der Colab-GPU – ihre Prognosen fehlen in diesem lokal erzeugten Explorer noch. Im [Colab-Notebook](https://colab.research.google.com/drive/1M-dcTiYkaDA48D1S0aMqBD19686xS26i) können Sie sich die Kurven aller Modelle selbst zeichnen lassen.)*
 
 Drei Dinge stechen heraus:
 
