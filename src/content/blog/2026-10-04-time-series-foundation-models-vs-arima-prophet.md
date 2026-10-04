@@ -64,9 +64,7 @@ Zahlen in einer Tabelle sind das eine – aber am spannendsten wird es, wenn Sie
 
 <iframe src="/time-series-forecast-explorer.html" title="Interaktiver Velo-Prognose-Explorer" style="width:100%;height:560px;border:1px solid #e5e7eb;border-radius:10px;" loading="lazy"></iframe>
 
-Probieren Sie mal einen Werktag (Mo–Fr) gegen ein Wochenende – der charakteristische Pendler-Doppelgipfel ist nur unter der Woche da, und man sieht sofort, welche Modelle ihn treffen und welche danebenliegen. ARIMA zeichnet den Verlauf erstaunlich eng nach, während Seasonal-Naive systematisch zu tief liegt.
-
-*(Hinweis: Chronos-2, TimesFM und TabPFN-TS liefen auf der Colab-GPU – ihre Prognosen fehlen in diesem lokal erzeugten Explorer noch. Im [Colab-Notebook](https://colab.research.google.com/drive/1M-dcTiYkaDA48D1S0aMqBD19686xS26i) können Sie sich die Kurven aller Modelle selbst zeichnen lassen.)*
+Probieren Sie mal einen Werktag (Mo–Fr) gegen ein Wochenende – der charakteristische Pendler-Doppelgipfel ist nur unter der Woche da, und man sieht sofort, welche Modelle ihn treffen und welche danebenliegen. Blenden Sie **Chronos-2** ein (der Sieger) und vergleichen Sie es mit Prophet oder Seasonal-Naive: Chronos-2 legt sich an den meisten Tagen fast deckungsgleich auf die tatsächliche Kurve, während die simplen Baselines systematisch danebenliegen.
 
 Drei Dinge stechen heraus:
 
