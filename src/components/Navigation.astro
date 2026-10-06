@@ -38,13 +38,52 @@ const links = [
       }
     </div>
 
-    <a
-      href="/#contact"
-      data-navigation-cta
-      class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm font-medium text-[var(--color-background)] transition-transform duration-300 ease-out hover:-translate-y-px"
-    >
-      {nav.cta}
-    </a>
+    <div class="flex items-center gap-3">
+      <a
+        href="/#contact"
+        data-navigation-cta
+        class="hidden items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm font-medium text-[var(--color-background)] transition-transform duration-300 ease-out hover:-translate-y-px md:inline-flex"
+      >
+        {nav.cta}
+      </a>
+
+      <button
+        type="button"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Menü öffnen"
+        class="-mr-2 flex h-11 w-11 items-center justify-center md:hidden"
+      >
+        <span class="burger" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" data-menu-panel hidden class="border-t border-[var(--color-rule)] md:hidden">
+    <div class="mx-auto flex max-w-6xl flex-col px-6 py-4">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            data-section={link.id}
+            data-navigation-link
+            class="border-b border-[var(--color-muted)] py-3.5 text-base text-[var(--color-ink-muted)] transition-colors last:border-b-0 hover:text-[var(--color-ink)]"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="/#contact"
+        data-navigation-cta
+        class="mt-4 inline-flex items-center justify-center rounded-full bg-[var(--color-ink)] px-5 py-3.5 text-sm font-medium text-[var(--color-background)]"
+      >
+        {nav.cta}
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -60,6 +99,61 @@ const links = [
     bottom: -1.05rem;
     height: 2px;
     background: var(--color-accent);
+  }
+
+  /* Burger icon — three lines, morphs to an X when open */
+  .burger {
+    position: relative;
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+  .burger > span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--color-ink);
+    transition:
+      top 0.25s ease,
+      transform 0.25s ease,
+      opacity 0.2s ease;
+  }
+  .burger > span:nth-child(1) {
+    top: 5px;
+  }
+  .burger > span:nth-child(2) {
+    top: 10px;
+  }
+  .burger > span:nth-child(3) {
+    top: 15px;
+  }
+  button[aria-expanded="true"] .burger > span:nth-child(1) {
+    top: 10px;
+    transform: rotate(45deg);
+  }
+  button[aria-expanded="true"] .burger > span:nth-child(2) {
+    opacity: 0;
+  }
+  button[aria-expanded="true"] .burger > span:nth-child(3) {
+    top: 10px;
+    transform: rotate(-45deg);
+  }
+
+  /* Dropdown slides in on open (animation replays whenever hidden is removed) */
+  [data-menu-panel]:not([hidden]) {
+    animation: menu-in 0.2s ease;
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 </style>
 
@@ -94,6 +188,42 @@ const links = [
     );
     sections.forEach((s) => observer.observe(s));
   }
+
+  /*
+    Mobile burger menu.
+    Opens the dropdown panel, morphs the icon to an X, and closes again on
+    link click, Escape, or when the viewport grows past the md breakpoint.
+  */
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const panel = document.getElementById("mobile-menu");
+
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Menü schliessen" : "Menü öffnen");
+      panel.hidden = !open;
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    panel.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("a")) setOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !panel.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    const desktop = window.matchMedia("(min-width: 768px)");
+    desktop.addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
 </script>
 
 <script is:inline>
@@ -106,12 +236,12 @@ const links = [
     });
   });
 
-  document
-    .querySelector("[data-navigation-cta]")
-    ?.addEventListener("click", () => {
+  document.querySelectorAll("[data-navigation-cta]").forEach((link) => {
+    link.addEventListener("click", () => {
       window.posthog?.capture("consultation_cta_clicked", {
         cta_location: "primary_navigation",
         target_section: "contact",
       });
     });
+  });
 </script>
