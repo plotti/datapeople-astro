@@ -12,9 +12,9 @@ cover: "../../assets/blog/jev-youtube-kids-cover.jpg"
 
 ## Die Ausgangslage
 
-Unsere Kinder sollten dieses Jahr einen eigenen YouTube-Kids-Account bekommen. Die Idee hinter YouTube Kids ist ja bestens: ein geschützter Raum, keine Kommentare, keine Videos, die für Erwachsene gemacht sind. Die Praxis ist ernüchternder – ohne gepflegte Kanalliste füllt der Empfehlungsalgorithmus die Zeit mit genau dem Zeug, das die Watchtime maximiert: laut, schnell geschnitten, inhaltlich leer.
+Unsere Kinder sollen dieses Jahr einen eigenen YouTube-Kids-Account bekommen. Die Idee hinter YouTube Kids finde ich ja ehrlich gesagt richtig gut: ein geschützter Raum, keine Kommentare, keine Videos, die eigentlich für Erwachsene gemacht sind. Nur sieht die Praxis leider anders aus. Lässt man das Profil ohne gepflegte Kanalliste laufen, füllt der Empfehlungsalgorithmus die Zeit nämlich mit genau dem Zeug, das die Watchtime maximiert: laut, schnell geschnitten und inhaltlich ungefähr so gehaltvoll wie die Verpackung eines Überraschungseis.
 
-Was ich wollte, war das Gegenteil: ein Profil mit einer kuratierten Kanalliste. Und zwar nicht auf Basis dessen, was ich *vermute*, was meine Kinder mögen – sondern auf Basis dessen, was die Daten sagen. Die Frage lautete also: **Was wurde in den letzten zwölf Monaten bei uns tatsächlich geschaut, und welche dieser Kanäle sind für Kinder geeignet?**
+Was ich stattdessen wollte: ein Profil mit einer kuratierten Kanalliste, bei der ich selbst die Kontrolle habe. Und zwar nicht auf Basis dessen, was ich *vermute*, was meine Kinder mögen – meine Trefferquote an dieser Stelle ist, vorsichtig formuliert, ausbaufähig –, sondern auf Basis dessen, was die Daten über das letzte Jahr hergeben. Die Frage lautete also: **Was wurde in den letzten zwölf Monaten bei uns tatsächlich geschaut, und welche dieser Kanäle taugen für einen Kinderaccount?**
 
 Die Daten liegen zum Glück alle bei mir selbst. Google [Takeout](https://takeout.google.com) exportiert den kompletten Wiedergabeverlauf – bei mir als eine einzige, rund 52 MB grosse HTML-Datei namens `Wiedergabeverlauf.html` (Takeout 4, Stand Oktober 2026). Die Zahlen daraus:
 
@@ -22,11 +22,11 @@ Die Daten liegen zum Glück alle bei mir selbst. Google [Takeout](https://takeou
 - **46'413** davon mit Kanalangabe, 3'384 ohne
 - **17'363 verschiedene Kanäle**
 
-Das ist der eigentliche Haken an der Sache. Ein YouTube-Kids-Account bekommt Kanäle zugewiesen, keine einzelnen Videos – die Aufgabe reduziert sich also von rund 50'000 Video-Entscheidungen auf 17'363 Kanal-Entscheidungen. Immer noch: 17'363 Mal googeln, was das für ein Kanal ist, und überlegen, ob das was fürs Kind ist. Bei fünf Sekunden pro Kanal sind das rund 24 Stunden reines Klicken. Nein.
+Und genau da liegt der eigentliche Haken an der Sache. Ein YouTube-Kids-Account bekommt nämlich Kanäle zugewiesen und keine einzelnen Videos – die Aufgabe schrumpft damit von rund 50'000 Video-Entscheidungen auf 17'363 Kanal-Entscheidungen. Klingt erstmal nach einem Riesengewinn, und im Prinzip ist es auch einer. Aber es bleiben immer noch 17'363 Mal googeln, was das für ein Kanal ist, und anschliessend überlegen, ob das was fürs eigene Kind ist. Bei fünf Sekunden pro Kanal sind das rund 24 Stunden reines Klicken. Kann man machen – ich hatte aber Lust auf etwas Angenehmeres. :)
 
 ## Erster Versuch: Keyword-Regeln (und warum das nichts wurde)
 
-Der erste Reflex eines Data People ist natürlich ein Skript – okay, just kidding, aber tun wir mal so, als ob. :) Ich habe den Verlauf per Regex geparst – die deutsche Takeout-Datei ist hübsch regelmäßig aufgebaut („*Video-Titel* angesehen *Kanal* am 12.09.2026, 19:03:11 MESZ") – und Kanäle dann mit Keyword-Buckets kategorisiert:
+Na ja, gut: Der erste Reflex eines Data People wäre natürlich ein Skript gewesen – okay, just kidding, der Reflex *war* ein Skript. :) Ich habe den Verlauf per Regex geparst – die deutsche Takeout-Datei ist hübsch regelmässig aufgebaut („*Video-Titel* angesehen *Kanal* am 12.09.2026, 19:03:11 MESZ") – und die Kanäle dann mit Keyword-Buckets kategorisiert:
 
 ```python
 categories = {
@@ -37,19 +37,19 @@ categories = {
 }
 ```
 
-Das Ergebnis war unterwegs brauchbar und an der entscheidenden Stelle unbrauchbar. „*Hot Wheels*" landete unter Automotive. „*The Action Lab*" – ein Wissenschaftskanal, den mein Zehnjähriger liebt – unter „Other", weil der Kanalname kein einziges Keyword enthält. Und die eigentliche Frage, *geeignet für Kinder ja/nein*, beantwortet so ein Bucket gar nicht: „Kids & Family" fängt, was „kids" im Namen trägt, und verliert alles andere.
+Das Ergebnis war auf dem Papier brauchbar und in der Praxis an der entscheidenden Stelle unbrauchbar. „*Hot Wheels*" landete unter Automotive. „*The Action Lab*" – ein Wissenschaftskanal, den mein Zehnjähriger liebt – rutschte unter „Other", weil der Kanalname kein einziges der Keywords enthält. Und die Frage, die mich überhaupt erst interessiert hat – *geeignet für Kinder ja/nein* – beantwortet so ein Bucket schlicht nicht: „Kids & Family" fängt alles, was „kids" im Namen trägt, und verliert den Rest.
 
-Das ist die Grenze von Regeln: Sie matchen Zeichenketten, keine Bedeutung. Irgendwas musste die Kanalnamen *lesen*. Klassischer nächster Schritt wäre ein LLM-Prompt pro Kanal gewesen. Aber:
+Das ist die klassische Grenze von Regeln: Sie matchen Zeichenketten, aber eben keine Bedeutung. Irgendetwas musste die Kanalnamen also wirklich *lesen* können. Der naheliegende nächste Schritt wäre ein LLM-Prompt pro Kanal gewesen. Aber genau da hapert es:
 
-- **17'363 LLM-Calls** für eine Beschriftungs-Aufgabe sind teuer und träge – und mir wäre das nur für die Top 500 eingefallen, nicht für den ganzen Long Tail.
-- Strukturierte Outputs lassen sich einfordern, JSON-Mode gibt es längst. Aber es bleibt generierter Text, der sich an ein Format halten soll – und genau das bricht dann gelegentlich.
-- Und fragt man ein LLM, wie sicher es sich ist, bekommt man Text, der *klingt* wie eine Wahrscheinlichkeit – eine echte, kalibrierte ist das trotzdem nicht.
+- **17'363 LLM-Calls** für eine reine Beschriftungs-Aufgabe sind teuer und träge. Realistisch wäre für mich nur eine Stichprobe der Top 500 gewesen – der ganze Long Tail wäre leer ausgegangen.
+- Strukturierte Outputs lassen sich zwar einfordern, JSON-Mode gibt es ja längst. Aber am Ende bleibt es generierter Text, der sich an ein Format halten soll – und genau dabei bricht es dann gelegentlich.
+- Und wenn man ein LLM fragt, wie sicher es sich ist, bekommt man Text, der *klingt* wie eine Wahrscheinlichkeit. Eine echte, kalibrierte ist das trotzdem keine.
 
-Genau hier kommt das Modell ins Spiel, um das es in diesem Post geht.
+Damit sind wir auch schon beim Modell, um das es in diesem Post geht.
 
 ## Auftritt Jev
 
-**Jev** ist ein Modell der Startup-Firma TypeSafe, über OpenRouter nutzbar – und es ist bemerkenswert, weil es *gar keinen Text generiert*. Kein Token-für-Token-Schreiben, kein Chain-of-Thought, keine Antwort in Prosa. Man reicht ihm einen Kontext („State") und eine Liste von Fragen, und es gibt für **alle Fragen gleichzeitig** kalibrierte Entscheidungswahrscheinlichkeiten zurück. Ein einziger Forward-Pass.
+**Jev** ist ein Modell der Startup-Firma TypeSafe, über OpenRouter nutzbar – und es ist deshalb so bemerkenswert, weil es *gar keinen Text generiert*. Kein Token-für-Token-Schreiben, kein Chain-of-Thought, keine Antwort in Prosa. Man reicht ihm einen Kontext („State") und eine Liste von Fragen, und zurück kommen für **alle Fragen gleichzeitig** kalibrierte Entscheidungswahrscheinlichkeiten. Ein einziger Forward-Pass, fertig.
 
 Der Name und das Design kommen aus Daniel Kahnemans *Thinking, Fast and Slow*:
 
@@ -58,23 +58,23 @@ Der Name und das Design kommen aus Daniel Kahnemans *Thinking, Fast and Slow*:
 | **Mensch** | 2 × 2 = 4, ohne nachzudenken | 17 × 24 = 408, Schritt für Schritt |
 | **KI** | **Jev**: Wahrscheinlichkeit in einem Durchgang, ohne Text | **LLMs & Reasoning-Modelle**: generieren Antwort und Gedankenkette Token für Token |
 
-Ein LLM ist ein System-2-Apparat: wunderbar, wenn eine nuancierte Antwort entstehen soll, aber Overkill, wenn die Frage nur ein Urteil verlangt. Jev ist das System 1: Die Frage „Ist dieser Kanal Kindercontent?" wird nicht *beantwortet*, sie wird *bewertet*.
+Ein LLM ist damit eher ein System-2-Apparat: wunderbar, wenn am Ende eine nuancierte Antwort stehen soll, aber klarer Overkill, wenn die Frage nur ein Urteil verlangt. Jev ist das Gegenstück dazu, das System 1: Die Frage „Ist dieser Kanal Kindercontent?" wird hier nicht erst ausformuliert und dann beantwortet – sie geht direkt rein und kommt als Wahrscheinlichkeit wieder raus.
 
-Dabei kann Jev drei Fragetypen, alle in einem Call:
+Dabei kann Jev drei Fragetypen, alle im selben Call:
 
 1. **Ja/Nein-Frage** – „Ist das eine Rückerstattungsanfrage?" → `0.90`: ein einzelner Score, 90 % Wahrscheinlichkeit für „Ja".
 2. **Mehrfachauswahl** – „An welches Team routen? `[Billing, Support, Sales]`" → `Billing: 0.85, Support: 0.10, Sales: 0.05` – die Verteilung ist auf die angebotenen Optionen beschränkt.
 3. **Skaliert** – „Wie dringend ist die Anfrage?" → `0.88` auf einer Low-bis-Critical-Skala.
 
-Und der Teil, der Jev für mich von „nett" zu „nützlich" macht: **Die Wahrscheinlichkeiten sind kalibriert.** Normale LLMs sind es demonstrativ nicht, und das liegt an ihrem Training: RLHF belohnt selbstbewusst klingende Antworten (Menschen mögen sie), RLVR belohnt Korrektheit, aber ignoriert, wie sicher sich das Modell dabei war. Jev wird mit **RLCD** (*Reinforcement Learning for Calibrated Decisions*) trainiert – belohnt wird, wenn die ausgegebene Wahrscheinlichkeit langfristig den tatsächlichen Ergebnissen entspricht. Wenn Jev sagt „0.80", dann ist es in 80 % dieser Fälle richtig. Nicht klingt so. Ist so.
+Und der Teil, der Jev für mich von „nett" zu „nützlich" gehoben hat: **Die Wahrscheinlichkeiten sind kalibriert.** Normale LLMs sind das demonstrativ nicht, und das liegt an ihrem Training: RLHF belohnt selbstbewusst klingende Antworten (Menschen mögen die einfach gern), RLVR belohnt Korrektheit, ignoriert aber, wie sicher sich das Modell dabei war. Jev wird mit **RLCD** (*Reinforcement Learning for Calibrated Decisions*) trainiert – belohnt wird, wenn die ausgegebene Wahrscheinlichkeit langfristig mit den tatsächlichen Ergebnissen übereinstimmt. Wenn Jev also „0.80" sagt, dann liegt es in 80 % dieser Fälle richtig. Also nicht: klingt so, als wäre es so. Sondern: die 80 % stimmen auch tatsächlich.
 
-Genau das ist der Unterschied zwischen „Das Modell sagt irgendwas zwischen 0 und 1" und „Ich kann auf 0.8 eine Regel bauen". Dazu gleich mehr.
+Das ist genau der Unterschied zwischen „Das Modell spuckt irgendetwas zwischen 0 und 1 aus" und „Ich kann auf 0.8 eine Regel bauen". Wie so eine Regel konkret aussieht, zeige ich weiter unten.
 
 *(Der Name ist übrigens eine kleine Pointe in sich: benannt nach William Stanley Jevons, dem Ökonomen des Jevons'schen Paradoxons – wenn man eine Ressource effizienter nutzt, steigt ihr Gesamtverbrauch, statt zu sinken. Davon mehr im Fazit.)*
 
 ## Der Code
 
-Die API ist armselig einfach – ein POST an die Decisions-Route von OpenRouter mit State und Fragen, zurück kommen Wahrscheinlichkeiten. Das ist der Kern von `jev_classify_v2.py`, unverkürzt in der Logik (API-Key natürlich aus der Umgebungsvariable und nicht, wie in meiner ersten Version, im Klartext im Skript…):
+Die API ist fast schon peinlich einfach: ein POST an die Decisions-Route von OpenRouter mit State und Fragen, zurück kommen Wahrscheinlichkeiten. Das ist der Kern von `jev_classify_v2.py`, unverkürzt in der Logik (API-Key natürlich aus der Umgebungsvariable und nicht, wie in meiner ersten Version, im Klartext im Skript…):
 
 ```python
 API_URL = "https://openrouter.ai/api/alpha/decisions"
@@ -126,11 +126,11 @@ def classify(channel: str) -> dict:
 
 Zwei Dinge, die mir dabei aufgefallen sind:
 
-**Der State ist banal – und genau das ist der Punkt.** Ich habe pro Kanal nichts weiter als den Namen reingereicht: `"state": {"channel": "Steve Mould"}`. Kein Scraping von Kanalseiten, keine Videobeschreibungen. Die Fragen tun die Arbeit; in den `instructions` stecken ein paar Beispiel-Kinderkanäle als Mini-Few-Shot („Die Sendung mit der Maus, Löwenzahn, Woozle Goozle…"), mehr Kontext brauchte es nicht.
+**Der State ist banal – und genau deshalb gefällt er mir so gut.** Ich habe pro Kanal nichts weiter als den Namen reingereicht: `"state": {"channel": "Steve Mould"}`. Kein Scraping von Kanalseiten, keine Videobeschreibungen, nichts. Die eigentliche Arbeit machen die Fragen: In den `instructions` steht, wie ein Zehnjähriger so tickt, und in den `criteria`, was „true" und „false" überhaupt bedeuten soll. Dazu ein paar Beispiel-Kinderkanäle als Mini-Few-Shot („Die Sendung mit der Maus, Löwenzahn, Woozle Goozle…") – und mehr Kontext hat es wirklich nicht gebraucht.
 
-**Zwei Fragen, ein Call.** Der zweite Durchgang stellt pro Kanal zwei unabhängige Fragen – „interessant für einen Zehnjährigen?" und „geeignet für einen Zehnjährigen?" – und kriegt beide Wahrscheinlichkeiten in derselben Antwort. Für einen LLM-Prompt wäre das ein strukturiertes-Output-Konstrukt gewesen; hier ist es einfach ein zweiter Schlüssel im Fragen-Dictionary.
+**Zwei Fragen, ein einziger Call.** Der zweite Durchgang stellt pro Kanal zwei unabhängige Fragen – „interessant für einen Zehnjährigen?" und „geeignet für einen Zehnjährigen?" – und bekommt beide Wahrscheinlichkeiten in derselben Antwort zurück. Mit einem LLM wäre das ein strukturiertes-Output-Konstrukt geworden, mit Prompt-Anleitung und gebetsmühlenartiger Hoffnung, dass der JSON-Block diesmal hält; hier ist es einfach ein zweiter Schlüssel im Fragen-Dictionary.
 
-Das Ergebnis sieht dann so aus – Zeile für Zeile, mit Gebühren-Log:
+Das Ergebnis sieht dann so aus – Zeile für Zeile, inklusive Gebühren-Log:
 
 ```json
 {"channel": "Woozle Goozle", "kid_appealing": 0.56, "kid_appropriate": 0.7}
@@ -138,15 +138,15 @@ Das Ergebnis sieht dann so aus – Zeile für Zeile, mit Gebühren-Log:
 {"channel": "Veritasium", "noul": 0.02, "cost": 1.701e-05}
 ```
 
-Und damit zur Frage, die Sie jetzt schon eine Weile stellen: **Was hat das gekostet?** Die API schreibt pro Entscheidung einen `cost`-Eintrag. Aufsummiert über den grossen Durchlauf mit rund 21'000 Klassifikationen:
+Und damit zur Frage, die du dir vermutlich schon eine Weile stellst: **Was hat das gekostet?** Die API schreibt pro Entscheidung einen `cost`-Eintrag. Aufsummiert über den grossen Durchlauf mit rund 21'000 Klassifikationen:
 
 > **Gesamtrechnung: $0.36.** Pro Entscheidung rund 0.0017 Cent.
 
-Zum Vergleich: Schon ein recht sparsamer LLM-Call läge pro Kanal um Grössenordnungen darüber – und genau deshalb wäre meine LLM-Version ein Top-500-Stichprobendesign geworden. Mit Jev war „einfach alle 17'363“ die triviale Entscheidung. Merken Sie sich diesen Satz, er ist das Fazit dieses Posts.
+Zum Vergleich: Schon ein recht sparsamer LLM-Call läge pro Kanal um Grössenordnungen darüber – und genau deshalb wäre meine LLM-Version ein Top-500-Stichprobendesign geworden. Mit Jev war „einfach alle 17'363" die triviale Entscheidung. Merk dir diesen Satz, er kommt im Fazit noch einmal zurück. :)
 
 ## Schwellenwerte statt Bauchgefühl
 
-Hier zahlt die Kalibrierung ein. Weil die Scores statistische Bedeutung haben, kann ich auf sie *Regeln* schreiben, und die Regeln sind Politik, nicht Vibes:
+Und hier zahlt sich die Kalibrierung dann richtig aus. Weil die Scores eine statistische Bedeutung haben, kann ich darauf *Regeln* bauen – und die lege ich bewusst als klare Politik fest, nicht als Bauchgefühl:
 
 ```python
 # Durchgang 1: Kindercontent ja/nein
@@ -158,7 +158,7 @@ tier = "yes"             if appeal >= 0.7 and appr >= 0.7 else \
        "watch-together"  if appeal >= 0.7 and appr >= 0.5 else "no"
 ```
 
-`p ≥ 0.8` heißt bei einem kalibrierten Modell: In 8 von 10 Fällen mit diesem Score liegt das Modell richtig. Für „Kanal kommt automatisch auf den Kinderaccount" gut genug? Für mich ja – bei 10 % Fehlalarm-Rate schaue ich trotzdem drüber, aber die Masse läuft durch. Und der untere Bereich ist das eigentlich Schöne: Alles unterhalb der Schwelle landet nicht im Müll, sondern in einer **Grenzfall-Liste zur manuellen Durchsicht**. Das Modell sagt mir ehrlich, wo es unsicher ist, statt falsch selbstbewusst „Nein" zu sagen. Genau das ist der Unterschied zu einem LLM, das man per Prompt um eine Confidence-Zahl bittet.
+`p ≥ 0.8` heisst bei einem kalibrierten Modell: In 8 von 10 Fällen mit diesem Score liegt das Modell richtig. Ist das gut genug, um einen Kanal automatisch auf den Kinderaccount zu legen? Für mich ja – bei einer Fehlalarm-Rate von 10 % schaue ich trotzdem kurz drüber, aber die Masse läuft einfach durch. Und der untere Bereich ist eigentlich das Schönste an der ganzen Geschichte: Alles unterhalb der Schwelle landet nicht im Müll, sondern auf einer **Grenzfall-Liste zur manuellen Durchsicht**. Das Modell sagt mir ehrlich, wo es unsicher ist, statt falsch selbstbewusst „Nein" zu sagen. Von einem LLM, dem man per Prompt eine Confidence-Zahl entlockt, bekommt man dagegen eine Zahl ohne jede Gewähr.
 
 ## Die Resultate
 
@@ -182,28 +182,28 @@ Die Spitze der Kern-Liste liest sich wie ein deutsches Fernsehen der letzten vie
 | KiKA von ARD und ZDF | 0.96 | 34 |
 | Peppa Pig Deutsch – Offizieller Kanal | 0.99 | 3 |
 
-Und weil Sie es sich denken: Nein, nicht alles war goldrichtig. Mein Lieblingsfehlalarm steht mit **p = 0.74** in der „likely"-Liste: **MotherDuck** – die Data-Warehouse-Firma. Vermutlich das Entchen-Logo. (Zugegeben: Wäre mein Kind, würde ich es stolz ertragen.) Der umgekehrte Fall: Der offizielle Pokémon-Kanal liegt bei 0.70, **Der Elefant** bei 0.79 – beides hätte eindeutig als kindertauglich kategorisiert werden sollen. Hier ist das Modell zu vorsichtig; die Grenzliste lohnt die Durchsicht also in beide Richtungen. 225 Kanäle manuell sind 24 Stunden Kickarbeit auf etwa eine halbe Stunde geschrumpft.
+Und weil du es dir vermutlich schon denkst: Nicht alles war goldrichtig. Mein Lieblingsfehlalarm steht mit **p = 0.74** in der „likely"-Liste: **MotherDuck** – die Data-Warehouse-Firma. Vermutlich wegen des Entchen-Logos. (Zugegeben: Wäre das mein Kind, würde ich es stolz ertragen.) Der umgekehrte Fall sieht so aus: Der offizielle Pokémon-Kanal liegt bei 0.70, **Der Elefant** bei 0.79 – beides hätte eindeutig als kindertauglich durchgehen sollen. Hier war das Modell zu vorsichtig; die Grenzliste lohnt die Durchsicht also in beide Richtungen. Immerhin: 225 Kanäle manuell durchgehen ist von 24 Stunden Kickarbeit auf etwa eine halbe Stunde geschrumpft.
 
 ## Zweiter Durchgang: für Kinder gemacht ≠ für mein Kind interessant
 
-Der erste Durchgang beantwortet „Ist das Kindercontent?“. Die interessantere Frage ist eine andere: Was ist *interessant und geeignet* für meine Tochter – sie ist neun; im Prompt steht „typical 10-year-old“, ich habe grosszügig aufgerundet. Ein Kanal muss dafür nämlich nicht für Kinder gemacht sein: Restaurationsvideos, Wissenschaftler mit Sprudelkullen, Männer, die Dinge aus LEGO bauen, die niemand braucht. Deshalb derselbe Call noch einmal über die 571 meistgesehenen Kanäle (zusammen 44 % aller Views), diesmal mit den beiden Fragen von oben – ein Request pro Kanal, zwei Wahrscheinlichkeiten. Am Ende stehen **33 Kanäle**, die beide Hürden nehmen, von The Action Lab über Veritasium und Steve Mould bis Mark Rober (Appeal 0.94 – Spitzenwert).
+Der erste Durchgang beantwortet „Ist das Kindercontent?". Die eigentlich interessante Frage ist aber eine andere: Was ist *interessant und geeignet* für meine Tochter – sie ist neun; im Prompt steht „typical 10-year-old", ich habe grosszügig aufgerundet. Denn dafür muss ein Kanal nämlich nicht für Kinder gemacht sein: Restaurationsvideos, Wissenschaftler mit Sprudelkullen, Männer, die Dinge aus LEGO bauen, die niemand braucht. Deshalb noch einmal derselbe Call, diesmal über die 571 meistgesehenen Kanäle (zusammen 44 % aller Views), mit den beiden Fragen von oben – ein Request pro Kanal, zwei Wahrscheinlichkeiten. Am Ende stehen **33 Kanäle**, die beide Hürden nehmen, von The Action Lab über Veritasium und Steve Mould bis Mark Rober (Appeal 0.94 – Spitzenwert).
 
 ## Wo die Grenzen liegen
 
-Damit niemand denkt, hier lief ein Wunderwerk:
+Damit hier niemand auf die Idee kommt, es hätte ein Wunderwerk laufen:
 
 - **State ist nur Text.** Ich habe Kanalnamen reingereicht, keine Thumbnails, keine Videotexte. Bei einem Kanal namens „CHECKER WELT" (0.68) muss man schon wissen, dass das die KiKA-„Checker"-Reihe ist – der Name allein ist mehrdeutig. Mehr Kontext reinzugeben (z. B. die 10 häufigsten Videotitel pro Kanal, die ich aus dem Verlauf sowieso habe) ist der naheliegende nächste Hebel.
-- **Kalibriert heißt nicht pro Fall richtig.** 0.74 für eine Datenbank-Ente. Die Statistik stimmt über viele Entscheidungen, nicht über jede.
-- **Kein Reasoning, kein Rechnen.** Jev ist bewusst kein System 2: mehrstufige Schlüsse oder Zählen kann es nicht, dafür ist der LLM-Apparat daneben weiterhin zuständig.
-- **Prompt-Anfällig bleibt es.** Wie alle Modelle kann adversarialer Text im State die Ausgabe verschieben. Bei Kanalnamen aus dem eigenen Verlauf ein theoretisches Risiko – in einem Produkt, das Fremdtext verarbeitet, wäre das eine Designfrage.
+- **Kalibriert heisst nicht pro Fall richtig.** 0.74 für eine Datenbank-Ente. Die Statistik stimmt über viele Entscheidungen hinweg, nicht über jede einzelne.
+- **Kein Reasoning, kein Rechnen.** Jev ist bewusst kein System 2: Mehrstufige Schlüsse oder Zählen kann es nicht – dafür ist der LLM-Apparat daneben weiterhin zuständig.
+- **Prompt-Anfällig bleibt es.** Wie alle Modelle lässt es sich durch adversarialen Text im State beeinflussen. Bei Kanalnamen aus dem eigenen Verlauf ist das ein rein theoretisches Risiko – in einem Produkt, das Fremdtext verarbeitet, wäre das aber eine echte Designfrage.
 
 ## Fazit
 
-Der Kinderaccount steht jetzt: die Kern-Kinderkanäle für den kleineren Sprössling, 33 weitere für meine Neunjährige – alles abgeleitet aus einem Jahr echtem Schauverhalten statt aus Bauchgefühl und Algorithmus-Verdacht. Und wenn im nächsten Jahr der nächste Takeout ansteht: Skript nochmal laufen lassen, ein paar Cent Kosten.
+Der Kinderaccount steht jetzt: die Kern-Kinderkanäle für den kleineren Sprössling, 33 weitere für meine Neunjährige – alles abgeleitet aus einem Jahr echtem Schauverhalten statt aus Bauchgefühl und Algorithmus-Verdacht. Und wenn im nächsten Jahr der nächste Takeout ansteht: Skript nochmal laufen lassen, ein paar Cent Kosten, fertig.
 
-Der eigentliche Punkt ist aber der Bauplan, nicht der Kinderaccount. Ich habe in den letzten Monaten etliche Posts über Foundation Models geschrieben – grosse Modelle, die in einem Forward-Pass erstaunliches leisten. Jev ist übrigens auch ein Foundation Model – vortrainiert und ohne Task-Training einsetzbar. Nur eben kein generatives: kein Text, kein Reasoning, nur Urteil – aber kalibriert, und so billig, dass Massenklassifikation zur Einzeiler-Entscheidung wird. Log-Dateien, Support-Tickets, Produktreviews, Datenbankzeilen, Wiedergabeverläufe: überall, wo man bislang entweder Stichproben zog oder die Aufgabe als „zu teuer für KI" weglegte, ist die Rechnung jetzt eine andere.
+Der eigentlich interessante Punkt ist aber der Bauplan, nicht der Kinderaccount. Ich habe in den letzten Monaten etliche Posts über Foundation Models geschrieben – grosse Modelle, die in einem Forward-Pass Erstaunliches leisten. Jev ist übrigens auch ein Foundation Model – vortrainiert und ohne Task-Training einsetzbar. Nur eben kein generatives: kein Text, kein Reasoning, nur Urteile. Dafür kalibriert, und so billig, dass Massenklassifikation keine Budgetfrage mehr ist, sondern ein Einzeiler im Skript. Log-Dateien, Support-Tickets, Produktreviews, Datenbankzeilen, Wiedergabeverläufe: Überall, wo man bislang entweder Stichproben gezogen oder die Aufgabe als „zu teuer für KI" beiseitegelegt hat, sieht die Rechnung jetzt anders aus.
 
-Und damit schliesst sich der Kreis zum Namenspatron: Das Jevons'sche Paradoxon besagt, dass effizientere Ressourcennutzung den Gesamtverbrauch *steigert* statt senkt. Bei $0.36 für 21'000 Entscheidungen kann ich Ihnen sagen, wie das in der Praxis aussieht – man klassifiziert plötzlich alles. Stichproben sind für Modelle, die pro Entscheidung kosten.
+Und damit schliesst sich der Kreis zum Namenspatron: Das Jevons'sche Paradoxon besagt, dass effizientere Ressourcennutzung den Gesamtverbrauch *steigert* statt senkt. Bei $0.36 für 21'000 Entscheidungen kann ich dir sagen, wie das in der Praxis aussieht – man klassifiziert plötzlich alles. Und das ist auch in Ordnung so: Stichproben braucht man nur dort, wo jede einzelne Entscheidung Geld kostet.
 
 *Alle Zahlen in diesem Post stammen aus meinen eigenen Takeout-Exporten (Stand Oktober 2026); die Klassifikationen aus den JSONL-Artefakten der Läufe inklusive der vom API gelieferten `cost`-Felder.*
 
