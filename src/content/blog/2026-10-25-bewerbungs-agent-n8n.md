@@ -2,13 +2,13 @@
 title: "Ein Bewerbungs-Agent mit n8n: Jobs finden, bewerten und Anschreiben entwerfen"
 description: "Jeden Morgen jobs.ch- und x28-Newsletter lesen, jede Stelle gegen den Lebenslauf bewerten und nur ab 7/10 ein Anschreiben entwerfen: wie ich das mit n8n, DeepSeek, Opus, Firecrawl und ntfy gebaut habe, wo es weh tat und was es pro Monat kostet."
 pubDate: 2026-10-25
-readTime: 14
+readTime: 16
 category: "AI Integration"
 tags: ["n8n", "Agenten", "Automatisierung", "OpenRouter", "Firecrawl", "ntfy", "Hetzner"]
 cover: "../../assets/blog/bewerbungs-agent-n8n-05-ntfy-push.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten
 
 Kennst du das? Jeden Morgen landen zwei, drei Job-Newsletter im Postfach – bei mir sind es jobs.ch und x28 – und jedes Mal das gleiche Ritual: durchscrollen, Titel überfliegen, ein paar Links öffnen, merken, dass die Hälfte in Bonaduz ist oder „Junior" im Kleingedruckten steht, und am Ende doch wieder nichts gemacht. Das ist eigentlich genau die Art von langweiliger, repetitiver Arbeit, für die wir Maschinen erfunden haben, oder?
 
@@ -120,7 +120,8 @@ So sehen die beiden Haupt-Workflows in n8n aus. Gehen wir sie der Reihe nach dur
 
 4. **Filtern.** Score mindestens 70 und kein K.-o.? Dann weiter. Sonst landet die Stelle als `übersprungen` mit Begründung im Tracker. Das klingt nach Nebensache, ist aber Gold wert: So sehe ich nach einer Woche, ob meine Schwelle passt oder ob gute Stellen durchrutschen.
 5. **Schreiben.** Das Anschreiben folgt meinen Regeln in `template.md`. Als Stilvorlage bekommt das Modell ein echtes Anschreiben von mir mit – mit dem ausdrücklichen Hinweis, dass es daraus nur den Ton übernehmen darf und **alle Fakten** aus dem Lebenslauf kommen müssen. Erfundene Erfahrung im Anschreiben ist so ziemlich das Peinlichste, was dir in einem Bewerbungsgespräch passieren kann.
-6. **Ablegen und benachrichtigen.** Google-Doc anlegen, Zeile im Tracker in Google Sheets, Push aufs Handy.
+6. **In meine Vorlage setzen.** Der Workflow kopiert mein eigenes Bewerbungs-Template aus Google Docs (mit Unterschrift) und tauscht darin nur Empfänger, Datum, Betreff, Anrede und Text aus. Daneben legt er ein PDF ab. Mehr dazu gleich.
+7. **Ablegen und benachrichtigen.** Zeile im Tracker in Google Sheets, Push aufs Handy.
 
 ## Wo es weh tat (Teil 1): Google
 
@@ -179,6 +180,16 @@ Und ehrlich gesagt war ich ziemlich beeindruckt. Fünf Absätze, Schweizer Recht
 
 Perfekt war es nicht: 534 Wörter statt der gewünschten 380 bis 480, und über dem Brief stand eine kleine Notiz mit den Lücken, die da nicht hingehört. Die kam von einer missverständlichen Zeile in meinen eigenen Regeln. Einmal korrigiert, und gut ist. Genau deshalb lese ich jeden Entwurf, bevor er rausgeht.
 
+### Vom Text zum Brief, den man wirklich abschicken kann
+
+Und dann kam der Moment, in dem ich mir den Entwurf genauer angeschaut habe. Ein Google-Doc mit nacktem Text – Score und Gründe oben drüber, dann der Brief in Arial. Das ist ein Entwurf, aber kein Anschreiben, das ich so rausschicke. Mein echtes Anschreiben hat ein Layout: Garamond, eine Überschrift in Kapitälchen, das Datum rechtsbündig, der Betreff fett und vor meinem Namen die eingescannte Unterschrift.
+
+Also habe ich den Spiess umgedreht. Statt ein neues Dokument zu erzeugen, kopiert der Workflow **mein eigenes Template aus Google Docs** und ersetzt darin nur die Teile, die sich pro Stelle ändern: Empfänger, Datum, Betreff, Anrede, die Absätze und den Gruss. Gefunden werden diese Stellen über den Inhalt (die Zeile mit „E-Mail“, das Datum, der fette Betreff, „Mit freundlichen Grüssen“), nicht über feste Positionen – so darf ich das Template später auch mal anpassen. Ist die Anzeige englisch, wird aus „Anschreiben“ ein „Cover Letter“ und aus dem Gruss „Kind regards“. Und gleich daneben legt der Workflow ein PDF ab, das ich direkt ins Bewerbungsportal hochladen kann.
+
+![Ein fertiges Anschreiben aus meinem Template – Empfänger, Kontaktdaten und Text habe ich für den Blog unkenntlich gemacht](../../assets/blog/bewerbungs-agent-n8n-07-anschreiben.png)
+
+Technisch sind das ein paar HTTP-Knoten gegen die Google-Drive- und Docs-API (Kopie anlegen, Dokument lesen, Änderungen schreiben, PDF exportieren) und ein Code-Knoten, der den Brief zerlegt und die Änderungen berechnet. Ein Stolperstein noch, weil er so schön versteckt ist: Plötzlich waren Briefe mitten im Satz abgeschnitten. Opus denkt vor dem Schreiben nach, und diese Denk-Tokens zählen zum Token-Limit. Bei 4'096 Tokens blieb für einen Brief manchmal nur noch die Hälfte übrig. Seit das Limit bei 16'000 liegt und der Workflow jeden Brief ablehnt, der nicht mit meinem Namen endet, ist Ruhe.
+
 So sieht das im Tracker aus (die Firmennamen habe ich unkenntlich gemacht):
 
 ![Der Tracker in Google Sheets: eine Stelle über 70, der Rest mit Begründung übersprungen](../../assets/blog/bewerbungs-agent-n8n-06-tracker.png)
@@ -233,12 +244,12 @@ Ich rechne grosszügig: 20 neue Stellen am Tag (dafür setzt du das Limit von 15
 | Hetzner CX23 | | €5.99 |
 | Extraktion, DeepSeek | ca. 3 Newsletter am Tag à $0.003 | $0.25 |
 | Abgleich, DeepSeek | 600 Stellen à ca. $0.0023 | $1.40 |
-| Anschreiben, Opus | 20 Briefe à ca. $0.08 | $1.60 |
+| Anschreiben, Opus (inkl. Denk-Tokens) | 20 Briefe à ca. $0.12 | $2.40 |
 | Firecrawl | 600 Credits, 1'000 gratis im Monat | $0 |
 | ntfy.sh, Google Sheets/Docs/Gmail | | $0 |
-| **Total** | | **ca. €8.80 / CHF 8.20** |
+| **Total** | | **ca. €9.50 / CHF 8.90** |
 
-Was mich daran am meisten überrascht: Der Server ist der grösste Posten, die KI ist fast Rundungsdifferenz. Mit Sonnet statt DeepSeek für den Abgleich kämen etwa $7.60 dazu. Und lokal auf dem Mac fällt der Server ganz weg, dann bezahlst du nur die Tokens, also gut drei Dollar im Monat.
+Was mich daran am meisten überrascht: Der Server ist der grösste Posten, die KI ist fast Rundungsdifferenz. Mit Sonnet statt DeepSeek für den Abgleich kämen etwa $7.60 dazu. Und lokal auf dem Mac fällt der Server ganz weg, dann bezahlst du nur die Tokens, also rund vier Dollar im Monat.
 
 ## Fazit: Was taugt das?
 
@@ -246,7 +257,8 @@ Was funktioniert richtig gut:
 
 - **Das Vorsortieren.** Von 15 Stellen bleibt eine übrig, und für jede aussortierte Stelle steht die Begründung im Tracker. Allein das spart mir jeden Morgen eine Viertelstunde.
 - **Die Trennung zwischen Daten und Workflow.** Lebenslauf, Regeln und Präferenzen als Markdown-Dateien, n8n nur als Ablauf. Das fühlt sich richtig an.
-- **Die freie Modellwahl.** Pro Schritt das passende Modell, und die KI kostet gut drei Dollar im Monat.
+- **Die freie Modellwahl.** Pro Schritt das passende Modell, und die KI kostet rund vier Dollar im Monat.
+- **Briefe im eigenen Layout.** Mein Google-Docs-Template mit Unterschrift, dazu ein PDF – fertig zum Hochladen.
 
 Was (noch) nervt:
 
