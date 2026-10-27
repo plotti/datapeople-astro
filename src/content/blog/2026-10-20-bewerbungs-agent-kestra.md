@@ -2,13 +2,13 @@
 title: "Braucht es einen Orchestrierer? Der Bewerbungs-Agent mit Kestra"
 description: "Derselbe Bewerbungs-Agent mit Kestra: der ganze Ablauf deklarativ in YAML, jeder Schritt in einem eigenen Container. Was das bringt, was es kostet (47 Sekunden für eine SQL-Zeile) und wann sich Kestra lohnt."
 pubDate: 2026-10-20
-readTime: 6
+readTime: 8
 category: "AI Integration"
 tags: ["Kestra", "YAML", "Orchestrierung", "Agenten", "Automatisierung", "Open Source"]
 cover: "../../assets/blog/bewerbungs-agent-kestra-ks-run.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 6 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 8 Minuten
 
 <!-- serie:start -->
 > **Serie „Agenten 2026“** · Teil 1: Bewerbungs-Agenten mit festem Ablauf, fünfmal derselbe Agent
@@ -25,7 +25,9 @@ Klingt nach Overkill für einen Agenten, der ein paar Newsletter liest? Ein biss
 
 ## Was ist anders als bei Windmill?
 
-Lass mich die Idee an einem Bild erklären. Windmill ist wie eine Werkstatt, in der alle deine Werkzeuge an der Wand hängen: Die Skripte laufen in einem gemeinsamen Worker, teilen sich Python und Pakete, und der Flow ruft sie der Reihe nach auf. Kestra ist eher wie eine Baustelle mit Containern: Für jeden Arbeitsschritt wird ein eigener Container hingestellt, mit genau dem Werkzeug, das er braucht, und danach wieder abgeräumt.
+Lass mich die Idee an einem Bild erklären. Windmill ist wie eine Werkstatt, in der wir alle in einer gemeinsamen Umgebung arbeiten: Die Worker teilen sich Python und alle Pakete, und der Flow ruft die Skripte einfach nacheinander auf. Kestra arbeitet dagegen komplett mit Containern. Für jeden Arbeitsschritt wird ein eigener Container hingestellt, mit genau dem Werkzeug, das dieser Schritt braucht, und nach getaner Arbeit wieder abgeräumt.
+
+Wer schon mit [Vertex AI Pipelines](https://cloud.google.com/vertex-ai/docs/pipelines/introduction) von Google gearbeitet hat, kennt dieses Prinzip, und genau daher kenne ich es auch aus meiner Arbeit: Dort läuft jede Komponente einer Pipeline ebenfalls in ihrem eigenen Container, den Google im Hintergrund auf Kubernetes-Infrastruktur startet und danach wieder wegräumt. Kestra bringt diese Denkweise auf den eigenen Rechner, nur dass hier Docker die Container startet und nicht ein Cluster in der Cloud.
 
 Daraus folgen drei Unterschiede:
 
@@ -41,9 +43,9 @@ So sieht der Anfang des Flows aus:
 
 ![Der Flow „bewerbung“ in Kestra: der ganze Ablauf als YAML, jeder Schritt mit eigenem Container, Abhängigkeiten und Secrets](../../assets/blog/bewerbungs-agent-kestra-ks-flow.png)
 
-Schau dir die Zeilen 20 bis 40 an: Für jeden Python-Schritt steht da, welches Container-Image er nutzt, welche Pakete er braucht, dass er die Dateien aus dem Namespace bekommt und welche Secrets als Umgebungsvariablen hineinkommen. Das ist ehrlich und nachvollziehbar, aber auch viel Text für „führe `bewerten.py` aus“. Ich habe diese Einstellungen deshalb einmal zentral definiert und lasse sie beim Einspielen in jeden Schritt einsetzen.
+Schau dir die Zeilen 20 bis 40 an: Für jeden Python-Schritt steht da, welches Container-Image er nutzt, welche Pakete er braucht, dass er die Dateien aus dem Namespace bekommt und welche Secrets als Umgebungsvariablen hineinkommen. Auch das kennt man aus Vertex-AI-Umgebungen, wo jede Komponente ihr Basis-Image und ihre Pakete mitbringt (bei Kubeflow Pipelines heisst das [`base_image` und `packages_to_install`](https://www.kubeflow.org/docs/components/pipelines/user-guides/components/lightweight-python-components/)). Das ist ehrlich und nachvollziehbar, aber auch viel Text für „führe `bewerten.py` aus“. Ich habe diese Einstellungen deshalb einmal zentral definiert und lasse sie beim Einspielen in jeden Schritt einsetzen.
 
-Die Freigabe ist in Kestra besonders schön gelöst. Statt einer Freigabeseite mit Ja/Nein gibt es eine Pause, die beim Fortsetzen eine Eingabe abfragt:
+Die Freigabe ist in Kestra besonders schön gelöst. Nach dem Push-Schritt kommt eine `Pause`: Die Ausführung bleibt an dieser Stelle stehen und wartet, bis jemand sie fortsetzt und dabei eine Frage beantwortet. In YAML sieht das so aus:
 
 ```yaml
 - id: pause
@@ -56,7 +58,7 @@ Die Freigabe ist in Kestra besonders schön gelöst. Statt einer Freigabeseite m
       values: [freigeben, ablehnen]
 ```
 
-Wer die Ausführung fortsetzt, wählt genau eine dieser Optionen, und der nächste Schritt liest die Antwort mit `{{ outputs.pause.onResume.entscheidung }}`.
+Beantwortet wird die Frage allerdings nicht in der Push-Nachricht selbst, sondern in Kestra. Die Nachricht auf meinem Handy enthält drei Links: das Anschreiben als Google-Doc, das PDF und einen Link „Freigeben“, der direkt die pausierte Ausführung in Kestra öffnet. Dort klicke ich auf „Resume“, Kestra fragt mich nach der Entscheidung, und ich wähle genau eine der beiden Optionen. Der nächste Schritt liest die Antwort dann mit `{{ outputs.pause.onResume.entscheidung }}` und setzt den Status auf „freigegeben“ oder „abgelehnt“. Weil Kestra bei mir lokal läuft, funktioniert dieser letzte Link allerdings nur am Mac und nicht unterwegs auf dem Handy.
 
 ## Was der Container-Ansatz kostet
 
@@ -76,18 +78,17 @@ Die lange Bahn ist die Pause, also meine Bedenkzeit. Interessant sind die andere
 
 Was ist da passiert, fragst du dich vielleicht? Der Abschluss macht nichts anderes, als eine Zeile in der Datenbank zu ändern. In Windmill dauert das 0,2 Sekunden, in Kestra 47. Der Grund: Kestra startet für jeden Schritt einen neuen Container, installiert darin die Python-Pakete und räumt danach wieder auf. Bei meinem Agenten sind das pro Schritt 30 bis 40 Sekunden Overhead.
 
-Ist das schlimm? Für einen Agenten, der einmal am Tag läuft und dann sowieso auf mich wartet: nein. Für eine Pipeline mit tausend kurzen Schritten: ja. Dort würdest du in Kestra eher grössere Schritte bauen oder einen anderen Task-Runner wählen. Die Isolation hat ihren Preis, und an diesem Beispiel sieht man ihn sehr deutlich.
+Ist das schlimm? Für meinen Agenten, der einmal am Tag läuft und danach sowieso stunden- oder tagelang auf meine Freigabe wartet, ehrlich gesagt nicht: Ob ein Entwurf nach einer oder nach vier Minuten fertig ist, merke ich gar nicht, weil ich ihn ohnehin erst lese, wenn ich Zeit dafür habe. Ganz anders sieht es bei einer Pipeline mit tausend kurzen Schritten aus, denn dort würden sich 30 bis 40 Sekunden pro Schritt zu Stunden aufsummieren. In so einem Fall würdest du in Kestra eher wenige, grössere Schritte bauen, die mehr Arbeit am Stück erledigen, oder einen anderen Task-Runner wählen, der ohne frischen Container auskommt. Die Isolation hat ihren Preis, und an diesem Beispiel sieht man ihn sehr deutlich.
 
 ## Wo es weh tat
 
 Kestra war von allen bisherigen Werkzeugen das, bei dem ich am meisten gestolpert bin. Ein Teil davon geht auf das Konto der ganz frischen Version 2.0:
 
-- **Das Standard-Image ist 9 GB gross.** Es bringt alle rund tausend Plugins mit. Auf meinem Mac war der Speicher danach wieder fast voll. Die Lösung: das schlanke Image ohne Plugins und nur die zwei installieren, die ich brauche (Python und Node). Ergebnis: 769 MB.
-- **Version 2.0 hat einiges umgebaut.** `ForEach` heisst jetzt `Loop`, der Eingabetyp `BOOLEAN` heisst `BOOL`, und gemeinsame Einstellungen pro Flow (`pluginDefaults`) gibt es nicht mehr. Wer Beispiele aus dem Netz kopiert, landet schnell bei Fehlermeldungen.
-- **YAML-Anker funktionieren nicht.** Eigentlich ein praktisches YAML-Feature, um denselben Block mehrfach zu nutzen. Kestras Parser löst ihn nicht auf.
-- **Die Ergebnisse der Schritte sind unsichtbar.** Die Ausgaben der Schritte funktionieren und lassen sich im nächsten Schritt verwenden, erscheinen aber nicht mehr in der API-Antwort einer Ausführung. Das hat mich einen Test-Flow gekostet, bis ich verstanden hatte, dass alles funktioniert. Meine Skripte schreiben ihre Ergebnisse jetzt zusätzlich lesbar ins Log.
-- **Deine Dateien sieht Kestra nicht direkt.** Weil jeder Schritt in einem frischen Container läuft, kommen Lebenslauf, Regeln und Profil als „Namespace-Dateien“ in Kestra. Ein kleines Skript lädt sie bei jeder Änderung hoch.
-- **Secrets kommen in der Open-Source-Version als Umgebungsvariablen**, Base64-kodiert mit dem Präfix `SECRET_`. Funktioniert, ist aber eher Handarbeit als Komfort.
+- **Wo sind die Ergebnisse der Schritte?** Das hat mich am meisten Zeit gekostet. Jeder Schritt gibt Ergebnisse weiter, etwa den Score oder die Links zum Google-Doc, und der nächste Schritt konnte sie auch problemlos verwenden. In der API-Antwort einer Ausführung tauchten sie aber nirgends auf, und ich dachte zuerst, meine Skripte würden gar nichts zurückgeben. Erst später habe ich verstanden, dass Kestra 2.0 die Ergebnisse bewusst aus dieser Antwort herausgenommen hat, damit die Listen schneller laden, und sie jetzt über einen eigenen Endpunkt ausliefert (`/outputs/tasks/{Ausführung}`, beschrieben im [Migrationsleitfaden](https://kestra.io/docs/migration-guide/v2.0.0/execution-api-response)). Dort ist alles vorhanden, vom Score 84 bis zur Entscheidung „freigeben“ aus der Pause, und in der Oberfläche sind die Ergebnisse laut Leitfaden ohnehin weiterhin zu sehen. Das Debugging ist also nicht schwieriger geworden, man muss nur wissen, wo man suchen muss. Meine Skripte schreiben ihre Ergebnisse trotzdem zusätzlich lesbar ins Log, weil ich sie dort am schnellsten finde.
+- **Das Standard-Image ist 9 GB gross.** Es bringt alle rund tausend Plugins mit, und auf meinem Mac war der Speicher danach wieder fast voll. Die Lösung war das schlanke Image ohne Plugins, in das ich nur die zwei installiere, die ich brauche (Python und Node). Ergebnis: 769 MB.
+- **Version 2.0 hat einiges umgebaut.** `ForEach` heisst jetzt `Loop`, der Eingabetyp `BOOLEAN` heisst `BOOL`, und gemeinsame Einstellungen pro Flow (`pluginDefaults`) gibt es nicht mehr. Wer Beispiele aus dem Netz kopiert, landet deshalb schnell bei Fehlermeldungen.
+- **Deine Dateien sieht Kestra nicht direkt.** Weil jeder Schritt in einem frischen Container läuft, kommen Lebenslauf, Regeln und Profil als „Namespace-Dateien“ in Kestra, und ein kleines Skript lädt sie bei jeder Änderung hoch.
+- **Secrets kommen in der Open-Source-Version als Umgebungsvariablen**, Base64-kodiert mit dem Präfix `SECRET_`. Das funktioniert, bietet aber laut [Kestra-Doku](https://kestra.io/docs/concepts/secret) weder Verschlüsselung im Ruhezustand noch ein Protokoll, wer wann darauf zugegriffen hat, noch eine Zugriffskontrolle. In der Enterprise-Version gibt es dafür einen richtigen Secrets-Manager, entweder Kestras eigenen oder angebunden an AWS Secrets Manager, Azure Key Vault oder HashiCorp Vault, und die Secrets lassen sich pro Namespace verwalten.
 
 Was mir dagegen richtig gut gefallen hat: das Gantt-Diagramm, die Logs pro Schritt, die Versionsgeschichte jedes Flows und die Dokumentation direkt neben dem Code-Editor. Man merkt, dass Kestra für Teams gebaut ist, die viele Abläufe parallel betreiben.
 
@@ -105,6 +106,22 @@ Was mir dagegen richtig gut gefallen hat: das Gantt-Diagramm, die Logs pro Schri
 | Stärke | Code schreiben und schnell ausprobieren | viele, verschiedene Abläufe sauber betreiben |
 
 Für meinen Bewerbungs-Agenten würde ich klar Windmill nehmen. Er ist schneller, schlanker, und ich komme schneller von der Idee zum laufenden Schritt. Kestra spielt seine Stärken dort aus, wo ein Team Dutzende Abläufe in verschiedenen Sprachen betreibt, die sich nicht gegenseitig stören dürfen, und wo jeder Ablauf als Datei in einem Review landen soll. Für einen Ein-Personen-Agenten ist das mehr Werkzeug als nötig, aber ich wollte genau sehen, wie sich diese eine Ebene mehr anfühlt.
+
+## Open Source oder Enterprise?
+
+Ich habe alles mit der kostenlosen Open-Source-Version gebaut, und für einen Ein-Personen-Agenten fehlt mir dort nichts. Trotzdem lohnt sich ein kurzer Blick darauf, was die bezahlte Enterprise-Version zusätzlich bringt, denn genau dort zeigt sich, für wen Kestra eigentlich gebaut ist ([Vergleich von Kestra](https://kestra.io/docs/oss-vs-paid)):
+
+| | Open Source | Enterprise |
+| --- | --- | --- |
+| Anmeldung | ein gemeinsames Basic-Auth-Konto für alle | eigene Konten, SSO, Rollen und Rechte (RBAC) |
+| Secrets | Umgebungsvariablen | Secrets-Manager (eigener, AWS, Azure, Vault), pro Namespace |
+| Wo die Schritte laufen | lokal als Prozess oder im Docker-Container | zusätzlich auf Kubernetes, AWS Batch, Azure Batch oder Google Cloud Run, mit Worker-Gruppen |
+| Mandanten | eine Umgebung | mehrere vollständig getrennte Umgebungen |
+| Nachvollziehbarkeit | – | Audit-Log jeder Aktion, Richtlinien, erlaubte Plugins |
+| Extras | – | Apps, eigene Vorlagen, Unit-Tests für Flows, Wartungsmodus |
+| Support | Community | mit garantierten Antwortzeiten |
+
+Spannend finde ich vor allem die Zeile „Wo die Schritte laufen“: Mit der Enterprise-Version landet man genau bei dem Bild von oben, bei dem jeder Schritt als Container auf einem Kubernetes-Cluster oder in der Cloud läuft, so wie man es von Vertex AI kennt. Die Open-Source-Version reicht völlig, um Kestra kennenzulernen und kleine Abläufe zu betreiben. Sobald aber mehrere Leute mit eigenen Rechten daran arbeiten oder Secrets sauber verwaltet werden müssen, führt eigentlich kein Weg an der bezahlten Version vorbei.
 
 ## Was kommt als Nächstes?
 
