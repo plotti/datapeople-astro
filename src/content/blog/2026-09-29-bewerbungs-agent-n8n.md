@@ -1,14 +1,23 @@
 ---
-title: "Ein Bewerbungs-Agent mit n8n: Jobs finden, bewerten und Anschreiben entwerfen"
+title: "Wie weit kommt man mit Klicken? Ein Bewerbungs-Agent mit n8n"
 description: "Jeden Morgen jobs.ch- und x28-Newsletter lesen, jede Stelle gegen den Lebenslauf bewerten und nur ab 7/10 ein Anschreiben entwerfen: wie ich das mit n8n, DeepSeek, Opus, Firecrawl und ntfy gebaut habe, wo es weh tat und was es pro Monat kostet."
-pubDate: 2026-10-25
+pubDate: 2026-09-29
 readTime: 16
 category: "AI Integration"
 tags: ["n8n", "Agenten", "Automatisierung", "OpenRouter", "Firecrawl", "ntfy", "Hetzner"]
 cover: "../../assets/blog/bewerbungs-agent-n8n-05-ntfy-push.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten
+**Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten
+
+<!-- serie:start -->
+> **Serie „Agenten 2026“** · Teil 1: Bewerbungs-Agenten mit festem Ablauf, fünfmal derselbe Agent
+>
+> - Klicken: **Wie weit kommt man mit Klicken? (n8n)** ← du bist hier · [Klicken, aber womit? (n8n gegen Activepieces)](/blog/2026-10-06-n8n-vs-activepieces/)
+> - Code mit Plattform: [Was bringt echter Code? (Windmill)](/blog/2026-10-13-bewerbungs-agent-windmill/) · [Braucht es einen Orchestrierer? (Kestra)](/blog/2026-10-20-bewerbungs-agent-kestra/)
+> - Code ohne Plattform: [Braucht es überhaupt eine Plattform? (DBOS)](/blog/2026-10-27-bewerbungs-agent-dbos/)
+> - Teil 2: Agenten, die selbst planen (folgt)
+<!-- serie:end -->
 
 Kennst du das? Jeden Morgen landen zwei, drei Job-Newsletter im Postfach – bei mir sind es jobs.ch und x28 – und jedes Mal das gleiche Ritual: durchscrollen, Titel überfliegen, ein paar Links öffnen, merken, dass die Hälfte in Bonaduz ist oder „Junior" im Kleingedruckten steht, und am Ende doch wieder nichts gemacht. Das ist eigentlich genau die Art von langweiliger, repetitiver Arbeit, für die wir Maschinen erfunden haben, oder?
 
@@ -18,7 +27,7 @@ In diesem Beitrag zeige ich dir, wie ich das mit **n8n** gebaut habe, lokal auf 
 
 ## Warum n8n und nicht einfach ein Agent?
 
-Dieser Beitrag ist der Auftakt einer kleinen Serie. Dabei geht es mir nicht ums blosse Ausprobieren, sondern darum, den aktuellen Stand der Dinge gegenüberzustellen: Wie funktionieren AI-Workflows und agentic AI heute, und wo liegt der Unterschied? Den gleichen Agenten habe ich übrigens schon vor einem Jahr mit n8n gebaut. Damals habe ich ihn noch von Hand zusammengeklickt beziehungsweise per MCP Änderungen daran gemacht. Heute kann man sich das alles sparen, wie du in diesem Artikel sehen wirst. Gleichzeitig gibt es inzwischen ordentlich Konkurrenz, sowohl bei den klassischen Workflow-Tools als auch im Agentic-Bereich, und genau die wollen wir uns anschauen.
+Dieser Beitrag ist der Auftakt einer kleinen Serie. Dabei geht es mir nicht ums blosse Ausprobieren, sondern darum, den aktuellen Stand der Dinge gegenüberzustellen: Wie funktionieren AI-Workflows und agentic AI heute, und wo liegt der Unterschied? Den gleichen Agenten habe ich übrigens schon vor einem Jahr mit n8n gebaut. Damals habe ich ihn noch von Hand zusammengeklickt beziehungsweise per MCP Änderungen daran gemacht. Heute kann man sich das alles sparen, wie du in diesem Artikel sehen wirst. Und das Thema selbst habe ich im Februar schon einmal angerissen, in einem [Überblick über acht Agenten-Frameworks](/blog/ki-agenten-vergleich/). Seither ist die Auswahl noch einmal deutlich grösser geworden: Es gibt inzwischen ordentlich Konkurrenz, sowohl bei den klassischen Workflow-Tools als auch im Agentic-Bereich, und genau die wollen wir uns diesmal nicht nur auf dem Papier, sondern am selben Beispiel anschauen.
 
 Als Beispiel habe ich mir bewusst ein plakatives Szenario ausgesucht: den Bewerbungs-Workflow. Er ist nicht besonders kompliziert, aber kompliziert genug, dass man die Ideen darunter gut sieht.
 
@@ -27,7 +36,7 @@ Grob gibt es zwei Arten, so etwas zu bauen:
 1. **Ein fester Ablauf.** Die Reihenfolge der Schritte steht fest – Mail holen, Stellen extrahieren, bewerten, schreiben –, und die KI erledigt nur die Textarbeit innerhalb der einzelnen Schritte.
 2. **Ein Agent, der selbst plant.** Du beschreibst das Ziel in Sprache, und das Modell entscheidet, was es als Nächstes tut.
 
-Genau so ist auch die Serie aufgebaut. **Teil 1** baut den Agenten als festen Ablauf: heute mit n8n, danach mit Alternativen wie Activepieces, Windmill und schliesslich als eigener Python-Code. **Teil 2** baut denselben Agenten ohne festen Ablauf: von einer geplanten Aufgabe in der Claude-App über eine Routine in der Cloud bis zu einem Schwarm aus mehreren spezialisierten Agenten.
+Genau so ist auch die Serie aufgebaut. **Teil 1** baut den Agenten als festen Ablauf: heute mit n8n, danach mit Activepieces, Windmill, Kestra und schliesslich als eigener Python-Code mit DBOS. **Teil 2** baut denselben Agenten ohne festen Ablauf: von einer geplanten Aufgabe in der Claude-App über eine Routine in der Cloud bis zu einem Schwarm aus mehreren spezialisierten Agenten.
 
 Variante 2 ist natürlich gerade sehr hip. Ich persönlich finde aber, dass man erst den festen Ablauf verstanden haben sollte: vorhersehbar, günstig, und wenn etwas schiefgeht, weiss ich genau, in welchem Schritt. Und für feste Abläufe ist n8n ziemlich genau das richtige Werkzeug – eine Kette aus Knoten im Browser, in der einzelne Knoten ein Sprachmodell aufrufen.
 
@@ -214,7 +223,7 @@ Eine ehrliche Einschränkung: ntfy.sh hält Nachrichten nur 12 Stunden vor. Klic
 
 ## Raus aus dem Mac: n8n auf einem VPS
 
-Der grösste Haken an meinem Setup ist ziemlich banal: Der Mac muss laufen. Klappe zu um 7 Uhr heisst kein Scan. Die naheliegende Lösung ist ein kleiner VPS. n8n ist genügsam, 2 vCPU und 4 GB RAM reichen locker (Stand Oktober 2026):
+Der grösste Haken an meinem Setup ist ziemlich banal: Der Mac muss laufen. Klappe zu um 7 Uhr heisst kein Scan. Die naheliegende Lösung ist ein kleiner VPS. n8n ist genügsam, 2 vCPU und 4 GB RAM reichen locker (Stand September 2026):
 
 | Anbieter | Plan | Ressourcen | Preis/Monat |
 | --- | --- | --- | --- |
@@ -274,4 +283,10 @@ Zuerst bleiben wir beim festen Ablauf und bauen denselben Agenten mit **Activepi
 
 Ich würde mein Geld darauf wetten, dass solche Agenten-Setups in einem Jahr für so etwas Standard sind. Ob sie dem guten alten festen Ablauf wirklich überlegen sind, finden wir gemeinsam heraus.
 
-Wenn du magst, bau es nach – und erzähl mir, welche Schwelle bei dir funktioniert. Ich freue mich auf eure Kommentare und Anregungen!
+Wenn du magst, bau es nach – und erzähl mir, welche Schwelle bei dir funktioniert. 
+
+<!-- serie:next -->
+**Weiter in der Serie:** [Klicken, aber womit? n8n gegen Activepieces, das echte Open Source](/blog/2026-10-06-n8n-vs-activepieces/)
+<!-- serie:next-end -->
+
+Ich freue mich auf eure Kommentare und Anregungen!

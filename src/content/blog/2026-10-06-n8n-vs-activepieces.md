@@ -1,7 +1,7 @@
 ---
-title: "n8n vs. Activepieces: derselbe Bewerbungs-Agent, zwei Baukästen"
+title: "Klicken, aber womit? n8n gegen Activepieces, das echte Open Source"
 description: "Denselben Bewerbungs-Agenten habe ich mit n8n und mit Activepieces gebaut. Was gleich bleibt, was anders ist und sechs Lessons learned: von Google mit einem Klick über eine Docker-Falle bis zu schwankenden Scores."
-pubDate: 2026-10-27
+pubDate: 2026-10-06
 readTime: 7
 category: "AI Integration"
 tags: ["n8n", "Activepieces", "Agenten", "Automatisierung", "Open Source", "Vergleich"]
@@ -10,7 +10,16 @@ cover: "../../assets/blog/n8n-vs-activepieces-cover.png"
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 7 Minuten
 
-Im [ersten Teil dieser Serie](/blog/2026-10-25-bewerbungs-agent-n8n/) habe ich einen Bewerbungs-Agenten mit n8n gebaut: Er liest jeden Morgen meine Job-Newsletter, bewertet jede Stelle gegen meinen Lebenslauf und entwirft nur für die passenden ein Anschreiben. Die Frage, die mir danach sofort gestellt wurde: Und wie sieht das mit der Konkurrenz aus?
+<!-- serie:start -->
+> **Serie „Agenten 2026“** · Teil 1: Bewerbungs-Agenten mit festem Ablauf, fünfmal derselbe Agent
+>
+> - Klicken: [Wie weit kommt man mit Klicken? (n8n)](/blog/2026-09-29-bewerbungs-agent-n8n/) · **Klicken, aber womit? (n8n gegen Activepieces)** ← du bist hier
+> - Code mit Plattform: [Was bringt echter Code? (Windmill)](/blog/2026-10-13-bewerbungs-agent-windmill/) · [Braucht es einen Orchestrierer? (Kestra)](/blog/2026-10-20-bewerbungs-agent-kestra/)
+> - Code ohne Plattform: [Braucht es überhaupt eine Plattform? (DBOS)](/blog/2026-10-27-bewerbungs-agent-dbos/)
+> - Teil 2: Agenten, die selbst planen (folgt)
+<!-- serie:end -->
+
+Im [ersten Teil dieser Serie](/blog/2026-09-29-bewerbungs-agent-n8n/) habe ich einen Bewerbungs-Agenten mit n8n gebaut: Er liest jeden Morgen meine Job-Newsletter, bewertet jede Stelle gegen meinen Lebenslauf und entwirft nur für die passenden ein Anschreiben. Die Frage, die mir danach sofort gestellt wurde: Und wie sieht das mit der Konkurrenz aus?
 
 Also habe ich genau denselben Agenten noch einmal gebaut, diesmal mit **Activepieces**. Gleiche Newsletter, gleiche Modelle, gleiche Schwelle von 7 von 10, gleiche Briefvorlage. Was sich unterscheidet, ist nur der Baukasten. Und genau darum geht es in diesem Beitrag: nicht noch einmal die ganze Bauanleitung, sondern was anders ist – und was ich dabei gelernt habe.
 
@@ -126,5 +135,9 @@ Für meinen Bewerbungs-Agenten ist es ehrlich gesagt ein Unentschieden. Beide li
 ## Was kommt als Nächstes?
 
 Beide Werkzeuge sind sich am Ende ähnlicher, als ich gedacht hätte. Richtig anders wird es im nächsten Schritt: **Code statt Klicks**. Ich baue denselben Agenten mit Windmill, wo jeder Schritt ein Python-Skript ist, und als eigenen Python-Prozess mit DBOS, der nach einem Absturz genau dort weitermacht, wo er aufgehört hat. Und danach wechseln wir die Seite und lassen den Agenten selbst planen.
+
+<!-- serie:next -->
+**Weiter in der Serie:** [Was bringt echter Code? Der Bewerbungs-Agent mit Windmill](/blog/2026-10-13-bewerbungs-agent-windmill/)
+<!-- serie:next-end -->
 
 Ich freue mich auf eure Kommentare und Anregungen – und falls du einen der beiden Baukästen schon produktiv einsetzt, erzähl mir gern, wie es dir damit geht!
