@@ -2,13 +2,13 @@
 title: "Was bringt echter Code? Der Bewerbungs-Agent mit Windmill"
 description: "Derselbe Bewerbungs-Agent, diesmal als normaler Python-Code in Windmill: Skripte in Git, Wiederholungen, Early Stop und eine Freigabeseite, die tagelang wartet. Was Windmill mir abnimmt und wo es weh tat."
 pubDate: 2026-10-13
-readTime: 6
+readTime: 8
 category: "AI Integration"
 tags: ["Windmill", "Python", "Agenten", "Automatisierung", "Open Source"]
 cover: "../../assets/blog/bewerbungs-agent-windmill-wm-flow.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 6 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 8 Minuten
 
 <!-- serie:start -->
 > **Serie „Agenten 2026“** · Teil 1: Bewerbungs-Agenten mit festem Ablauf, fünfmal derselbe Agent
@@ -19,22 +19,24 @@ cover: "../../assets/blog/bewerbungs-agent-windmill-wm-flow.png"
 > - Teil 2: Agenten, die selbst planen (folgt)
 <!-- serie:end -->
 
-Bisher habe ich in dieser Serie meinen Bewerbungs-Agenten zusammengeklickt – erst [mit n8n](/blog/2026-09-29-bewerbungs-agent-n8n/), dann [im Vergleich mit Activepieces](/blog/2026-10-06-n8n-vs-activepieces/). Beide Male bestand der Agent aus Knoten im Browser, in denen hier und da ein Code-Schnipsel steckte. Das funktioniert, aber irgendwann stört mich genau das: Die Logik verteilt sich auf Dutzende Einstellungsfelder, und eine Änderung am Prompt lässt sich weder sauber vergleichen noch testen.
+In den ersten beiden Beiträgen dieser Serie habe ich meinen Bewerbungs-Agenten mit Werkzeugen gebaut, die zum Zusammenklicken gedacht sind, erst [mit n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) und dann [im Vergleich mit Activepieces](/blog/2026-10-06-n8n-vs-activepieces/). Ehrlich gesagt habe ich dabei aber gar nichts zusammengeklickt: Claude hat die Workflows als Code geschrieben und eingespielt, und ich habe von Hand praktisch nichts mehr gemacht. Das ist irgendwie paradox, denn wozu brauche ich einen Baukasten zum Klicken, wenn ohnehin ein Agent den Code erzeugt? Man kann sich ernsthaft fragen, ob sich das Zusammenklicken von Workflows damit nicht überholt hat.
 
-Heute drehe ich das um. Derselbe Agent – Newsletter lesen, Stellen gegen meinen Lebenslauf bewerten, ab 7 von 10 ein Anschreiben in meine Vorlage setzen, auf meine Freigabe warten – diesmal als **ganz normaler Python-Code**. Und die Plattform, die drumherum Zeitplan, Wiederholungen, Zwischenergebnisse und die Freigabe übernimmt, heisst **Windmill**.
+Ich glaube trotzdem nicht, dass die visuellen Werkzeuge damit überflüssig sind. Ihr grösster Vorteil liegt aus meiner Sicht woanders, nämlich in der Transparenz: Eine Kette aus Knoten, in der man jeden Schritt sieht und anklicken kann, verstehen auch Leute, die nie eine Zeile Code lesen würden, und genau das macht einen Prozess für das ganze Team nachvollziehbar.
+
+Für mich als jemanden, der den Code ohnehin lesen will, stellt sich aber die umgekehrte Frage: Was passiert, wenn der Agent nicht Knoten, sondern **ganz normalen Python-Code** schreibt? Derselbe Agent – Newsletter lesen, Stellen gegen meinen Lebenslauf bewerten, ab 7 von 10 ein Anschreiben in meine Vorlage setzen, auf meine Freigabe warten – diesmal als Skripte, und die Plattform, die drumherum Zeitplan, Wiederholungen, Zwischenergebnisse und die Freigabe übernimmt, heisst **Windmill**.
 
 ## Die Idee: Code, aber mit Oberfläche
 
-Wo liegt eigentlich der Unterschied zu n8n? Die kurze Antwort: In n8n ist der Workflow das Produkt, und Code ist die Ausnahme. In Windmill ist der Code das Produkt, und der Workflow verbindet nur noch die Skripte.
+Wo liegt eigentlich der Unterschied zu n8n? In n8n ist der Workflow das eigentliche Produkt, und Code kommt nur ausnahmsweise vor, als kleiner Schnipsel in einem einzelnen Knoten. In Windmill ist es genau umgekehrt: Dort ist der Code das Produkt, und der Workflow dient nur noch dazu, die einzelnen Skripte miteinander zu verbinden.
 
-Konkret heisst das: Jeder Schritt ist ein eigenes Python-Skript mit einer `main`-Funktion. Die Skripte liegen als Dateien in einem Ordner auf meinem Mac, landen in Git und werden per Kommandozeile eingespielt:
+Konkret heisst das, dass jeder Schritt ein eigenes Python-Skript mit einer `main`-Funktion ist. Die Skripte liegen als ganz normale Dateien in einem Ordner auf meinem Mac, landen in Git und werden über die Kommandozeile in Windmill eingespielt:
 
 ```bash
 wmill generate-metadata --yes   # Abhängigkeiten aus den Imports auflösen
 wmill sync push --yes           # alles in den Workspace schieben
 ```
 
-Windmill ergänzt dann genau das, was ich in reinem Python mühsam selbst bauen müsste: einen Zeitplan, Wiederholungen bei Fehlern, eine Weboberfläche mit Logs zu jedem Lauf, gespeicherte Zwischenergebnisse und – das ist das Schöne – eine eingebaute Freigabeseite, auf der ein Flow tagelang auf mich warten kann.
+Windmill ergänzt dann genau das, was ich in reinem Python mühsam selbst bauen müsste: einen Zeitplan, Wiederholungen bei Fehlern, eine Weboberfläche mit den Logs zu jedem Lauf und gespeicherte Zwischenergebnisse. Und, was ich besonders schön finde, eine eingebaute Freigabeseite, auf der ein Flow tagelang auf meine Entscheidung warten kann, ohne dass in der Zwischenzeit etwas läuft.
 
 ## Der Aufbau
 
@@ -62,11 +64,28 @@ Die Module importieren sich gegenseitig wie in jedem Python-Projekt, mit `from .
 
 Jeder Schritt kann bei einem Fehler wiederholen, bei mir dreimal mit zehn Sekunden Abstand. Das ist wichtig, weil DeepSeek als Reasoning-Modell gelegentlich so lange nachdenkt, dass die Antwort leer bleibt.
 
-Noch eleganter ist der „Early Stop“: Nach dem Bewerten steht in der Flow-Definition eine einzige Zeile, `stop_after_if: "!result.passed"`. Passt die Stelle nicht, endet der Flow dort, ohne dass Opus überhaupt angefragt wird. Bei meinem Test mit einer Stelle in der Geoinformation (Score 10) liefen die Schritte b bis e schlicht nicht.
+Noch eleganter finde ich den „Early Stop“. Dazu muss man wissen, dass Windmill die Schritte eines Flows mit Buchstaben benennt: Bei mir ist **a** das Bewerten, **b** das Schreiben des Anschreibens, **c** das Google-Doc mit PDF, **d** der Push mit der Freigabe und **e** der Abschluss. Der Schritt a gibt als Ergebnis unter anderem den Score zurück und ein Feld `passed`, das nur dann wahr ist, wenn die Stelle mindestens 70 Punkte hat und kein K.-o.-Kriterium greift.
+
+In der Flow-Definition steht beim Schritt a dann eine einzige zusätzliche Zeile:
+
+```yaml
+stop_after_if:
+  expr: '!result.passed'   # "wenn die Stelle NICHT passt"
+```
+
+Windmill wertet diesen kleinen Ausdruck direkt nach dem Schritt aus, `result` ist dabei das Ergebnis von a, und das Ausrufezeichen bedeutet „nicht“. Passt die Stelle also nicht, beendet Windmill den Flow an genau dieser Stelle und markiert ihn trotzdem als erfolgreich. Die Schritte b bis e werden gar nicht erst gestartet, und vor allem wird Opus nicht angefragt, was bei Dutzenden unpassenden Stellen pro Woche bares Geld spart. Ausprobiert habe ich das mit einer Stelle als Fachspezialist für Geoinformation, die bei mir verständlicherweise nur 10 Punkte bekam: Im Lauf war Schritt a grün, und die Schritte b bis e standen einfach als „nicht ausgeführt“ da.
 
 ### 2. Warten, ohne dass etwas läuft
 
-Nach dem Push „pausiert“ der Flow im Schritt d – bis zu 14 Tage lang. Während er wartet, läuft kein Prozess und nichts kostet. Ich bekomme eine Push-Nachricht mit drei Links: das Anschreiben als Google-Doc, das PDF und die **Freigabeseite** von Windmill. Ein Klick auf „Freigeben“, und der Flow macht weiter und setzt den Status auf `freigegeben`.
+Nach dem Push pausiert der Flow im Schritt d, und zwar bis zu 14 Tage lang. Während er wartet, läuft kein Prozess und es entstehen keine Kosten. Auf dem Handy bekomme ich in dieser Zeit eine Push-Nachricht über ntfy, die so aussieht:
+
+![Die Push-Nachricht in ntfy: Score, Stelle und drei Knöpfe für Anschreiben, PDF und Freigabe](../../assets/blog/bewerbungs-agent-windmill-ntfy.png)
+
+Mit „Anschreiben“ und „PDF“ öffne ich den Entwurf als Google-Doc beziehungsweise als fertiges PDF, und „Freigeben“ führt auf die **Freigabeseite** von Windmill. Diese Seite erzeugt Windmill für jeden pausierten Flow automatisch, ich musste dafür nichts bauen. Sie zeigt, welcher Flow wartet, mit welchen Eingaben er gestartet wurde, und den kurzen Text, den mein Schritt d mitgibt, hier also Stelle, Score und die Links zu den Dokumenten:
+
+![Die Freigabeseite von Windmill: der pausierte Flow mit Stelle, Score und Links, darunter die Knöpfe „Deny“ und „Approve“](../../assets/blog/bewerbungs-agent-windmill-freigabe.png)
+
+Ein Klick auf „Approve“, und der Flow macht weiter und setzt im Schritt e den Status auf `freigegeben`, mit „Deny“ entsprechend auf `abgelehnt`. Einen Haken hat das Ganze bei mir: Weil Windmill lokal läuft, zeigt der Link auf `localhost`, und die Freigabe funktioniert deshalb nur am Mac. Auf einem Server mit richtiger Adresse ginge das auch unterwegs am Handy.
 
 ![Ein kompletter Lauf: in 2 Minuten 47 Sekunden von der Stelle bis zur Freigabe](../../assets/blog/bewerbungs-agent-windmill-wm-run.png)
 
@@ -80,13 +99,28 @@ Den Schritt, der den Brief in meine Google-Docs-Vorlage setzt, habe ich nicht in
 
 Ganz reibungslos lief es natürlich nicht :)
 
-- **Die Images sind riesig.** Das Windmill-Image ist rund 6 GB gross, der optionale Zusatzdienst für die Code-Vervollständigung im Editor weitere 8 GB. Weil die offizielle Compose-Datei bei jedem Start neu herunterlädt, lag ich zwischenzeitlich bei 4 GB freiem Speicher auf dem Mac. Die Lösung: Zusatzdienst raus, Download nur, wenn das Image fehlt.
+- **Die Images sind riesig.** Das Windmill-Image ist rund 6 GB gross, und der optionale Zusatzdienst für die Code-Vervollständigung im Editor bringt noch einmal 8 GB mit. Den habe ich weggelassen, weil ich die Skripte ohnehin nicht im Browser schreibe.
 - **Datentabellen muss man erst einschalten.** Die Anleitung war unsicher, ob es die eingebauten Datentabellen in der Community Edition überhaupt gibt. Es gibt sie, aber erst nachdem man eine Datenbank dafür angelegt und im Workspace eingetragen hat. Danach ist es wunderbar: `wmill.datatable().query(...)` direkt im Skript.
-- **Die Freigabeseite hat kein Formular.** Laut Doku kann ich das Anschreiben in Windmill Cloud und in der Enterprise Edition direkt auf der Freigabeseite korrigieren, in der Community Edition nicht. Für mich egal, weil ich ohnehin im Google-Doc korrigiere.
-- **Die Freigabeseite läuft auf `localhost`.** Am Handy öffne ich also Doc und PDF, freigeben kann ich nur am Mac. Für den Betrieb auf einem Server müsste die Seite hinter eine richtige Adresse.
-- **Kleinkram bei der Kommandozeile.** Die Konfiguration erwartete Flows in Ordnern namens `name__flow` statt `name.flow`, und damit die Links zur Freigabeseite stimmen, muss die Basis-URL der Instanz gesetzt sein.
 
-Und eine nette Überraschung am Rande: Beim Einrichten des Projekts hat die Windmill-Kommandozeile gleich Anleitungen für KI-Coding-Agenten mit angelegt. Windmill rechnet also schon damit, dass nicht ein Mensch, sondern ein Agent die Skripte schreibt. Genau so habe ich es gemacht.
+Und eine nette Überraschung am Rande: Beim Einrichten des Projekts hat die Windmill-Kommandozeile gleich Anleitungen für KI-Coding-Agenten mit angelegt, eine Datei `AGENTS.md` und 31 sogenannte Skills, also Anleitungen für einzelne Aufgaben wie „Python-Skript schreiben“, „Flow bauen“ oder „Zeitplan anlegen“. So beginnt die Datei:
+
+```markdown
+# Windmill CLI Agent Instructions
+
+You are a helpful assistant that can help with Windmill scripts, flows, apps,
+and resources management.
+
+## Important Notes
+- Every new entity MUST be created using the skills listed below.
+- Every modification of an entity MUST be done using the skills listed below.
+
+## Flow Writing Guide
+
+You MUST use the `write-flow` skill to create or modify flows.
+When a new flow needs to be created, YOU run `wmill flow new <path>` yourself …
+```
+
+Windmill rechnet also schon fest damit, dass nicht ein Mensch, sondern ein Agent die Skripte und Flows schreibt, und gibt ihm gleich die Spielregeln mit. Genau so habe ich es auch gemacht.
 
 ## Windmill oder n8n?
 
@@ -102,7 +136,7 @@ Und eine nette Überraschung am Rande: Beim Einrichten des Projekts hat die Wind
 
 Ich persönlich finde: Sobald du Python schreiben kannst und der Agent mehr als eine Spielerei ist, fühlt sich Windmill richtiger an. Die Prompts liegen in Dateien, jede Änderung ist ein Diff, und ich kann einen einzelnen Schritt mit echten Eingaben testen, ohne den ganzen Flow anzuwerfen. Der Preis ist eine schwerere Installation und etwas mehr Einarbeitung.
 
-Wenn du dagegen nie Code anfassen willst, bleibt n8n oder Activepieces die bessere Wahl. Das ist keine Schwäche, sondern eine andere Zielgruppe.
+Wenn du dagegen nie Code anfassen willst, bleibt n8n oder Activepieces die bessere Wahl, und das gilt auch dann, wenn ein Prozess für Leute ohne technischen Hintergrund nachvollziehbar sein soll: Eine Kette aus Knoten versteht man auf einen Blick, eine Sammlung von Python-Dateien nicht.
 
 ## Was kommt als Nächstes?
 
