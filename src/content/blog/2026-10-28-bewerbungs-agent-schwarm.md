@@ -15,9 +15,9 @@ cover: "../../assets/blog/bewerbungs-agent-schwarm-aufbau.png"
 >
 > - [Braucht es überhaupt noch einen Workflow? (geplante Aufgabe)](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 > - **Was kann ein Schwarm? (Claude Managed Agents)** ← du bist hier
-> - Wie machen es Google und OpenAI? · folgt
+> - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
+> - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
 > - Ein fertiger Agent, aber offen? (Pi, Hermes) · folgt
-> - Den Schwarm selbst programmieren? (CrewAI, Microsoft Agent Framework) · folgt
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->
@@ -132,7 +132,7 @@ Den ganzen Schwarm habe ich übrigens in einem GitHub-Repo abgelegt, mit allen A
 Managed Agents sind Anthropics Antwort auf die Frage, wie man Agenten als Dienst betreibt. Google und OpenAI haben inzwischen ganz ähnliche Angebote, mit Gemini Managed Agents und der OpenAI Agents API. Im nächsten Beitrag baue ich denselben Bewerbungs-Agenten bei beiden nach und schaue, wie viel vom Schwarm dort überhaupt möglich ist, was es kostet und wo meine Daten dabei landen.
 
 <!-- serie:next -->
-**Weiter in der Serie:** Wie machen es Google und OpenAI? (folgt). Zum [Anfang von Teil 2](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/).
+**Weiter in der Serie:** [Derselbe Schwarm, drei Plattformen: Claude, Gemini und OpenAI im Vergleich](/blog/2026-10-29-bewerbungs-agent-vergleich/)
 <!-- serie:next-end -->
 
 Ich freue mich auf eure Kommentare und Anregungen!

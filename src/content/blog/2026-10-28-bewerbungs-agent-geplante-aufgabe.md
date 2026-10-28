@@ -15,9 +15,9 @@ cover: "../../assets/blog/bewerbungs-agent-geplante-aufgabe-radar-aufgabe.png"
 >
 > - **Braucht es überhaupt noch einen Workflow? (geplante Aufgabe)** ← du bist hier
 > - [Was kann ein Schwarm? (Claude Managed Agents)](/blog/2026-10-28-bewerbungs-agent-schwarm/)
-> - Wie machen es Google und OpenAI? · folgt
+> - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
+> - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
 > - Ein fertiger Agent, aber offen? (Pi, Hermes) · folgt
-> - Den Schwarm selbst programmieren? (CrewAI, Microsoft Agent Framework) · folgt
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->
