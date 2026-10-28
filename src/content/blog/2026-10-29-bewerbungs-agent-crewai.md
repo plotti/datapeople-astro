@@ -2,13 +2,13 @@
 title: "Der Schwarm zum Selberbauen: CrewAI, offene Modelle und ein eigener Docker-Stack"
 description: "Derselbe Bewerbungs-Schwarm mit CrewAI und offenen Modellen (Qwen 3.8, DeepSeek V4.1) als Docker-Stack mit Proxy pro Stufe: Kosten, Laufzeit, Deployment und ein Vergleich mit Claude, Gemini und OpenAI."
 pubDate: 2026-10-29
-readTime: 16
+readTime: 20
 category: "AI Integration"
 tags: ["CrewAI", "Open Source", "DeepSeek", "Qwen", "Docker", "Multi-Agent", "Agenten", "Kosten"]
 cover: "../../assets/blog/bewerbungs-agent-crewai-aufbau.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 20 Minuten
 
 <!-- serie:start -->
 > **Serie „Agenten 2026“** · Teil 2: Agenten, die selbst planen
@@ -127,6 +127,7 @@ Jetzt habe ich denselben Schwarm viermal gebaut, und damit kann ich endlich die 
 | OpenAI Agents API | 3 min 8 s | 1,07 $ | 1 |
 | Gemini Managed Agents | 33 min 53 s | 1,94 $ | 2 |
 | CrewAI mit DeepSeek V4.1 Flash | 6 bis 10 min | rund 0,10 $ | 1 bis 3 |
+| CrewAI als Flow mit DeepSeek (dazu unten mehr) | 2 bis 3 min | rund 0,03 $ | 1 |
 
 CrewAI kostet rund ein Zehntel bis ein Zwanzigstel, bei ähnlicher Laufzeit wie Claude. Das hat mich ehrlich überrascht. Pro Monat wären das für meinen Radar weniger als fünf Franken statt der rund 25 Dollar beim Claude-Schwarm. Dazu kommt bei CrewAI allerdings der Server, ein kleiner kostet ein paar Franken im Monat.
 
@@ -153,15 +154,42 @@ Die Sterne sind meine Erfahrung mit genau diesem Schwarm, keine allgemeine Bewer
 
 **Der Mac hatte keinen Platz mehr.** Auch das gehört zur Wahrheit beim Selberbetreiben. Mitten im Bauen hing Docker komplett, weil meine Festplatte am Morgen voll gelaufen war und die virtuelle Platte von Docker dabei Schreibfehler abbekommen hat. Bei den Plattformen wäre das das Problem von jemand anderem gewesen. Hier hiess es: aufräumen, Docker neu starten und beim nächsten Mal etwas besser auf den Speicher achten.
 
+## Bürsten wir CrewAI gegen den Strich?
+
+Beim Schreiben dieses Beitrags hat mich eine Frage nicht mehr losgelassen: Wieso musste ich so viel um CrewAI herumbauen? Schreibwerkzeuge pro Rolle, ein eigenes Werkzeug statt der Delegation, Prüfsummen, eine Abschlussprüfung. Also habe ich nachgelesen, wie CrewAI selbst gedacht ist, und die Doku ist da erstaunlich deutlich: „For any production-ready application, start with a Flow.“
+
+Ein Flow ist das feste Gerüst einer Anwendung, in ganz normalem Python: Schritte, die aufeinander folgen, ein typisierter Zustand, Verzweigungen und parallele Äste. Crews und Agenten kommen nur dort hinein, wo es wirklich Urteilsvermögen braucht. Und genau da lag mein Fehler: Ich hatte den Claude-Schwarm eins zu eins nachgebaut, mit einem Lead, der auch die ganze Buchhaltung selbst macht, also das Tageslimit, die Status, die Prüfsummen. Genau dort ist Qwen gescheitert.
+
+Also habe ich den Schwarm noch einmal gebaut, diesmal als Flow. Mails lesen, Stellen anlegen, das Limit von 15, die Auswahl, Google Docs, Push und Protokoll sind jetzt Code. Agenten gibt es nur noch für sechs Aufgaben: Stellen aus den Mails lesen, Vorfilter, Matcher, Researcher, Writer und Skeptiker. Jeder liefert ein Objekt mit festem Schema zurück (bei CrewAI heisst das `output_pydantic`), das geprüft wird, bevor es weitergeht. Und der Writer hat Guardrails: kleine Python-Funktionen, die Anrede, Länge, Webseite und Grussformel prüfen und ihn bei einem Fehler bis zu dreimal nachbessern lassen. Den Lead gibt es nicht mehr.
+
+| CrewAI als Flow | Zeit | Kosten | Anschreiben |
+| --- | --- | --- | --- |
+| DeepSeek V4.1 Flash, zwei Läufe | 3 min 10 s + 2 min 4 s | rund 5 Rappen | 2, beide in der ersten Runde ohne Befund |
+| Qwen 3.8 27B, zwei Läufe | 3 min 41 s + 5 min 54 s | rund 23 Rappen | 1 |
+
+Zwei Läufe, weil der Flow das Tageslimit jetzt garantiert einhält: Drei Stellen kamen erst am „nächsten Tag“ dran, genau wie bei OpenAI. Mit DeepSeek ist der Flow damit der günstigste Weg in dieser ganzen Serie, und mit gut drei Minuten pro Lauf fast so schnell wie OpenAI. Und Qwen? Das Limit und die Status kann es jetzt gar nicht mehr verletzen, und jeder Brief hat garantiert eine Anrede. Am Urteilsvermögen ändert das Gerüst aber nichts: Im zweiten Lauf hat der Qwen-Skeptiker ausgerechnet die Anrede bemängelt, weil sie angeblich schon in der Vorlage stehe, und den Brief damit zweimal durchfallen lassen.
+
+Ganz ehrlich gesagt ist der Flow übrigens nicht kürzer: Beide Varianten haben etwa gleich viel Code. Der Unterschied liegt woanders. Die Prompts sind von rund 1700 auf 700 Wörter geschrumpft, und die Regeln, um die ich das Modell vorher gebeten habe, stehen jetzt als Code da, den kein Modell übergehen kann. Und weil die Agenten ohnehin keine Shell haben, läuft der Flow in einem einzigen Container, mit dem Proxy als zweiter Absicherung.
+
+Für die Serie ist das eine spannende Pointe: Der Lead, der selbst plant, also das eigentliche Thema von Teil 2, verschwindet bei CrewAI fast ganz. Was übrig bleibt, ist im Grunde ein fester Ablauf wie in Teil 1, mit Agenten an genau den Stellen, wo es Urteilsvermögen braucht. CrewAI sagt damit ziemlich klar: In Produktion soll man nicht alles den Agenten überlassen. Ich finde, da ist was dran.
+
 ## Mein Fazit
 
 Brauche ich die Plattformen also gar nicht? So einfach ist es nicht. Was ich bei CrewAI selbst bauen musste, also Sandbox, Netz pro Teil, Tresor, Gedächtnis und Zeitplan, hat mich deutlich mehr Zeit gekostet als das Schreiben der Agenten selbst. Und mit jedem Teil, den man selbst baut, wird man auch selbst dafür verantwortlich, wenn er nachts um sieben Uhr nicht läuft.
 
 Dafür bekomme ich etwas, das mir keine der drei Plattformen gibt: Ich weiss genau, wo meine Daten liegen, ich kann das Modell jederzeit austauschen, ohne eine Zeile am Schwarm zu ändern, und der ganze Stack läuft überall, wo Docker läuft. Und das zu einem Bruchteil der Kosten. Die Schwäche liegt bei den Modellen: Die offenen Modelle halten sich sichtbar weniger zuverlässig an Regeln als Claude oder GPT. Genau deshalb finde ich den Aufbau mit Skeptiker und harter Abschlussprüfung hier noch wichtiger als bei den Plattformen. Er hat bei allen drei Modellen jeden schlechten Entwurf abgefangen.
 
-Ich persönlich würde für meinen Radar inzwischen ziemlich sicher den Docker-Stack nehmen, mit DeepSeek als Modell und der Option, eines Tages auf eigene Hardware umzuziehen. Ich würde mein Geld darauf wetten, dass die offenen Modelle in einem Jahr bei der Regeltreue aufgeholt haben, und dann ist der Unterschied nur noch der Preis.
+Ich persönlich würde für meinen Radar inzwischen ziemlich sicher den Docker-Stack nehmen, und zwar die Flow-Variante, mit DeepSeek als Modell und der Option, eines Tages auf eigene Hardware umzuziehen. Ich würde mein Geld darauf wetten, dass die offenen Modelle in einem Jahr bei der Regeltreue aufgeholt haben, und dann ist der Unterschied nur noch der Preis.
 
 Den Code habe ich wie bei den anderen Schwärmen in einem eigenen Repo abgelegt, mit Dockerfile, Compose-Datei, Proxy-Konfiguration und allen Prompts, aber natürlich ohne meinen Lebenslauf und ohne Zugangsdaten.
+
+## Warum nicht das OpenAI Agents SDK oder Google ADK?
+
+Eine naheliegende Frage: Warum gerade CrewAI? OpenAI und Google haben mit dem Agents SDK und dem Agent Development Kit (ADK) ja ebenfalls offene Frameworks für Agenten-Teams. Und nein, die zwingen einen nicht zu ihren eigenen Modellen: Beide lassen sich laut Doku über LiteLLM oder eine OpenAI-kompatible Adresse auch mit DeepSeek, Qwen oder einem lokalen Modell betreiben.
+
+Für mich gab es trotzdem drei Gründe. Erstens hatte ich OpenAI und Google gerade im letzten Beitrag mit ihren eigenen Plattformen verglichen, und ich wollte diesmal bewusst ein Framework, hinter dem kein Modellanbieter steht. Zweitens sind beide auf die eigenen Modelle zugeschnitten: Die Übergaben zwischen Agenten verlassen sich stark auf Function Calling, wie es GPT- und Gemini-Modelle liefern, und vieles drumherum, etwa Tracing, Auswertungen oder die Web-Oberfläche des ADK, spielt am besten mit dem eigenen Ökosystem zusammen. Mit einem kleineren offenen Modell, das schon bei CrewAI über Tool-Calls gestolpert ist, wäre ich da vermutlich nicht weiter gekommen. Und drittens passt das Denkmodell von CrewAI, ein Team aus Rollen mit Ziel und Hintergrundgeschichte, eins zu eins zu meinem Schwarm.
+
+Ausprobiert habe ich die beiden für diesen Beitrag nicht, das ist also eine Begründung und kein Testergebnis. Zusammen mit LangGraph wären sie bestimmt einen eigenen Vergleich wert.
 
 ## Was kommt als Nächstes?
 
