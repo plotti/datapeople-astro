@@ -16,7 +16,7 @@ cover: "../../assets/blog/bewerbungs-agent-dbos-liste.png"
 > - Klicken: [Wie weit kommt man mit Klicken? (n8n)](/blog/2026-09-29-bewerbungs-agent-n8n/) · [Klicken, aber womit? (n8n gegen Activepieces)](/blog/2026-10-06-n8n-vs-activepieces/)
 > - Code mit Plattform: [Was bringt echter Code? (Windmill)](/blog/2026-10-13-bewerbungs-agent-windmill/) · [Braucht es einen Orchestrierer? (Kestra)](/blog/2026-10-20-bewerbungs-agent-kestra/)
 > - Code ohne Plattform: **Braucht es überhaupt eine Plattform? (DBOS)** ← du bist hier
-> - Teil 2: Agenten, die selbst planen (folgt)
+> - Teil 2: [Agenten, die selbst planen](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 <!-- serie:end -->
 
 In den letzten Beiträgen ging es Schritt für Schritt Richtung Code: [n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) und Activepieces zum Klicken, [Windmill](/blog/2026-10-13-bewerbungs-agent-windmill/) mit Python-Skripten in einer Plattform, [Kestra](/blog/2026-10-20-bewerbungs-agent-kestra/) mit dem ganzen Ablauf als YAML und einem Container pro Schritt. Heute kommt der letzte Schritt im ersten Teil der Serie, und der ist eigentlich ein Schritt zurück: **keine Plattform mehr**. Kein Server, den ich installiere, keine Oberfläche, in die ich mich einlogge. Nur ein Python-Prozess und eine SQLite-Datei.
@@ -164,7 +164,7 @@ Welche Variante würde ich behalten? Für mich persönlich ist es knapp zwischen
 Damit ist der erste Teil der Serie fertig: fünfmal derselbe feste Ablauf, vom Klicken bis zum reinen Code. Im zweiten Teil wechseln wir endlich die Seite. Dort gibt es keinen festen Ablauf mehr, sondern einen Agenten, der selbst plant, was er als Nächstes tut.
 
 <!-- serie:next -->
-**Weiter in der Serie:** Teil 2, Agenten, die selbst planen (folgt). Zum [Anfang der Serie](/blog/2026-09-29-bewerbungs-agent-n8n/).
+**Weiter in der Serie:** [Braucht es überhaupt noch einen Workflow? Der Bewerbungs-Agent als geplante Aufgabe](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 <!-- serie:next-end -->
 
 Ich freue mich auf eure Kommentare und Anregungen!

@@ -16,7 +16,7 @@ cover: "../../assets/blog/bewerbungs-agent-windmill-wm-flow.png"
 > - Klicken: [Wie weit kommt man mit Klicken? (n8n)](/blog/2026-09-29-bewerbungs-agent-n8n/) · [Klicken, aber womit? (n8n gegen Activepieces)](/blog/2026-10-06-n8n-vs-activepieces/)
 > - Code mit Plattform: **Was bringt echter Code? (Windmill)** ← du bist hier · [Braucht es einen Orchestrierer? (Kestra)](/blog/2026-10-20-bewerbungs-agent-kestra/)
 > - Code ohne Plattform: [Braucht es überhaupt eine Plattform? (DBOS)](/blog/2026-10-27-bewerbungs-agent-dbos/)
-> - Teil 2: Agenten, die selbst planen (folgt)
+> - Teil 2: [Agenten, die selbst planen](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 <!-- serie:end -->
 
 In den ersten beiden Beiträgen dieser Serie habe ich meinen Bewerbungs-Agenten mit Werkzeugen gebaut, die zum Zusammenklicken gedacht sind, erst [mit n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) und dann [im Vergleich mit Activepieces](/blog/2026-10-06-n8n-vs-activepieces/). Ehrlich gesagt habe ich dabei aber gar nichts zusammengeklickt: Claude hat die Workflows als Code geschrieben und eingespielt, und ich habe von Hand praktisch nichts mehr gemacht. Das ist irgendwie paradox, denn wozu brauche ich einen Baukasten zum Klicken, wenn ohnehin ein Agent den Code erzeugt? Man kann sich ernsthaft fragen, ob sich das Zusammenklicken von Workflows damit nicht überholt hat.

@@ -16,7 +16,7 @@ cover: "../../assets/blog/n8n-vs-activepieces-cover.png"
 > - Klicken: [Wie weit kommt man mit Klicken? (n8n)](/blog/2026-09-29-bewerbungs-agent-n8n/) · **Klicken, aber womit? (n8n gegen Activepieces)** ← du bist hier
 > - Code mit Plattform: [Was bringt echter Code? (Windmill)](/blog/2026-10-13-bewerbungs-agent-windmill/) · [Braucht es einen Orchestrierer? (Kestra)](/blog/2026-10-20-bewerbungs-agent-kestra/)
 > - Code ohne Plattform: [Braucht es überhaupt eine Plattform? (DBOS)](/blog/2026-10-27-bewerbungs-agent-dbos/)
-> - Teil 2: Agenten, die selbst planen (folgt)
+> - Teil 2: [Agenten, die selbst planen](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 <!-- serie:end -->
 
 Im [ersten Teil dieser Serie](/blog/2026-09-29-bewerbungs-agent-n8n/) habe ich einen Bewerbungs-Agenten mit n8n gebaut: Er liest jeden Morgen meine Job-Newsletter, bewertet jede Stelle gegen meinen Lebenslauf und entwirft nur für die passenden ein Anschreiben. Die Frage, die mir danach sofort gestellt wurde: Und wie sieht das mit der Konkurrenz aus?

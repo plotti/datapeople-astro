@@ -16,7 +16,7 @@ cover: "../../assets/blog/bewerbungs-agent-n8n-05-ntfy-push.png"
 > - Klicken: **Wie weit kommt man mit Klicken? (n8n)** ← du bist hier · [Klicken, aber womit? (n8n gegen Activepieces)](/blog/2026-10-06-n8n-vs-activepieces/)
 > - Code mit Plattform: [Was bringt echter Code? (Windmill)](/blog/2026-10-13-bewerbungs-agent-windmill/) · [Braucht es einen Orchestrierer? (Kestra)](/blog/2026-10-20-bewerbungs-agent-kestra/)
 > - Code ohne Plattform: [Braucht es überhaupt eine Plattform? (DBOS)](/blog/2026-10-27-bewerbungs-agent-dbos/)
-> - Teil 2: Agenten, die selbst planen (folgt)
+> - Teil 2: [Agenten, die selbst planen](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 <!-- serie:end -->
 
 Kennst du das? Jeden Morgen landen zwei, drei Job-Newsletter im Postfach – bei mir sind es jobs.ch und x28 – und jedes Mal das gleiche Ritual: durchscrollen, Titel überfliegen, ein paar Links öffnen, merken, dass die Hälfte in Bonaduz ist oder „Junior" im Kleingedruckten steht, und am Ende doch wieder nichts gemacht. Das ist eigentlich genau die Art von langweiliger, repetitiver Arbeit, für die wir Maschinen erfunden haben, oder?
