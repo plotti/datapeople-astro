@@ -1,14 +1,14 @@
 ---
-title: "Der Schwarm zum Selberbauen: CrewAI, offene Modelle und ein eigener Docker-Stack"
-description: "Derselbe Bewerbungs-Schwarm mit CrewAI und offenen Modellen (Qwen 3.8, DeepSeek V4.1) als Docker-Stack mit Proxy pro Stufe: Kosten, Laufzeit, Deployment und ein Vergleich mit Claude, Gemini und OpenAI."
+title: "Der Schwarm zum Selberbauen: CrewAI Flows mit offenen Modellen"
+description: "Derselbe Bewerbungs-Schwarm mit CrewAI und offenen Modellen: erst mit einem Lead wie bei Claude, dann als Flow mit Python als Gerüst. Warum der Lead die wichtigste Design-Entscheidung ist, was es kostet und wie es im Vergleich zu Claude, Gemini und OpenAI abschneidet."
 pubDate: 2026-10-29
-readTime: 20
+readTime: 19
 category: "AI Integration"
-tags: ["CrewAI", "Open Source", "DeepSeek", "Qwen", "Docker", "Multi-Agent", "Agenten", "Kosten"]
-cover: "../../assets/blog/bewerbungs-agent-crewai-aufbau.png"
+tags: ["CrewAI", "Flows", "Open Source", "DeepSeek", "Qwen", "Multi-Agent", "Agenten", "Kosten"]
+cover: "../../assets/blog/bewerbungs-agent-crewai-flow.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 20 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 19 Minuten
 
 <!-- serie:start -->
 > **Serie „Agenten 2026“** · Teil 2: Agenten, die selbst planen
@@ -24,21 +24,25 @@ cover: "../../assets/blog/bewerbungs-agent-crewai-aufbau.png"
 
 In den letzten zwei Beiträgen hat mein Bewerbungs-Schwarm immer auf der Plattform eines grossen Anbieters gelebt: zuerst auf [Claude Managed Agents](/blog/2026-10-28-bewerbungs-agent-schwarm/), danach im [Vergleich mit Gemini und OpenAI](/blog/2026-10-29-bewerbungs-agent-vergleich/). Jedes Mal hat mir jemand die Sandbox, den Tresor für die Zugangsdaten, das Gedächtnis und den Zeitplan fix und fertig hingestellt. Bequem, aber man ist dabei immer auch Gast im Haus eines anderen.
 
-Heute drehe ich den Spiess um. Derselbe Schwarm, dieselben fünf Rollen, dieselben Regeln, aber diesmal mit **CrewAI**, also Open Source, mit **offenen Modellen** und in einem **Docker-Stack**, der erstmal auf meinem Mac läuft, sich aber genauso gut auf einen Server schieben lässt. Die spannende Frage: Wie viel von dem, was die Plattformen mir abgenommen haben, vermisse ich wirklich? Und was kostet es, wenn man alles selbst macht?
+Heute drehe ich den Spiess um. Derselbe Schwarm, dieselben Rollen, dieselben Regeln, aber diesmal mit **CrewAI**, also Open Source, und mit **offenen Modellen**. Die spannende Frage: Wie viel von dem, was die Plattformen mir abgenommen haben, vermisse ich wirklich? Und was kostet es, wenn man alles selbst macht?
+
+Vorweg, damit du weisst, wohin die Reise geht: Mein erster Versuch ist ziemlich holprig geworden, und zwar weil ich CrewAI genau so benutzt habe wie Claude. Erst als ich nachgelesen habe, wie CrewAI eigentlich gedacht ist, wurde es richtig gut. So gut, dass es am Ende die günstigste Variante der ganzen Serie ist. Und unterwegs bin ich bei der Frage gelandet, die ich inzwischen für die wichtigste Design-Entscheidung bei solchen Systemen halte: Braucht es überhaupt einen Lead?
 
 ## Was ist CrewAI?
 
-CrewAI ist ein Python-Framework für genau das, was wir hier bauen: ein Team aus Agenten mit klaren Rollen. Jeder Agent hat eine Rolle, ein Ziel, eine Hintergrundgeschichte (bei uns: der Systemprompt aus dem Claude-Schwarm) und eine Liste von Werkzeugen. Das Team heisst bei CrewAI, wenig überraschend, eine Crew. Matcher, Researcher, Writer und Skeptiker sind also sozusagen schon eingebaut.
+CrewAI ist ein Python-Framework für Teams aus Agenten. Jeder Agent hat eine Rolle, ein Ziel, eine Hintergrundgeschichte (bei uns: der Systemprompt aus dem Claude-Schwarm) und eine Liste von Werkzeugen. Das Team heisst, wenig überraschend, eine Crew. Matcher, Researcher, Writer und Skeptiker sind also sozusagen schon eingebaut.
 
-Was CrewAI dagegen nicht mitbringt, ist alles, was bei den Plattformen um die Agenten herum passiert: keine Sandbox, kein Tresor, kein Gedächtnis zwischen den Läufen, kein Zeitplan. Das ist der Teil, den ich heute selbst bauen muss.
+Daneben gibt es bei CrewAI aber noch ein zweites Konzept, das ich anfangs völlig übersehen habe: **Flows**. Ein Flow ist das feste Gerüst einer Anwendung, in ganz normalem Python, mit Schritten, die aufeinander folgen, einem typisierten Zustand, Verzweigungen und parallelen Ästen. Agenten kommen nur dort hinein, wo es wirklich Urteilsvermögen braucht. Die Doku ist da erstaunlich deutlich: „For any production-ready application, start with a Flow.“
+
+Was CrewAI nicht mitbringt, ist alles, was bei den Plattformen um die Agenten herum passiert: keine Sandbox, kein Tresor, kein Zeitplan. Das muss ich selbst bauen.
 
 ## Welches Modell?
 
-Mein Plan war eigentlich, ein offenes Modell lokal laufen zu lassen, etwa Qwen 3.8 mit 27 Milliarden Parametern. Der Haken: In der üblichen 4-Bit-Fassung ist das Modell 18 GB gross und braucht für einen flüssigen Betrieb einen Mac mit mindestens 32 GB Speicher. Mein MacBook hat 16 GB :) Dazu kommt, dass Docker auf dem Mac keine Grafikkarte durchreicht, ein Modell im Container also nur auf der CPU laufen würde.
+Mein Plan war eigentlich, ein offenes Modell lokal laufen zu lassen, etwa Qwen 3.8 mit 27 Milliarden Parametern. Der Haken: In der üblichen 4-Bit-Fassung ist das Modell 18 GB gross und braucht für einen flüssigen Betrieb einen Mac mit mindestens 32 GB Speicher. Mein MacBook hat 16 GB :)
 
-Ich habe es deshalb pragmatisch gelöst: Die Modelle sind offen, laufen aber gehostet bei OpenRouter, das für sehr viele offene Modelle eine einheitliche API anbietet. Wichtig dabei: Es ist dasselbe Modell, das ich auch selbst betreiben könnte, und im Stack steckt es in einer einzigen Umgebungsvariable. Wer einen Server mit einer grossen Grafikkarte hat, tauscht die Adresse aus, und der Schwarm läuft komplett auf eigener Hardware.
+Ich habe es deshalb pragmatisch gelöst: Die Modelle sind offen, laufen aber gehostet bei OpenRouter, das für sehr viele offene Modelle eine einheitliche API anbietet. Es ist dasselbe Modell, das ich auch selbst betreiben könnte, und im Code steckt es in einer einzigen Umgebungsvariable. Wer einen Server mit einer grossen Grafikkarte hat, tauscht die Adresse aus, und der Schwarm läuft komplett auf eigener Hardware.
 
-Gestartet bin ich mit Qwen, weil es für offene Modelle in dieser Grösse gerade der Standard ist. Am Ende habe ich drei offene Modelle ausprobiert:
+Ausprobiert habe ich drei offene Modelle:
 
 | Modell | Input pro Mio. Tokens | Output pro Mio. Tokens |
 | --- | --- | --- |
@@ -48,140 +52,131 @@ Gestartet bin ich mit Qwen, weil es für offene Modelle in dieser Grösse gerade
 
 Zum Vergleich: Bei Claude kostet Sonnet ein Vielfaches davon. Da wird man schon mal neugierig.
 
-## Agenten ohne Shell
+## Erster Versuch: ein Lead wie bei Claude
 
-Der erste grosse Unterschied zu den Plattformen fällt sofort auf: CrewAI-Agenten haben keine Shell. Bei Claude, Gemini und OpenAI konnte jeder Agent in seiner Sandbox beliebige Befehle ausführen. Hier kann ein Agent genau das, was ich ihm als Werkzeug in Python gebe, und sonst nichts.
+Mein erster Schwarm war ein Nachbau eins zu eins. Ein Lead bekommt die Regeln aus dem Claude-Schwarm, also höchstens 15 neue Stellen pro Tag, Vorfilter, höchstens drei Anschreiben, Prüfsummen und Protokoll, und verteilt die Arbeit an seine Spezialisten. Weil CrewAI-Agenten keine Shell haben, habe ich ihnen Werkzeuge gebaut: Dateien lesen, Dateien schreiben (jede Rolle nur ihre eigenen), Anzeigen laden, Websuche.
 
-Am Anfang fand ich das einschränkend, inzwischen finde ich es ziemlich elegant. Ich habe es nämlich gleich für die Sicherheit genutzt. Jedes Werkzeug zum Lesen und Schreiben ist auf das gemeinsame Gedächtnis beschränkt, und jeder Agent bekommt ein Schreibwerkzeug, das nur seine eigenen Dateien erlaubt. Der Matcher darf nur `match.json` schreiben, der Writer nur `entwurf.md`, der Skeptiker nur `warnungen.md`. Versucht der Writer, die Prüfdatei des Leads zu überschreiben, bekommt er ein freundliches „VERBOTEN“ zurück. Im Claude-Schwarm stand das als Bitte im Prompt („Andere Dateien änderst du nicht“), hier ist es eine harte Regel im Code.
+Das ging ziemlich holprig los. CrewAIs eingebaute Delegation hat der Lead schon beim allerersten Schritt benutzt, nämlich um die Inbox aufzulisten, und zwar ausgerechnet über den Researcher, der dafür gar kein Werkzeug hatte. Der hat brav geraten und mir dann erklärt, warum er die Liste leider nicht liefern kann :) Also habe ich die Delegation durch ein eigenes Werkzeug ersetzt, das pro Stelle einen frischen Spezialisten startet.
 
-Die Zugangsdaten sieht kein Modell je, denn die Werkzeuge holen sie selbst aus den Umgebungsvariablen des Containers. Ein Agent ohne Shell kann auch nicht einfach `env` eintippen. Und den neugierigen Lead aus dem letzten Beitrag, der in meiner Shell-History gestöbert hat, kann es hier gar nicht geben.
+Und dann kam Qwen. Ich gebe es gleich zu: Mit Qwen bin ich nicht wirklich weitergekommen. Es hat fleissig gearbeitet, sich aber bei jedem Lauf an eine andere Regel nicht gehalten. Das grosse Modell hat 18 statt 15 Stellen angelegt und im einzigen fertigen Brief die Anrede vergessen, das schnellere Flash-Modell hat Schlüssel abgekürzt, einen eigenen Status erfunden und keinen einzigen Brief geschafft. Erst der Wechsel auf DeepSeek brachte den Durchbruch: derselbe Schwarm, dieselben Prompts, und auf einmal hat fast alles gestimmt.
 
-## Der Lead, der alles delegiert hat
-
-CrewAI hat eine eingebaute Delegation: Ein Agent darf Aufgaben an seine Kollegen weitergeben. Klingt perfekt für einen Lead, oder? Das dachte ich auch, bis ich im Log gesehen habe, was passiert ist. Der Lead hat schon den allerersten Schritt, nämlich die Dateien in der Inbox aufzulisten, an einen Kollegen delegiert, und zwar ausgerechnet an den Researcher. Der hatte dafür gar kein Werkzeug, hat brav geraten und mir dann erklärt, warum er die Liste leider nicht liefern kann :)
-
-Die Lösung ist dieselbe wie bei Gemini: ein eigenes Werkzeug namens `spezialisten`. Der Lead ruft es mit einer Rolle und einer Liste von Stellenordnern auf, und das Werkzeug startet pro Stelle einen frischen Spezialisten mit genau den Werkzeugen seiner Rolle, bis zu acht gleichzeitig. Der Lead entscheidet also weiterhin selbst, wann er wen für welche Stellen braucht, kann aber keine falschen Kollegen mehr erwischen. Alles andere macht er selbst, genau wie im Claude-Schwarm.
-
-## Der Docker-Stack
-
-Jetzt kommt der Teil, den mir die Plattformen bisher abgenommen haben. Der Stack besteht aus drei Containern aus demselben Image, einen pro Teil des Schwarms, und einem vierten als Türsteher:
-
-![Der Docker-Stack: Postfach, Schwarm und Ablage im internen Netz, ein Proxy mit eigener Allowlist pro Stufe als einziger Ausgang, das Volume als gemeinsames Gedächtnis](../../assets/blog/bewerbungs-agent-crewai-aufbau.png)
-
-| Container | Erreicht | Zugangsdaten |
-| --- | --- | --- |
-| Postfach | Modell und Gmail-API | Gmail, nur lesen |
-| Schwarm | Modell und Firecrawl | nur Firecrawl |
-| Ablage | Modell, Google Docs und ntfy | Google Docs |
-
-Wie setze ich das um, ohne Firewall-Regeln zu basteln? Die drei Container hängen in einem internen Docker-Netz ohne jeden Weg ins Internet. Der einzige Weg nach draussen führt über einen kleinen Squid-Proxy, und der hat pro Container einen eigenen Port mit einer eigenen Liste erlaubter Adressen. Fragt der Schwarm nach Gmail, sagt der Proxy nein. Versucht er es ohne Proxy, gibt es schlicht kein Netz. Getestet habe ich es natürlich: Jeder Container erreicht genau seine Ziele, alles andere wird abgewiesen.
-
-Die Zugangsdaten verteilt ein kleines Skript aus meiner `.env` auf drei Dateien, und jeder Container bekommt nur seine eigene. Das Gedächtnis ist ein Docker-Volume, das Profil mit Lebenslauf und Kriterien hängt nur lesbar im Container, und den Zeitplan übernimmt jeder Container selbst: Er wartet bis 6:40, 7:00 oder 8:30 Uhr Schweizer Zeit, macht seine Arbeit und legt sich wieder hin. Ein schlechter Tag bricht den Zeitplan nicht ab. Ein `docker compose up -d` startet das Ganze, egal ob auf meinem Mac oder auf einem Server.
-
-Ganz ehrlich: Das war deutlich mehr Arbeit als bei den Plattformen. Aber am Ende ist es genau die Trennung, die ich beim Claude-Schwarm so geschätzt habe, und ich verstehe jede Zeile davon.
-
-## Viele Versuche mit Qwen, dann DeepSeek
-
-Ich gebe es gleich zu: Mit Qwen bin ich nicht wirklich weitergekommen. Die ersten Läufe hingen, mal wegen CrewAI (dazu gleich mehr), mal wegen meiner eigenen Werkzeuge, und als endlich alles lief, hat Qwen zwar fleissig gearbeitet, sich aber bei jedem Lauf an eine andere Regel nicht gehalten. Ich habe die Delegation umgebaut, das Kontextfenster korrigiert, das Denkbudget begrenzt und das grosse 27B-Modell gegen das schnellere Flash-Modell getauscht, und es wurde nicht wirklich besser. Den Fortschritt brachte erst der Wechsel auf DeepSeek: derselbe Schwarm, dieselben Prompts, und auf einmal hat fast alles gestimmt.
-
-Getestet habe ich alle drei wieder mit denselben vier Job-Alerts wie in den letzten Beiträgen, plus der Testmail mit einer Stelle, die gut passt:
-
-| | Qwen 3.8 27B | Qwen 3.8 Flash | DeepSeek V4.1 Flash |
+| Erster Versuch, mit Lead | Qwen 3.8 27B | Qwen 3.8 Flash | DeepSeek V4.1 Flash |
 | --- | --- | --- | --- |
 | Dauer | 22 min 13 s | 12 min 23 s | 9 min 30 s |
 | Kosten | 17–26 Rappen | 8–9 Rappen | 8–11 Rappen |
 | Tageslimit von 15 Stellen | 18 angelegt | gehalten | gehalten |
 | Anschreiben | 1, ohne Anrede | 0 | 3 |
 
-Warum stehen bei den Kosten Spannen? Weil OpenRouter die letzten Aufrufe eines Laufs mit Verzögerung verbucht. Ich messe einmal über das Guthaben vor und nach dem Lauf und einmal über die gezählten Tokens mal den Preis, und die beiden Werte liegen nicht ganz beieinander. Für die Grössenordnung reicht es allemal: Ein ganzer Schwarm-Lauf kostet hier ein paar Rappen.
+Warum stehen bei den Kosten Spannen? Weil OpenRouter die letzten Aufrufe eines Laufs mit Verzögerung verbucht. Ich messe einmal über das Guthaben vor und nach dem Lauf und einmal über die gezählten Tokens mal den Preis, und die beiden Werte liegen nicht ganz beieinander. Für die Grössenordnung reicht es allemal.
 
-Und die Qualität? Da lagen die drei Modelle weiter auseinander, als ich erwartet hätte.
+Funktioniert hat es also, mit DeepSeek sogar richtig gut. Aber beim Aufschreiben hat mich eine Frage nicht mehr losgelassen: Wieso musste ich so viel um CrewAI herumbauen? Schreibwerkzeuge pro Rolle, ein eigenes Werkzeug statt der Delegation, Prüfsummen, eine Abschlussprüfung. Die Antwort steht in dem Satz aus der Doku oben. Ich hatte dem Lead die ganze Buchhaltung überlassen, also das Tageslimit, die Status und die Prüfsummen, und genau dort ist Qwen gescheitert. Das ist keine Aufgabe für ein Sprachmodell, das ist eine Aufgabe für drei Zeilen Python.
 
-**Qwen 3.8 27B** hat solide Anschreiben geschrieben, sich aber nicht ans Tageslimit gehalten und im einzigen fertigen Brief die Anrede vergessen, er begann direkt mit dem ersten Satz. Das ist weder dem Skeptiker noch meiner Abschlussprüfung aufgefallen, die prüft das jetzt. Ausserdem hat es eine Stelle wegen des Orts verworfen, die alle anderen Modelle in diesem Vergleich mit 8 oder 9 von 10 bewertet haben.
+## Der Schwarm als Flow
 
-**Qwen 3.8 Flash** war schneller und billiger, hat aber Schlüssel abgekürzt, einen eigenen Status erfunden und zwei Anschreiben geschrieben, die nach zwei Runden immer noch zu lang waren. Ergebnis: kein einziger Brief. Immerhin hat die Abschlussprüfung beide sauber aussortiert, statt sie mir als fertig hinzulegen.
+Also habe ich den Schwarm noch einmal gebaut, diesmal so, wie CrewAI es vorsieht:
 
-**DeepSeek V4.1 Flash** war der klare Gewinner. Es hat sich an das Tageslimit gehalten, die Stelle mit einer früheren Bewerbung korrekt als Hinweis markiert und drei Anschreiben geliefert, die alle Prüfungen bestanden haben. Ich habe die Behauptungen in einem davon gegen meinen Lebenslauf gegengelesen, und sie stimmen. Seitdem ist DeepSeek das Standardmodell des Stacks.
+![Der Schwarm als CrewAI Flow: sieben Schritte von den Mails bis zur Ablage, Code-Schritte grau, Agenten-Schritte blau, mit Router und der Abkürzung, wenn nichts passt](../../assets/blog/bewerbungs-agent-crewai-flow.png)
 
-Im Docker-Stack habe ich den Lauf mit DeepSeek noch einmal wiederholt: knapp sechs Minuten, rund 10 Rappen, ein Anschreiben im Google Doc und eine Push-Nachricht aufs Handy. Die Teststelle hat der Skeptiker diesmal aussortiert, weil nach zwei Runden immer noch drei Bindestrich-Ketten im Brief standen, die auf meiner Vermeiden-Liste stehen. Streng, aber genau so gewollt :)
+Mails holen, Stellen anlegen, Dubletten erkennen, das Limit von 15, die Auswahl, Google Docs, Push und Protokoll sind jetzt Code. Agenten gibt es nur noch für sechs Aufgaben, bei denen es tatsächlich Urteilsvermögen braucht: die Stellen aus den Mails lesen, der Vorfilter, der Matcher, der Researcher, der Writer und der Skeptiker. Den Lead gibt es nicht mehr.
+
+Drei Dinge machen den Unterschied:
+
+**Feste Ausgaben statt Dateien.** Jeder Agent liefert ein Objekt mit festem Schema zurück, bei CrewAI heisst das `output_pydantic`. Der Matcher gibt also keinen Text zurück, der hoffentlich gültiges JSON ist, sondern ein `Match` mit Score, den vier Kriterien als Wahrheitswerten und allen anderen Feldern. Ist etwas falsch, merkt CrewAI das, bevor es weitergeht. Die Dateien im Ordner der Stelle schreibt dann Python, nicht der Agent.
+
+**Guardrails statt Bitten im Prompt.** Ein Guardrail ist eine kleine Python-Funktion, die die Antwort eines Agenten prüft und ihn bei einem Fehler bis zu dreimal nachbessern lässt. Beim Writer prüft sie, ob der Brief mit einer Anrede beginnt, vier bis fünf Absätze und 250 bis 450 Wörter hat, meine Webseite erwähnt und keine Grussformel enthält. Beim Auslesen der Mails prüft sie, ob jeder Link wörtlich in der Mail steht. Im ersten Versuch waren das Regeln, um die ich das Modell gebeten habe. Jetzt sind es Regeln, die es nicht übergehen kann.
+
+**Ein Router statt eines Leads.** Nach dem Matchen entscheidet ein Router in Python, wie es weitergeht: Score ab 7 und alle vier Kriterien erfüllt heisst Empfehlung, eine frühere Bewerbung bei derselben Firma macht daraus einen Hinweis, höchstens drei gehen ins Schreiben, und passt gar nichts, springt der Flow direkt zur Ablage. Die Regel zu früheren Bewerbungen habe ich dabei gleich geschärft: Der Matcher liefert Firma, Rolle und Alter der früheren Bewerbung als eigene Felder, und Python wendet die Regel an. Im ersten Versuch hat DeepSeek dieselbe Lage einmal als Hinweis und einmal als Empfehlung behandelt.
+
+Ganz ehrlich: Kürzer ist der Code dadurch nicht geworden, beide Varianten haben etwa gleich viel. Der Unterschied liegt woanders. Die Prompts sind von rund 1700 auf 700 Wörter geschrumpft, weil die Regeln jetzt im Code stehen.
+
+## Was dabei herauskommt
+
+Getestet habe ich wieder mit denselben vier Job-Alerts wie in den letzten Beiträgen, plus der Testmail mit einer Stelle, die gut passt:
+
+| CrewAI Flow | Zeit | Kosten | Anschreiben |
+| --- | --- | --- | --- |
+| DeepSeek V4.1 Flash, zwei Läufe | 3 min 10 s + 2 min 4 s | rund 5 Rappen | 2, beide in der ersten Runde ohne Befund |
+| Qwen 3.8 27B, zwei Läufe | 3 min 41 s + 5 min 54 s | rund 23 Rappen | 1 |
+
+Warum zwei Läufe? Weil der Flow das Tageslimit jetzt garantiert einhält. In der Inbox lagen 18 Stellen, drei kamen erst am „nächsten Tag“ dran, und ausgerechnet meine Teststelle war dabei, genau wie bei OpenAI im letzten Beitrag. Regelkonform, aber für einen Test ein bisschen ärgerlich :)
+
+Mit **DeepSeek** ist der Flow damit der günstigste Weg in dieser ganzen Serie, und mit gut drei Minuten pro Lauf fast so schnell wie OpenAI. Beide Briefe haben die erste Prüfrunde ohne Befund bestanden, beide liegen fertig in meiner Google-Docs-Vorlage. Bei der Teststelle hat der Researcher sogar dieselbe Kontaktperson gefunden wie Claude und OpenAI. Einziger Schönheitsfehler: Er schreibt „Sehr geehrte Frau …“, rät das Geschlecht also aus dem Vornamen, was Claude bewusst vermieden hatte.
+
+Und **Qwen**? Da wird es interessant. Das Tageslimit und die Status kann es jetzt gar nicht mehr verletzen, und jeder Brief hat garantiert eine Anrede. Eine Stelle, die Qwen im ersten Versuch wegen des Orts verworfen hatte, hat im Flow einen fertigen Brief bekommen. Am Urteilsvermögen ändert das Gerüst aber nichts: Im zweiten Lauf hat der Qwen-Skeptiker ausgerechnet die Anrede bemängelt, weil sie angeblich schon in der Vorlage stehe, und den Brief damit zweimal durchfallen lassen. Ein gutes Gerüst macht ein schwächeres Modell zuverlässiger, aber nicht klüger.
+
+## Lead oder Gerüst: die wichtigste Design-Entscheidung
+
+Wenn ich aus dieser Serie bisher eine Sache mitnehme, dann diese: Ob es einen Lead gibt, der den Ablauf selbst plant, oder ein festes Gerüst, das die Agenten aufruft, ist die wichtigste Entscheidung beim Bau eines solchen Systems. Wichtiger als die Wahl der Plattform und wichtiger als die Wahl des Modells. Beide Wege haben ihren Preis.
+
+**Ein Lead** kann mit dem Unerwarteten umgehen. Im Claude-Schwarm hat er von sich aus einen Matcher neu gestartet, der nichts geliefert hatte, einen Link ohne Tracking-Parameter noch einmal geladen und entschieden, welche zwei Stellen er auf morgen verschiebt. Nichts davon stand in seinem Prompt, und in einem festen Ablauf hätte ich jeden dieser Fälle vorher kennen und programmieren müssen. Dafür hat der Lead auf allen Plattformen mit Abstand die meisten Tokens gelesen und die meiste Zeit gebraucht, weil er bei jedem Schritt alles wieder liest. Und er braucht ein starkes Modell: Mit Qwen hat er sich ständig an eine andere Regel nicht gehalten.
+
+**Ein Gerüst** ist billig, schnell und berechenbar. Das Tageslimit, die Status und die Auswahl stimmen garantiert, egal welches Modell gerade arbeitet, und auch ein schwächeres Modell liefert brauchbare Ergebnisse, weil es nur noch kleine, klar umrissene Aufgaben bekommt. Der Preis: Alles, was nicht im Code steht, passiert auch nicht. Lädt eine Anzeige nicht, gibt es keinen Lead, der es selbst noch einmal anders versucht.
+
+Für meinen Job-Radar ist die Sache klar. Der Ablauf ist jeden Tag derselbe, die Regeln sind bekannt, und das Unerwartete ist selten. Da ist das Gerüst die bessere Wahl, und das wäre es auch bei Claude gewesen. Bei einer Aufgabe, deren Ablauf ich vorher nicht kenne, etwa einer offenen Recherche, würde ich mich anders entscheiden. Und dazwischen gibt es einen Mittelweg, den CrewAI ausdrücklich vorsieht: ein festes Gerüst, in dem einzelne Schritte einer kleinen Crew mit eigenem Lead überlassen werden, genau dort, wo es Planung braucht.
+
+Für die Serie ist das eine spannende Pointe. Der Lead, der selbst plant, also das eigentliche Thema von Teil 2, ist nicht immer die beste Idee. Was bei CrewAI übrig bleibt, ist im Grunde ein fester Ablauf wie in Teil 1, mit Agenten an genau den Stellen, wo es Urteilsvermögen braucht.
+
+## Exkurs: Und wo läuft das Ganze?
+
+Bei den Plattformen gab es für jeden Teil des Schwarms eine eigene Sandbox mit eigenem Netz und eigenen Zugangsdaten. Das habe ich im ersten Versuch mit Docker nachgebaut: drei Container für Postfach, Schwarm und Ablage in einem internen Netz ohne Internet, und ein kleiner Squid-Proxy als einziger Ausgang, mit einer eigenen Liste erlaubter Adressen pro Container. Das funktioniert, war aber auch der aufwendigste Teil des ganzen Beitrags.
+
+Für den Flow habe ich das vereinfacht. Weil CrewAI-Agenten keine Shell haben, sondern nur die Werkzeuge, die ich ihnen gebe, ist die Trennung pro Agent nicht mehr so wichtig wie bei den Plattformen: Der Matcher hat schlicht kein Werkzeug für Gmail. Der Flow läuft deshalb in einem einzigen Container, der jeden Morgen um sieben Uhr aufwacht. Den Proxy habe ich als zweite Absicherung behalten, damit der Container nur die Adressen erreicht, die der Schwarm wirklich braucht. Ein `docker compose up -d` startet das Ganze, egal ob auf meinem Mac oder auf einem Server.
 
 ## Deployen und damit arbeiten
 
-Ein Schwarm, der nur auf meinem Laptop läuft, ist natürlich nur die halbe Miete. Mein Mac ist um sieben Uhr morgens nicht immer wach :) Deployt habe ich den Stack noch nicht, aber er ist genau dafür gebaut, und so würde ich es machen.
+Ein Schwarm, der nur auf meinem Laptop läuft, ist natürlich nur die halbe Miete. Mein Mac ist um sieben Uhr morgens nicht immer wach :) Deployt habe ich den Flow noch nicht, aber so würde ich es machen.
 
-**Wo er läuft.** Weil das Modell bei OpenRouter läuft, braucht der Server selbst kaum Leistung. Ein kleiner virtueller Server mit zwei Kernen und 4 GB Speicher reicht, das Image ist 1,5 GB gross. Dort kommen das Repo, die `.env` mit den Zugangsdaten und mein Profil hin, dann verteilt `secrets.sh` die Zugangsdaten auf die drei Container, und `docker compose up -d --build` startet alles. Ab dann wacht jeder Container zu seiner Uhrzeit selbst auf. Ein Update ist ein `git pull` und noch einmal dasselbe `docker compose up`. Wer ganz ohne fremde Modelle auskommen will, stellt einen Server mit Grafikkarte daneben, lässt dort das Modell laufen und ändert im Stack eine einzige Variable, nämlich `MODELL`.
+**Wo er läuft.** Weil das Modell bei OpenRouter läuft, braucht der Server kaum Leistung. Ein kleiner virtueller Server mit zwei Kernen und 4 GB Speicher reicht. Dort kommen das Repo, die Zugangsdaten und mein Profil hin, und ein `docker compose up -d` startet den Flow. Ein Update ist ein `git pull` und noch einmal dasselbe. Wer ganz ohne fremde Modelle auskommen will, stellt einen Server mit Grafikkarte daneben und ändert eine einzige Variable, nämlich `MODELL`.
 
-**Worauf ich achten würde.** Das Gedächtnis ist ein Docker-Volume, und das würde ich jede Nacht sichern, sonst ist mit dem Server auch die ganze Bewerbungsgeschichte weg. Bei den Plattformen hat das jemand anderes gemacht. Und im Moment schreibt ein Container einen fehlgeschlagenen Lauf nur ins Log. Für den echten Betrieb würde ich die Push-Nachricht auch für Fehler nutzen, damit ich nicht erst nach drei Tagen merke, dass etwas klemmt.
+**Worauf ich achten würde.** Das Gedächtnis liegt in einem Docker-Volume, und das würde ich jede Nacht sichern, sonst ist mit dem Server auch die ganze Bewerbungsgeschichte weg. Bei den Plattformen hat das jemand anderes gemacht. Und ein fehlgeschlagener Lauf landet im Moment nur im Log. Für den echten Betrieb würde ich die Push-Nachricht auch für Fehler nutzen.
 
-**Wie ich damit arbeite.** Im Alltag merke ich vom Stack fast nichts, und genau so soll es sein. Um halb neun kommt die Push-Nachricht aufs Handy, entweder mit den neuen Anschreiben oder mit einem kurzen „keine passt“ samt den Hauptgründen. Ein Tippen öffnet das Google Doc mit dem fertigen Anschreiben, die Übersicht hat einen Eintrag pro Stelle mit Score, Lohn, Risiken und Bewerbungslink, und dort setze ich den Status auf „beworben“ oder „nicht interessant“. Will ich wissen, warum eine Stelle verworfen wurde, liegt im Gedächtnis zu jeder Stelle ein Ordner mit allen Zwischenschritten und pro Tag ein Protokoll des Leads. Und wenn ich nicht bis morgen warten will, startet `docker compose run --rm schwarm python -m bewerbungs_crew.lauf schwarm` einen Lauf sofort. Was noch fehlt, ist der umgekehrte Weg: dem Schwarm einfach einen Link zu einer Stelle schicken, die ich selbst gefunden habe. Das steht ziemlich weit oben auf meiner Liste.
+**Wie ich damit arbeite.** Im Alltag merke ich vom Flow fast nichts, und genau so soll es sein. Nach dem Lauf kommt die Push-Nachricht aufs Handy, entweder mit den neuen Anschreiben oder mit einem kurzen „keine passt“ samt den Hauptgründen. Ein Tippen öffnet das Google Doc mit dem fertigen Anschreiben, die Übersicht hat einen Eintrag pro Stelle mit Score, Lohn, Risiken und Bewerbungslink, und dort setze ich den Status auf „beworben“ oder „nicht interessant“. Will ich wissen, warum eine Stelle verworfen wurde, liegt zu jeder Stelle ein Ordner mit allen Zwischenschritten im Gedächtnis, und pro Tag ein Protokoll. Was noch fehlt, ist der umgekehrte Weg: dem Schwarm einfach einen Link zu einer Stelle schicken, die ich selbst gefunden habe. Das steht ziemlich weit oben auf meiner Liste.
 
 ## Vier Wege zum selben Schwarm
 
-Jetzt habe ich denselben Schwarm viermal gebaut, und damit kann ich endlich die Frage beantworten, die mich seit dem ersten Teil beschäftigt: Was ist eigentlich der beste Weg? Die ehrliche Antwort ist, wie so oft: Es kommt darauf an, worauf du Wert legst. Schauen wir uns drei Dinge an, nämlich Kosten, wie einfach der Aufbau ist und wie viel Arbeit der Betrieb macht.
-
-**Die Kosten** sind schnell erzählt:
+Jetzt habe ich denselben Schwarm viermal gebaut, und damit kann ich endlich die Frage beantworten, die mich seit dem ersten Teil beschäftigt: Was ist eigentlich der beste Weg? Die ehrliche Antwort ist, wie so oft: Es kommt darauf an, worauf du Wert legst.
 
 | | Dauer | Kosten pro Lauf mit Anschreiben | Anschreiben |
 | --- | --- | --- | --- |
 | Claude Managed Agents | 6 min 23 s | 1,77 $ | 1 |
 | OpenAI Agents API | 3 min 8 s | 1,07 $ | 1 |
 | Gemini Managed Agents | 33 min 53 s | 1,94 $ | 2 |
-| CrewAI mit DeepSeek V4.1 Flash | 6 bis 10 min | rund 0,10 $ | 1 bis 3 |
-| CrewAI als Flow mit DeepSeek (dazu unten mehr) | 2 bis 3 min | rund 0,03 $ | 1 |
+| CrewAI Flow mit DeepSeek V4.1 Flash | 2 bis 3 min | rund 0,03 $ | 1 |
 
-CrewAI kostet rund ein Zehntel bis ein Zwanzigstel, bei ähnlicher Laufzeit wie Claude. Das hat mich ehrlich überrascht. Pro Monat wären das für meinen Radar weniger als fünf Franken statt der rund 25 Dollar beim Claude-Schwarm. Dazu kommt bei CrewAI allerdings der Server, ein kleiner kostet ein paar Franken im Monat.
+**Die Kosten** sind schnell erzählt: Der Flow kostet rund ein Fünfzigstel von Claude. Pro Monat wären das für meinen Radar ein bis zwei Franken statt der rund 25 Dollar beim Claude-Schwarm. Dazu kommt allerdings der Server, ein kleiner kostet ein paar Franken im Monat. Fair ist der Vergleich nicht ganz, denn die Plattformen arbeiten mit einem Lead und der Flow nicht, aber genau das ist ja die Design-Entscheidung von oben.
 
-**Wie einfach ist der Aufbau?** Hier gewinnt Claude klar. Jeder Agent ist eine Markdown-Datei, die Spezialisten sind vordefiniert, jede Rolle bekommt ihr eigenes Modell, und Tresor, Gedächtnis und Zeitplan sind kleine Konfigurationsdateien. Selbst bauen musste ich nur einen Skill zum Laden der Anzeigen. OpenAI kommt knapp dahinter, meine Skills liefen sogar unverändert, aber die Subagenten erben das Modell des Leads, und die Rollen musste ich als Dateien ablegen. Bei Gemini habe ich mir die Spezialisten mangels Subagenten selbst gebaut. Und bei CrewAI waren die Agenten selbst zwar schnell geschrieben, aber alles um sie herum, also Sandbox, Netz, Tresor, Gedächtnis, Zeitplan und sogar die Kostenmessung, ist mein eigener Code. Dazu kamen die Überraschungen mit Delegation und Kontextfenster.
+**Wie einfach ist der Aufbau?** Hier gewinnt Claude klar. Jeder Agent ist eine Markdown-Datei, die Spezialisten sind vordefiniert, jede Rolle bekommt ihr eigenes Modell, und Tresor, Gedächtnis und Zeitplan sind kleine Konfigurationsdateien. OpenAI kommt knapp dahinter, aber die Subagenten erben das Modell des Leads. Bei Gemini habe ich mir die Spezialisten mangels Subagenten selbst gebaut. Und bei CrewAI schreibe ich alles in Python, inklusive Zeitplan und Kostenmessung. Mit dem Flow ist das aber erstaunlich übersichtlich geworden, viel übersichtlicher als mein erster Versuch mit dem Lead.
 
-**Wie viel Arbeit macht der Betrieb?** Bei den drei Plattformen kümmert sich der Anbieter um Server, Updates und Ausfälle. Bei Claude kommt ein Budget pro Zeitplan dazu, und das Gedächtnis bleibt, bis ich es lösche. OpenAI hat kein Budget pro Sitzung. Gemini löscht eine Umgebung mitsamt Gedächtnis, wenn sie sieben Tage nicht benutzt wird, und lässt geplante Läufe höchstens zehn Minuten laufen. Bei CrewAI bin ich selbst der Betreiber: Server, Docker, Backups, Updates von CrewAI und eben auch eine volle Festplatte. Dafür kann ich das Modell mit einer einzigen Variable wechseln, auch auf eigene Hardware, und bin an keinen Anbieter gebunden.
+**Wie viel Arbeit macht der Betrieb?** Bei den drei Plattformen kümmert sich der Anbieter um Server, Updates und Ausfälle, mit ihren Eigenheiten: Claude hat ein Budget pro Zeitplan, OpenAI keines, und Gemini löscht eine Umgebung mitsamt Gedächtnis, wenn sie sieben Tage nicht benutzt wird. Bei CrewAI bin ich selbst der Betreiber: Server, Docker, Backups, Updates und auch einmal eine volle Festplatte. Dafür kann ich das Modell mit einer einzigen Variable wechseln und bin an keinen Anbieter gebunden.
 
-| | Claude | OpenAI | Gemini | CrewAI |
+| | Claude | OpenAI | Gemini | CrewAI Flow |
 | --- | --- | --- | --- | --- |
 | Kosten | ★☆☆ | ★★☆ | ★☆☆ | ★★★ |
-| Einfacher Aufbau | ★★★ | ★★☆ | ★☆☆ | ★☆☆ |
+| Einfacher Aufbau | ★★★ | ★★☆ | ★☆☆ | ★★☆ |
 | Einfacher Betrieb | ★★★ | ★★☆ | ★☆☆ | ★★☆ |
 | Unabhängigkeit | ★☆☆ | ★☆☆ | ★☆☆ | ★★★ |
 
-Die Sterne sind meine Erfahrung mit genau diesem Schwarm, keine allgemeine Bewertung der Produkte. CrewAI bekommt beim Betrieb trotzdem zwei Sterne: Ein Docker-Stack mit vier Containern ist kein Hexenwerk, und ich verstehe jede Zeile davon. Bei Gemini habe ich mehr Zeit mit Eigenheiten der Preview verbracht als hier mit Docker.
+Die Sterne sind meine Erfahrung mit genau diesem Schwarm, keine allgemeine Bewertung der Produkte. Mit dem ersten Versuch hätte CrewAI beim Aufbau nur einen Stern bekommen, der Flow hat sich den zweiten verdient.
 
 ## Wo es weh tat
 
-**CrewAI kannte das Kontextfenster nicht.** Der erste richtige Lauf mit Qwen kam einfach nicht vom Fleck. Im Log stand dann: „Context summarization triggered“, bei gerade mal 14'000 Tokens. CrewAI kennt das Kontextfenster von Qwen 3.8 nicht und hat mit 6963 Tokens gerechnet, obwohl das Modell eine Million kann. Also hat es den Verlauf des Leads alle paar Schritte zusammengefasst und meine Profil-Dateien in Zwischenablagen ausgelagert. Für Modelle über OpenRouter gibt es dafür keinen Schalter, ich musste die Methode am Objekt selbst überschreiben. Ein Klassiker bei Open Source: Es funktioniert alles, sobald man weiss, wo man drehen muss.
+**CrewAI kannte das Kontextfenster nicht.** Mein erster Lauf mit Qwen kam einfach nicht vom Fleck. Im Log stand dann: „Context summarization triggered“, bei gerade mal 14'000 Tokens. CrewAI kennt das Kontextfenster von Qwen 3.8 nicht und hat mit 6963 Tokens gerechnet, obwohl das Modell eine Million kann. Also hat es den Verlauf alle paar Schritte zusammengefasst und meine Profil-Dateien ausgelagert. Für Modelle über OpenRouter gibt es dafür keinen Schalter, ich musste die Methode am Objekt selbst überschreiben. Ein Klassiker bei Open Source: Es funktioniert alles, sobald man weiss, wo man drehen muss.
 
-**Qwen denkt gern sehr lange nach.** Ein Tipp aus der Community hat mir viel Zeit gespart: Qwen 3.8 neigt zum Überdenken, und mit einem Denkbudget von 8192 Tokens pro Anfrage wird es deutlich zügiger, ohne merklich schlechter zu werden. Bei llama.cpp heisst das `--reasoning-budget`, bei OpenRouter `reasoning.max_tokens`. Im Stack steckt es in der Variable `DENKBUDGET`.
+**Qwen denkt gern sehr lange nach.** Ein Tipp aus der Community hat mir viel Zeit gespart: Mit einem Denkbudget von 8192 Tokens pro Anfrage wird Qwen 3.8 deutlich zügiger, ohne merklich schlechter zu werden. Bei llama.cpp heisst das `--reasoning-budget`, bei OpenRouter `reasoning.max_tokens`.
 
-**Mein eigener Fehler.** Einmal hat der Lead fünfmal hintereinander den Inhalt der Inbox abgefragt, bis CrewAI ihn wegen fehlenden Fortschritts gestoppt hat. Schuld war nicht das Modell, sondern ich: Mein Werkzeug zum Auflisten ist an einem relativen Pfad gescheitert und hat jedes Mal dieselbe Fehlermeldung geliefert. Die gute Nachricht: CrewAI bemerkt solche Schleifen und bricht sie ab, bevor sie teuer werden.
+**CrewAI hat mich vor mir selbst gerettet.** Zweimal: Im ersten Versuch hat CrewAI einen Agenten gestoppt, der fünfmal hintereinander dasselbe Werkzeug mit denselben Argumenten aufgerufen hat (schuld war ein Fehler in meinem Werkzeug, nicht das Modell). Und beim Flow hat es meinen ersten Entwurf gar nicht erst gestartet, weil ein Schritt auf sein eigenes Ende gehört hätte, eine Endlosschleife.
 
-**Der Mac hatte keinen Platz mehr.** Auch das gehört zur Wahrheit beim Selberbetreiben. Mitten im Bauen hing Docker komplett, weil meine Festplatte am Morgen voll gelaufen war und die virtuelle Platte von Docker dabei Schreibfehler abbekommen hat. Bei den Plattformen wäre das das Problem von jemand anderem gewesen. Hier hiess es: aufräumen, Docker neu starten und beim nächsten Mal etwas besser auf den Speicher achten.
-
-## Bürsten wir CrewAI gegen den Strich?
-
-Beim Schreiben dieses Beitrags hat mich eine Frage nicht mehr losgelassen: Wieso musste ich so viel um CrewAI herumbauen? Schreibwerkzeuge pro Rolle, ein eigenes Werkzeug statt der Delegation, Prüfsummen, eine Abschlussprüfung. Also habe ich nachgelesen, wie CrewAI selbst gedacht ist, und die Doku ist da erstaunlich deutlich: „For any production-ready application, start with a Flow.“
-
-Ein Flow ist das feste Gerüst einer Anwendung, in ganz normalem Python: Schritte, die aufeinander folgen, ein typisierter Zustand, Verzweigungen und parallele Äste. Crews und Agenten kommen nur dort hinein, wo es wirklich Urteilsvermögen braucht. Und genau da lag mein Fehler: Ich hatte den Claude-Schwarm eins zu eins nachgebaut, mit einem Lead, der auch die ganze Buchhaltung selbst macht, also das Tageslimit, die Status, die Prüfsummen. Genau dort ist Qwen gescheitert.
-
-Also habe ich den Schwarm noch einmal gebaut, diesmal als Flow. Mails lesen, Stellen anlegen, das Limit von 15, die Auswahl, Google Docs, Push und Protokoll sind jetzt Code. Agenten gibt es nur noch für sechs Aufgaben: Stellen aus den Mails lesen, Vorfilter, Matcher, Researcher, Writer und Skeptiker. Jeder liefert ein Objekt mit festem Schema zurück (bei CrewAI heisst das `output_pydantic`), das geprüft wird, bevor es weitergeht. Und der Writer hat Guardrails: kleine Python-Funktionen, die Anrede, Länge, Webseite und Grussformel prüfen und ihn bei einem Fehler bis zu dreimal nachbessern lassen. Den Lead gibt es nicht mehr.
-
-| CrewAI als Flow | Zeit | Kosten | Anschreiben |
-| --- | --- | --- | --- |
-| DeepSeek V4.1 Flash, zwei Läufe | 3 min 10 s + 2 min 4 s | rund 5 Rappen | 2, beide in der ersten Runde ohne Befund |
-| Qwen 3.8 27B, zwei Läufe | 3 min 41 s + 5 min 54 s | rund 23 Rappen | 1 |
-
-Zwei Läufe, weil der Flow das Tageslimit jetzt garantiert einhält: Drei Stellen kamen erst am „nächsten Tag“ dran, genau wie bei OpenAI. Mit DeepSeek ist der Flow damit der günstigste Weg in dieser ganzen Serie, und mit gut drei Minuten pro Lauf fast so schnell wie OpenAI. Und Qwen? Das Limit und die Status kann es jetzt gar nicht mehr verletzen, und jeder Brief hat garantiert eine Anrede. Am Urteilsvermögen ändert das Gerüst aber nichts: Im zweiten Lauf hat der Qwen-Skeptiker ausgerechnet die Anrede bemängelt, weil sie angeblich schon in der Vorlage stehe, und den Brief damit zweimal durchfallen lassen.
-
-Ganz ehrlich gesagt ist der Flow übrigens nicht kürzer: Beide Varianten haben etwa gleich viel Code. Der Unterschied liegt woanders. Die Prompts sind von rund 1700 auf 700 Wörter geschrumpft, und die Regeln, um die ich das Modell vorher gebeten habe, stehen jetzt als Code da, den kein Modell übergehen kann. Und weil die Agenten ohnehin keine Shell haben, läuft der Flow in einem einzigen Container, mit dem Proxy als zweiter Absicherung.
-
-Für die Serie ist das eine spannende Pointe: Der Lead, der selbst plant, also das eigentliche Thema von Teil 2, verschwindet bei CrewAI fast ganz. Was übrig bleibt, ist im Grunde ein fester Ablauf wie in Teil 1, mit Agenten an genau den Stellen, wo es Urteilsvermögen braucht. CrewAI sagt damit ziemlich klar: In Produktion soll man nicht alles den Agenten überlassen. Ich finde, da ist was dran.
+**Der Mac hatte keinen Platz mehr.** Auch das gehört zur Wahrheit beim Selberbetreiben. Mitten im Bauen hing Docker komplett, weil meine Festplatte voll gelaufen war und die virtuelle Platte von Docker dabei Schreibfehler abbekommen hat. Bei den Plattformen wäre das das Problem von jemand anderem gewesen.
 
 ## Mein Fazit
 
-Brauche ich die Plattformen also gar nicht? So einfach ist es nicht. Was ich bei CrewAI selbst bauen musste, also Sandbox, Netz pro Teil, Tresor, Gedächtnis und Zeitplan, hat mich deutlich mehr Zeit gekostet als das Schreiben der Agenten selbst. Und mit jedem Teil, den man selbst baut, wird man auch selbst dafür verantwortlich, wenn er nachts um sieben Uhr nicht läuft.
+Brauche ich die Plattformen also gar nicht? So einfach ist es nicht. Bei CrewAI bin ich für alles selbst verantwortlich, vom Server bis zum Backup, und die offenen Modelle halten sich sichtbar weniger zuverlässig an Regeln als Claude oder GPT. Qwen hat mich auch mit dem besten Gerüst nicht überzeugt.
 
-Dafür bekomme ich etwas, das mir keine der drei Plattformen gibt: Ich weiss genau, wo meine Daten liegen, ich kann das Modell jederzeit austauschen, ohne eine Zeile am Schwarm zu ändern, und der ganze Stack läuft überall, wo Docker läuft. Und das zu einem Bruchteil der Kosten. Die Schwäche liegt bei den Modellen: Die offenen Modelle halten sich sichtbar weniger zuverlässig an Regeln als Claude oder GPT. Genau deshalb finde ich den Aufbau mit Skeptiker und harter Abschlussprüfung hier noch wichtiger als bei den Plattformen. Er hat bei allen drei Modellen jeden schlechten Entwurf abgefangen.
+Dafür bekomme ich etwas, das mir keine der drei Plattformen gibt: Ich weiss genau, wo meine Daten liegen, ich kann das Modell jederzeit austauschen, und das Ganze kostet ein paar Rappen pro Tag. Die wichtigste Lektion war aber eine andere: Ein Framework will so benutzt werden, wie es gedacht ist. Solange ich CrewAI wie Claude behandelt habe, habe ich gegen das Framework gearbeitet. Mit dem Flow arbeitet es für mich. Und die Frage, ob ich einen Lead brauche, stelle ich mir ab jetzt bei jedem Agenten-System als Erstes.
 
-Ich persönlich würde für meinen Radar inzwischen ziemlich sicher den Docker-Stack nehmen, und zwar die Flow-Variante, mit DeepSeek als Modell und der Option, eines Tages auf eigene Hardware umzuziehen. Ich würde mein Geld darauf wetten, dass die offenen Modelle in einem Jahr bei der Regeltreue aufgeholt haben, und dann ist der Unterschied nur noch der Preis.
+Ich persönlich würde für meinen Radar inzwischen ziemlich sicher den Flow nehmen, mit DeepSeek als Modell und der Option, eines Tages auf eigene Hardware umzuziehen. Ich würde mein Geld darauf wetten, dass die offenen Modelle in einem Jahr bei der Regeltreue aufgeholt haben, und dann ist der Unterschied nur noch der Preis.
 
-Den Code habe ich wie bei den anderen Schwärmen in einem eigenen Repo abgelegt, mit Dockerfile, Compose-Datei, Proxy-Konfiguration und allen Prompts, aber natürlich ohne meinen Lebenslauf und ohne Zugangsdaten.
+Den Code habe ich wie bei den anderen Schwärmen in einem eigenen Repo abgelegt, mit dem Flow, dem ersten Versuch, der Docker-Konfiguration und allen Prompts, aber natürlich ohne meinen Lebenslauf und ohne Zugangsdaten.
 
 ## Warum nicht das OpenAI Agents SDK oder Google ADK?
 
@@ -193,7 +188,7 @@ Ausprobiert habe ich die beiden für diesen Beitrag nicht, das ist also eine Beg
 
 ## Was kommt als Nächstes?
 
-CrewAI ist ein Framework, in dem ich die Crew in Python zusammenbaue. Im nächsten Beitrag schaue ich mir zwei ganz andere Ansätze an: Wie weit komme ich mit **Pi** und **Hermes**, wenn ich damit ein ähnliches Schwarm-System baue? Ich bin gespannt, wie viel vom Docker-Stack aus diesem Beitrag ich dort wiederverwenden kann, und ob DeepSeek auch dort die Nase vorn hat.
+CrewAI ist ein Framework, in dem ich den Schwarm in Python zusammenbaue. Im nächsten Beitrag schaue ich mir zwei ganz andere Ansätze an: Wie weit komme ich mit **Pi** und **Hermes**, wenn ich damit ein ähnliches Schwarm-System baue? Ich bin gespannt, wie viel ich vom Flow aus diesem Beitrag dort wiederverwenden kann, und ob DeepSeek auch dort die Nase vorn hat.
 
 <!-- serie:next -->
 **Weiter in der Serie:** Ein fertiger Agent, aber offen? (Pi, Hermes) · folgt. Zum [Anfang von Teil 2](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/).
