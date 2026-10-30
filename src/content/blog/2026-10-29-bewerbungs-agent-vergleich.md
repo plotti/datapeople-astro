@@ -17,7 +17,7 @@ cover: "../../assets/blog/bewerbungs-agent-vergleich-cover.png"
 > - [Was kann ein Schwarm? (Claude Managed Agents)](/blog/2026-10-28-bewerbungs-agent-schwarm/)
 > - **Wie machen es Google und OpenAI?** ← du bist hier
 > - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
-> - Ein fertiger Agent, aber offen? (Pi, Hermes) · folgt
+> - [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->

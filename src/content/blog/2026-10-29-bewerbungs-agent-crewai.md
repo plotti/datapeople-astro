@@ -17,7 +17,7 @@ cover: "../../assets/blog/bewerbungs-agent-crewai-cover.png"
 > - [Was kann ein Schwarm? (Claude Managed Agents)](/blog/2026-10-28-bewerbungs-agent-schwarm/)
 > - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
 > - **Den Schwarm selbst programmieren? (CrewAI)** ← du bist hier
-> - Ein fertiger Agent, aber offen? (Pi, Hermes) · folgt
+> - [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->
@@ -314,7 +314,7 @@ Ausprobiert habe ich die beiden für diesen Beitrag nicht, das ist also eine Beg
 CrewAI ist ein Framework, in dem ich den Schwarm in Python zusammenbaue. Im nächsten Beitrag schaue ich mir zwei ganz andere Ansätze an: Wie weit komme ich mit **Pi** und **Hermes**, wenn ich damit ein ähnliches Schwarm-System baue? Ich bin gespannt, wie viel ich vom Flow aus diesem Beitrag dort wiederverwenden kann, und ob DeepSeek auch dort die Nase vorn hat.
 
 <!-- serie:next -->
-**Weiter in der Serie:** Ein fertiger Agent, aber offen? (Pi, Hermes) · folgt. Zum [Anfang von Teil 2](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/).
+**Weiter in der Serie:** [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/). Zum [Anfang von Teil 2](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/).
 <!-- serie:next-end -->
 
 Ich freue mich auf eure Kommentare und Anregungen!
