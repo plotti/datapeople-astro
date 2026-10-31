@@ -6,6 +6,7 @@ readTime: 28
 category: "AI Integration"
 tags: ["Agentic BI", "Evidence", "Dashboards", "LLM"]
 cover: "../../assets/blog/agentic-dashboards-hero.png"
+series: "Agenten-Dashboards"
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 28 Minuten
