@@ -1,14 +1,15 @@
 ---
 title: "Der Schwarm zieht nach Hause: Pi und Hermes mit ihren Bordmitteln"
 description: "Der Bewerbungs-Schwarm auf dem eigenen Mac: Hermes und Pi mit ihren eingebauten Subagenten, Skills und Sandboxen — und die Gegenprobe mit nur einem Agenten. Spoiler: Der Schwarm bringt hier nichts."
-pubDate: 2026-10-29
-readTime: 14
+pubDate: 2026-10-29T14:00:00+01:00
+readTime: 15
 category: "AI Integration"
 tags: ["Hermes", "Pi", "Multi-Agent", "Open Source", "DeepSeek", "Agenten", "Kosten", "Sicherheit"]
-cover: "../../assets/blog/bewerbungs-agent-pi-hermes-cover.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-pi-hermes.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-pi-hermes.png"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 15 Minuten
 
 <!-- serie:start -->
 > **Serie „Agenten 2026“** · Teil 2: Agenten, die selbst planen
@@ -18,6 +19,7 @@ cover: "../../assets/blog/bewerbungs-agent-pi-hermes-cover.png"
 > - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
 > - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
 > - **Der Schwarm zieht nach Hause? (Pi, Hermes)** ← du bist hier
+> - [Ich bau mir meinen Schwarm komplett selbst (Microsoft Agent Framework)](/blog/2026-10-30-bewerbungs-agent-microsoft/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->
@@ -43,6 +45,7 @@ So sehen die beiden im Terminal aus, beide mit derselben Frage: Welche Skills si
 ![Pi im Terminal: die Antwort mit den vier Agenten-Dateien und dem Werkzeug subagent, darunter die Statuszeile mit Modell und Kosten und der Hinweis, dass die Sandbox aktiv ist](../../assets/blog/bewerbungs-agent-pi-terminal.png)
 
 Der Unterschied ist schon beim Start sichtbar: Hermes begrüsst mich mit einem Banner voller Werkzeuge und Skills, Pi mit einer leeren Eingabezeile und einer Statuszeile mit Tokens und Kosten.
+
 
 Installiert sind beide in Minuten: Hermes über `pip` bzw. `uv` (Paket `hermes-agent`), Pi über npm (`@earendil-works/pi-coding-agent`). Beide konfiguriere ich projektlokal, damit sie nichts von meiner globalen Umgebung wissen: Bei Hermes setze ich `HERMES_HOME` auf einen eigenen Ordner, bei Pi `PI_CODING_AGENT_DIR`. Das Modell bleibt dasselbe wie in den letzten Beiträgen, DeepSeek V4.1 Flash über OpenRouter, über eine Umgebungsvariable gesetzt.
 
@@ -101,6 +104,27 @@ Der Unterschied ist grundsätzlich: Bei Pi ist die Rolle eine Datei, die ich ein
 
 Beide laufen mit echter Shell auf deinem Rechner, deshalb empfehle ich dringend eine Sandbox. Bei Hermes ist das eine Zeile, `terminal.backend: docker`. Bei Pi die mitgelieferte Sandbox-Erweiterung plus vierzig Zeilen eigene Erweiterung, weil Pis Datei-Werkzeuge sonst an der Sandbox vorbeilaufen.
 
+### Der Schwarm bei der Arbeit
+
+Und so sieht es aus, wenn ich den Schwarm starte. Beide GIFs spielen den gemessenen Schwarm-Lauf aus diesem Beitrag ab, direkt aus dem Protokoll der jeweiligen Plattform und stark beschleunigt. Jede Zeile ist ein Werkzeugaufruf, die Farbe zeigt, welcher Agent ihn macht, die Zeitstempel links sind echt. Firmennamen, Links und Webinhalte sind ausgeblendet.
+
+![Hermes im Schwarm: Der Lead liest Profil und Rollen, schreibt sich ein eigenes Python-Skript zum Anlegen der Stellen, delegiert fünf Matcher gleichzeitig, dann je drei Researcher, Writer und Skeptiker, prüft am Ende selbst nach und schreibt das Tagesprotokoll](/blog/bewerbungs-agent-hermes-schwarm.gif)
+
+Bei **Hermes** fällt auf, wie viel der Lead selbst macht: Er schreibt sich für das Anlegen der Stellen kurzerhand ein eigenes Python-Skript und verteilt dann die Arbeit in Wellen mit `delegate_task`, erst fünf Matcher gleichzeitig, dann je drei Researcher, Writer und Skeptiker. Knapp neun Minuten.
+
+![Pi im Schwarm: Der Lead stösst gleich zu Beginn an die Sandbox, legt die Stellen mit einem eigenen Skript an, startet sechs Matcher parallel, dann Researcher, Writer und Skeptiker; die Researcher bauen sich eigene kleine Shell-Skripte für die Websuche](/blog/bewerbungs-agent-pi-schwarm.gif)
+
+Bei **Pi** sieht man die Sandbox bei der Arbeit: Gleich am Anfang will der Lead in Ordner ausserhalb seines Bereichs schauen und bekommt ein rotes „blockiert“. Man sieht auch eine Macke meines Aufbaus: Ein Teil der Shell-Befehle scheitert mit `spawn E2BIG`, vermutlich weil die Verbotsliste der Sandbox mit über 800 Pfaden für manche Aufrufe schlicht zu lang wird (E2BIG heisst „Argumentliste zu lang“). Pi und seine Agenten finden dann einen anderen Weg, das kostet aber Zeit. Ein Grund mehr, warum der Pi-Schwarm mit gut 16 Minuten der langsamste Lauf war.
+
+### Wo sehe ich, was sie gemacht haben?
+
+Beide schreiben von sich aus alles mit, nur an unterschiedlichen Orten:
+
+- **Hermes** speichert jede Sitzung in einer SQLite-Datenbank (`state.db` im Hermes-Ordner), mit jeder Nachricht, jedem Werkzeugaufruf und jedem Ergebnis, und die Subagenten als eigene Sitzungen mit Verweis auf den Lead. Ansehen geht mit `hermes sessions list` und `hermes sessions browse`, exportieren mit `hermes sessions export` (JSONL oder Markdown). Dazu kommen `hermes logs` für die Logdateien, `hermes insights` für Tokens und Kosten und mit `hermes dashboard` sogar eine Weboberfläche.
+- **Pi** legt jede Sitzung als JSONL-Datei im Ordner `sessions/` seines Agenten-Verzeichnisses ab. Mit `pi -r` suchst du eine alte Sitzung aus und machst weiter, mit `pi --export sitzung.html` wird daraus eine lesbare HTML-Seite. Für meine Messläufe habe ich das Speichern abgeschaltet (`--no-session`) und stattdessen den JSON-Ereignisstrom mitgeschrieben (`--mode json`). Darin stehen auch die kompletten Verläufe der Subagenten, mit Zeitstempel.
+
+Genau aus diesen beiden Quellen sind die GIFs oben entstanden, ohne dass ich irgendetwas nachbauen musste.
+
 ## Ein Agent gegen Multi-Agent: die Zahlen
 
 Damit zur ehrlichsten Frage des ganzen Beitrags: Braucht dieser Job den Schwarm überhaupt? Statt darüber zu spekulieren, habe ich es ausprobiert. Dieselbe Inbox, dieselben Regeln, dasselbe Modell, aber pro Plattform **nur ein Agent**, ohne Subagenten.
@@ -138,9 +162,11 @@ Die Zahlen sagen aber nur die halbe Wahrheit. Spannender ist, was mit den einzel
 
 Pi als einzelner Agent ist die einzige Variante mit einer sauberen Spalte: dieselben zwei Briefe wie der Pi-Schwarm, beide früheren Bewerbungen korrekt als Hinweis, keine Abbrüche. Und das in kürzerer Zeit und für gut die Hälfte der Kosten. Davon geht mehr als die Hälfte an den Skeptiker, der Agent selbst hat für zwei Tage Arbeit nicht einmal zwei Cent verbraucht. Die Regel zu früheren Bewerbungen hält jetzt auf beiden Plattformen, weil nicht mehr ein Modell sie auslegt, sondern ein Skript sie anwendet.
 
-Hermes allein ist dagegen teurer und langsamer als sein Schwarm und liefert weniger Briefe. Der Grund steht in der Spalte „davon Skeptiker“ und im nächsten Absatz.
+Hermes allein ist dagegen teurer und langsamer als sein Schwarm und liefert weniger Briefe. Der Grund steht in der Spalte „davon Skeptiker“ und in den nächsten Absätzen.
 
-Ganz ohne Drama ging es trotzdem nicht, und natürlich war es wieder Hermes :) Die Regel „höchstens zwei Prüfrunden pro Brief“ stand zuerst nur im Prompt; Hermes hat den Skeptiker an Tag zwei siebenmal gefragt, bis der endlich keine Befunde mehr hatte. Also habe ich die Grenze ins Skript eingebaut: Ab Runde drei lehnt es ab. Hermes' Antwort darauf: `rm -f pruefung.json` — er hat die Datei mit dem Rundenzähler gelöscht und wieder bei Runde eins angefangen, sechs Prüfungen in einem Lauf. Daher der Stern beim Testbrief in der Tabelle: Nach den Regeln wäre er nicht durchgekommen. Das ist keine Bosheit, sondern genau die Initiative, für die man Hermes mag. Es zeigt nur: Eine Regel im Skript ist nur so fest wie der Ort, an dem ihr Zustand liegt. Liegt der Zähler dort, wo der Agent schreiben darf, ist es eine Empfehlung.
+Ganz ohne Drama ging es trotzdem nicht, und natürlich war es wieder Hermes :) Die Regel „höchstens zwei Prüfrunden pro Brief“ stand zuerst nur im Prompt; Hermes hat den Skeptiker an Tag zwei siebenmal gefragt. Also habe ich die Grenze ins Skript eingebaut: Ab Runde drei lehnt es ab. Hermes' Antwort darauf: `rm -f pruefung.json` — er hat die Datei mit dem Rundenzähler gelöscht und wieder bei Runde eins angefangen, sechs Prüfungen in einem Lauf. Daher der Stern beim Testbrief in der Tabelle: Nach den Regeln wäre er nicht durchgekommen.
+
+**Nachtrag vom 30. Oktober:** Ein Teil davon geht auf meine Kappe. Beim Bau der nächsten Variante habe ich gemerkt, dass DeepSeek als Skeptiker manchmal bis an die Token-Grenze nachdenkt und gar kein lesbares Urteil liefert, und mein Skript hat das trotzdem als Befund gezählt. Genau das steht in Hermes' Protokoll direkt vor dem Löschen: „zurückgesetzt (zwei nicht lesbare Antworten entfernt)“. Hermes hat also nicht einfach so lange gefragt, bis ihm das Ergebnis passte, sondern zwei kaputte Prüfungen nicht gelten lassen. Das ist nachvollziehbar, nur eben nicht seine Entscheidung. Inzwischen fragt das Skript bei einer unlesbaren Antwort selbst noch einmal nach. Die Lehre bleibt trotzdem dieselbe: Eine Regel im Skript ist nur so fest wie der Ort, an dem ihr Zustand liegt. Liegt der Zähler dort, wo der Agent schreiben darf, ist es eine Empfehlung — und wenn das Skript einen Fehler hat, repariert der Agent ihn auf seine Art.
 
 Was kauft der Schwarm also noch? In der Theorie Kontext-Isolation, Parallelität und eine unabhängige Gegenprüfung. In der Praxis bekomme ich die Gegenprüfung auch mit einem einzelnen Aufruf im Skill, die Isolation brauche ich bei fünf Stellen am Tag nicht, und die Parallelität hat Pi nicht schneller gemacht, sondern langsamer. Dafür bezahlt man doppelt: Bei Hermes trägt jeder Subagent den vollen Systemprompt mit dem ganzen Werkzeugkasten noch einmal mit, gegen 16'000 Tokens, bevor er seinen ersten Befehl sieht. Bei Pi ist jeder Subagent ein eigener Prozess, im Schwarm-Lauf waren es 378 Modellaufrufe.
 
@@ -176,6 +202,6 @@ Die ganze Serie über waren die offenen Modelle über OpenRouter der Grund, waru
 
 Mit Pi und Hermes ist der Schwarm jetzt überall gewesen, wo man ihn bauen kann: auf drei Plattformen, in einem Framework und auf dem eigenen Rechner. Eine Randnotiz für Neugierige: Wer einen fertigen Lead fürs Programmieren sucht, schaut sich FirstMate an, eine Agenten-Verteilung, die auf Pi läuft und eine Crew in eigenen Git-Worktrees steuert. Für unseren Ordner-Schwarm war es das falsche Werkzeug. Und die wichtigste Lehre der ganzen Serie passt in einen Satz: Bevor du einen Schwarm baust, probier es mit einem Agenten und guten Skills. Meistens reicht das.
 
-Zum [Anfang von Teil 2](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/).
+**Weiter in der Serie:** [Ich bau mir meinen Schwarm komplett selbst: das Microsoft Agent Framework](/blog/2026-10-30-bewerbungs-agent-microsoft/). Zum [Anfang von Teil 2](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/).
 
 Ich freue mich auf eure Kommentare und Anregungen!

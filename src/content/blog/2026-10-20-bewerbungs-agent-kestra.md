@@ -5,7 +5,8 @@ pubDate: 2026-10-20
 readTime: 8
 category: "AI Integration"
 tags: ["Kestra", "YAML", "Orchestrierung", "Agenten", "Automatisierung", "Open Source"]
-cover: "../../assets/blog/bewerbungs-agent-kestra-ks-run.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-kestra.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-kestra.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 8 Minuten

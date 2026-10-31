@@ -127,7 +127,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
               <div class="order-1 md:order-2 md:w-64 md:shrink-0 lg:w-80">
                 <div class="overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-surface)]">
                   <Image
-                    src={post.data.cover}
+                    src={post.data.thumb ?? post.data.cover}
                     alt=""
                     widths={[320, 480, 640]}
                     sizes="(min-width: 1024px) 320px, (min-width: 768px) 256px, 100vw"

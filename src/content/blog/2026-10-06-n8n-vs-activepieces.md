@@ -5,7 +5,8 @@ pubDate: 2026-10-06
 readTime: 7
 category: "AI Integration"
 tags: ["n8n", "Activepieces", "Agenten", "Automatisierung", "Open Source", "Vergleich"]
-cover: "../../assets/blog/n8n-vs-activepieces-cover.png"
+cover: "../../assets/blog/serie-cover-n8n-vs-activepieces.png"
+thumb: "../../assets/blog/serie-karte-n8n-vs-activepieces.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 7 Minuten

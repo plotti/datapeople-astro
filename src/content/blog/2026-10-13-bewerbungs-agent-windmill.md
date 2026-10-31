@@ -5,7 +5,8 @@ pubDate: 2026-10-13
 readTime: 8
 category: "AI Integration"
 tags: ["Windmill", "Python", "Agenten", "Automatisierung", "Open Source"]
-cover: "../../assets/blog/bewerbungs-agent-windmill-wm-flow.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-windmill.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-windmill.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 8 Minuten

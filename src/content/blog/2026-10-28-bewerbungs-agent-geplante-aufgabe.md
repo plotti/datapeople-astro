@@ -1,11 +1,12 @@
 ---
 title: "Braucht es überhaupt noch einen Workflow? Der Bewerbungs-Agent als geplante Aufgabe"
 description: "Derselbe Bewerbungs-Agent ohne festen Ablauf: eine geplante Aufgabe in der Claude-App, die jeden Morgen Newsletter liest, Stellen bewertet und Anschreiben in Google Docs schreibt. Was ein Prompt und ein Bewerbungskontext ersetzen, und wo die Grenzen liegen."
-pubDate: 2026-10-28
+pubDate: 2026-10-28T08:00:00+01:00
 readTime: 14
 category: "AI Integration"
 tags: ["Claude", "Geplante Aufgaben", "Agenten", "Automatisierung", "Google Drive", "Gmail"]
-cover: "../../assets/blog/bewerbungs-agent-geplante-aufgabe-radar-aufgabe.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-geplante-aufgabe.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-geplante-aufgabe.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
@@ -18,6 +19,7 @@ cover: "../../assets/blog/bewerbungs-agent-geplante-aufgabe-radar-aufgabe.png"
 > - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
 > - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
 > - [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/)
+> - [Ich bau mir meinen Schwarm komplett selbst (Microsoft Agent Framework)](/blog/2026-10-30-bewerbungs-agent-microsoft/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->

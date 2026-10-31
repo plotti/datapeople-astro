@@ -1,11 +1,12 @@
 ---
 title: "Der Schwarm zum Selberbauen: CrewAI Flows mit offenen Modellen"
 description: "Derselbe Bewerbungs-Schwarm mit CrewAI und offenen Modellen: mit eigenem Lead, als Flow mit Python als Gerüst und als Crew mit CrewAIs eingebautem Manager. Warum der Lead die wichtigste Design-Entscheidung ist, was es kostet und wie es im Vergleich zu Claude, Gemini und OpenAI abschneidet."
-pubDate: 2026-10-29
+pubDate: 2026-10-29T11:00:00+01:00
 readTime: 28
 category: "AI Integration"
 tags: ["CrewAI", "Flows", "Open Source", "DeepSeek", "Qwen", "Multi-Agent", "Agenten", "Kosten"]
-cover: "../../assets/blog/bewerbungs-agent-crewai-cover.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-crewai.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-crewai.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 28 Minuten
@@ -18,6 +19,7 @@ cover: "../../assets/blog/bewerbungs-agent-crewai-cover.png"
 > - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
 > - **Den Schwarm selbst programmieren? (CrewAI)** ← du bist hier
 > - [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/)
+> - [Ich bau mir meinen Schwarm komplett selbst (Microsoft Agent Framework)](/blog/2026-10-30-bewerbungs-agent-microsoft/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->

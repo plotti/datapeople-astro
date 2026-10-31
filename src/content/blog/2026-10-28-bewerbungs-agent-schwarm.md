@@ -1,11 +1,12 @@
 ---
 title: "Was kann ein Schwarm? Der Bewerbungs-Agent mit Claude Managed Agents"
 description: "Derselbe Bewerbungs-Agent als Schwarm in Claude Managed Agents: ein Lead, der seine Workflows selbst schreibt, Matcher, Researcher, Writer und Skeptiker. Mit gemessenen Kosten, Tokens und Laufzeiten."
-pubDate: 2026-10-28
+pubDate: 2026-10-28T12:00:00+01:00
 readTime: 14
 category: "AI Integration"
 tags: ["Claude", "Managed Agents", "Multi-Agent", "Agenten", "Automatisierung", "Kosten"]
-cover: "../../assets/blog/bewerbungs-agent-schwarm-aufbau.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-schwarm.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-schwarm.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
@@ -18,6 +19,7 @@ cover: "../../assets/blog/bewerbungs-agent-schwarm-aufbau.png"
 > - [Wie machen es Google und OpenAI?](/blog/2026-10-29-bewerbungs-agent-vergleich/)
 > - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
 > - [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/)
+> - [Ich bau mir meinen Schwarm komplett selbst (Microsoft Agent Framework)](/blog/2026-10-30-bewerbungs-agent-microsoft/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->

@@ -1,11 +1,12 @@
 ---
 title: "Derselbe Schwarm, drei Plattformen: Claude, Gemini und OpenAI im Vergleich"
 description: "Der Bewerbungs-Schwarm aus Claude Managed Agents, nachgebaut mit Gemini Managed Agents und der OpenAI Agents API: was geht, was fehlt, was es kostet und wie lange es dauert."
-pubDate: 2026-10-29
+pubDate: 2026-10-29T08:00:00+01:00
 readTime: 12
 category: "AI Integration"
 tags: ["Claude", "Gemini", "OpenAI", "Managed Agents", "Multi-Agent", "Agenten", "Kosten"]
-cover: "../../assets/blog/bewerbungs-agent-vergleich-cover.png"
+cover: "../../assets/blog/serie-cover-bewerbungs-agent-vergleich.png"
+thumb: "../../assets/blog/serie-karte-bewerbungs-agent-vergleich.png"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 12 Minuten
@@ -18,6 +19,7 @@ cover: "../../assets/blog/bewerbungs-agent-vergleich-cover.png"
 > - **Wie machen es Google und OpenAI?** ← du bist hier
 > - [Den Schwarm selbst programmieren? (CrewAI)](/blog/2026-10-29-bewerbungs-agent-crewai/)
 > - [Der Schwarm zieht nach Hause? (Pi, Hermes)](/blog/2026-10-29-bewerbungs-agent-pi-hermes/)
+> - [Ich bau mir meinen Schwarm komplett selbst (Microsoft Agent Framework)](/blog/2026-10-30-bewerbungs-agent-microsoft/)
 >
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->
