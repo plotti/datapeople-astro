@@ -59,7 +59,7 @@ import { hero } from "../data/site";
   document
     .querySelector('[data-hero-cta="consultation"]')
     ?.addEventListener("click", () => {
-      window.posthog?.capture("consultation_cta_clicked", {
+      window.umami?.track("consultation_cta_clicked", {
         cta_location: "hero",
         target_section: "contact",
       });
@@ -68,7 +68,7 @@ import { hero } from "../data/site";
   document
     .querySelector('[data-hero-cta="process"]')
     ?.addEventListener("click", () => {
-      window.posthog?.capture("process_cta_clicked", {
+      window.umami?.track("process_cta_clicked", {
         cta_location: "hero",
         target_section: "how_it_works",
       });

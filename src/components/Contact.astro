@@ -53,7 +53,7 @@ import { contact } from "../data/site";
   document
     .querySelector('[data-contact-link="primary_email"]')
     ?.addEventListener("click", () => {
-      window.posthog?.capture("consultation_cta_clicked", {
+      window.umami?.track("consultation_cta_clicked", {
         cta_location: "contact_section",
         contact_method: "email",
       });
@@ -62,7 +62,7 @@ import { contact } from "../data/site";
   document
     .querySelector('[data-contact-link="email"]')
     ?.addEventListener("click", () => {
-      window.posthog?.capture("contact_email_clicked", {
+      window.umami?.track("contact_email_clicked", {
         link_location: "contact_section",
       });
     });
@@ -70,7 +70,7 @@ import { contact } from "../data/site";
   document
     .querySelector('[data-contact-link="phone"]')
     ?.addEventListener("click", () => {
-      window.posthog?.capture("contact_phone_clicked", {
+      window.umami?.track("contact_phone_clicked", {
         link_location: "contact_section",
       });
     });

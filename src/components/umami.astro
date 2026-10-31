@@ -1,0 +1,11 @@
+---
+// Umami analytics (https://umami.is): cookieless, no consent banner needed.
+// The website ID is public (it ends up in the page source anyway), so it lives here and not in an env var:
+// the site is built on CI, where the local .env does not exist.
+// Leave UMAMI_WEBSITE_ID empty to disable tracking. Not loaded in `astro dev`.
+const UMAMI_WEBSITE_ID = "";
+const UMAMI_SCRIPT = "https://cloud.umami.is/script.js";
+const aktiv = UMAMI_WEBSITE_ID && import.meta.env.PROD;
+---
+
+{aktiv && <script is:inline defer src={UMAMI_SCRIPT} data-website-id={UMAMI_WEBSITE_ID} data-do-not-track="true"></script>}

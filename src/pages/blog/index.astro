@@ -147,7 +147,7 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
 <script is:inline>
   document.querySelectorAll("[data-blog-post-link]").forEach((link) => {
     link.addEventListener("click", () => {
-      window.posthog?.capture("blog_post_selected", {
+      window.umami?.track("blog_post_selected", {
         article_slug: link.getAttribute("data-post-slug"),
         article_category: link.getAttribute("data-post-category"),
         link_location: "blog_listing",
