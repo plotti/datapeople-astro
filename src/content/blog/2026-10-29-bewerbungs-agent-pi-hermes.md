@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["Hermes", "Pi", "Multi-Agent", "Open Source", "DeepSeek", "Agenten", "Kosten", "Sicherheit"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-pi-hermes.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-pi-hermes.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 15 Minuten

@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["Claude", "Gemini", "OpenAI", "Managed Agents", "Multi-Agent", "Agenten", "Kosten"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-vergleich.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-vergleich.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 12 Minuten

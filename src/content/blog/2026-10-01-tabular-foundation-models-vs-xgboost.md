@@ -6,6 +6,7 @@ readTime: 14
 category: "Machine Learning"
 tags: ["Machine Learning", "TabPFN", "XGBoost", "scikit-learn", "Foundation Models", "Immobilien", "Benchmark"]
 cover: "../../assets/blog/tabular-models-cover.jpg"
+series: "Foundation Models"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten

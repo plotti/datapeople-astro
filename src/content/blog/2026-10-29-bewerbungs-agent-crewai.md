@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["CrewAI", "Flows", "Open Source", "DeepSeek", "Qwen", "Multi-Agent", "Agenten", "Kosten"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-crewai.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-crewai.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 28 Minuten

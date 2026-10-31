@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["Claude", "Managed Agents", "Multi-Agent", "Agenten", "Automatisierung", "Kosten"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-schwarm.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-schwarm.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten

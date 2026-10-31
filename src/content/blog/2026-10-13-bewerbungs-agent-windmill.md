@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["Windmill", "Python", "Agenten", "Automatisierung", "Open Source"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-windmill.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-windmill.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 8 Minuten

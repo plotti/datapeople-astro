@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["DBOS", "Python", "Durable Execution", "Agenten", "Automatisierung", "Open Source"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-dbos.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-dbos.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 7 Minuten

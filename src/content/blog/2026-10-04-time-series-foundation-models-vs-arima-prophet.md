@@ -6,6 +6,7 @@ readTime: 13
 category: "Machine Learning"
 tags: ["Machine Learning", "Time Series", "Forecasting", "Chronos", "TimesFM", "Foundation Models", "Zürich", "Open Data"]
 cover: "../../assets/blog/time-series-models-cover.jpg"
+series: "Foundation Models"
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 13 Minuten

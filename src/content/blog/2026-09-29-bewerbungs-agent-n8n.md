@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["n8n", "Agenten", "Automatisierung", "OpenRouter", "Firecrawl", "ntfy", "Hetzner"]
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-n8n.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-n8n.png"
+series: "Agenten 2026"
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten

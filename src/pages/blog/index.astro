@@ -22,6 +22,7 @@ const manualPosts = [
       readTime: null as number | null,
       category: "KI Tools",
       tags: ["AI Agents", "Claude Code", "Tooling", "Hacker News"],
+      series: null as string | null,
       cover: landscapeCover,
     },
   },
@@ -30,6 +31,17 @@ const manualPosts = [
 const posts = [...manualPosts, ...collectionPosts].sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
+
+const serien = [...new Set(posts.map((p) => p.data.series).filter(Boolean))]
+  .map((name) => ({
+    name: name as string,
+    slug: (name as string).toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    count: posts.filter((p) => p.data.series === name).length,
+    latest: Math.max(
+      ...posts.filter((p) => p.data.series === name).map((p) => p.data.pubDate.getTime())
+    ),
+  }))
+  .sort((a, b) => b.latest - a.latest);
 
 const dateFormat = new Intl.DateTimeFormat("de-CH", {
   day: "numeric",
@@ -68,15 +80,42 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
 
     <!-- Post list -->
     <section class="px-6 pb-32">
-      <ul class="mx-auto max-w-5xl measure-none">
+      {
+        serien.length > 0 && (
+          <div
+            class="mx-auto mb-2 flex max-w-5xl flex-wrap items-center gap-x-8 gap-y-3"
+            role="tablist"
+            aria-label="Nach Serie filtern"
+          >
+            <button
+              type="button"
+              data-series-tab
+              data-series-slug="alle"
+              aria-pressed="true"
+              class="serie-tab"
+            >
+              Alle&nbsp;<span class="tabular-nums">({posts.length})</span>
+            </button>
+            {serien.map((s) => (
+              <button
+                type="button"
+                data-series-tab
+                data-series-slug={s.slug}
+                aria-pressed="false"
+                class="serie-tab"
+              >
+                {s.name}&nbsp;<span class="tabular-nums">({s.count})</span>
+              </button>
+            ))}
+          </div>
+        )
+      }
+      <ul class="mx-auto max-w-5xl border-b border-[var(--color-rule)] measure-none">
         {
           posts.map((post, i) => (
             <li
-              class:list={[
-                "group relative flex flex-col gap-8 border-t border-[var(--color-rule)] py-12 md:flex-row md:items-start md:gap-16 md:py-16",
-                i === posts.length - 1 &&
-                  "border-b border-[var(--color-rule)]",
-              ]}
+              data-series-item={post.data.series ? post.data.series.toLowerCase().replace(/[^a-z0-9]+/g, "-") : ""}
+              class="group relative flex flex-col gap-8 border-t border-[var(--color-rule)] py-12 md:flex-row md:items-start md:gap-16 md:py-16"
             >
               <a
                 href={post.href}
@@ -103,6 +142,11 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
                       <span aria-hidden="true">·</span>
                       <span>{post.data.readTime} min Lesezeit</span>
                     </>
+                  )}
+                  {post.data.series && (
+                    <span class="rounded-full border border-[var(--color-accent)] px-3 py-0.5 text-[12px] uppercase tracking-[0.1em] text-[var(--color-accent)]">
+                      Serie · {post.data.series}
+                    </span>
                   )}
                 </div>
 
@@ -144,7 +188,40 @@ const dateFormat = new Intl.DateTimeFormat("de-CH", {
   <Footer />
 </Layout>
 
+<style>
+  .serie-tab {
+    padding-bottom: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-ink-muted);
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .serie-tab:hover {
+    color: var(--color-ink);
+  }
+  .serie-tab[aria-pressed="true"] {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+</style>
+
 <script is:inline>
+  document.querySelectorAll("[data-series-tab]").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const slug = tab.getAttribute("data-series-slug");
+      document.querySelectorAll("[data-series-tab]").forEach((t) => {
+        t.setAttribute("aria-pressed", String(t === tab));
+      });
+      document.querySelectorAll("[data-series-item]").forEach((li) => {
+        li.hidden = slug !== "alle" && li.getAttribute("data-series-item") !== slug;
+      });
+      window.umami?.track("blog_series_tab_selected", { series_slug: slug });
+    });
+  });
+
   document.querySelectorAll("[data-blog-post-link]").forEach((link) => {
     link.addEventListener("click", () => {
       window.umami?.track("blog_post_selected", {
