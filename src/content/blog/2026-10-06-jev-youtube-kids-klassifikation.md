@@ -2,14 +2,14 @@
 title: "Jev: die KI, die keine Texte generiert – und 17'363 YouTube-Kanäle für den Kinderaccount sortiert"
 description: "Ein YouTube-Kids-Account soll her – mit genau den Kanälen, die bei uns im letzten Jahr wirklich geschaut wurden. Dafür habe ich den Wiedergabeverlauf aus Google Takeout extrahiert und alle 17'363 Kanäle mit Jev klassifiziert, dem KI-Modell von TypeSafe, das statt Texten kalibrierte Wahrscheinlichkeiten liefert. Die ganze Rechnung: $0.36."
 pubDate: 2026-10-06
-readTime: 10
+readTime: 13
 category: "Machine Learning"
 tags: ["Machine Learning", "Jev", "Klassifikation", "YouTube", "Kalibrierung", "Python", "KI"]
 cover: "../../assets/blog/jev-youtube-kids-cover.jpg"
 series: "Foundation Models"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 12 Minuten
+**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 15 Minuten
 
 ## Die Ausgangslage
 
@@ -81,29 +81,16 @@ Die API ist fast schon peinlich einfach: ein POST an die Decisions-Route von Ope
 API_URL = "https://openrouter.ai/api/alpha/decisions"
 MODEL   = "typesafe/jev-1.13"
 
-KID10_QUESTIONS = {
-    "kid_appealing": {
+KID_QUESTION = {
+    "is_kid_content": {
         "type": "noul",
         "instructions": (
-            "Would a typical 10-year-old child find this YouTube channel's "
-            "content interesting or entertaining to watch? Think like a curious "
-            "10-year-old: they love restoration videos, science experiments, "
-            "inventions and machines, animals, toys, tricks, building things. "
-            "A channel does NOT need to be made for children to be appealing."
+            "Is this YouTube channel's content made for children — "
+            "topics, tone and pacing aimed at a child audience?"
         ),
         "criteria": {
-            "true":  "A typical 10-year-old would genuinely enjoy watching this.",
-            "false": "The content requires adult interests; a 10-year-old would "
-                     "find it boring or not understand it.",
-        },
-    },
-    "kid_appropriate": {
-        "type": "noul",
-        "instructions": "Is this channel's content appropriate for a 10-year-old?",
-        "criteria": {
-            "true":  "No explicit content, graphic violence, hate speech, gambling. "
-                     "Occasional mild adult language is acceptable.",
-            "false": "Contains content parents would not want a 10-year-old to see.",
+            "true":  "The channel produces children's content.",
+            "false": "The content targets an adult or general audience.",
         },
     },
 }
@@ -112,7 +99,7 @@ def classify(channel: str) -> dict:
     body = json.dumps({
         "model": MODEL,
         "state": {"channel": channel},
-        "questions": KID10_QUESTIONS,
+        "questions": KID_QUESTION,
     }).encode()
     req = urllib.request.Request(API_URL, data=body, method="POST", headers={
         "Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}",
@@ -121,21 +108,20 @@ def classify(channel: str) -> dict:
     with urllib.request.urlopen(req, timeout=60) as resp:
         ans = json.loads(resp.read())["answers"]
     return {"channel": channel,
-            "kid_appealing":   ans["kid_appealing"]["noul"],
-            "kid_appropriate": ans["kid_appropriate"]["noul"]}
+            "p_kid": ans["is_kid_content"]["noul"]}
 ```
 
 Zwei Dinge, die mir dabei aufgefallen sind:
 
-**Der State ist banal – und genau deshalb gefällt er mir so gut.** Ich habe pro Kanal nichts weiter als den Namen reingereicht: `"state": {"channel": "Steve Mould"}`. Kein Scraping von Kanalseiten, keine Videobeschreibungen, nichts. Die eigentliche Arbeit machen die Fragen: In den `instructions` steht, wie ein Zehnjähriger so tickt, und in den `criteria`, was „true" und „false" überhaupt bedeuten soll. Dazu ein paar Beispiel-Kinderkanäle als Mini-Few-Shot („Die Sendung mit der Maus, Löwenzahn, Woozle Goozle…") – und mehr Kontext hat es wirklich nicht gebraucht.
+**Der State ist banal – und genau deshalb gefällt er mir so gut.** Ich habe pro Kanal nichts weiter als den Namen reingereicht: `"state": {"channel": "Steve Mould"}`. Kein Scraping von Kanalseiten, keine Videobeschreibungen, nichts. Die eigentliche Arbeit machen die Fragen: In den `instructions` steht, wonach überhaupt geurteilt wird, und in den `criteria`, was „true" und „false" überhaupt bedeuten soll. Dazu ein paar Beispiel-Kinderkanäle als Mini-Few-Shot („Die Sendung mit der Maus, Löwenzahn, Woozle Goozle…") – und mehr Kontext hat es wirklich nicht gebraucht.
 
-**Zwei Fragen, ein einziger Call.** Der zweite Durchgang stellt pro Kanal zwei unabhängige Fragen – „interessant für einen Zehnjährigen?" und „geeignet für einen Zehnjährigen?" – und bekommt beide Wahrscheinlichkeiten in derselben Antwort zurück. Mit einem LLM wäre das ein strukturiertes-Output-Konstrukt geworden, mit Prompt-Anleitung und gebetsmühlenartiger Hoffnung, dass der JSON-Block diesmal hält; hier ist es einfach ein zweiter Schlüssel im Fragen-Dictionary.
+**Ein Call pro Kanal.** Pro Kanal geht genau ein Request raus und kommt mit einem einzigen Urteil wieder zurück. Mit einem LLM wäre das ein strukturiertes-Output-Konstrukt geworden, mit Prompt-Anleitung und gebetsmühlenartiger Hoffnung, dass der JSON-Block diesmal hält; hier ist die Antwort schlicht ein Feld im Antwort-Objekt.
 
 Das Ergebnis sieht dann so aus – Zeile für Zeile, inklusive Gebühren-Log:
 
 ```json
-{"channel": "Woozle Goozle", "kid_appealing": 0.56, "kid_appropriate": 0.7}
-{"channel": "Unser Sandmännchen (rbb media)", "kid_appealing": 0.39, "kid_appropriate": 0.94}
+{"channel": "Woozle Goozle", "noul": 0.95}
+{"channel": "Unser Sandmännchen (rbb media)", "noul": 0.97}
 {"channel": "Veritasium", "noul": 0.02, "cost": 1.701e-05}
 ```
 
@@ -150,20 +136,16 @@ Zum Vergleich: Schon ein recht sparsamer LLM-Call läge pro Kanal um Grössenord
 Und hier zahlt sich die Kalibrierung dann richtig aus. Weil die Scores eine statistische Bedeutung haben, kann ich darauf *Regeln* bauen – und die lege ich bewusst als klare Politik fest, nicht als Bauchgefühl:
 
 ```python
-# Durchgang 1: Kindercontent ja/nein
+# Kindercontent ja/nein
 tier = "core"       if p_kid >= 0.8  else \
        "likely"     if p_kid >= 0.7  else "borderline"   # 0.5–0.69
-
-# Durchgang 2: für den Zehnjährigen
-tier = "yes"             if appeal >= 0.7 and appr >= 0.7 else \
-       "watch-together"  if appeal >= 0.7 and appr >= 0.5 else "no"
 ```
 
 `p ≥ 0.8` heisst bei einem kalibrierten Modell: In 8 von 10 Fällen mit diesem Score liegt das Modell richtig. Ist das gut genug, um einen Kanal automatisch auf den Kinderaccount zu legen? Für mich ja – bei einer Fehlalarm-Rate von 10 % schaue ich trotzdem kurz drüber, aber die Masse läuft einfach durch. Und der untere Bereich ist eigentlich das Schönste an der ganzen Geschichte: Alles unterhalb der Schwelle landet nicht im Müll, sondern auf einer **Grenzfall-Liste zur manuellen Durchsicht**. Das Modell sagt mir ehrlich, wo es unsicher ist, statt falsch selbstbewusst „Nein" zu sagen. Von einem LLM, dem man per Prompt eine Confidence-Zahl entlockt, bekommt man dagegen eine Zahl ohne jede Gewähr.
 
 ## Die Resultate
 
-Durchgang 1 über alle 17'363 Kanäle (46'413 Views mit Kanalzuordnung):
+Die Klassifikation über alle 17'363 Kanäle (46'413 Views mit Kanalzuordnung):
 
 - **170 Kern-Kinderkanäle** (p ≥ 0.80)
 - **66 weitere wahrscheinliche** (0.70–0.79)
@@ -185,9 +167,52 @@ Die Spitze der Kern-Liste liest sich wie ein deutsches Fernsehen der letzten vie
 
 Und weil du es dir vermutlich schon denkst: Nicht alles war goldrichtig. Mein Lieblingsfehlalarm steht mit **p = 0.74** in der „likely"-Liste: **MotherDuck** – die Data-Warehouse-Firma. Vermutlich wegen des Entchen-Logos. (Zugegeben: Wäre das mein Kind, würde ich es stolz ertragen.) Der umgekehrte Fall sieht so aus: Der offizielle Pokémon-Kanal liegt bei 0.70, **Der Elefant** bei 0.79 – beides hätte eindeutig als kindertauglich durchgehen sollen. Hier war das Modell zu vorsichtig; die Grenzliste lohnt die Durchsicht also in beide Richtungen. Immerhin: 225 Kanäle manuell durchgehen ist von 24 Stunden Kickarbeit auf etwa eine halbe Stunde geschrumpft.
 
-## Zweiter Durchgang: für Kinder gemacht ≠ für mein Kind interessant
+## Und wie gut ist Jev im Vergleich?
 
-Der erste Durchgang beantwortet „Ist das Kindercontent?". Die eigentlich interessante Frage ist aber eine andere: Was ist *interessant und geeignet* für meine Tochter – sie ist neun; im Prompt steht „typical 10-year-old", ich habe grosszügig aufgerundet. Denn dafür muss ein Kanal nämlich nicht für Kinder gemacht sein: Restaurationsvideos, Wissenschaftler mit Sprudelkullen, Männer, die Dinge aus LEGO bauen, die niemand braucht. Deshalb noch einmal derselbe Call, diesmal über die 571 meistgesehenen Kanäle (zusammen 44 % aller Views), mit den beiden Fragen von oben – ein Request pro Kanal, zwei Wahrscheinlichkeiten. Am Ende stehen **33 Kanäle**, die beide Hürden nehmen, von The Action Lab über Veritasium und Steve Mould bis Mark Rober (Appeal 0.94 – Spitzenwert).
+Schön und gut, wirst du jetzt vielleicht sagen – aber ist Jev auch *besser* als die Alternativen? Meine YouTube-Kanäle taugen dafür nicht, denn sie sind eine Anekdote: Es gibt keine richtige Antwort, gegen die ich messen könnte. Also habe ich die öffentlichen Benchmarks nachgebaut, die [AIMLAPI](https://aimlapi.com/blog/what-is-jev) für Jev veröffentlicht hat – in einer leichten Version, aber mit denselben Daten und derselben Stichprobe (300 Beispiele pro Aufgabe, Seed 42). Das Schöne daran: Die drei Aufgaben decken genau die drei Fragetypen von oben ab.
+
+| Aufgabe | Datensatz | Fragetyp |
+|---|---|---|
+| **Anfragen routen** | [Banking77](https://huggingface.co/datasets/PolyAI/banking77): Kundenanfragen an eine Bank, 77 Absichten | Mehrfachauswahl |
+| **Moderation** | [TweetEval offensive](https://huggingface.co/datasets/cardiffnlp/tweet_eval): Ist der Tweet beleidigend? | Ja/Nein |
+| **Antworten bewerten** | [HelpSteer2](https://huggingface.co/datasets/nvidia/HelpSteer2): Wie hilfreich ist eine KI-Antwort, 0 bis 4, von Menschen bewertet | Skaliert |
+
+Gegen Jev antreten mussten zwei Sprachmodelle ohne Training – **Mistral Small** und **Gemma 4 31B** mit offenen Gewichten, beide mit denselben Anweisungen und Optionen wie Jev – und zwei klassische Verfahren, die aus den Trainingsdaten der jeweiligen Aufgabe lernen (bis 10'000 Beispiele): **TF-IDF mit Logistischer Regression** und **Open-Source-Embeddings** (multilingual-e5-small, lokal) mit Logistischer Regression.
+
+**Erst mal: Lassen sich die veröffentlichten Zahlen bestätigen?** Weitgehend ja:
+
+| Jev-1.13 | Banking77 (Genauigkeit) | Moderation (F1) | Antworten bewerten (Spearman) |
+|---|---:|---:|---:|
+| veröffentlicht von AIMLAPI | 78.3 % | 0.70 | 0.39 |
+| mein Nachbau | 80.3 % | 0.67 | 0.33 |
+
+**Und jetzt der eigentliche Vergleich:**
+
+| Kandidat | Banking77 Genauigkeit | Moderation F1 | Bewerten Spearman | Kosten (alle 900) |
+|---|---:|---:|---:|---:|
+| **Jev-1.13** | 80 % | **0.67** | **0.33** | $0.041 |
+| Mistral Small | 71 % | 0.63 | 0.24 | $0.040 |
+| Gemma 4 31B (offene Gewichte) | 78 % | 0.55 | 0.32 | $0.064 |
+| TF-IDF + Logistische Regression | 88 % | 0.58 | 0.29 | 0 |
+| Embeddings + Logistische Regression | **92 %** | **0.67** | 0.24 | 0 |
+
+Unter den drei Modellen ohne Training ist Jev auf allen drei Aufgaben vorne – und dabei das schnellste: eine Fünftelsekunde pro Entscheidung, Mistral und Gemma brauchen das Zwei- bis Vierfache. Spannender finde ich aber drei andere Dinge:
+
+**Mit Trainingsdaten gewinnt beim Routen das klassische ML.** Sobald es gelabelte Beispiele gibt, sind TF-IDF und Embeddings bei Banking77 mit 88 und 92 % klar besser als jedes Modell ohne Training – kostenlos und lokal. Bei der Moderation zieht nur noch das Embedding-Verfahren mit Jev gleich, und beim Bewerten liegen beide sogar dahinter. Jev und Co. sind also vor allem dort stark, wo es **keine oder kaum Labels gibt** – so wie bei meinen 17'363 YouTube-Kanälen.
+
+**Die Konfidenz ist der eigentliche Unterschied.** Was passiert, wenn ich nur Antworten mit einer Sicherheit von mindestens 0.9 automatisch übernehme und den Rest von Hand anschaue?
+
+| Kandidat | Banking77: automatisch durch | … davon richtig | Moderation: automatisch durch | … davon richtig |
+|---|---:|---:|---:|---:|
+| Jev-1.13 | 66 % | 92 % | 44 % | 98 % |
+| Gemma 4 31B | 83 % | 86 % | 69 % | 88 % |
+| Mistral Small | 99 % | 72 % | 100 % | 81 % |
+
+Mistral sagt praktisch bei jeder Anfrage, es sei sich zu mindestens 90 % sicher – und liegt trotzdem bei mehr als jeder vierten daneben. Eine Schwelle auf dieser Zahl ist wertlos, genau das meinte ich weiter oben mit „eine Zahl ohne jede Gewähr“. Bei Jev hält die Schwelle, was sie verspricht. Gemessen als Kalibrierungsfehler (ECE, kleiner ist besser) liegt Jev bei 0.08 (Banking77) und 0.06 (Moderation), Mistral bei 0.26 und 0.18.
+
+**Beim Bewerten stossen alle an ihre Grenzen.** Ob eine KI-Antwort eine 3 oder eine 4 verdient, ist offenbar schwer zu treffen: Kein Kandidat kommt über eine Korrelation von 0.33 mit dem menschlichen Urteil, und auch Jevs Kalibrierung bricht hier ein (ECE 0.32 – das hatte AIMLAPI ebenfalls gesehen). Und eine Warnung zu einer Kennzahl, die gern zitiert wird: Wer bei HelpSteer2 *immer* „3“ antwortet, liegt bei 84 % der Antworten höchstens einen Punkt daneben – besser als jedes Modell in meinem Test. „Innerhalb eines Punktes“ sagt hier also nichts aus. Für meine Kinderkanäle heisst das alles: Die Frage „Ist das für Kinder gemacht?“ ist eine klare Ja/Nein-Frage zum Inhalt – genau die Sorte Frage, bei der Jev am besten und am ehrlichsten ist.
+
+Der ganze Nachbau hat übrigens 15 Cent gekostet.
 
 ## Wo die Grenzen liegen
 
@@ -200,7 +225,7 @@ Damit hier niemand auf die Idee kommt, es hätte ein Wunderwerk laufen:
 
 ## Fazit
 
-Der Kinderaccount steht jetzt: die Kern-Kinderkanäle für den kleineren Sprössling, 33 weitere für meine Neunjährige – alles abgeleitet aus einem Jahr echtem Schauverhalten statt aus Bauchgefühl und Algorithmus-Verdacht. Und wenn im nächsten Jahr der nächste Takeout ansteht: Skript nochmal laufen lassen, ein paar Cent Kosten, fertig.
+Der Kinderaccount steht jetzt: 170 Kern-Kinderkanäle, 66 Wahrscheinliche obendrauf, dazu die Treffer aus einer halben Stunde Grenzfall-Durchsicht – alles abgeleitet aus einem Jahr echtem Schauverhalten statt aus Bauchgefühl und Algorithmus-Verdacht. Und wenn im nächsten Jahr der nächste Takeout ansteht: Skript nochmal laufen lassen, ein paar Cent Kosten, fertig.
 
 Der eigentlich interessante Punkt ist aber der Bauplan, nicht der Kinderaccount. Ich habe in den letzten Monaten etliche Posts über Foundation Models geschrieben – grosse Modelle, die in einem Forward-Pass Erstaunliches leisten. Jev ist übrigens auch ein Foundation Model – vortrainiert und ohne Task-Training einsetzbar. Nur eben kein generatives: kein Text, kein Reasoning, nur Urteile. Dafür kalibriert, und so billig, dass Massenklassifikation keine Budgetfrage mehr ist, sondern ein Einzeiler im Skript. Log-Dateien, Support-Tickets, Produktreviews, Datenbankzeilen, Wiedergabeverläufe: Überall, wo man bislang entweder Stichproben gezogen oder die Aufgabe als „zu teuer für KI" beiseitegelegt hat, sieht die Rechnung jetzt anders aus.
 
@@ -215,3 +240,6 @@ Und damit schliesst sich der Kreis zum Namenspatron: Das Jevons'sche Paradoxon b
 - [Daniel Kahneman: *Thinking, Fast and Slow*](https://de.wikipedia.org/wiki/Thinking,_Fast_and_Slow)
 - [Jevons'sches Paradoxon](https://de.wikipedia.org/wiki/Jevons-Paradoxon)
 - [Google Takeout](https://takeout.google.com)
+- [AIMLAPI: What Is Jev? TypeSafe's Decision Model, Tested Against LLMs](https://aimlapi.com/blog/what-is-jev)
+- [Banking77](https://huggingface.co/datasets/PolyAI/banking77), [TweetEval](https://huggingface.co/datasets/cardiffnlp/tweet_eval), [HelpSteer2](https://huggingface.co/datasets/nvidia/HelpSteer2)
+- [intfloat/multilingual-e5-small](https://huggingface.co/intfloat/multilingual-e5-small)
