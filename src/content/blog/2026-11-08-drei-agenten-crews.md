@@ -104,6 +104,8 @@ Der Nachbau selbst ist erstaunlich simpel. Ein **Router** spricht mit mir und ve
 
 Das Ganze sind bei mir rund 50 Zeilen Router-Vertrag und ein Fünfzeilen-Skript für den Watchdog. Mehr nicht. Claude Code lief dabei auf DeepSeek, über den Anthropic-kompatiblen Endpunkt von OpenRouter: eine Zeile `ANTHROPIC_BASE_URL`, und Claude Code merkt gar nicht, dass da kein Claude antwortet.
 
+Und weil das so wenig ist, liegt es zum Nachbauen auf GitHub: **Router-Vertrag, Ticket-Vorlagen, Watchdog und die sechs Tickets dieses Laufs** stecken als Claude-Code-Plugin in [github.com/plotti/agent-crew](https://github.com/plotti/agent-crew) – MIT-Lizenz, zwei Befehle zum Installieren.
+
 Und so sah der Bauplan aus, wie der Router ihn in `board.md` geführt hat:
 
 | Ticket | hängt ab von | Ergebnis |
@@ -212,6 +214,8 @@ Drei Systeme, dieselbe Aufgabe, und am Ende drei Apps, die alle funktionieren. S
 6. **Ein Lauf pro Kandidat ist kein Beweis.** Bei Agenten kann ein zweiter Lauf durchaus anders ausgehen. Beim Super-Agenten weiss ich es sogar sicher: Der zweite Lauf hätte anders ausgesehen, weil der erste abgeschrieben hat.
 
 Ich würde mein Geld darauf wetten, dass solche Muster bald fest in den Harnessen stecken und man keine Router-Verträge mehr selbst schreibt. Bis dahin gilt für mich: Für den schnellen Wurf den eigenen Router, für das Projekt, das länger leben soll, lieber zweimal prüfen lassen – und für alles, was unbeaufsichtigt läuft, erst die Sandbox und dann den Agenten.
+
+Und weil der Vertrag am Ende das Einzige war, das ich wirklich selbst gebaut habe, habe ich ihn aufgeschrieben und veröffentlicht: [github.com/plotti/agent-crew](https://github.com/plotti/agent-crew). Darin steckt der Router-Vertrag, die Ticket-Vorlagen, der Watchdog und ein Wächter, der den Router blockiert, wenn er doch selbst Code schreiben will – den gab es bei diesem Lauf noch nicht, genau wegen der Geschichte mit den abgeschriebenen Daten. Wer will, installiert es sich mit zwei Befehlen und lässt die eigene Crew auf eine eigene Aufgabe los.
 
 Und das passt zusammen: Am billigsten war am Ende das Gespann aus DeepSeeks eigenem Modell und DeepSeeks eigenem Harness. Das dürfte kein Zufall sein. Wer beides baut, holt die Effizienzgewinne am leichtesten – Cache-Verhalten, Prompt-Aufbau und Werkzeugschleife sind aufeinander abgestimmt, und genau dort entstehen die Kostenunterschiede, die ich hier gemessen habe.
 
