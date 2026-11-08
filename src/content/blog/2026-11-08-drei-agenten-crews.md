@@ -6,9 +6,19 @@ readTime: 16
 category: "AI Integration"
 tags: ["DeepSeek", "Super-Agent", "FirstMate", "Multi-Agent", "Claude Code", "Pi", "Agenten", "Coding Agents", "Benchmark"]
 cover: "../../assets/blog/freizeitkarte-cover.jpg"
+series: "Agenten 2026"
 ---
 
 **Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten
+
+<!-- serie:start -->
+> **Serie „Agenten 2026“** · Teil 3: Crews – wer verteilt die Arbeit?
+>
+> - **Drei Agenten-Crews, eine Aufgabe? (FirstMate, DeepSeeks Super-Agent, mein Nachbau)** ← du bist hier
+>
+> Teil 2, Agenten, die selbst planen: [von der geplanten Aufgabe](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/) bis [Microsoft Agent Framework](/blog/2026-10-30-bewerbungs-agent-microsoft/)
+> Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
+<!-- serie:end -->
 
 Wer schon mal mit drei Claude-Code-Fenstern gleichzeitig gearbeitet hat, kennt das: Nach einer Stunde weiss man nicht mehr, welches Fenster gerade was macht, welcher Test rot war und wo man die Migration angefangen hat. Man ist dann im Grunde kein Entwickler mehr, sondern Tab-Jongleur. :)
 
