@@ -54,6 +54,8 @@ Und so sah das Ergebnis nach gut drei Stunden aus: **3 Stunden 15 Minuten** und 
 
 ![FirstMate in Aktion: Karte mit geclusterten Markern, hineinzoomen, einen Ort anklicken, Detailansicht, zurück und in die Liste wechseln](../../assets/blog/freizeitkarte-firstmate.gif)
 
+**Selbst ausprobieren: [freizeitkarte-firstmate.fly.dev](https://freizeitkarte-firstmate.fly.dev/)** – Karte mit Clustern, Liste, Filter und Detailseite, für alle 19'501 Orte.
+
 ## Kandidat 2: DeepSeeks Super-Agent
 
 Kommen wir zum zweiten Kandidaten, und das ist der neueste von allen. DeepSeek hat intern einen **Super-Agenten** gebaut, der eine Aufgabe nicht selbst erledigt, sondern zerlegt: Ein Router nimmt den Auftrag entgegen, schreibt Tickets, und für jedes Ticket startet ein Arbeiter. Das Interessante daran ist weniger das Muster – das kennen wir inzwischen von überall –, sondern dass hier der **Modellanbieter selbst** zeigt, wie er seine Coding-Agenten orchestriert.
@@ -79,6 +81,8 @@ Und jetzt kommt die Zahl, bei der ich zweimal hingeschaut habe: Der ganze Lauf h
 Und die App ist gut geworden: Karte mit Clustern, Liste mit Nachladen, Filter, Detailseiten, alles mit eigener URL. Getestet habe ich sie heute noch einmal – **12 Datentests und 20 Browsertests, alle grün**. Was mich freut, weil F6 „Qualität“ nie als eigenes Issue dran war: Der Router hat die Tests trotzdem mitgeliefert.
 
 ![DeepSeeks Super-Agent in Aktion: Karte mit Clustern, hineinzoomen, einen Ort anklicken, Detailansicht, zurück und in die Liste wechseln](../../assets/blog/freizeitkarte-prototyp.gif)
+
+**Selbst ausprobieren: [freizeitkarte-superagent.fly.dev](https://freizeitkarte-superagent.fly.dev/)** – dieselben 19'501 Orte, MapLibre-Karte, Liste mit Nachladen, Filter und Detailseiten mit eigener URL.
 
 Eine Sache muss ich hier aber geradeheraus sagen: Die Daten von FirstMate und dem Super-Agenten sind Ort für Ort identisch – 19'501 Orte, dieselbe Kategorie, kein einziger Unterschied. Der F1-Arbeiter, ausgerechnet der teuerste Teil des Projekts, hat in `~/code` nach Verwandten gesucht, FirstMate gefunden und `categories.py` (401 Zeilen), `cantons.py` (123) und `test_prepare_data.py` (281) **zeichengleich** übernommen, die erzeugte `index.json` sogar elementweise identisch – dabei hatte er im Denkprotokoll noch geschrieben, er wolle „not copy wholesale“, sondern das Projekt nur „for context/ideas, especially canton mapping“ ansehen. F2 bis F5 sind sauber und die Zeiten und Kosten echt, aber verhindern konnte ich die Kopie nicht – jede Sitzung läuft dort hart auf `danger-full-access`, und die Sandbox des Harness regelt nur das Schreiben –, und das ist streng genommen kein Agentenproblem, sondern eines der Rechteverwaltung.
 
@@ -113,6 +117,8 @@ Und jetzt kommt der Teil, der mich nachdenklich macht. Ich habe das Zwanzig-Doll
 
 ![Der Nachbau in Aktion: Seitenleiste mit Filtern, Karte mit Clustern, Detailansicht und Liste](../../assets/blog/freizeitkarte-nachbau.gif)
 
+**Selbst ausprobieren: [freizeitkarte-nachbau.fly.dev](https://freizeitkarte-nachbau.fly.dev/)** – 17'776 Orte, Seitenleiste mit Filtern, Karte, Detailseite und Liste.
+
 ## Jetzt alle drei nebeneinander
 
 | | FirstMate | Super-Agent (DeepSeek) | Nachbau (Claude Code) |
@@ -128,7 +134,7 @@ Und jetzt kommt der Teil, der mich nachdenklich macht. Ich habe das Zwanzig-Doll
 | Karte bedienbar | 0,4 s | 0,8–0,9 s | 0,6–0,9 s |
 | 390 px ohne seitliches Scrollen | ja | ja | ja |
 
-Alle drei laufen jetzt öffentlich, du kannst sie also selbst anklicken: [FirstMate](https://freizeitkarte-firstmate.fly.dev/) mit 19'501 Orten, [DeepSeeks Super-Agent](https://freizeitkarte-superagent.fly.dev/) mit denselben 19'501 Orten und [mein Nachbau](https://freizeitkarte-nachbau.fly.dev/) mit 17'776. Beim ersten Aufruf dauert es zwei, drei Sekunden, bis die Cluster da sind, und zwischen den Besuchen schlafen die Maschinen ein – sonst würde das Hosting Geld kosten, und das soll es nicht.
+Alle drei laufen öffentlich und du kannst sie direkt vergleichen – [FirstMate](https://freizeitkarte-firstmate.fly.dev/), [DeepSeeks Super-Agent](https://freizeitkarte-superagent.fly.dev/) und [mein Nachbau](https://freizeitkarte-nachbau.fly.dev/). Beim ersten Aufruf dauert es zwei, drei Sekunden, bis die Cluster da sind, und zwischen den Besuchen schlafen die Maschinen ein – sonst würde das Hosting Geld kosten, und das soll es nicht.
 
 Die letzten Zeilen habe ich heute alle mit **demselben Skript** gemessen, auf demselben Rechner, im Produktions-Build. Die Bedienbarkeit ist die Zeit vom Aufruf bis die Karte etwas zeigt. Alle drei liegen meilenweit unter den drei Sekunden, die die Aufgabe verlangt, und keiner hat das mobile Layout verbockt. DeepSeeks Super-Agent ist der schwerste Kandidat – MapLibre mit 19'501 geclusterten Punkten braucht etwas länger als Leaflet, und beim Zoomen merkt man die Datenmenge. Aber alles im Bereich von unter einer Sekunde, da würde ich nichts dramatisieren.
 
