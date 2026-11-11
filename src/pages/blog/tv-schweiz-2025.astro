@@ -1,0 +1,1084 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout
+  title="Die Altersschere vor dem Fernseher – Datapeople"
+  description="Eine Scroll-Story zu den Mediapulse-TV-Daten 2025: Wie sich das Schweizer Fernsehen seit 1985 verändert, wann geschaut wird, wer schaut und welche Sender den Bildschirm teilen. Mit einem 3D-Film zur Altersschere."
+>
+  <Navigation />
+  <main id="main-content" class="px-6 py-20 md:py-24">
+    <article class="mx-auto max-w-6xl">
+      <a href="/blog/" class="mb-12 inline-flex items-center font-sans text-sm text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"><span aria-hidden="true" class="mr-2">←</span> Zurück zur Schreibwerkstatt</a>
+      <div class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)]">
+        <span class="text-[var(--color-accent)]">Datenstory</span>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-11-11">11. November 2026</time>
+        <span aria-hidden="true">·</span>
+        <span>8 min Lesezeit</span>
+      </div>
+      <h1 class="mb-10 max-w-[22ch] font-serif leading-[1.08] text-[var(--color-ink)]" style="font-size: var(--text-display-lg);">Die Altersschere vor dem Fernseher</h1>
+      <p class="tv-lede-num mb-6 max-w-[60ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl">2025 lief der Fernseher in der Deutschschweiz im Schnitt <b data-draw="num" data-source="tv_minuten_trend" data-field="minuten" data-where="jahr=2025&amp;region=Deutschschweiz">—</b> Minuten pro Person und Tag – <b data-draw="num" data-source="trend_kennzahlen" data-field="rueckgang_pct" data-row="0" data-fmt="int">—</b>&nbsp;% weniger als im Rekordjahr <b data-draw="num" data-source="trend_kennzahlen" data-field="peak_jahr" data-row="0" data-fmt="raw">—</b>. Eine Geschichte in vier Kapiteln: wie sich das Fernsehen verändert, wann geschaut wird, wer schaut und welche Sender den Bildschirm teilen.</p>
+      <p class="mb-16 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]"><strong>Stand:</strong> November 2026 · <strong>Autor:</strong> Thomas Ebermann · Daten: Mediapulse TV Data, Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024. Scrollen, die Grafik rechts wechselt mit dem Text.</p>
+
+<div class="tv" data-read lang="de-CH">
+  
+
+  <div class="tv-scrolly" data-view="trend_de">
+    <div class="tv-sticky">
+      <figure class="tv-figure" id="chart" style="margin:0">
+        <p class="tv-ctitle" data-for="trend_de">Sehdauer pro Person und Tag, 1985–2025<span class="tv-csub">Minuten · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="trend_regionen" hidden>Sehdauer pro Person und Tag nach Sprachregion<span class="tv-csub">Minuten · 1985–2025</span></p>
+        <p class="tv-ctitle" data-for="komposition" hidden>Was am TV-Gerät läuft, 2013–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="zeitversetzt" hidden>Zeitversetztes Fernsehen, 2013–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="tag_de" hidden>Wer gerade fernsieht, im Tagesverlauf<span class="tv-csub">Rating in % der Bevölkerung pro Viertelstunde · Deutschschweiz 2025</span></p>
+        <p class="tv-ctitle" data-for="tag_regionen" hidden>Tagesverlauf nach Sprachregion<span class="tv-csub">Rating in %, Montag bis Sonntag · 2025</span></p>
+        <p class="tv-ctitle" data-for="alter_de" hidden>Sehdauer nach Alter<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz 2025</span></p>
+        <p class="tv-ctitle" data-for="alter_trend" hidden>Sehdauer nach Alter, 2019–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="alter_index" hidden>Veränderung seit 2019 nach Alter<span class="tv-csub">Sehdauer, Index 2019 = 100 · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="alter_3d" hidden>Die Altersschere in 3D<span class="tv-csub">Sehdauer in Minuten pro Tag, 2019–2025 · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="alter_regionen" hidden>Sehdauer nach Alter und Sprachregion<span class="tv-csub">Minuten pro Person und Tag · 2025</span></p>
+        <p class="tv-ctitle" data-for="sender_2025" hidden>Marktanteile der Sender<span class="tv-csub">% der gesamten TV-Nutzungszeit · Deutschschweiz 2025</span></p>
+        <p class="tv-ctitle" data-for="heimsender" hidden>SRG-Sender und Schweizer Private, 1995–2025<span class="tv-csub">Marktanteil in % in der eigenen Sprachregion</span></p>
+        <div class="tv-stage" data-draw="stage" data-source="tv_minuten_trend tv_set_anteile zeitversetzt_trend tagesverlauf tag_spitze sehdauer_gruppen alter_faktor sehdauer_alter_trend alter_veraenderung marktanteile_de heimsender_anteil trend_kennzahlen zeitversetzt_kennzahlen"></div>
+      </figure>
+    </div>
+
+    <div class="tv-steps">
+      <div class="tv-chap" id="kapitel-1"><span>Kapitel 1</span><h2>Die lange Kurve</h2></div>
+
+      <article class="tv-step is-active" data-view="trend_de" id="s-trend">
+        <p>Seit 1985 wird gemessen, wie lange die Schweiz fernsieht. In der Deutschschweiz lag der Höchststand im Jahr <b data-draw="num" data-source="trend_kennzahlen" data-field="peak_jahr" data-row="0" data-fmt="raw">—</b> bei <b data-draw="num" data-source="trend_kennzahlen" data-field="peak_minuten" data-row="0">—</b> Minuten pro Person und Tag.</p>
+        <p>2025 sind es noch <b data-draw="num" data-source="tv_minuten_trend" data-field="minuten" data-where="jahr=2025&amp;region=Deutschschweiz">—</b> Minuten. Das Corona-Jahr 2020 brachte nur einen kurzen Ausschlag nach oben.</p>
+        <p class="tv-note">Ab 2013 gilt ein neues Messsystem; frühere Werte sind nur bedingt vergleichbar.</p>
+      </article>
+
+      <article class="tv-step" data-view="trend_regionen" id="s-regionen">
+        <p>Die Kurve sinkt in allen drei Sprachregionen, aber auf unterschiedlichem Niveau.</p>
+        <p>2025: Svizzera italiana <b data-draw="num" data-source="tv_minuten_trend" data-field="minuten" data-where="jahr=2025&amp;region=Svizzera%20italiana">—</b>&nbsp;Min., Suisse romande <b data-draw="num" data-source="tv_minuten_trend" data-field="minuten" data-where="jahr=2025&amp;region=Suisse%20romande">—</b>&nbsp;Min., Deutschschweiz <b data-draw="num" data-source="tv_minuten_trend" data-field="minuten" data-where="jahr=2025&amp;region=Deutschschweiz">—</b>&nbsp;Min. pro Tag.</p>
+      </article>
+
+      <article class="tv-step" data-view="komposition" id="s-komposition">
+        <p>Nicht jede Minute vor dem TV-Gerät ist Fernsehen. Playback, Games, Streaming und Signale, die keinem Sender zugeordnet werden können, machen 2025 <b data-draw="num" data-source="tv_set_anteile" data-field="nicht_sender_pct" data-where="region=Deutschschweiz&amp;jahr=2025" data-fmt="int">—</b>&nbsp;% der Nutzung aus – <b data-draw="num" data-source="tv_set_anteile" data-field="nicht_sender_minuten" data-where="region=Deutschschweiz&amp;jahr=2025">—</b> Minuten pro Tag.</p>
+        <p class="tv-note">Seit Mai 2024 läuft ein neues Messsystem: Nicht referenzierte Signale erscheinen als «nicht identifizierte Audios» statt als Playback/DVD/Games.</p>
+      </article>
+
+      <article class="tv-step" data-view="zeitversetzt" id="s-zeitversetzt">
+        <p>Wer Sender schaut, tut das immer öfter zeitversetzt – also aufgezeichnet, per Replay oder Pause.</p>
+        <p><b data-draw="num" data-source="zeitversetzt_kennzahlen" data-field="von_jahr" data-row="0" data-fmt="raw">—</b> waren es <b data-draw="num" data-source="zeitversetzt_kennzahlen" data-field="von_minuten" data-row="0">—</b> Minuten am Tag, <b data-draw="num" data-source="zeitversetzt_kennzahlen" data-field="bis_jahr" data-row="0" data-fmt="raw">—</b> bereits <b data-draw="num" data-source="zeitversetzt_kennzahlen" data-field="bis_minuten" data-row="0">—</b> Minuten: das <b data-draw="num" data-source="zeitversetzt_kennzahlen" data-field="faktor" data-row="0">—</b>-Fache.</p>
+      </article>
+
+      <div class="tv-chap" id="kapitel-2"><span>Kapitel 2</span><h2>Ein Tag vor dem Bildschirm</h2></div>
+
+      <article class="tv-step" data-view="tag_de" id="s-tag">
+        <p>Der Fernsehtag beginnt bei Mediapulse um 2 Uhr nachts. Das Rating zeigt, welcher Anteil der Bevölkerung in einer Viertelstunde im Schnitt fernsieht.</p>
+        <p>Unter der Woche liegt die Spitze um <b data-draw="num" data-source="tag_spitze" data-field="spitze_zeit" data-where="region=Deutschschweiz&amp;tage=Mo–Fr" data-fmt="raw">—</b> Uhr mit <b data-draw="num" data-source="tag_spitze" data-field="spitze_rating" data-where="region=Deutschschweiz&amp;tage=Mo–Fr">—</b>&nbsp;%. Am Wochenende um <b data-draw="num" data-source="tag_spitze" data-field="spitze_zeit" data-where="region=Deutschschweiz&amp;tage=Sa–So" data-fmt="raw">—</b> Uhr mit <b data-draw="num" data-source="tag_spitze" data-field="spitze_rating" data-where="region=Deutschschweiz&amp;tage=Sa–So">—</b>&nbsp;%.</p>
+      </article>
+
+      <article class="tv-step" data-view="tag_regionen" id="s-tag-regionen">
+        <p>Der Rhythmus ist in allen Regionen ähnlich, die Höhe nicht.</p>
+        <p>Spitzen (Mo–So): Svizzera italiana <b data-draw="num" data-source="tag_spitze" data-field="spitze_rating" data-where="region=Svizzera%20italiana&amp;tage=Mo–So">—</b>&nbsp;% um <b data-draw="num" data-source="tag_spitze" data-field="spitze_zeit" data-where="region=Svizzera%20italiana&amp;tage=Mo–So" data-fmt="raw">—</b>, Suisse romande <b data-draw="num" data-source="tag_spitze" data-field="spitze_rating" data-where="region=Suisse%20romande&amp;tage=Mo–So">—</b>&nbsp;% um <b data-draw="num" data-source="tag_spitze" data-field="spitze_zeit" data-where="region=Suisse%20romande&amp;tage=Mo–So" data-fmt="raw">—</b>, Deutschschweiz <b data-draw="num" data-source="tag_spitze" data-field="spitze_rating" data-where="region=Deutschschweiz&amp;tage=Mo–So">—</b>&nbsp;% um <b data-draw="num" data-source="tag_spitze" data-field="spitze_zeit" data-where="region=Deutschschweiz&amp;tage=Mo–So" data-fmt="raw">—</b>.</p>
+      </article>
+
+      <div class="tv-chap" id="kapitel-3"><span>Kapitel 3</span><h2>Wer schaut</h2></div>
+
+      <article class="tv-step" data-view="alter_de" id="s-alter">
+        <p>Fernsehen ist eine Frage des Alters. Personen ab 60 schauen in der Deutschschweiz <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Deutschschweiz&amp;gruppe=60+">—</b> Minuten pro Tag, 15- bis 29-Jährige <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Deutschschweiz&amp;gruppe=15–29">—</b>.</p>
+        <p>Das ist das <b data-draw="num" data-source="alter_faktor" data-field="faktor" data-where="region=Deutschschweiz">—</b>-Fache.</p>
+      </article>
+
+      <article class="tv-step" data-view="alter_trend" id="s-alter-trend">
+        <p>Und die Schere geht auf. 15- bis 29-Jährige schauen jedes Jahr weniger: <b data-draw="num" data-source="sehdauer_alter_trend" data-field="minuten" data-where="jahr=2019&amp;gruppe=15–29" data-fmt="int">—</b> Minuten pro Tag im Jahr 2019, <b data-draw="num" data-source="sehdauer_alter_trend" data-field="minuten" data-where="jahr=2025&amp;gruppe=15–29">—</b> Minuten 2025.</p>
+        <p>Personen ab 60 bleiben fast auf demselben Niveau: <b data-draw="num" data-source="sehdauer_alter_trend" data-field="minuten" data-where="jahr=2019&amp;gruppe=60+" data-fmt="int">—</b> Minuten 2019, <b data-draw="num" data-source="sehdauer_alter_trend" data-field="minuten" data-where="jahr=2025&amp;gruppe=60+">—</b> Minuten 2025.</p>
+        <p class="tv-note">2019–2024 aus den Mediapulse-Jahresberichten Deutschschweiz (auf ganze Minuten gerundet), 2025 aus der Excel-Publikation.</p>
+      </article>
+
+      <article class="tv-step" data-view="alter_index" id="s-alter-index">
+        <p>Auf 2019 = 100 gerechnet, sieht man, wo die Fernsehzeit verloren geht. Veränderung seit 2019: 15- bis 29-Jährige <b data-draw="num" data-source="alter_veraenderung" data-field="veraenderung_pct" data-where="gruppe=15–29" data-fmt="signed">—</b>&nbsp;%, 30- bis 39-Jährige <b data-draw="num" data-source="alter_veraenderung" data-field="veraenderung_pct" data-where="gruppe=30–39" data-fmt="signed">—</b>&nbsp;%, Personen ab 60 <b data-draw="num" data-source="alter_veraenderung" data-field="veraenderung_pct" data-where="gruppe=60+" data-fmt="signed">—</b>&nbsp;%.</p>
+        <p>Der Rückgang des Fernsehens ist vor allem ein Rückgang bei den Jüngeren.</p>
+      </article>
+
+      <article class="tv-step" data-view="alter_3d" id="s-alter-3d">
+        <p>Alles auf einmal, in drei Dimensionen. Jede Wand ist eine Altersgruppe, vorne die Jüngsten, hinten Personen ab 60. Von links nach rechts laufen die Jahre 2019 bis 2025, die Höhe ist die Sehdauer.</p>
+        <p>Vorne sinkt die ockerfarbene Wand der 15- bis 29-Jährigen fast auf den Boden, hinten bleibt die grüne Wand der über 60-Jährigen stehen.</p>
+        <p class="tv-note">Mit der Maus ziehen dreht die Ansicht. <a class="tv-link" href="#film">Zum animierten 3D-Film ↓</a></p>
+      </article>
+
+      <article class="tv-step" data-view="alter_regionen" id="s-alter-regionen">
+        <p>Das Muster gilt in allen Regionen. In der Svizzera italiana kommen über 60-Jährige auf <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Svizzera%20italiana&amp;gruppe=60+">—</b> Minuten, in der Suisse romande auf <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Suisse%20romande&amp;gruppe=60+">—</b>.</p>
+        <p>Frauen schauen in der Deutschschweiz <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Deutschschweiz&amp;gruppe=Frauen">—</b> Minuten, Männer <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Deutschschweiz&amp;gruppe=Männer">—</b>.</p>
+      </article>
+
+    </div>
+  </div>
+
+  <section class="tv-blogfilm" id="film">
+    <p class="tv-film-kicker">Zwischenspiel</p>
+    <h2>Die Altersschere als 3D-Film</h2>
+    <p>Dieselben Zahlen wie oben, als animierte Kamerafahrt in sechs Kapiteln. Play startet den Film, die Knöpfe springen zu einem Kapitel, und mit der Maus über den Wänden siehst du die Werte.</p>
+    <iframe src="/tv-schweiz/altersschere.html" title="Die Altersschere: 3D-Animation der Sehdauer nach Alter 2019–2025" loading="lazy"></iframe>
+  </section>
+
+  <div class="tv-scrolly" data-view="sender_2025">
+<div class="tv-sticky">
+      <figure class="tv-figure" id="chart-2" style="margin:0">
+        <p class="tv-ctitle" data-for="trend_de" hidden>Sehdauer pro Person und Tag, 1985–2025<span class="tv-csub">Minuten · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="trend_regionen" hidden>Sehdauer pro Person und Tag nach Sprachregion<span class="tv-csub">Minuten · 1985–2025</span></p>
+        <p class="tv-ctitle" data-for="komposition" hidden>Was am TV-Gerät läuft, 2013–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="zeitversetzt" hidden>Zeitversetztes Fernsehen, 2013–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="tag_de" hidden>Wer gerade fernsieht, im Tagesverlauf<span class="tv-csub">Rating in % der Bevölkerung pro Viertelstunde · Deutschschweiz 2025</span></p>
+        <p class="tv-ctitle" data-for="tag_regionen" hidden>Tagesverlauf nach Sprachregion<span class="tv-csub">Rating in %, Montag bis Sonntag · 2025</span></p>
+        <p class="tv-ctitle" data-for="alter_de" hidden>Sehdauer nach Alter<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz 2025</span></p>
+        <p class="tv-ctitle" data-for="alter_trend" hidden>Sehdauer nach Alter, 2019–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="alter_index" hidden>Veränderung seit 2019 nach Alter<span class="tv-csub">Sehdauer, Index 2019 = 100 · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="alter_3d" hidden>Die Altersschere in 3D<span class="tv-csub">Sehdauer in Minuten pro Tag, 2019–2025 · Deutschschweiz</span></p>
+        <p class="tv-ctitle" data-for="alter_regionen" hidden>Sehdauer nach Alter und Sprachregion<span class="tv-csub">Minuten pro Person und Tag · 2025</span></p>
+        <p class="tv-ctitle" data-for="sender_2025">Marktanteile der Sender<span class="tv-csub">% der gesamten TV-Nutzungszeit · Deutschschweiz 2025</span></p>
+        <p class="tv-ctitle" data-for="heimsender" hidden>SRG-Sender und Schweizer Private, 1995–2025<span class="tv-csub">Marktanteil in % in der eigenen Sprachregion</span></p>
+        <div class="tv-stage" data-draw="stage" data-source="tv_minuten_trend tv_set_anteile zeitversetzt_trend tagesverlauf tag_spitze sehdauer_gruppen alter_faktor sehdauer_alter_trend alter_veraenderung marktanteile_de heimsender_anteil trend_kennzahlen zeitversetzt_kennzahlen"></div>
+      </figure>
+    </div>
+
+        <div class="tv-steps">
+      <div class="tv-chap" id="kapitel-4"><span>Kapitel 4</span><h2>Wer den Bildschirm teilt</h2></div>
+
+      <article class="tv-step" data-view="sender_2025" id="s-sender">
+        <p>Der Marktanteil zeigt, welcher Teil der gesamten Fernsehzeit auf einen Sender fällt. SRF 1 führt mit <b data-draw="num" data-source="marktanteile_de" data-field="marktanteil_pct" data-where="jahr=2025&amp;sender=SRF%201">—</b>&nbsp;%, alle SRF-Sender zusammen kommen auf <b data-draw="num" data-source="marktanteile_de" data-field="marktanteil_pct" data-where="jahr=2025&amp;sender=SRF">—</b>&nbsp;%.</p>
+        <p>Die Schweizer Privatsender erreichen zusammen <b data-draw="num" data-source="marktanteile_de" data-field="marktanteil_pct" data-where="jahr=2025&amp;sender=Schweizer%20Private">—</b>&nbsp;%, ZDF <b data-draw="num" data-source="marktanteile_de" data-field="marktanteil_pct" data-where="jahr=2025&amp;sender=ZDF">—</b>&nbsp;% und ARD <b data-draw="num" data-source="marktanteile_de" data-field="marktanteil_pct" data-where="jahr=2025&amp;sender=ARD">—</b>&nbsp;%.</p>
+      </article>
+
+      <article class="tv-step" data-view="heimsender" id="s-heimsender">
+        <p>Über drei Jahrzehnte halten die SRG-Sender ihren Anteil in der eigenen Region: SRF <b data-draw="num" data-source="heimsender_anteil" data-field="marktanteil_pct" data-where="jahr=1995&amp;region=Deutschschweiz&amp;sender=SRF">—</b>&nbsp;% (1995) und <b data-draw="num" data-source="heimsender_anteil" data-field="marktanteil_pct" data-where="jahr=2025&amp;region=Deutschschweiz&amp;sender=SRF">—</b>&nbsp;% (2025).</p>
+        <p>Gewachsen sind die Schweizer Privaten: in der Deutschschweiz von <b data-draw="num" data-source="heimsender_anteil" data-field="marktanteil_pct" data-where="jahr=1995&amp;region=Deutschschweiz&amp;sender=Schweizer%20Private" data-fmt="d2">—</b>&nbsp;% auf <b data-draw="num" data-source="heimsender_anteil" data-field="marktanteil_pct" data-where="jahr=2025&amp;region=Deutschschweiz&amp;sender=Schweizer%20Private" data-fmt="d2">—</b>&nbsp;%.</p>
+      </article>
+    </div>
+  </div>
+
+  <footer class="tv-foot" id="hinweise">
+    <details>
+      <summary>Begriffe und Hinweise zu den Daten</summary>
+      <dl>
+        <dt>Sehdauer</dt><dd>Durchschnittliche Fernsehzeit pro Person und Tag in Minuten, alle Personen ab 3 Jahren mitgezählt (auch wer nicht schaut).</dd>
+        <dt>Rating</dt><dd>Anteil der Bevölkerung, der in einer Viertelstunde im Schnitt fernsieht.</dd>
+        <dt>Marktanteil</dt><dd>Anteil eines Senders an der gesamten TV-Nutzungszeit. «SRF» umfasst SRF 1, SRF zwei und SRF info; «Schweizer Private» alle Schweizer Privatsender zusammen.</dd>
+        <dt>Zeitversetzt</dt><dd>Nutzung von Sendungen nach der Ausstrahlung (Aufzeichnung, Replay), wie von Mediapulse ausgewiesen.</dd>
+        <dt>Brüche in der Zeitreihe</dt><dd>2013 neues Messsystem: Werte davor sind nur bedingt vergleichbar. Seit Mai 2024 ersetzt die Kategorie «nicht identifizierte Audios» schrittweise «Playback, DVD, Games».</dd>
+      </dl>
+      <p>Quelle: Mediapulse TV Data, Publikation Jahresdaten 2025 (Deutschschweiz, Suisse romande, Svizzera italiana).</p>
+    </details>
+  </footer>
+</div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+
+.tv{container-type:inline-size;font-family:var(--font-anthropic-sans);color:var(--color-fg);
+  --color-fg:var(--color-ink);--color-fg-muted:var(--color-ink-muted);--color-panel:oklch(0.99 0.006 70);--color-border-line:var(--color-rule);
+  --cds-text-secondary:var(--color-ink-muted);--cds-chart-grid:oklch(0.9 0.012 120);--cds-chart-axis:oklch(0.75 0.015 120);--cds-chart-reference:oklch(0.6 0.02 120);--cds-chart-muted:#b4bcab;
+  --cds-surface-popover:#fff;--cds-border:var(--color-rule);--cds-shadow-popover:var(--shadow-lift);--cds-radius:var(--radius-card);
+  --cds-pad-xs:4px;--cds-pad-sm:8px;--cds-pad-md:14px;--cds-pad-lg:22px;--cds-pad-xl:32px;--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:14px;--cds-gap-lg:22px;--cds-gap-xl:36px;
+  --cds-font-size-caption:12.5px;--cds-font-size-body:16px;--cds-font-weight-medium:700;
+  --font-anthropic-sans:var(--font-sans);--font-anthropic-serif:var(--font-serif)}
+.tv-hero{max-width:46rem;padding:var(--cds-pad-xl) 0 calc(var(--cds-pad-xl) * 2)}
+.tv-kicker{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);letter-spacing:.06em;text-transform:uppercase;margin:0 0 var(--cds-gap-sm)}
+.tv-hero h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:clamp(2rem,6cqi,3.4rem);line-height:1.08;margin:0 0 var(--cds-gap-md)}
+.tv-lede{font-size:1.2rem;line-height:1.55;margin:0 0 var(--cds-gap-lg)}
+.tv-lede b,.tv-step b{font-variant-numeric:tabular-nums;font-weight:var(--cds-font-weight-medium)}
+.tv-hint{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+.tv-scrolly{display:grid;grid-template-columns:minmax(260px,36%) 1fr;column-gap:var(--cds-gap-xl);position:relative}
+.tv-steps{grid-column:1;grid-row:1;padding:10vh 0 45vh;position:relative;z-index:1}
+.tv-sticky{grid-column:2;grid-row:1;position:sticky;top:88px;height:calc(100vh - 104px);min-height:420px;display:flex;align-self:start}
+.tv-figure{flex:1;display:flex;flex-direction:column;background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);min-width:0}
+.tv-ctitle{font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)}
+.tv-csub{display:block;font-weight:400;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-top:2px}
+.tv-stage{flex:1;position:relative;min-height:280px}
+.tv-stage svg{position:absolute;inset:0;overflow:visible}
+.tv-chap{margin:0 0 var(--cds-gap-lg);padding-top:20vh}
+.tv-chap:first-child{padding-top:0}
+.tv-chap span{display:block;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);letter-spacing:.08em;text-transform:uppercase}
+.tv-chap h2{font-family:var(--font-anthropic-serif);font-weight:400;font-size:clamp(1.6rem,4cqi,2.3rem);line-height:1.15;margin:4px 0 0}
+.tv-step{margin:0 0 55vh;padding:var(--cds-pad-lg);border-radius:var(--cds-radius);border:1px solid var(--color-border-line);background:var(--color-panel);line-height:1.6;font-size:var(--cds-font-size-body);opacity:.35;transition:opacity .4s}
+.tv-step.is-active{opacity:1}
+.tv-step p{margin:0 0 var(--cds-gap-sm)}
+.tv-step p:last-child{margin-bottom:0}
+.tv-link{color:var(--color-fg);text-underline-offset:3px}
+.tv-step .tv-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.tv-foot{max-width:46rem;padding:var(--cds-pad-xl) 0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.6}
+.tv-foot summary{cursor:pointer;color:var(--color-fg);font-size:var(--cds-font-size-body)}
+.tv-foot dt{color:var(--color-fg);font-weight:var(--cds-font-weight-medium);margin-top:var(--cds-gap-sm)}
+.tv-foot dd{margin:0}
+.tv-svg .tick text,.tv-measure{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption);font-family:var(--font-anthropic-sans)}
+.tv-svg .tv-grid line{stroke:var(--cds-chart-grid)}
+.tv-svg .tv-grid .tick line{stroke-dasharray:2 3}
+.tv-svg .tv-xaxis .domain,.tv-svg .tv-xaxis line{stroke:var(--cds-chart-axis)}
+.tv-svg text{font-family:var(--font-anthropic-sans)}
+.tv-lbl{fill:var(--color-fg);font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums;paint-order:stroke;stroke:var(--color-panel);stroke-width:4px;stroke-linejoin:round}
+.tv-lbl.muted{fill:var(--cds-text-secondary)}
+.tv-annot text{fill:var(--color-fg);font-size:var(--cds-font-size-caption);paint-order:stroke;stroke:var(--color-panel);stroke-width:5px;stroke-linejoin:round}
+.tv-annot text .hd{font-weight:var(--cds-font-weight-medium)}
+.tv-annot line{stroke:var(--color-fg);stroke-width:1}
+.tv-annot circle{fill:var(--color-panel);stroke:var(--color-fg);stroke-width:1.5}
+.tv-ref{stroke:var(--cds-chart-reference);stroke-dasharray:4 4}
+.tv-rule{stroke:var(--cds-chart-axis)}
+.tv-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:var(--cds-radius);padding:8px 10px;font-size:var(--cds-font-size-caption);min-width:150px;opacity:0;z-index:3;transition:opacity .12s}
+.tv-tip-title{font-weight:var(--cds-font-weight-medium);margin-bottom:4px}
+.tv-tip-row{display:flex;align-items:center;gap:6px;color:var(--cds-text-secondary)}
+.tv-tip-row i{width:8px;height:8px;border-radius:2px;flex:none}
+.tv-tip-row b{margin-left:auto;padding-left:12px;color:var(--color-fg);font-variant-numeric:tabular-nums;font-weight:var(--cds-font-weight-medium)}
+.tv-msg{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption)}
+[data-dash-source-state=refreshing]{opacity:.5}
+@container (max-width:720px){
+  .tv-scrolly{grid-template-columns:1fr}
+  .tv-sticky{grid-column:1;top:76px;height:56vh;min-height:320px;z-index:0}
+  .tv-figure{padding:var(--cds-pad-md)}
+  .tv-steps{grid-column:1;padding:56vh 0 40vh;pointer-events:none}
+  .tv-step,.tv-chap{pointer-events:auto}
+  .tv-step{opacity:1;margin-bottom:70vh;box-shadow:var(--cds-shadow-popover)}
+  .tv-chap{padding:var(--cds-pad-md);margin-bottom:60vh;background:var(--color-panel);border-radius:var(--cds-radius);border:1px solid var(--color-border-line)}
+  .tv-chap:first-child{padding-top:var(--cds-pad-md)}
+}
+
+.tv-blogfilm{margin:0 0 12vh}
+.tv-blogfilm h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.6rem,4cqi,2.3rem);line-height:1.15;margin:4px 0 10px}
+.tv-blogfilm p{max-width:62ch;color:var(--color-ink-muted);margin:0 0 18px}
+.tv-blogfilm iframe{display:block;width:100%;height:880px;border:1px solid var(--color-rule);border-radius:var(--radius-card);background:#f2f5ec}
+@media (max-width:640px){.tv-blogfilm iframe{height:1000px}}
+.tv-lede-num b{font-variant-numeric:tabular-nums}
+.tv-film-kicker{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);letter-spacing:.08em;text-transform:uppercase;margin:0}
+
+</style>
+
+<script is:inline src="/tv-schweiz/d3.v7.min.js"></script>
+<script is:inline>
+
+// Small stand-in for the dashboard runtime: loads the CSV files, works out calculations
+// and redraws every [data-draw] element when data arrives or its width changes.
+(function () {
+  const BASE = '/tv-schweiz/data/';
+  const FILES = {tv_minuten_trend: 'tv_minuten_trend.csv', zeitversetzt_trend: 'zeitversetzt_trend.csv', tagesverlauf: 'tagesverlauf.csv',
+    sehdauer_gruppen: 'sehdauer_gruppen.csv', marktanteile_de: 'marktanteile_deutschschweiz.csv', heimsender_anteil: 'heimsender_anteil.csv',
+    tv_set_komponenten: 'tv_set_komponenten.csv', sehdauer_alter_trend: 'sehdauer_alter_trend.csv'};
+  const store = {}, calcs = {}, draws = {}, listeners = [];
+  let scheduled = false;
+  function load(id) {
+    if (store[id]) return;
+    store[id] = {status: 'loading', data: []};
+    d3.csv(BASE + FILES[id]).then((rows) => { store[id] = {status: 'ok', data: rows}; Object.values(calcs).forEach((c) => { c.cache = undefined; }); schedule(); })
+      .catch((e) => { store[id] = {status: 'error', data: [], message: String(e)}; schedule(); });
+  }
+  function data(id) {
+    if (FILES[id]) { load(id); return store[id]; }
+    const c = calcs[id];
+    if (!c) return {status: 'missing', data: null};
+    const ins = c.inputs.map(data);
+    if (ins.some((s) => s.status === 'loading')) return {status: 'loading', data: null};
+    if (ins.some((s) => s.status !== 'ok')) return {status: 'error', data: null};
+    if (c.cache === undefined) { try { c.cache = c.fn(...ins.map((s) => s.data)); } catch (e) { console.error(e); c.cache = null; } }
+    return {status: c.cache == null ? 'error' : 'ok', data: c.cache};
+  }
+  function runEl(name, el) {
+    const d = draws[name];
+    if (!d) return;
+    try {
+      if (typeof d === 'function') d(el);
+      else { if (!el.__made) { el.replaceChildren(); el.__made = d.mount ? d.mount(el) : {}; } d.update && d.update(el, el.__made); }
+    } catch (e) { console.error(e); }
+  }
+  function run(name) { document.querySelectorAll(`[data-draw="${name}"]`).forEach((el) => runEl(name, el)); }
+  function runAll() { scheduled = false; listeners.forEach((f) => { try { f(); } catch (e) { console.error(e); } }); Object.keys(draws).forEach(run); }
+  function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(runAll); } }
+  const widths = new WeakMap();
+  const ro = new ResizeObserver((entries) => entries.forEach((en) => {
+    const el = en.target, w = Math.round(en.contentRect.width), h = Math.round(en.contentRect.height);
+    const prev = widths.get(el);
+    widths.set(el, w + 'x' + h);
+    if (prev && prev !== w + 'x' + h) runEl(el.dataset.draw, el);
+  }));
+  window.dash = {
+    colors: ['#2d6a4f', '#52b788', '#a3b43c', '#7a5c3e', '#d99a2b', '#2b8c8c', '#8a8f85', '#a8415b'],
+    data, calc(id, o) { calcs[id] = o; },
+    loader() {}, onData(fn) { listeners.push(fn); },
+    draw(name, fn) {
+      if (!fn) { run(name); return; }
+      draws[name] = fn;
+      document.querySelectorAll(`[data-draw="${name}"]`).forEach((el) => ro.observe(el));
+      schedule();
+    },
+    drawIn(root, name) { root.querySelectorAll(`[data-draw="${name}"]`).forEach((el) => runEl(name, el)); },
+    refresh() {}, params() { return {}; }, setParams() {}, resetParams() {}, setLink() {}
+  };
+})();
+
+
+// Calculations worked out from the attached Mediapulse tables
+dash.calc('trend_kennzahlen', {
+  inputs: ['tv_minuten_trend'],
+  title: 'Höchststand und Rückgang · Deutschschweiz',
+  description: 'Jahr mit der höchsten Sehdauer und Rückgang bis zum letzten Jahr in Prozent.',
+  fn: (trend) => {
+    const de = trend.filter((r) => r.region === 'Deutschschweiz').map((r) => ({jahr: +r.jahr, min: +r.minuten}));
+    if (!de.length) return [];
+    const peak = de.reduce((a, b) => (b.min > a.min ? b : a));
+    const last = de.reduce((a, b) => (b.jahr > a.jahr ? b : a));
+    return [{peak_jahr: peak.jahr, peak_minuten: peak.min, letztes_jahr: last.jahr, letzte_minuten: last.min, rueckgang_pct: Math.round((1 - last.min / peak.min) * 100)}];
+  }
+});
+
+dash.calc('tv_set_anteile', {
+  inputs: ['tv_set_komponenten'],
+  title: 'TV-Gerät: mit und ohne Senderzuordnung',
+  description: 'Minuten mit Senderzuordnung (Total minus Playback/DVD/Games und nicht identifizierte Audios) und Anteil ohne Zuordnung.',
+  fn: (komponenten) => komponenten.map((r) => {
+    const total = +r.total_minuten;
+    const ohne = +r.playback_dvd_games_minuten + +r.nicht_identifiziert_minuten;
+    return {region: r.region, jahr: r.jahr, total_minuten: total, sender_minuten: Math.round((total - ohne) * 10) / 10, nicht_sender_minuten: Math.round(ohne * 10) / 10, nicht_sender_pct: Math.round((ohne / total) * 100)};
+  })
+});
+
+dash.calc('zeitversetzt_kennzahlen', {
+  inputs: ['zeitversetzt_trend'],
+  title: 'Zeitversetzt: erstes und letztes Jahr',
+  description: 'Minuten zeitversetzter Nutzung im ersten und letzten Jahr und das Verhältnis der beiden.',
+  fn: (zeitversetzt) => {
+    const s = zeitversetzt.map((r) => ({jahr: +r.jahr, min: +r.minuten})).sort((a, b) => a.jahr - b.jahr);
+    if (!s.length) return [];
+    const a = s[0], b = s[s.length - 1];
+    return [{von_jahr: a.jahr, von_minuten: a.min, bis_jahr: b.jahr, bis_minuten: b.min, faktor: Math.round((b.min / a.min) * 10) / 10}];
+  }
+});
+
+dash.calc('tag_spitze', {
+  inputs: ['tagesverlauf'],
+  title: 'Spitze und Tiefpunkt im Tagesverlauf',
+  description: 'Viertelstunde mit dem höchsten und tiefsten Rating je Region und Tagesgruppe.',
+  fn: (verlauf) => {
+    const groups = new Map();
+    verlauf.forEach((r) => {
+      const k = r.region + '|' + r.tage;
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(r);
+    });
+    return Array.from(groups.values()).map((rows) => {
+      const hi = rows.reduce((a, b) => (+b.rating_pct > +a.rating_pct ? b : a));
+      const lo = rows.reduce((a, b) => (+b.rating_pct < +a.rating_pct ? b : a));
+      return {region: hi.region, tage: hi.tage, spitze_zeit: hi.zeit, spitze_rating: +hi.rating_pct, tief_zeit: lo.zeit, tief_rating: +lo.rating_pct};
+    });
+  }
+});
+
+dash.calc('alter_veraenderung', {
+  inputs: ['sehdauer_alter_trend'],
+  title: 'Veränderung der Sehdauer seit 2019 nach Alter',
+  description: 'Prozentuale Veränderung der Minuten pro Tag vom ersten zum letzten Jahr, je Altersgruppe (Deutschschweiz).',
+  fn: (alterTrend) => {
+    const gruppen = Array.from(new Set(alterTrend.map((r) => r.gruppe)));
+    return gruppen.map((gruppe) => {
+      const s = alterTrend.filter((r) => r.gruppe === gruppe).map((r) => ({jahr: +r.jahr, min: +r.minuten})).sort((a, b) => a.jahr - b.jahr);
+      const a = s[0], b = s[s.length - 1];
+      return {gruppe, von_jahr: a.jahr, von_minuten: a.min, bis_jahr: b.jahr, bis_minuten: b.min, veraenderung_pct: Math.round((b.min / a.min - 1) * 100)};
+    });
+  }
+});
+
+dash.calc('alter_faktor', {
+  inputs: ['sehdauer_gruppen'],
+  title: 'Sehdauer 60+ im Verhältnis zu 15–29',
+  description: 'Wie viel Mal länger Personen ab 60 fernsehen als 15- bis 29-Jährige, je Region.',
+  fn: (gruppen) => {
+    const regions = Array.from(new Set(gruppen.map((r) => r.region)));
+    return regions.map((region) => {
+      const alt = gruppen.find((r) => r.region === region && r.gruppe === '60+');
+      const jung = gruppen.find((r) => r.region === region && r.gruppe === '15–29');
+      return {region, faktor: alt && jung ? Math.round((+alt.minuten / +jung.minuten) * 10) / 10 : null};
+    });
+  }
+});
+
+
+// Shared helpers
+(function () {
+  const loc = d3.formatLocale({decimal: '.', thousands: '’', grouping: [3], currency: ['CHF ', '']});
+  window.tvFmt = {f0: loc.format('.0f'), f1: loc.format('.1f'), f2: loc.format('.2f')};
+  window.tvState = window.tvState || {view: 'trend_de'};
+})();
+
+
+// Numbers inside the text
+dash.draw('num', (el) => {
+  const {f0, f1, f2} = window.tvFmt;
+  const d = dash.data(el.dataset.source);
+  if (d.status !== 'ok' || !d.data) { el.textContent = '—'; return; }
+  const rows = Array.isArray(d.data) ? d.data : [d.data];
+  let row;
+  if (el.dataset.where) {
+    const conds = el.dataset.where.split('&').map((s) => s.split('=').map(decodeURIComponent));
+    row = rows.find((r) => conds.every(([k, v]) => String(r[k]) === v));
+  } else {
+    row = rows[+(el.dataset.row || 0)];
+  }
+  const v = row ? row[el.dataset.field] : null;
+  if (v == null || v === '') { el.textContent = '—'; return; }
+  const f = el.dataset.fmt;
+  el.textContent = f === 'signed' ? (+v > 0 ? '+' : +v < 0 ? '−' : '±') + f0(Math.abs(+v)) : f === 'raw' ? String(v) : f === 'int' ? f0(+v) : f === 'd2' ? f2(+v) : f1(+v);
+});
+
+
+// Scroll steps: which chapter is in view decides the chart
+(function () {
+  const steps = Array.from(document.querySelectorAll('.tv-step[data-view]'));
+  if (!steps.length || !('IntersectionObserver' in window)) return;
+  const root = document.querySelector('.tv');
+  const narrow = root && root.clientWidth < 720;
+  const setView = (view, stepEl) => {
+    const block = stepEl.closest('.tv-scrolly');
+    if (!block) return;
+    block.querySelectorAll('.tv-step').forEach((s) => s.classList.toggle('is-active', s === stepEl));
+    block.querySelectorAll('.tv-ctitle').forEach((t) => { t.hidden = t.dataset.for !== view; });
+    if (block.dataset.view !== view) {
+      block.dataset.view = view;
+      if (dash.drawIn) dash.drawIn(block, 'stage'); else dash.draw('stage');
+    }
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) setView(e.target.dataset.view, e.target); });
+  }, {root: null, rootMargin: narrow ? '-74% 0px -22% 0px' : '-46% 0px -50% 0px', threshold: 0});
+  steps.forEach((s) => io.observe(s));
+})();
+
+
+// The chart that stays in view
+(function () {
+  const {f0, f1} = window.tvFmt;
+  const reduce = !window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  const C = (i) => dash.colors[i % dash.colors.length];
+  const MUTED = 'var(--cds-chart-muted)';
+  const REGS = ['Deutschschweiz', 'Suisse romande', 'Svizzera italiana'];
+  const RC = {'Deutschschweiz': 0, 'Suisse romande': 1, 'Svizzera italiana': 2};
+  const HOME = {'Deutschschweiz': 'SRF', 'Suisse romande': 'RTS', 'Svizzera italiana': 'RSI'};
+  const SHORT = {'Deutschschweiz': 'DE', 'Suisse romande': 'FR', 'Svizzera italiana': 'IT'};
+
+  function measure(svg, str, cls) {
+    const t = svg.append('text').attr('class', cls || 'tv-measure').text(str);
+    const w = t.node().getComputedTextLength() || str.length * 7;
+    t.remove();
+    return w;
+  }
+  function yearTicks(a, b, iw) {
+    const step = iw < 300 ? 10 : 5;
+    const s = Math.ceil(a / step) * step;
+    return d3.range(s, b + 1, step);
+  }
+  function frame(ctx, o) {
+    const {svg, w, h} = ctx;
+    const y = d3.scaleLinear().domain([0, o.yMax]).nice();
+    const yt = y.ticks(h < 380 ? 4 : 5);
+    const l = Math.ceil(d3.max(yt, (t) => measure(svg, o.yFmt(t)))) + 8;
+    const r = o.right || 12;
+    const M = {t: o.top || 30, r, b: 24, l};
+    const iw = Math.max(60, w - M.l - M.r), ih = Math.max(60, h - M.t - M.b);
+    const x = o.x.range([0, iw]);
+    y.range([ih, 0]);
+    const gp = ctx.g.attr('transform', `translate(${M.l},${M.t})`);
+    gp.append('g').attr('class', 'tv-grid').call(d3.axisLeft(y).tickValues(yt).tickSize(-iw).tickFormat(o.yFmt)).call((g) => g.select('.domain').remove());
+    const xa = d3.axisBottom(x).tickSizeOuter(0);
+    if (o.xTicks) xa.tickValues(o.xTicks);
+    if (o.xFmt) xa.tickFormat(o.xFmt);
+    gp.append('g').attr('class', 'tv-xaxis').attr('transform', `translate(0,${ih})`).call(xa);
+    return {x, y, M, iw, ih, gp};
+  }
+  function drawLine(F, pts, color, o) {
+    o = o || {};
+    const p = F.gp.append('path').datum(pts).attr('fill', 'none').style('stroke', color)
+      .attr('stroke-width', o.width || 2.25).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+      .attr('d', d3.line().defined((d) => d.y != null && !isNaN(d.y)).x((d) => F.x(d.x)).y((d) => F.y(d.y)));
+    if (o.dash) p.attr('stroke-dasharray', '5 4');
+    if (o.animate) {
+      if (o.dash) {
+        p.style('opacity', 0).transition().delay(o.delay || 0).duration(700).style('opacity', 1);
+      } else {
+        const L = p.node().getTotalLength();
+        p.attr('stroke-dasharray', `${L} ${L}`).attr('stroke-dashoffset', L)
+          .transition().delay(o.delay || 0).duration(1300).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0)
+          .on('end', () => p.attr('stroke-dasharray', null));
+      }
+    }
+    return p;
+  }
+  function drawArea(F, pts, color, animate) {
+    const a = F.gp.append('path').datum(pts).style('fill', color).style('fill-opacity', 0.12)
+      .attr('d', d3.area().x((d) => F.x(d.x)).y0(F.ih).y1((d) => F.y(d.y)));
+    if (animate) a.style('opacity', 0).transition().delay(500).duration(900).style('opacity', 1);
+  }
+  // An annotation: a ringed point, a leader line and a short text block
+  function annot(ctx, F, o) {
+    const a = F.gp.append('g').attr('class', 'tv-annot');
+    const t = a.append('text');
+    (o.lines || []).forEach((s, i) => t.append('tspan').attr('class', i === 0 ? 'hd' : null).attr('x', 0).attr('dy', i === 0 ? 0 : 15).text(s));
+    let bw = 0;
+    t.selectAll('tspan').each(function () { bw = Math.max(bw, this.getComputedTextLength()); });
+    const bh = 15 * (o.lines.length - 1);
+    let left = o.anchor === 'end' ? o.tx - bw : o.anchor === 'middle' ? o.tx - bw / 2 : o.tx;
+    left = Math.max(-F.M.l + 4, Math.min(left, F.iw + F.M.r - bw - 4));
+    let top = Math.max(-F.M.t + 12, Math.min(o.ty, F.ih - bh - 2));
+    t.attr('transform', `translate(${left},${top})`);
+    const lx = Math.max(left, Math.min(o.x, left + bw));
+    const below = top > o.y;
+    const ly = below ? top - 12 : top + bh + 6;
+    if (Math.hypot(lx - o.x, ly - o.y) > 10) a.insert('line', 'text').attr('x1', o.x).attr('y1', o.y).attr('x2', lx).attr('y2', ly);
+    if (!o.noDot) a.append('circle').attr('cx', o.x).attr('cy', o.y).attr('r', 4.5);
+    if (ctx.animate) a.style('opacity', 0).transition().delay(o.delay == null ? 1100 : o.delay).duration(500).style('opacity', 1);
+  }
+  function refLineX(F, xv, label) {
+    const g = F.gp.append('g');
+    g.append('line').attr('class', 'tv-ref').attr('x1', F.x(xv)).attr('x2', F.x(xv)).attr('y1', 0).attr('y2', F.ih);
+    if (label) g.append('text').attr('class', 'tv-lbl muted').attr('x', F.x(xv) + 5).attr('y', F.ih - 8).text(label);
+  }
+  function legend(ctx, items) {
+    const g = ctx.svg.append('g').attr('transform', 'translate(0,10)');
+    let x = 0, y = 0;
+    items.forEach((it) => {
+      const w = measure(ctx.svg, it.label) + 30;
+      if (x + w > ctx.w && x > 0) { x = 0; y += 16; }
+      const row = g.append('g').attr('transform', `translate(${x},${y})`);
+      const sw = row.append('line').attr('x1', 0).attr('x2', 16).attr('y1', 0).attr('y2', 0).style('stroke', it.color).attr('stroke-width', it.bar ? 8 : 2.5);
+      if (it.dash) sw.attr('stroke-dasharray', '4 3');
+      row.append('text').attr('class', 'tv-lbl').attr('x', 21).attr('dy', '0.32em').text(it.label);
+      x += w;
+    });
+    return y + 16;
+  }
+  function endLabels(F, items) {
+    items.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < items.length; i++) if (items[i].y - items[i - 1].y < 14) items[i].y = items[i - 1].y + 14;
+    const over = items.length ? items[items.length - 1].y - F.ih : 0;
+    if (over > 0) items.forEach((it) => { it.y -= over; });
+    items.forEach((it) => {
+      F.gp.append('circle').attr('cx', F.iw + 6).attr('cy', it.y).attr('r', 3).style('fill', it.color);
+      F.gp.append('text').attr('class', 'tv-lbl').attr('x', F.iw + 12).attr('y', it.y).attr('dy', '0.32em').text(it.text);
+    });
+  }
+  function showTip(ctx, title, rows, px, py) {
+    const t = ctx.tip;
+    t.selectAll('*').remove();
+    t.append('div').attr('class', 'tv-tip-title').text(title);
+    rows.forEach(([c, n, v]) => {
+      const r = t.append('div').attr('class', 'tv-tip-row');
+      r.append('i').style('background', c);
+      r.append('span').text(n);
+      r.append('b').text(v);
+    });
+    const tw = t.node().offsetWidth, th = t.node().offsetHeight;
+    let left = px + 14;
+    if (left + tw > ctx.w - 2) left = px - tw - 14;
+    left = Math.max(2, left);
+    let top = py - th - 12;
+    if (top < 2) top = Math.min(py + 14, ctx.h - th - 2);
+    t.style('left', left + 'px').style('top', top + 'px').style('opacity', 1);
+  }
+  function hideTip(ctx) { ctx.tip.style('opacity', 0); }
+  function hoverLines(ctx, F, series, xVals, fmtX, fmtY) {
+    const rule = F.gp.append('line').attr('class', 'tv-rule').attr('y1', 0).attr('y2', F.ih).style('opacity', 0);
+    const dots = F.gp.append('g');
+    F.gp.append('rect').attr('width', F.iw).attr('height', F.ih).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev);
+        const xv = F.x.invert(px);
+        const near = xVals.reduce((a, b) => (Math.abs(b - xv) < Math.abs(a - xv) ? b : a));
+        const rows = series.map((s) => ({s, p: s.values.find((v) => v.x === near)})).filter((r) => r.p && r.p.y != null && !isNaN(r.p.y));
+        if (!rows.length) return;
+        rule.attr('x1', F.x(near)).attr('x2', F.x(near)).style('opacity', 1);
+        dots.selectAll('circle').data(rows).join('circle').attr('r', 4).attr('cx', F.x(near)).attr('cy', (r) => F.y(r.p.y))
+          .style('fill', (r) => r.s.color).style('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+        showTip(ctx, fmtX(near), rows.map((r) => [r.s.color, r.s.name, fmtY(r.p.y)]), F.M.l + F.x(near), F.M.t + d3.min(rows, (r) => F.y(r.p.y)));
+      })
+      .on('pointerleave', () => { rule.style('opacity', 0); dots.selectAll('*').remove(); hideTip(ctx); });
+  }
+  const yr = d3.format('d');
+  const minFmt = (v) => f1(v) + ' Min.';
+  const pctFmt = (v) => f1(v) + ' %';
+
+  const VIEWS = {
+    trend_de: {
+      sources: ['tv_minuten_trend', 'trend_kennzahlen'],
+      label: 'Liniendiagramm: Sehdauer in der Deutschschweiz von 1985 bis 2025',
+      render(ctx) {
+        const pts = ctx.data.tv_minuten_trend.filter((r) => r.region === 'Deutschschweiz').map((r) => ({x: +r.jahr, y: +r.minuten})).sort((a, b) => a.x - b.x);
+        const k = ctx.data.trend_kennzahlen[0];
+        if (!pts.length || !k) return;
+        const ext = d3.extent(pts, (d) => d.x);
+        const iwGuess = ctx.w - 60;
+        const F = frame(ctx, {x: d3.scaleLinear().domain(ext), yMax: d3.max(pts, (d) => d.y) * 1.4, yFmt: f0, xTicks: yearTicks(ext[0], ext[1], iwGuess), xFmt: yr});
+        refLineX(F, 2013, 'neues Messsystem');
+        drawArea(F, pts, C(0), ctx.animate);
+        drawLine(F, pts, C(0), {animate: ctx.animate, width: 2.75});
+        const px = F.x(k.peak_jahr), py = F.y(k.peak_minuten);
+        annot(ctx, F, {x: px, y: py, tx: px - 10, ty: py - 58, anchor: 'end', lines: [`${k.peak_jahr}: Höchststand`, `${f1(k.peak_minuten)} Minuten pro Tag`], delay: 900});
+        const p20 = pts.find((d) => d.x === 2020), p19 = pts.find((d) => d.x === 2019);
+        if (p20 && p19) annot(ctx, F, {x: F.x(2020), y: F.y(p20.y), tx: F.x(2020) - 8, ty: F.y(p20.y) - 64, anchor: 'end', lines: ['2020: Corona-Jahr', `${p20.y - p19.y >= 0 ? '+' : '−'}${f1(Math.abs(p20.y - p19.y))} Min. ggü. 2019`], delay: 1300});
+        const lx = F.x(k.letztes_jahr), ly = F.y(k.letzte_minuten);
+        annot(ctx, F, {x: lx, y: ly, tx: lx, ty: ly + 40, anchor: 'end', lines: [`${k.letztes_jahr}: ${f1(k.letzte_minuten)} Min.`, `−${k.rueckgang_pct} % seit ${k.peak_jahr}`], delay: 1600});
+        hoverLines(ctx, F, [{name: 'Deutschschweiz', color: C(0), values: pts}], pts.map((d) => d.x), yr, minFmt);
+      }
+    },
+    trend_regionen: {
+      sources: ['tv_minuten_trend'],
+      label: 'Liniendiagramm: Sehdauer der drei Sprachregionen von 1985 bis 2025',
+      render(ctx) {
+        const rows = ctx.data.tv_minuten_trend;
+        const series = REGS.map((r) => ({name: r, color: C(RC[r]), values: rows.filter((d) => d.region === r).map((d) => ({x: +d.jahr, y: +d.minuten})).sort((a, b) => a.x - b.x)})).filter((s) => s.values.length);
+        if (!series.length) return;
+        const all = series.flatMap((s) => s.values);
+        const ext = d3.extent(all, (d) => d.x);
+        const right = d3.max(series, (s) => measure(ctx.svg, `${SHORT[s.name]} ${f1(s.values[s.values.length - 1].y)}`)) + 18;
+        const F = frame(ctx, {x: d3.scaleLinear().domain(ext), yMax: d3.max(all, (d) => d.y) * 1.25, yFmt: f0, xTicks: yearTicks(ext[0], ext[1], ctx.w - 60 - right), xFmt: yr, right});
+        refLineX(F, 2013);
+        series.forEach((s, i) => drawLine(F, s.values, s.color, {animate: ctx.animate, delay: i * 250}));
+        endLabels(F, series.map((s) => { const l = s.values[s.values.length - 1]; return {y: F.y(l.y), color: s.color, text: `${SHORT[s.name]} ${f1(l.y)}`}; }));
+        const it = series.find((s) => s.name === 'Svizzera italiana');
+        if (it) {
+          const m = it.values.reduce((a, b) => (b.y > a.y ? b : a));
+          annot(ctx, F, {x: F.x(m.x), y: F.y(m.y), tx: F.x(m.x) - 10, ty: F.y(m.y) - 50, anchor: 'end', lines: [`Svizzera italiana, ${m.x}`, `Spitze: ${f1(m.y)} Min.`], delay: 1300});
+        }
+        hoverLines(ctx, F, series, Array.from(new Set(all.map((d) => d.x))).sort((a, b) => a - b), yr, minFmt);
+      }
+    },
+    komposition: {
+      sources: ['tv_set_anteile'],
+      label: 'Gestapelte Säulen: Minuten mit und ohne Senderzuordnung 2013 bis 2025, Deutschschweiz',
+      render(ctx) {
+        const rows = ctx.data.tv_set_anteile.filter((r) => r.region === 'Deutschschweiz').map((r) => ({jahr: +r.jahr, s: +r.sender_minuten, n: +r.nicht_sender_minuten, t: +r.total_minuten, p: +r.nicht_sender_pct})).sort((a, b) => a.jahr - b.jahr);
+        if (!rows.length) return;
+        const top = legend(ctx, [{label: 'Sender (live und zeitversetzt)', color: C(0), bar: true}, {label: 'Ohne Senderzuordnung', color: C(4), bar: true}]) + 34;
+        const years = rows.map((r) => r.jahr);
+        const xb = d3.scaleBand().domain(years).padding(0.25);
+        const F = frame(ctx, {x: xb, yMax: d3.max(rows, (r) => r.t) * 1.2, yFmt: f0, top, xTicks: years.filter((y, i) => ctx.w > 520 || i % 3 === 0 || i === years.length - 1), xFmt: yr});
+        const bw = xb.bandwidth();
+        const g = F.gp.append('g');
+        rows.forEach((r, i) => {
+          const gx = xb(r.jahr);
+          const b1 = g.append('rect').attr('x', gx).attr('width', bw).style('fill', C(0)).attr('rx', 1.5);
+          const b2 = g.append('rect').attr('x', gx).attr('width', bw).style('fill', C(4)).attr('rx', 1.5);
+          const set = (sel, y, hgt) => sel.attr('y', y).attr('height', Math.max(0, hgt));
+          if (ctx.animate) {
+            set(b1, F.ih, 0); set(b2, F.y(r.s), 0);
+            b1.transition().delay(i * 50).duration(600).ease(d3.easeCubicOut).attr('y', F.y(r.s)).attr('height', F.ih - F.y(r.s));
+            b2.transition().delay(600 + i * 50).duration(500).attr('y', F.y(r.t)).attr('height', F.y(r.s) - F.y(r.t));
+          } else {
+            set(b1, F.y(r.s), F.ih - F.y(r.s));
+            set(b2, F.y(r.t), F.y(r.s) - F.y(r.t));
+          }
+          g.append('rect').attr('x', gx - xb.step() * xb.paddingInner() / 2).attr('width', xb.step()).attr('y', 0).attr('height', F.ih).attr('fill', 'transparent')
+            .on('pointerenter', () => showTip(ctx, String(r.jahr), [[C(0), 'Sender', minFmt(r.s)], [C(4), 'Ohne Zuordnung', minFmt(r.n)], ['var(--color-fg-muted)', 'Total', minFmt(r.t)]], F.M.l + gx + bw / 2, F.M.t + F.y(r.t)))
+            .on('pointerleave', () => hideTip(ctx));
+        });
+        const last = rows[rows.length - 1];
+        const cx = xb(last.jahr) + bw / 2;
+        annot(ctx, F, {x: cx, y: F.y(last.t - last.n / 2), tx: cx - bw, ty: F.y(last.t) - 54, anchor: 'end', lines: [`${last.jahr}: ${f0(last.p)} % ohne Sender`, `${f1(last.n)} von ${f1(last.t)} Minuten`], delay: 1400});
+      }
+    },
+    zeitversetzt: {
+      sources: ['zeitversetzt_trend', 'zeitversetzt_kennzahlen'],
+      label: 'Liniendiagramm: zeitversetzte Nutzung 2013 bis 2025, Deutschschweiz',
+      render(ctx) {
+        const pts = ctx.data.zeitversetzt_trend.map((r) => ({x: +r.jahr, y: +r.minuten})).sort((a, b) => a.x - b.x);
+        const k = ctx.data.zeitversetzt_kennzahlen[0];
+        if (!pts.length || !k) return;
+        const ext = d3.extent(pts, (d) => d.x);
+        const F = frame(ctx, {x: d3.scaleLinear().domain(ext), yMax: d3.max(pts, (d) => d.y) * 1.35, yFmt: f0, xTicks: d3.range(ext[0], ext[1] + 1, ctx.w < 520 ? 4 : 2), xFmt: yr});
+        drawArea(F, pts, C(1), ctx.animate);
+        drawLine(F, pts, C(1), {animate: ctx.animate, width: 2.75});
+        annot(ctx, F, {x: F.x(k.von_jahr), y: F.y(k.von_minuten), tx: F.x(k.von_jahr) + 6, ty: F.y(k.von_minuten) - 56, anchor: 'start', lines: [`${k.von_jahr}: ${f1(k.von_minuten)} Min.`], delay: 900});
+        annot(ctx, F, {x: F.x(k.bis_jahr), y: F.y(k.bis_minuten), tx: F.x(k.bis_jahr) - 8, ty: F.y(k.bis_minuten) - 58, anchor: 'end', lines: [`${k.bis_jahr}: ${f1(k.bis_minuten)} Min.`, `${f1(k.faktor)}-mal so viel wie ${k.von_jahr}`], delay: 1500});
+        hoverLines(ctx, F, [{name: 'Zeitversetzt', color: C(1), values: pts}], pts.map((d) => d.x), yr, minFmt);
+      }
+    },
+    tag_de: {
+      sources: ['tagesverlauf', 'tag_spitze'],
+      label: 'Liniendiagramm: Rating im Tagesverlauf, Montag bis Freitag und Wochenende, Deutschschweiz',
+      render(ctx) { tagChart(ctx, ['Mo–Fr', 'Sa–So'].map((t, i) => ({key: t, name: t === 'Mo–Fr' ? 'Montag–Freitag' : 'Samstag–Sonntag', color: C(i === 0 ? 0 : 4), filter: (r) => r.region === 'Deutschschweiz' && r.tage === t})), 'de'); }
+    },
+    tag_regionen: {
+      sources: ['tagesverlauf', 'tag_spitze'],
+      label: 'Liniendiagramm: Rating im Tagesverlauf nach Sprachregion',
+      render(ctx) { tagChart(ctx, REGS.map((r) => ({key: r, name: r, color: C(RC[r]), filter: (d) => d.region === r && d.tage === 'Mo–So'})), 'reg'); }
+    },
+    alter_de: {
+      sources: ['sehdauer_gruppen', 'alter_faktor'],
+      label: 'Balkendiagramm: Sehdauer nach Altersgruppe, Deutschschweiz',
+      render(ctx) {
+        const rows = ctx.data.sehdauer_gruppen.filter((r) => r.region === 'Deutschschweiz' && r.merkmal === 'Alter').map((r) => ({g: r.gruppe, v: +r.minuten}));
+        const avgRow = ctx.data.sehdauer_gruppen.find((r) => r.region === 'Deutschschweiz' && r.merkmal === 'Total');
+        const fk = ctx.data.alter_faktor.find((r) => r.region === 'Deutschschweiz');
+        if (!rows.length) return;
+        const H = hbars(ctx, rows.map((r) => r.g), d3.max(rows, (r) => r.v), 0);
+        rows.forEach((r, i) => H.bar(r.g, 0, r.v, r.g === '60+' || r.g === '15–29' ? C(0) : MUTED, i, [[C(0), r.g + ' Jahre', minFmt(r.v)]]));
+        rows.forEach((r) => H.valueLabel(r.g, r.v, f1(r.v)));
+        if (avgRow) {
+          const ax = H.x(+avgRow.minuten);
+          H.gp.append('line').attr('class', 'tv-ref').attr('x1', ax).attr('x2', ax).attr('y1', -6).attr('y2', H.ih);
+          H.gp.append('text').attr('class', 'tv-lbl muted').attr('x', ax + 4).attr('y', -10).text(`Ø alle: ${f1(+avgRow.minuten)}`);
+        }
+        const jung = rows.find((r) => r.g === '15–29');
+        if (jung && fk && fk.faktor != null) {
+          const yy = H.yc('15–29');
+          annot(ctx, H, {x: H.x(jung.v) + 34, y: yy, tx: H.x(jung.v) + 48, ty: yy - 6, anchor: 'start', noDot: true, lines: [`60+ schauen ${f1(fk.faktor)}-mal so lange`, 'wie 15- bis 29-Jährige'], delay: 1000});
+        }
+      }
+    },
+    alter_trend: {
+      sources: ['sehdauer_alter_trend', 'alter_veraenderung'],
+      label: 'Liniendiagramm: Sehdauer nach Altersgruppe 2019 bis 2025, Deutschschweiz',
+      render(ctx) { alterTrendChart(ctx, false); }
+    },
+    alter_index: {
+      sources: ['sehdauer_alter_trend', 'alter_veraenderung'],
+      label: 'Liniendiagramm: Veränderung der Sehdauer seit 2019 nach Altersgruppe, Index 2019 = 100',
+      render(ctx) { alterTrendChart(ctx, true); }
+    },
+    alter_3d: {
+      sources: ['sehdauer_alter_trend'],
+      label: '3D-Ansicht: Sehdauer der sechs Altersgruppen von 2019 bis 2025 als hintereinander stehende Wände, Deutschschweiz',
+      render(ctx) { alter3d(ctx); }
+    },
+    alter_regionen: {
+      sources: ['sehdauer_gruppen'],
+      label: 'Gruppierte Balken: Sehdauer nach Altersgruppe in den drei Sprachregionen',
+      render(ctx) {
+        const rows = ctx.data.sehdauer_gruppen.filter((r) => r.merkmal === 'Alter');
+        if (!rows.length) return;
+        const groups = Array.from(new Set(rows.map((r) => r.gruppe)));
+        const top = legend(ctx, REGS.map((r) => ({label: r, color: C(RC[r]), bar: true}))) + 22;
+        const H = hbars(ctx, groups, d3.max(rows, (r) => +r.minuten), top, REGS);
+        let i = 0;
+        rows.forEach((r) => { H.bar(r.gruppe, 0, +r.minuten, C(RC[r.region]), i++, [[C(RC[r.region]), r.region, minFmt(+r.minuten)]], r.region); });
+        if (H.sub.bandwidth() >= 9) rows.forEach((r) => H.valueLabel(r.gruppe, +r.minuten, f0(+r.minuten), r.region));
+        const m = rows.reduce((a, b) => (+b.minuten > +a.minuten ? b : a));
+        const yy = H.yc(m.gruppe, m.region);
+        annot(ctx, H, {x: H.x(+m.minuten), y: yy, tx: H.iw, ty: H.y(groups[Math.max(0, groups.length - 3)]), anchor: 'end', lines: [`${f1(+m.minuten)} Minuten am Tag`, `${m.gruppe}, ${m.region}`], delay: 1200});
+      }
+    },
+    sender_2025: {
+      sources: ['marktanteile_de'],
+      label: 'Balkendiagramm: Marktanteile der Sender in der Deutschschweiz 2025',
+      render(ctx) {
+        const all = ctx.data.marktanteile_de;
+        const lastYear = d3.max(all, (r) => +r.jahr);
+        const skip = new Set(['SRF', 'SRG SSR', 'andere SRG SSR']);
+        const rows = all.filter((r) => +r.jahr === lastYear && !skip.has(r.sender) && +r.marktanteil_pct >= 0.8).map((r) => ({g: r.sender, v: +r.marktanteil_pct})).sort((a, b) => b.v - a.v);
+        const srf = all.find((r) => +r.jahr === lastYear && r.sender === 'SRF');
+        if (!rows.length) return;
+        const label = (g) => (g === 'Schweizer Private' ? 'Schweizer Private (alle)' : g);
+        const H = hbars(ctx, rows.map((r) => label(r.g)), d3.max(rows, (r) => r.v) * 1.15, 0);
+        const col = (g) => (/^SRF/.test(g) ? C(0) : g === 'Schweizer Private' ? C(1) : MUTED);
+        rows.forEach((r, i) => H.bar(label(r.g), 0, r.v, col(r.g), i, [[col(r.g), r.g, pctFmt(r.v)]]));
+        rows.forEach((r) => H.valueLabel(label(r.g), r.v, f1(r.v) + ' %'));
+        if (srf) {
+          const top = rows.find((r) => /^SRF/.test(r.g));
+          if (top) {
+            const yy = H.yc(label(top.g));
+            const lx = H.x(top.v) + measure(ctx.svg, f1(top.v) + ' %') + 10;
+            annot(ctx, H, {x: lx, y: yy, tx: H.iw + H.M.r - 6, ty: H.ih * 0.62, anchor: 'end', noDot: true, lines: ['SRF-Sender zusammen', `${f1(+srf.marktanteil_pct)} % der TV-Zeit`], delay: 1000});
+          }
+        }
+      }
+    },
+    heimsender: {
+      sources: ['heimsender_anteil'],
+      label: 'Liniendiagramm: Marktanteil der SRG-Sender und der Schweizer Privaten je Sprachregion, 1995 bis 2025',
+      render(ctx) {
+        const rows = ctx.data.heimsender_anteil;
+        const series = [];
+        REGS.forEach((r) => {
+          ['home', 'priv'].forEach((kind) => {
+            const name = kind === 'home' ? HOME[r] : 'Schweizer Private';
+            const vals = rows.filter((d) => d.region === r && d.sender === name).map((d) => ({x: +d.jahr, y: +d.marktanteil_pct})).sort((a, b) => a.x - b.x);
+            if (vals.length) series.push({name: kind === 'home' ? `${name} (${SHORT[r]})` : `Private ${SHORT[r]}`, region: r, kind, color: C(RC[r]), values: vals});
+          });
+        });
+        if (!series.length) return;
+        const all = series.flatMap((s) => s.values);
+        const ext = d3.extent(all, (d) => d.x);
+        const top = legend(ctx, [{label: 'SRG-Sender der Region', color: 'var(--color-fg)'}, {label: 'Schweizer Private', color: 'var(--color-fg)', dash: true}]) + 30;
+        const right = d3.max(series, (s) => measure(ctx.svg, `${s.name} ${f1(s.values[s.values.length - 1].y)}`)) + 18;
+        const F = frame(ctx, {x: d3.scaleLinear().domain(ext), yMax: d3.max(all, (d) => d.y) * 1.15, yFmt: f0, xTicks: yearTicks(ext[0], ext[1], ctx.w - 60 - right), xFmt: yr, right, top});
+        refLineX(F, 2013);
+        series.forEach((s, i) => drawLine(F, s.values, s.color, {animate: ctx.animate, delay: i * 150, dash: s.kind === 'priv'}));
+        endLabels(F, series.map((s) => { const l = s.values[s.values.length - 1]; return {y: F.y(l.y), color: s.color, text: `${s.name} ${f1(l.y)}`}; }));
+        const de = series.find((s) => s.kind === 'priv' && s.region === 'Deutschschweiz');
+        if (de) {
+          const a = de.values[0], b = de.values[de.values.length - 1];
+          const mid = de.values.find((v) => v.x === 2010) || de.values[Math.floor(de.values.length / 2)];
+          annot(ctx, F, {x: F.x(mid.x), y: F.y(mid.y), tx: F.x(mid.x) - 10, ty: F.y(mid.y) - 70, anchor: 'end', lines: ['Schweizer Private, Deutschschweiz', `${a.x}: ${f1(a.y)} % → ${b.x}: ${f1(b.y)} %`], delay: 1300});
+        }
+        hoverLines(ctx, F, series, Array.from(new Set(all.map((d) => d.x))).sort((a, b) => a - b), yr, pctFmt);
+      }
+    }
+  };
+
+  // Day curve: 96 quarter-hours starting at 02:00
+  function tagChart(ctx, defs, mode) {
+    const rows = ctx.data.tagesverlauf;
+    const slots = Array.from(new Set(rows.map((r) => r.zeit)));
+    const idx = new Map(slots.map((s, i) => [s, i]));
+    const series = defs.map((d) => ({...d, values: rows.filter(d.filter).map((r) => ({x: idx.get(r.zeit), y: +r.rating_pct}))})).filter((s) => s.values.length);
+    if (!series.length) return;
+    const top = legend(ctx, series.map((s) => ({label: s.name, color: s.color}))) + 30;
+    const every = ctx.w < 520 ? 6 : 4;
+    const ticks = slots.map((s, i) => i).filter((i) => slots[i].endsWith(':00') && (+slots[i].slice(0, 2) - 2 + 24) % every === 0);
+    const F = frame(ctx, {x: d3.scaleLinear().domain([0, slots.length - 1]), yMax: d3.max(series, (s) => d3.max(s.values, (v) => v.y)) * 1.3, yFmt: (v) => f0(v) + ' %', top, xTicks: ticks, xFmt: (i) => slots[i]});
+    series.forEach((s, i) => drawLine(F, s.values, s.color, {animate: ctx.animate, delay: i * 250}));
+    const sp = ctx.data.tag_spitze;
+    if (mode === 'de') {
+      const a = sp.find((r) => r.region === 'Deutschschweiz' && r.tage === 'Sa–So');
+      const b = sp.find((r) => r.region === 'Deutschschweiz' && r.tage === 'Mo–Fr');
+      if (a) { const x = F.x(idx.get(a.spitze_zeit)), y = F.y(+a.spitze_rating); annot(ctx, F, {x, y, tx: x - 14, ty: y - 46, anchor: 'end', lines: [`Wochenende ${a.spitze_zeit} Uhr`, `${f1(+a.spitze_rating)} % schauen gleichzeitig`], delay: 1100}); }
+      if (b) { const x = F.x(idx.get(b.spitze_zeit)), y = F.y(+b.spitze_rating); annot(ctx, F, {x, y, tx: x - 34, ty: y + 70, anchor: 'end', lines: [`Mo–Fr ${b.spitze_zeit} Uhr`, `${f1(+b.spitze_rating)} %`], delay: 1400}); }
+      if (b) { const x = F.x(idx.get(b.tief_zeit)), y = F.y(+b.tief_rating); annot(ctx, F, {x, y, tx: x + 6, ty: F.ih * 0.28, anchor: 'start', lines: [`Tiefpunkt ${b.tief_zeit} Uhr`, `${f1(+b.tief_rating)} %`], delay: 1700}); }
+    } else {
+      const peaks = sp.filter((r) => r.tage === 'Mo–So');
+      if (peaks.length) {
+        const m = peaks.reduce((a, b) => (+b.spitze_rating > +a.spitze_rating ? b : a));
+        const x = F.x(idx.get(m.spitze_zeit)), y = F.y(+m.spitze_rating);
+        annot(ctx, F, {x, y, tx: x - 14, ty: y - 46, anchor: 'end', lines: [`${m.region}, ${m.spitze_zeit} Uhr`, `Spitze: ${f1(+m.spitze_rating)} %`], delay: 1200});
+      }
+    }
+    hoverLines(ctx, F, series, slots.map((s, i) => i), (i) => `${slots[i]} Uhr`, pctFmt);
+  }
+
+  // Age groups over the years: minutes, or indexed to the first year
+  function alterTrendChart(ctx, indexed) {
+    const rows = ctx.data.sehdauer_alter_trend;
+    const ver = ctx.data.alter_veraenderung;
+    const gruppen = Array.from(new Set(rows.map((r) => r.gruppe))).filter((g) => g !== 'Alle (3+)');
+    const focus = {'60+': C(0), '15–29': C(4)};
+    let series = gruppen.map((g) => {
+      const v = rows.filter((r) => r.gruppe === g).map((r) => ({x: +r.jahr, y: +r.minuten})).sort((a, b) => a.x - b.x);
+      const base = v.length ? v[0].y : 1;
+      return {name: g, color: focus[g] || MUTED, focus: !!focus[g], values: indexed ? v.map((p) => ({x: p.x, y: Math.round((p.y / base) * 1000) / 10, raw: p.y})) : v};
+    }).filter((s) => s.values.length);
+    if (!series.length) return;
+    const all = series.flatMap((s) => s.values);
+    const ext = d3.extent(all, (d) => d.x);
+    const lab = (s) => { const l = s.values[s.values.length - 1]; return `${s.name} ${indexed ? f0(l.y) : f0(l.y)}`; };
+    const right = d3.max(series, (s) => measure(ctx.svg, lab(s))) + 18;
+    const yMax = indexed ? Math.max(120, d3.max(all, (d) => d.y) * 1.1) : d3.max(all, (d) => d.y) * 1.25;
+    const F = frame(ctx, {x: d3.scaleLinear().domain(ext), yMax, yFmt: f0, xTicks: d3.range(ext[0], ext[1] + 1, ctx.w < 420 ? 2 : 1), xFmt: yr, right});
+    if (indexed) {
+      F.gp.append('line').attr('class', 'tv-ref').attr('x1', 0).attr('x2', F.iw).attr('y1', F.y(100)).attr('y2', F.y(100));
+      F.gp.append('text').attr('class', 'tv-lbl muted').attr('x', F.iw * 0.42).attr('y', F.y(100) - 6).text('2019 = 100');
+    }
+    series.sort((a, b) => a.focus - b.focus);
+    series.forEach((s, i) => drawLine(F, s.values, s.color, {animate: ctx.animate, delay: s.focus ? 500 : i * 80, width: s.focus ? 3 : 1.5}));
+    endLabels(F, series.map((s) => { const l = s.values[s.values.length - 1]; return {y: F.y(l.y), color: s.color, text: lab(s)}; }));
+    const old = series.find((s) => s.name === '60+'), young = series.find((s) => s.name === '15–29');
+    const vOld = ver.find((r) => r.gruppe === '60+'), vYoung = ver.find((r) => r.gruppe === '15–29');
+    const fm = (v) => (Number.isInteger(v) ? f0(v) : f1(v));
+    const sign = (v) => (v > 0 ? '+' : v < 0 ? '−' : '±') + f0(Math.abs(v));
+    if (young && vYoung) {
+      const p = young.values[young.values.length - 1];
+      annot(ctx, F, {x: F.x(p.x), y: F.y(p.y), tx: F.x(p.x) - 16, ty: F.y(p.y) - (indexed ? 58 : 64), anchor: 'end', lines: [`15–29: ${sign(vYoung.veraenderung_pct)} % seit ${vYoung.von_jahr}`, `${fm(vYoung.von_minuten)} → ${fm(vYoung.bis_minuten)} Min. pro Tag`], delay: 1500});
+    }
+    if (old && vOld) {
+      const p = old.values.find((v) => v.x === 2021) || old.values[Math.floor(old.values.length / 2)];
+      annot(ctx, F, {x: F.x(p.x), y: F.y(p.y), tx: F.x(p.x) + 10, ty: F.y(p.y) - 52, anchor: 'start', lines: [`60+: ${sign(vOld.veraenderung_pct)} % seit ${vOld.von_jahr}`, `${fm(vOld.von_minuten)} → ${fm(vOld.bis_minuten)} Min. pro Tag`], delay: 1900});
+    }
+    const fmtY = indexed ? (v) => f1(v) : minFmt;
+    hoverLines(ctx, F, series.slice().reverse(), Array.from(new Set(all.map((d) => d.x))).sort((a, b) => a - b), yr, fmtY);
+  }
+
+  // Pseudo-3D walls drawn in SVG: one wall per age group, years left to right, minutes as height
+  function alter3d(ctx) {
+    const rows = ctx.data.sehdauer_alter_trend.filter((r) => r.gruppe !== 'Alle (3+)');
+    const groups = Array.from(new Set(rows.map((r) => r.gruppe)));
+    const years = Array.from(new Set(rows.map((r) => +r.jahr))).sort((a, b) => a - b);
+    if (!groups.length || years.length < 2) return;
+    const val = new Map(rows.map((r) => [r.gruppe + '|' + r.jahr, +r.minuten]));
+    const XS = 2, HS = 1 / 20, ZS = 1.7, D = 0.55;
+    const walls = groups.map((g, i) => ({g, z: (groups.length - 1 - i) * ZS, v: years.map((y) => val.get(g + '|' + y) ?? 0),
+      color: g === '60+' ? C(0) : g === '15–29' ? C(4) : MUTED, focus: g === '60+' || g === '15–29'}));
+    const xMax = (years.length - 1) * XS, yMax = d3.max(walls, (w) => d3.max(w.v)) * HS, zMax = (groups.length - 1) * ZS + D;
+    const center = [xMax / 2, yMax * 0.4, zMax / 2];
+    const st = window.tv3d || (window.tv3d = {az: 0.72, el: 0.34});
+    const top = legend(ctx, [{label: '60+', color: C(0), bar: true}, {label: '15–29', color: C(4), bar: true}, {label: 'übrige Altersgruppen', color: MUTED, bar: true}]) + 14;
+    const root = ctx.g;
+    root.append('rect').attr('x', 0).attr('y', top).attr('width', ctx.w).attr('height', ctx.h - top).attr('fill', 'transparent');
+    const scene = root.append('g');
+    const R = 36;
+    function proj(p, az, el) {
+      const x = p[0] - center[0], y = p[1] - center[1], z = p[2] - center[2];
+      const ca = Math.cos(az), sa = Math.sin(az), ce = Math.cos(el), se = Math.sin(el);
+      const x1 = x * ca - z * sa, z1 = x * sa + z * ca;
+      const y2 = y * ce - z1 * se, z2 = y * se + z1 * ce;
+      const d = R - z2;
+      return [(x1 * R) / d, (-y2 * R) / d, d];
+    }
+    const corners = [];
+    walls.forEach((w) => w.v.forEach((v, k) => { [[0, w.z], [0, w.z + D], [v * HS, w.z], [v * HS, w.z + D]].forEach(([y, z]) => corners.push([k * XS, y, z])); }));
+    corners.push([0, 0, zMax + 1.2], [xMax, 0, zMax + 1.2], [-0.6, 180 * HS, -0.3]);
+    function profile(w, sweep) {
+      const pts = [], n = Math.floor(sweep);
+      for (let k = 0; k <= n && k < w.v.length; k++) pts.push([k * XS, w.v[k] * HS]);
+      if (sweep > n && n + 1 < w.v.length) { const f = sweep - n; pts.push([(n + f) * XS, (w.v[n] + (w.v[n + 1] - w.v[n]) * f) * HS]); }
+      if (pts[pts.length - 1][0] < 0.12) pts.push([0.12, pts[0][1]]);
+      return pts;
+    }
+    function draw(az, el, sweep) {
+      scene.selectAll('*').remove();
+      const pr = corners.map((p) => proj(p, az, el));
+      const bx = d3.extent(pr, (q) => q[0]), by = d3.extent(pr, (q) => q[1]);
+      const m = 18, lm = 58, availW = ctx.w - 2 * m - lm - 64, availH = ctx.h - top - 2 * m;
+      const s = Math.min(availW / (bx[1] - bx[0]), availH / (by[1] - by[0]));
+      const ox = m + lm + (availW - (bx[1] - bx[0]) * s) / 2 - bx[0] * s, oy = top + m + (availH - (by[1] - by[0]) * s) / 2 - by[0] * s;
+      const P = (p) => { const q = proj(p, az, el); return [ox + q[0] * s, oy + q[1] * s, q[2]]; };
+      const pathOf = (ps) => 'M' + ps.map((p) => { const q = P(p); return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join('L') + 'Z';
+      const line = (a, b, cls) => { const p = P(a), q = P(b); scene.append('line').attr('class', cls).attr('x1', p[0]).attr('y1', p[1]).attr('x2', q[0]).attr('y2', q[1]); };
+      // floor and minute rules
+      const fl = scene.append('g');
+      years.forEach((y, k) => { const p = P([k * XS, 0, -0.3]), q = P([k * XS, 0, zMax + 0.6]); fl.append('line').style('stroke', 'var(--cds-chart-grid)').attr('x1', p[0]).attr('y1', p[1]).attr('x2', q[0]).attr('y2', q[1]); });
+      [ -0.3, zMax + 0.6].forEach((z) => { const p = P([-0.3, 0, z]), q = P([xMax + 0.3, 0, z]); fl.append('line').style('stroke', 'var(--cds-chart-grid)').attr('x1', p[0]).attr('y1', p[1]).attr('x2', q[0]).attr('y2', q[1]); });
+      [60, 120, 180].forEach((mi) => {
+        line([-0.3, mi * HS, -0.3], [xMax + 0.3, mi * HS, -0.3], 'tv-ref');
+        const p = P([-0.4, mi * HS, -0.3]);
+        scene.append('text').attr('class', 'tv-lbl muted').attr('x', p[0] - 4).attr('y', p[1]).attr('dy', '0.32em').attr('text-anchor', 'end').text(`${mi} Min.`);
+      });
+      // walls, far to near
+      const labs = [];
+      const order = walls.map((w) => ({w, d: P([xMax / 2, yMax / 3, w.z + D / 2])[2]})).sort((a, b) => b.d - a.d);
+      order.forEach(({w}) => {
+        const pts = profile(w, sweep);
+        const xe = pts[pts.length - 1][0];
+        const g = scene.append('g').style('opacity', w.focus ? 1 : 0.92);
+        const faces = [];
+        for (let k = 0; k < pts.length - 1; k++) {
+          const a = pts[k], b = pts[k + 1];
+          faces.push({ps: [[a[0], a[1], w.z + D], [b[0], b[1], w.z + D], [b[0], b[1], w.z], [a[0], a[1], w.z]], kind: 'top'});
+        }
+        faces.push({ps: [[0, 0, w.z], [0, pts[0][1], w.z], [0, pts[0][1], w.z + D], [0, 0, w.z + D]], kind: 'cap'});
+        faces.push({ps: [[xe, 0, w.z], [xe, pts[pts.length - 1][1], w.z], [xe, pts[pts.length - 1][1], w.z + D], [xe, 0, w.z + D]], kind: 'cap'});
+        faces.forEach((f) => { f.d = d3.mean(f.ps, (p) => P(p)[2]); });
+        faces.sort((a, b) => b.d - a.d).forEach((f) => {
+          g.append('path').attr('d', pathOf(f.ps)).style('fill', w.color).style('stroke', w.color).attr('stroke-width', 0.6)
+            .style('filter', f.kind === 'top' ? 'brightness(1.22)' : 'brightness(0.72)');
+        });
+        const front = [[0, 0, w.z + D], ...pts.map((p) => [p[0], p[1], w.z + D]), [xe, 0, w.z + D]];
+        const tops = pts.map((p) => P([p[0], p[1], w.z + D]));
+        g.append('path').attr('d', pathOf(front)).style('fill', w.color).style('stroke', 'var(--color-panel)').attr('stroke-width', 0.8).attr('stroke-opacity', 0.6)
+          .on('pointermove', (ev) => {
+            const [mx] = d3.pointer(ev, ctx.svg.node());
+            let k = 0, best = Infinity;
+            tops.forEach((q, i) => { if (Math.abs(q[0] - mx) < best && i < w.v.length && pts[i][0] === i * XS) { best = Math.abs(q[0] - mx); k = i; } });
+            showTip(ctx, `${w.g} Jahre · ${years[k]}`, [[w.color, 'Sehdauer', minFmt(w.v[k])]], tops[k][0], tops[k][1]);
+          })
+          .on('pointerleave', () => hideTip(ctx));
+        const e = P([xe, pts[pts.length - 1][1], w.z + D / 2]);
+        const k = Math.round(xe / XS);
+        const shown = Math.abs(xe - k * XS) < 0.01 ? w.v[k] : pts[pts.length - 1][1] / HS;
+        labs.push({x: e[0] + 6, y: e[1], focus: w.focus, text: `${w.g} · ${f0(shown)}`});
+      });
+      labs.sort((a, b) => a.y - b.y);
+      for (let i = 1; i < labs.length; i++) {
+        for (let j = 0; j < i; j++) if (Math.abs(labs[i].x - labs[j].x) < 70 && labs[i].y - labs[j].y < 14) labs[i].y = labs[j].y + 14;
+      }
+      labs.forEach((l) => scene.append('text').attr('class', l.focus ? 'tv-lbl' : 'tv-lbl muted').style('font-weight', l.focus ? 'var(--cds-font-weight-medium)' : null)
+        .attr('x', l.x).attr('y', l.y).attr('dy', '0.32em').text(l.text));
+      years.forEach((y, k) => {
+        if (k * XS > sweep * XS + 0.01) return;
+        if (ctx.w < 520 && k % 2 && k !== years.length - 1) return;
+        const p = P([k * XS, 0, zMax + 1.1]);
+        scene.append('text').attr('class', 'tv-lbl muted').attr('x', p[0]).attr('y', p[1]).attr('dy', '0.9em').attr('text-anchor', 'middle').text(String(y));
+      });
+    }
+    // Drag with the mouse to turn the view
+    root.on('pointerdown', (ev) => {
+      if (ev.pointerType !== 'mouse') return;
+      if (window.tv3dStop) window.tv3dStop();
+      let lx = ev.clientX, ly = ev.clientY;
+      const move = (e) => { st.az += (e.clientX - lx) * 0.008; st.el = Math.max(0.05, Math.min(1.1, st.el + (e.clientY - ly) * 0.005)); lx = e.clientX; ly = e.clientY; hideTip(ctx); draw(st.az, st.el, years.length - 1); };
+      const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+    }).style('cursor', 'grab');
+    if (ctx.animate) {
+      const ease = d3.easeCubicInOut, t0 = performance.now(), full = years.length - 1;
+      let raf = 0;
+      const stop = () => { cancelAnimationFrame(raf); window.tv3dStop = null; };
+      window.tv3dStop = stop;
+      const tick = (now) => {
+        const t = (now - t0) / 1000;
+        const a = ease(Math.min(1, t / 5.5));
+        st.az = -1.15 + (0.72 + 1.15) * a;
+        st.el = 0.2 + (0.34 - 0.2) * a;
+        draw(st.az, st.el, full * d3.easeCubicOut(Math.max(0, Math.min(1, (t - 0.3) / 4))));
+        if (t < 5.5) raf = requestAnimationFrame(tick); else stop();
+      };
+      raf = requestAnimationFrame(tick);
+    } else {
+      draw(st.az, st.el, years.length - 1);
+    }
+  }
+
+  // Horizontal bars, optionally grouped
+  function hbars(ctx, cats, vMax, top, subs) {
+    const {svg, w, h} = ctx;
+    const l = Math.ceil(d3.max(cats, (c) => measure(svg, c))) + 10;
+    const r = 52;
+    const M = {t: (top || 0) + 22, r, b: 8, l};
+    const iw = Math.max(60, w - M.l - M.r), ih = Math.max(60, h - M.t - M.b);
+    const y = d3.scaleBand().domain(cats).range([0, ih]).paddingInner(subs ? 0.25 : 0.3).paddingOuter(0.1);
+    const sub = d3.scaleBand().domain(subs || ['_']).range([0, y.bandwidth()]).padding(0.08);
+    const x = d3.scaleLinear().domain([0, vMax]).range([0, iw]);
+    const gp = ctx.g.attr('transform', `translate(${M.l},${M.t})`);
+    gp.append('g').attr('class', 'tv-xaxis').call(d3.axisLeft(y).tickSize(0).tickPadding(8)).call((g) => g.select('.domain').remove());
+    const by = (c, s) => y(c) + sub(s || '_');
+    const H = {x, y, sub, M, iw, ih, gp,
+      yc: (c, s) => by(c, s) + sub.bandwidth() / 2,
+      bar(c, from, v, color, i, tip, s) {
+        const rect = gp.append('rect').attr('y', by(c, s)).attr('height', sub.bandwidth()).attr('x', x(from)).attr('rx', 2).style('fill', color)
+          .on('pointerenter', () => showTip(ctx, c, tip, M.l + x(v), M.t + by(c, s)))
+          .on('pointerleave', () => hideTip(ctx));
+        if (ctx.animate) rect.attr('width', 0).transition().delay(i * 40).duration(700).ease(d3.easeCubicOut).attr('width', Math.max(0, x(v) - x(from)));
+        else rect.attr('width', Math.max(0, x(v) - x(from)));
+      },
+      valueLabel(c, v, text, s) {
+        const t = gp.append('text').attr('class', 'tv-lbl').attr('x', x(v) + 5).attr('y', H.yc(c, s)).attr('dy', '0.32em').text(text);
+        if (ctx.animate) t.style('opacity', 0).transition().delay(700).duration(400).style('opacity', 1);
+      }
+    };
+    return H;
+  }
+
+  dash.draw('stage', {
+    mount(el) {
+      const svg = d3.select(el).append('svg').attr('class', 'tv-svg').attr('role', 'img');
+      const tip = d3.select(el).append('div').attr('class', 'tv-tip');
+      return {svg, tip, last: null};
+    },
+    update(el, m) {
+      const block = el.closest('.tv-scrolly');
+      const want = block && block.dataset.view;
+      const view = VIEWS[want] ? want : 'trend_de';
+      const V = VIEWS[view];
+      const sets = V.sources.map((id) => dash.data(id));
+      const w = Math.max(260, el.clientWidth), h = Math.max(260, el.clientHeight || 400);
+      m.svg.attr('width', w).attr('height', h).attr('viewBox', `0 0 ${w} ${h}`).attr('aria-label', V.label);
+      if (window.tv3dStop) window.tv3dStop();
+      m.svg.interrupt().selectAll('*').interrupt().remove();
+      m.tip.style('opacity', 0);
+      const msg = (s) => m.svg.append('text').attr('class', 'tv-msg').attr('x', w / 2).attr('y', h / 2).attr('text-anchor', 'middle').text(s);
+      if (sets.some((s) => s.status === 'loading')) { msg('Lädt …'); return; }
+      if (sets.some((s) => s.status !== 'ok' || s.data == null)) { msg('Konnte nicht geladen werden'); return; }
+      const animate = !reduce && m.last !== view;
+      m.last = view;
+      const data = {};
+      V.sources.forEach((id, i) => { data[id] = sets[i].data; });
+      V.render({svg: m.svg, g: m.svg.append('g'), w, h, data, tip: m.tip, el, animate});
+    }
+  });
+})();
+
+</script>

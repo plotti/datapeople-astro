@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="de-CH" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Die Altersschere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+body{margin:0}
+/* Layout: a stage holds the 3D chart; the chapter text sits over its lower left, the player bar runs beneath. Palette follows the Meadow look of the TV scroll story: green for 60+, ochre for 15–29. */
+:root {
+  --night: #f2f5ec;
+  --night-2: #ffffff;
+  --ink: #1e2a1f;
+  --mute: #66735f;
+  --line: #dde4d2;
+  --old: #2d6a4f;
+  --young: #d99a2b;
+  --mid: #b4bcab;
+  --mid-2: #a3ac99;
+  --floor: #e6ebdd;
+  --grid: #d3dbc6;
+  --glow: #fffbe8;
+  --stage-a: #ffffff;
+  --stage-b: #eef2e6;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Helvetica Neue", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --night: #0e130e; --night-2: #192019; --ink: #f0efec; --mute: #898781; --line: #272726; --old: #72d0a2; --young: #f1b454;
+  --mid: #3c473c; --mid-2: #333d33; --floor: #111811; --grid: #222c22; --glow: #cfe8d6; --stage-a: #1a231a; --stage-b: #0e130e; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --night: #0e130e; --night-2: #192019; --ink: #f0efec; --mute: #898781; --line: #272726; --old: #72d0a2; --young: #f1b454;
+  --mid: #3c473c; --mid-2: #333d33; --floor: #111811; --grid: #222c22; --glow: #cfe8d6; --stage-a: #1a231a; --stage-b: #0e130e; color-scheme: dark; }
+html, body { background: var(--night); color: var(--ink); }
+body { font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 20px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 14px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+.kicker { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin: 0; }
+.legend { display: flex; gap: 16px; font-family: var(--f-mono); font-size: 12px; color: var(--mute); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+.stage { position: relative; height: clamp(440px, 74vh, 760px); border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
+  background: radial-gradient(120% 90% at 70% 20%, var(--stage-a) 0%, var(--stage-b) 70%); }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
+.labels { position: absolute; inset: 0; pointer-events: none; }
+.lbl { position: absolute; left: 0; top: 0; transform: translate(-50%, -100%); white-space: nowrap; font-family: var(--f-mono); font-size: 12px; color: var(--ink);
+  text-shadow: 0 0 6px var(--night), 0 0 2px var(--night); transition: opacity .4s; }
+.lbl b { font-weight: 500; }
+.lbl.year { transform: translate(-50%, 0); color: var(--mute); font-size: 11px; }
+.lbl.gap { font-family: var(--f-display); font-weight: 700; font-size: 22px; color: var(--ink); transform: translate(8px, -50%); }
+
+.story { position: absolute; left: 0; bottom: 0; width: min(560px, 100%); padding: 22px 24px 24px; display: grid; gap: 6px;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--night) 85%, transparent) 26%, color-mix(in srgb, var(--night) 95%, transparent) 100%); }
+.ch { display: none; gap: 6px; }
+.ch.on { display: grid; animation: rise .5s ease-out both; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ch.on { animation: none; } .lbl { transition: none; } }
+.ch-label { font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin: 0; }
+.ch h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(24px, 3.4vw, 38px); line-height: 1.08; margin: 0; text-wrap: balance; }
+.ch p.cap { margin: 0; color: var(--ink); max-width: 52ch; }
+.big { font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 9vw, 104px); line-height: .9; color: var(--young); letter-spacing: -.02em; }
+.y { color: var(--young); } .o { color: var(--old); }
+
+.player { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.play { font: 500 14px var(--f-body); color: var(--night); background: var(--ink); border: 0; border-radius: 999px; padding: 9px 18px 9px 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.play:focus-visible, .pill:focus-visible { outline: 2px solid var(--old); outline-offset: 2px; }
+.play svg { width: 14px; height: 14px; fill: currentColor; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
+.pill { position: relative; overflow: hidden; font: 400 12px var(--f-mono); color: var(--mute); background: var(--night-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.pill .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: color-mix(in srgb, var(--old) 22%, transparent); }
+.pill span { position: relative; }
+.pill.on { color: var(--ink); border-color: var(--old); }
+.time { font: 12px var(--f-mono); color: var(--mute); font-variant-numeric: tabular-nums; }
+.src { font-size: 12px; color: var(--mute); margin: 0; max-width: 90ch; }
+
+.tip { position: absolute; pointer-events: none; background: var(--night-2); border: 1px solid var(--line); box-shadow: 0 6px 20px color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 8px; padding: 7px 10px; font: 12px var(--f-mono); color: var(--ink); opacity: 0; transition: opacity .12s; z-index: 3; white-space: nowrap; }
+.tip b { font-weight: 500; }
+.fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--mute); font-size: 14px; padding: 24px; text-align: center; }
+
+@media (max-width: 640px) {
+  .stage { height: clamp(520px, 82vh, 760px); }
+  .story { padding: 16px 16px 18px; }
+  .ch p.cap { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="top">
+    <p class="kicker">Mediapulse TV-Daten · Deutschschweiz · 2019–2025</p>
+    <div class="legend" aria-hidden="true">
+      <span><i style="background:var(--young)"></i>15–29 Jahre</span>
+      <span><i style="background:var(--old)"></i>60+ Jahre</span>
+      <span><i style="background:var(--mid)"></i>übrige Altersgruppen</span>
+    </div>
+  </div>
+
+  <div class="stage" id="stage" role="img" aria-label="3D-Diagramm: Sehdauer in Minuten pro Tag für sechs Altersgruppen von 2019 bis 2025. Die Werte der 15- bis 29-Jährigen fallen von 38 auf 14.6 Minuten, Personen ab 60 bleiben bei rund 195 bis 216 Minuten.">
+    <canvas id="gl"></canvas>
+    <div class="labels" id="labels"></div>
+    <div class="tip" id="tip"></div>
+    <div class="story" aria-live="polite">
+      <div class="ch on" data-ch="0">
+        <p class="ch-label">Die Altersschere</p>
+        <div class="big">−62 %</div>
+        <h2>So viel weniger fernsehen 15- bis 29-Jährige als 2019.</h2>
+        <p class="cap">Sieben Jahre, sechs Altersgruppen, ein Bild. Play startet die Fahrt durch die Daten (<span id="dur">rund 50 Sekunden</span>).</p>
+      </div>
+      <div class="ch" data-ch="1">
+        <p class="ch-label">2019</p>
+        <h2>Damals schauten Junge noch <span class="y">38 Minuten</span> am Tag.</h2>
+        <p class="cap">Jede Wand ist eine Altersgruppe, vorne die Jüngsten, hinten 60+. Die Höhe zeigt die Sehdauer pro Person und Tag. Personen ab 60 kamen auf <span class="o">194 Minuten</span>.</p>
+      </div>
+      <div class="ch" data-ch="2">
+        <p class="ch-label">Sieben Jahre</p>
+        <h2>Die Wände laufen durch die Jahre.</h2>
+        <p class="cap">Im Corona-Jahr 2020 steigen fast alle Gruppen kurz an. Danach geht es für die meisten nach unten, am steilsten vorne bei den Jüngeren.</p>
+      </div>
+      <div class="ch" data-ch="3">
+        <p class="ch-label">15–29 Jahre</p>
+        <h2>Die Jungen schauen <span class="y">62 % weniger</span>.</h2>
+        <p class="cap">Von 38 Minuten im Jahr 2019 auf 14.6 Minuten 2025. Auch 30- bis 39-Jährige verlieren 39 % ihrer Fernsehzeit.</p>
+      </div>
+      <div class="ch" data-ch="4">
+        <p class="ch-label">60+ Jahre</p>
+        <h2>Personen ab 60 bleiben <span class="o">dabei</span>.</h2>
+        <p class="cap">198.9 Minuten pro Tag im Jahr 2025, das sind 3 % mehr als 2019 und mehr als drei Stunden vor dem Fernseher.</p>
+      </div>
+      <div class="ch" data-ch="5">
+        <p class="ch-label">Die Schere</p>
+        <h2>60+ schauen <span class="o">13.6-mal</span> so lange wie 15- bis 29-Jährige.</h2>
+        <p class="cap">2025 liegen 184 Minuten pro Tag zwischen den beiden Gruppen. Der Rückgang des Fernsehens ist vor allem ein Rückgang bei den Jüngeren.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="player">
+    <button class="play" id="play" type="button" aria-label="Abspielen"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2.5v11l9-5.5z"/></svg><span id="playTxt">Play</span></button>
+    <div class="pills" id="pills" role="group" aria-label="Kapitel">
+      <button class="pill on" type="button" data-go="0"><i class="fill"></i><span>Titel</span></button>
+      <button class="pill" type="button" data-go="1"><i class="fill"></i><span>2019</span></button>
+      <button class="pill" type="button" data-go="2"><i class="fill"></i><span>Sieben Jahre</span></button>
+      <button class="pill" type="button" data-go="3"><i class="fill"></i><span>15–29</span></button>
+      <button class="pill" type="button" data-go="4"><i class="fill"></i><span>60+</span></button>
+      <button class="pill" type="button" data-go="5"><i class="fill"></i><span>Die Schere</span></button>
+    </div>
+    <span class="time" id="time">0:00 / 0:00</span>
+  </div>
+  <p class="src">Sehdauer: durchschnittliche Fernsehminuten pro Person und Tag, Montag–Sonntag, Personen ab 3 Jahren, Deutschschweiz. 2019–2024: Mediapulse-Jahresberichte, Tabelle 2.7, auf ganze Minuten gerundet. 2025: Mediapulse TV Data, Publikation Jahresdaten 2025. Mit der Maus über die Wände fahren zeigt die Werte.</p>
+</div>
+
+<script src="/tv-schweiz/three.min.js"></script>
+<script>
+(function () {
+  const YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
+  const DATA = [
+    {g: '3–14',  v: [38, 32, 26, 26, 22, 24, 21.7]},
+    {g: '15–29', v: [38, 36, 30, 21, 18, 17, 14.6]},
+    {g: '30–39', v: [85, 78, 66, 63, 61, 62, 51.9]},
+    {g: '40–49', v: [111, 121, 110, 90, 87, 86, 75.1]},
+    {g: '50–59', v: [146, 157, 150, 141, 138, 136, 129.6]},
+    {g: '60+',   v: [194, 214, 216, 203, 207, 208, 198.9]}
+  ];
+  const fmt = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
+  const XS = 2, HS = 1 / 20, ZS = 1.7, DEPTH = 0.55;
+  const zOf = (i) => (DATA.length - 1 - i) * ZS;           // youngest in front (largest z)
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const stage = document.getElementById('stage');
+  const canvas = document.getElementById('gl');
+  const labelsEl = document.getElementById('labels');
+  const tip = document.getElementById('tip');
+
+  if (!window.THREE) {
+    const f = document.createElement('div');
+    f.className = 'fallback';
+    f.textContent = 'Die 3D-Ansicht konnte nicht geladen werden. Die Geschichte steht unten im Text.';
+    stage.appendChild(f);
+    return;
+  }
+
+  // ---- Chapters: where the camera goes, how far the years have run, what is in focus
+  const ALL = [1, 1, 1, 1, 1, 1];
+  const DIM = 0.13;
+  const CH = [
+    {dur: 6,  cam: {az: 0.78, el: 0.36, r: 27, t: [6, 4.2, 4.2]}, sweep: 6, focus: ALL, gap: 0},
+    {dur: 8,  cam: {az: -1.2, el: 0.22, r: 19, t: [0.5, 4.2, 4.2]}, sweep: 0, focus: ALL, gap: 0},
+    {dur: 9,  cam: {az: 0.42, el: 0.3, r: 25, t: [6, 4, 4.2]}, sweep: 6, focus: ALL, gap: 0, sweepFrom: 0},
+    {dur: 8,  cam: {az: 0.18, el: 0.16, r: 15, t: [7, 1.6, 7.6]}, sweep: 6, focus: [DIM, 1, 0.35, DIM, DIM, DIM], gap: 0},
+    {dur: 8,  cam: {az: 0.82, el: 0.34, r: 21, t: [6, 6.5, 1.5]}, sweep: 6, focus: [DIM, DIM, DIM, DIM, 0.35, 1], gap: 0},
+    {dur: 9,  cam: {az: 1.12, el: 0.18, r: 23, t: [10, 5, 4.5]}, sweep: 6, focus: [DIM, 1, DIM, DIM, DIM, 1], gap: 1}
+  ];
+  const TOTAL = CH.reduce((a, c) => a + c.dur, 0);
+  const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  document.getElementById('dur').textContent = `${TOTAL} Sekunden`;
+
+  // ---- Three.js scene
+  const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x000000, 30, 62);
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+
+  scene.add(new THREE.AmbientLight(0x8090b0, 0.38));
+  const key = new THREE.DirectionalLight(0xffffff, 0.42);
+  key.position.set(8, 20, 14);
+  scene.add(key);
+  const tvGlow = new THREE.PointLight(0xffffff, 0.7, 60);   // the screen in front of the walls
+  tvGlow.position.set(6, 5, 18);
+  scene.add(tvGlow);
+
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshStandardMaterial({color: 0x000000, roughness: 1}));
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.set(6, -0.01, 4);
+  scene.add(floor);
+  let grid = null;
+
+  // Minute rules on the back wall: 60, 120, 180 minutes
+  const ruleMat = new THREE.LineDashedMaterial({color: 0x000000, dashSize: 0.3, gapSize: 0.25});
+  const rules = new THREE.Group();
+  [60, 120, 180].forEach((m) => {
+    const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.4, m * HS, -0.6), new THREE.Vector3(12.4, m * HS, -0.6)]);
+    rules.add(new THREE.Line(g, ruleMat));
+    rules.children[rules.children.length - 1].computeLineDistances();
+  });
+  scene.add(rules);
+
+  const walls = DATA.map((d, i) => {
+    const mat = new THREE.MeshStandardMaterial({roughness: 0.7, metalness: 0.05, transparent: true, opacity: 1});
+    const mesh = new THREE.Mesh(new THREE.BufferGeometry(), mat);
+    mesh.position.z = zOf(i);
+    mesh.userData.idx = i;
+    scene.add(mesh);
+    const edgeMat = new THREE.LineBasicMaterial({transparent: true});
+    const edge = new THREE.Line(new THREE.BufferGeometry(), edgeMat);
+    edge.position.z = zOf(i) + DEPTH + 0.01;
+    scene.add(edge);
+    return {d, mesh, edge, alpha: 1, lastSweep: -1};
+  });
+
+  function buildWall(w, sweep) {
+    const v = w.d.v;
+    const pts = [];
+    const n = Math.floor(sweep);
+    for (let k = 0; k <= n && k < v.length; k++) pts.push([k * XS, v[k] * HS]);
+    if (sweep > n && n + 1 < v.length) {
+      const f = sweep - n;
+      pts.push([(n + f) * XS, (v[n] + (v[n + 1] - v[n]) * f) * HS]);
+    }
+    let xEnd = pts[pts.length - 1][0];
+    if (xEnd < 0.12) { pts.push([0.12, pts[0][1]]); xEnd = 0.12; }
+    const shape = new THREE.Shape();
+    shape.moveTo(0, 0);
+    pts.forEach(([x, y]) => shape.lineTo(x, y));
+    shape.lineTo(xEnd, 0);
+    shape.lineTo(0, 0);
+    w.mesh.geometry.dispose();
+    w.mesh.geometry = new THREE.ExtrudeGeometry(shape, {depth: DEPTH, bevelEnabled: false});
+    w.edge.geometry.dispose();
+    w.edge.geometry = new THREE.BufferGeometry().setFromPoints(pts.map(([x, y]) => new THREE.Vector3(x, y + 0.01, 0)));
+    w.end = {x: xEnd, y: pts[pts.length - 1][1], val: pts[pts.length - 1][1] / HS};
+    w.lastSweep = sweep;
+  }
+
+  // Gap marker between 15–29 and 60+ in 2025
+  const yI = DATA.findIndex((d) => d.g === '15–29'), oI = DATA.findIndex((d) => d.g === '60+');
+  const gx = (YEARS.length - 1) * XS + 0.9;
+  const gapPts = [
+    new THREE.Vector3(gx, DATA[yI].v[6] * HS, zOf(yI) + DEPTH / 2),
+    new THREE.Vector3(gx, DATA[oI].v[6] * HS, zOf(yI) + DEPTH / 2),
+    new THREE.Vector3(gx - 0.7, DATA[oI].v[6] * HS, zOf(oI) + DEPTH / 2)
+  ];
+  const gapLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(gapPts), new THREE.LineBasicMaterial({transparent: true, opacity: 0}));
+  scene.add(gapLine);
+  const gapTick = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(gx - 0.7, DATA[yI].v[6] * HS, zOf(yI) + DEPTH / 2), gapPts[0]]), gapLine.material);
+  scene.add(gapTick);
+
+  // ---- Colors come from the page tokens, so the 3D scene follows the light or dark theme
+  function applyTheme() {
+    const css = getComputedStyle(document.documentElement);
+    const c = (n) => new THREE.Color(css.getPropertyValue(n).trim() || '#888888');
+    const dark = c('--night').getHSL({}).l < 0.3;
+    scene.fog.color = c('--night');
+    floor.material.color = c('--floor');
+    if (grid) { scene.remove(grid); grid.geometry.dispose(); grid.material.dispose(); }
+    grid = new THREE.GridHelper(40, 20, c('--grid'), c('--grid'));
+    grid.position.set(6, 0.005, 4);
+    scene.add(grid);
+    floor.material.emissive = c('--floor');
+    floor.material.emissiveIntensity = dark ? 0.2 : 0.75;
+    ruleMat.color = c('--grid').lerp(c('--mute'), 0.4);
+    tvGlow.color = c('--glow');
+    gapLine.material.color = c('--ink');
+    const ink = c('--ink');
+    walls.forEach((w) => {
+      const base = w.d.g === '60+' ? c('--old') : w.d.g === '15–29' ? c('--young') : (w.mesh.userData.idx % 2 ? c('--mid-2') : c('--mid'));
+      const focus = w.d.g === '60+' || w.d.g === '15–29';
+      w.mesh.material.color = base;
+      w.mesh.material.emissive = base.clone();
+      w.mesh.material.emissiveIntensity = dark ? (focus ? 0.22 : 0.08) : (focus ? 0.08 : 0.15);
+      w.edge.material.color = base.clone().lerp(ink, dark ? 0.15 : 0.35);
+    });
+  }
+  applyTheme();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+  new MutationObserver(applyTheme).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+
+  // ---- HTML labels projected from 3D
+  const groupLbls = walls.map((w) => {
+    const el = document.createElement('div');
+    el.className = 'lbl';
+    labelsEl.appendChild(el);
+    return el;
+  });
+  const yearLbls = YEARS.map((y) => {
+    const el = document.createElement('div');
+    el.className = 'lbl year';
+    el.textContent = y;
+    labelsEl.appendChild(el);
+    return el;
+  });
+  const ruleLbls = [60, 120, 180].map((m) => {
+    const el = document.createElement('div');
+    el.className = 'lbl year';
+    el.textContent = `${m} Min.`;
+    labelsEl.appendChild(el);
+    return el;
+  });
+  const gapLbl = document.createElement('div');
+  gapLbl.className = 'lbl gap';
+  gapLbl.textContent = `${(DATA[oI].v[6] / DATA[yI].v[6]).toFixed(1)}×`;
+  labelsEl.appendChild(gapLbl);
+
+  const v3 = new THREE.Vector3();
+  let W = 1, H = 1;
+  function place(el, x, y, z, opacity) {
+    v3.set(x, y, z).project(camera);
+    const vis = v3.z < 1 && opacity > 0.02;
+    el.style.opacity = vis ? opacity : 0;
+    let px = (v3.x * 0.5 + 0.5) * W;
+    if (vis && !el.classList.contains('gap')) { const hw = el.offsetWidth / 2 + 4; px = Math.max(hw, Math.min(W - hw, px)); }
+    if (vis) el.style.transform = `translate(${px}px, ${(-v3.y * 0.5 + 0.5) * H}px) ${el.classList.contains('gap') ? 'translate(8px,-50%)' : el.classList.contains('year') ? 'translate(-50%,0)' : 'translate(-50%,-110%)'}`;
+  }
+
+  function resize() {
+    W = stage.clientWidth; H = stage.clientHeight;
+    renderer.setSize(W, H, false);
+    camera.aspect = W / H;
+    camera.fov = W < 640 ? 50 : 38;
+    if (W >= 640) camera.setViewOffset(W, H, -W * 0.17, H * 0.05, W, H);
+    else camera.setViewOffset(W, H, 0, H * 0.2, W, H);
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage);
+  resize();
+
+  // ---- Timeline
+  const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  const lerp = (a, b, f) => a + (b - a) * f;
+  function stateAt(ci, t) {
+    const c = CH[ci], p = CH[Math.max(0, ci - 1)];
+    const e = reduce ? 1 : ease(clamp(t / 2.2));
+    const fe = reduce ? 1 : ease(clamp(t / 1.2));
+    const cam = {az: lerp(p.cam.az, c.cam.az, e), el: lerp(p.cam.el, c.cam.el, e), r: lerp(p.cam.r, c.cam.r, e), t: c.cam.t.map((v, k) => lerp(p.cam.t[k], v, e))};
+    let sweep = c.sweep;
+    if (c.sweepFrom != null) sweep = reduce ? c.sweep : lerp(c.sweepFrom, c.sweep, ease(clamp((t - 1.2) / (c.dur - 2.6))));
+    else if (ci > 0 && p.sweep !== c.sweep) sweep = lerp(p.sweep, c.sweep, e);
+    const focus = c.focus.map((v, k) => lerp(p.focus[k], v, fe));
+    const gap = lerp(p.gap, c.gap, reduce ? 1 : clamp((t - 1.6) / 1));
+    return {cam, sweep, focus, gap};
+  }
+
+  let ci = 0, ct = CH[0].dur, playing = false, last = performance.now(), idle = 0;
+  const pills = Array.from(document.querySelectorAll('.pill'));
+  const chEls = Array.from(document.querySelectorAll('.ch'));
+  const playBtn = document.getElementById('play'), playTxt = document.getElementById('playTxt'), playIcon = document.getElementById('playIcon');
+  const timeEl = document.getElementById('time');
+
+  function showChapter(i) {
+    chEls.forEach((el) => el.classList.toggle('on', +el.dataset.ch === i));
+    pills.forEach((p) => p.classList.toggle('on', +p.dataset.go === i));
+  }
+  function setPlaying(on) {
+    playing = on;
+    playTxt.textContent = on ? 'Pause' : (ci === CH.length - 1 && ct >= CH[ci].dur ? 'Nochmals' : 'Play');
+    playBtn.setAttribute('aria-label', on ? 'Pausieren' : 'Abspielen');
+    playIcon.innerHTML = on ? '<path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/>' : '<path d="M4 2.5v11l9-5.5z"/>';
+  }
+  function go(i, t) {
+    ci = i; ct = t; showChapter(i);
+  }
+  playBtn.addEventListener('click', () => {
+    if (playing) { setPlaying(false); return; }
+    if (ci === CH.length - 1 && ct >= CH[ci].dur) go(0, 0);
+    else if (ci === 0 && ct >= CH[0].dur) go(1, 0);
+    setPlaying(true);
+  });
+  pills.forEach((p) => p.addEventListener('click', () => { go(+p.dataset.go, 0); setPlaying(true); }));
+
+  // ---- Hover values
+  const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+  canvas.addEventListener('pointermove', (ev) => {
+    const r = canvas.getBoundingClientRect();
+    mouse.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(mouse, camera);
+    const hit = ray.intersectObjects(walls.filter((w) => w.alpha > 0.3).map((w) => w.mesh))[0];
+    if (!hit) { tip.style.opacity = 0; return; }
+    const w = walls[hit.object.userData.idx];
+    const k = Math.max(0, Math.min(YEARS.length - 1, Math.round(hit.point.x / XS)));
+    if (k > w.lastSweep + 0.01) { tip.style.opacity = 0; return; }
+    tip.innerHTML = '';
+    const b = document.createElement('b'); b.textContent = `${w.d.g} Jahre · ${YEARS[k]}`;
+    tip.appendChild(b); tip.appendChild(document.createElement('br'));
+    tip.appendChild(document.createTextNode(`${fmt(w.d.v[k])} Minuten pro Tag`));
+    let x = ev.clientX - r.left + 14, y = ev.clientY - r.top - 44;
+    if (x + tip.offsetWidth > r.width - 4) x = ev.clientX - r.left - tip.offsetWidth - 14;
+    tip.style.left = Math.max(4, x) + 'px'; tip.style.top = Math.max(4, y) + 'px'; tip.style.opacity = 1;
+  });
+  canvas.addEventListener('pointerleave', () => { tip.style.opacity = 0; });
+
+  function frame(now) {
+    const dt = Math.min(0.1, (now - last) / 1000); last = now;
+    if (playing) {
+      ct += dt;
+      if (ct >= CH[ci].dur) {
+        if (ci < CH.length - 1) go(ci + 1, 0);
+        else { ct = CH[ci].dur; setPlaying(false); }
+      }
+    } else if (ci === 0 && !reduce) {
+      idle += dt;                                    // a slow drift on the title only
+    }
+    const s = stateAt(ci, ct);
+    const az = s.cam.az + (ci === 0 && !playing ? Math.sin(idle * 0.18) * 0.22 : 0);
+    const [tx, ty, tz] = s.cam.t;
+    camera.position.set(tx + s.cam.r * Math.sin(az) * Math.cos(s.cam.el), ty + s.cam.r * Math.sin(s.cam.el), tz + s.cam.r * Math.cos(az) * Math.cos(s.cam.el));
+    camera.lookAt(tx, ty, tz);
+
+    walls.forEach((w, i) => {
+      if (Math.abs(w.lastSweep - s.sweep) > 0.001) buildWall(w, s.sweep);
+      w.alpha = s.focus[i];
+      w.mesh.material.opacity = w.alpha;
+      w.mesh.material.depthWrite = w.alpha > 0.95;
+      w.edge.material.opacity = w.alpha;
+      const yr = YEARS[Math.min(YEARS.length - 1, Math.round(w.end.x / XS))];
+      const atYear = Math.abs(w.end.x / XS - Math.round(w.end.x / XS)) < 0.02;
+      groupLbls[i].innerHTML = '';
+      const b = document.createElement('b'); b.textContent = w.d.g;
+      groupLbls[i].appendChild(b);
+      groupLbls[i].appendChild(document.createTextNode(` · ${atYear ? fmt(w.d.v[Math.round(w.end.x / XS)]) : Math.round(w.end.val)} Min.${atYear && s.sweep < 6 ? ' (' + yr + ')' : ''}`));
+      place(groupLbls[i], w.end.x + 0.15, w.end.y + 0.35, zOf(i) + DEPTH / 2, w.alpha < 0.3 ? 0 : Math.min(1, w.alpha + 0.1));
+    });
+    YEARS.forEach((y, k) => place(yearLbls[k], k * XS, -0.15, zOf(0) + DEPTH + 1.3, k <= s.sweep + 0.01 ? 0.9 : 0.25));
+    [60, 120, 180].forEach((m, k) => place(ruleLbls[k], -0.6, m * HS + 0.2, -0.6, 0.75));
+    gapLine.material.opacity = s.gap;
+    place(gapLbl, gx, (DATA[yI].v[6] + DATA[oI].v[6]) / 2 * HS, zOf(yI) + DEPTH / 2, s.gap);
+
+    const el = CH.slice(0, ci).reduce((a, c) => a + c.dur, 0) + ct;
+    timeEl.textContent = `${mmss(Math.min(el, TOTAL))} / ${mmss(TOTAL)}`;
+    pills.forEach((p) => {
+      const i = +p.dataset.go;
+      p.querySelector('.fill').style.width = (i < ci ? 100 : i === ci ? (ct / CH[i].dur) * 100 : 0) + '%';
+    });
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  showChapter(0);
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>

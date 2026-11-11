@@ -1,0 +1,865 @@
+region,tage,zeit,rating_pct
+Deutschschweiz,Mo–Fr,02:00,1.05
+Deutschschweiz,Sa–So,02:00,1.47
+Deutschschweiz,Mo–So,02:00,1.17
+Deutschschweiz,Mo–Fr,02:15,1.15
+Deutschschweiz,Sa–So,02:15,1.65
+Deutschschweiz,Mo–So,02:15,1.3
+Deutschschweiz,Mo–Fr,02:30,1.17
+Deutschschweiz,Sa–So,02:30,1.62
+Deutschschweiz,Mo–So,02:30,1.3
+Deutschschweiz,Mo–Fr,02:45,1.15
+Deutschschweiz,Sa–So,02:45,1.59
+Deutschschweiz,Mo–So,02:45,1.28
+Deutschschweiz,Mo–Fr,03:00,1.12
+Deutschschweiz,Sa–So,03:00,1.56
+Deutschschweiz,Mo–So,03:00,1.25
+Deutschschweiz,Mo–Fr,03:15,1.08
+Deutschschweiz,Sa–So,03:15,1.48
+Deutschschweiz,Mo–So,03:15,1.19
+Deutschschweiz,Mo–Fr,03:30,1.03
+Deutschschweiz,Sa–So,03:30,1.42
+Deutschschweiz,Mo–So,03:30,1.14
+Deutschschweiz,Mo–Fr,03:45,0.98
+Deutschschweiz,Sa–So,03:45,1.35
+Deutschschweiz,Mo–So,03:45,1.09
+Deutschschweiz,Mo–Fr,04:00,0.97
+Deutschschweiz,Sa–So,04:00,1.29
+Deutschschweiz,Mo–So,04:00,1.06
+Deutschschweiz,Mo–Fr,04:15,0.95
+Deutschschweiz,Sa–So,04:15,1.25
+Deutschschweiz,Mo–So,04:15,1.04
+Deutschschweiz,Mo–Fr,04:30,0.92
+Deutschschweiz,Sa–So,04:30,1.22
+Deutschschweiz,Mo–So,04:30,1.0
+Deutschschweiz,Mo–Fr,04:45,0.89
+Deutschschweiz,Sa–So,04:45,1.17
+Deutschschweiz,Mo–So,04:45,0.97
+Deutschschweiz,Mo–Fr,05:00,0.91
+Deutschschweiz,Sa–So,05:00,1.14
+Deutschschweiz,Mo–So,05:00,0.98
+Deutschschweiz,Mo–Fr,05:15,0.94
+Deutschschweiz,Sa–So,05:15,1.14
+Deutschschweiz,Mo–So,05:15,1.0
+Deutschschweiz,Mo–Fr,05:30,1.03
+Deutschschweiz,Sa–So,05:30,1.19
+Deutschschweiz,Mo–So,05:30,1.07
+Deutschschweiz,Mo–Fr,05:45,1.08
+Deutschschweiz,Sa–So,05:45,1.24
+Deutschschweiz,Mo–So,05:45,1.13
+Deutschschweiz,Mo–Fr,06:00,1.2
+Deutschschweiz,Sa–So,06:00,1.3
+Deutschschweiz,Mo–So,06:00,1.23
+Deutschschweiz,Mo–Fr,06:15,1.18
+Deutschschweiz,Sa–So,06:15,1.29
+Deutschschweiz,Mo–So,06:15,1.21
+Deutschschweiz,Mo–Fr,06:30,1.27
+Deutschschweiz,Sa–So,06:30,1.33
+Deutschschweiz,Mo–So,06:30,1.29
+Deutschschweiz,Mo–Fr,06:45,1.37
+Deutschschweiz,Sa–So,06:45,1.39
+Deutschschweiz,Mo–So,06:45,1.37
+Deutschschweiz,Mo–Fr,07:00,1.55
+Deutschschweiz,Sa–So,07:00,1.56
+Deutschschweiz,Mo–So,07:00,1.55
+Deutschschweiz,Mo–Fr,07:15,1.59
+Deutschschweiz,Sa–So,07:15,1.66
+Deutschschweiz,Mo–So,07:15,1.61
+Deutschschweiz,Mo–Fr,07:30,1.7
+Deutschschweiz,Sa–So,07:30,1.9
+Deutschschweiz,Mo–So,07:30,1.75
+Deutschschweiz,Mo–Fr,07:45,1.74
+Deutschschweiz,Sa–So,07:45,2.1
+Deutschschweiz,Mo–So,07:45,1.84
+Deutschschweiz,Mo–Fr,08:00,1.87
+Deutschschweiz,Sa–So,08:00,2.4
+Deutschschweiz,Mo–So,08:00,2.02
+Deutschschweiz,Mo–Fr,08:15,1.82
+Deutschschweiz,Sa–So,08:15,2.57
+Deutschschweiz,Mo–So,08:15,2.03
+Deutschschweiz,Mo–Fr,08:30,1.85
+Deutschschweiz,Sa–So,08:30,2.75
+Deutschschweiz,Mo–So,08:30,2.11
+Deutschschweiz,Mo–Fr,08:45,1.98
+Deutschschweiz,Sa–So,08:45,2.94
+Deutschschweiz,Mo–So,08:45,2.25
+Deutschschweiz,Mo–Fr,09:00,2.24
+Deutschschweiz,Sa–So,09:00,3.29
+Deutschschweiz,Mo–So,09:00,2.54
+Deutschschweiz,Mo–Fr,09:15,2.29
+Deutschschweiz,Sa–So,09:15,3.62
+Deutschschweiz,Mo–So,09:15,2.67
+Deutschschweiz,Mo–Fr,09:30,2.37
+Deutschschweiz,Sa–So,09:30,4.26
+Deutschschweiz,Mo–So,09:30,2.91
+Deutschschweiz,Mo–Fr,09:45,2.61
+Deutschschweiz,Sa–So,09:45,4.73
+Deutschschweiz,Mo–So,09:45,3.21
+Deutschschweiz,Mo–Fr,10:00,2.67
+Deutschschweiz,Sa–So,10:00,5.25
+Deutschschweiz,Mo–So,10:00,3.4
+Deutschschweiz,Mo–Fr,10:15,2.65
+Deutschschweiz,Sa–So,10:15,5.72
+Deutschschweiz,Mo–So,10:15,3.52
+Deutschschweiz,Mo–Fr,10:30,2.84
+Deutschschweiz,Sa–So,10:30,6.17
+Deutschschweiz,Mo–So,10:30,3.79
+Deutschschweiz,Mo–Fr,10:45,2.76
+Deutschschweiz,Sa–So,10:45,6.28
+Deutschschweiz,Mo–So,10:45,3.76
+Deutschschweiz,Mo–Fr,11:00,2.97
+Deutschschweiz,Sa–So,11:00,6.62
+Deutschschweiz,Mo–So,11:00,4.01
+Deutschschweiz,Mo–Fr,11:15,3.22
+Deutschschweiz,Sa–So,11:15,6.78
+Deutschschweiz,Mo–So,11:15,4.23
+Deutschschweiz,Mo–Fr,11:30,3.45
+Deutschschweiz,Sa–So,11:30,6.95
+Deutschschweiz,Mo–So,11:30,4.45
+Deutschschweiz,Mo–Fr,11:45,3.52
+Deutschschweiz,Sa–So,11:45,6.88
+Deutschschweiz,Mo–So,11:45,4.48
+Deutschschweiz,Mo–Fr,12:00,3.8
+Deutschschweiz,Sa–So,12:00,6.86
+Deutschschweiz,Mo–So,12:00,4.67
+Deutschschweiz,Mo–Fr,12:15,4.06
+Deutschschweiz,Sa–So,12:15,6.96
+Deutschschweiz,Mo–So,12:15,4.88
+Deutschschweiz,Mo–Fr,12:30,4.36
+Deutschschweiz,Sa–So,12:30,7.12
+Deutschschweiz,Mo–So,12:30,5.15
+Deutschschweiz,Mo–Fr,12:45,4.68
+Deutschschweiz,Sa–So,12:45,7.37
+Deutschschweiz,Mo–So,12:45,5.45
+Deutschschweiz,Mo–Fr,13:00,4.63
+Deutschschweiz,Sa–So,13:00,7.72
+Deutschschweiz,Mo–So,13:00,5.51
+Deutschschweiz,Mo–Fr,13:15,4.42
+Deutschschweiz,Sa–So,13:15,7.94
+Deutschschweiz,Mo–So,13:15,5.42
+Deutschschweiz,Mo–Fr,13:30,4.34
+Deutschschweiz,Sa–So,13:30,7.89
+Deutschschweiz,Mo–So,13:30,5.36
+Deutschschweiz,Mo–Fr,13:45,4.32
+Deutschschweiz,Sa–So,13:45,8.02
+Deutschschweiz,Mo–So,13:45,5.37
+Deutschschweiz,Mo–Fr,14:00,4.48
+Deutschschweiz,Sa–So,14:00,8.21
+Deutschschweiz,Mo–So,14:00,5.54
+Deutschschweiz,Mo–Fr,14:15,4.51
+Deutschschweiz,Sa–So,14:15,8.13
+Deutschschweiz,Mo–So,14:15,5.54
+Deutschschweiz,Mo–Fr,14:30,4.56
+Deutschschweiz,Sa–So,14:30,7.92
+Deutschschweiz,Mo–So,14:30,5.52
+Deutschschweiz,Mo–Fr,14:45,4.59
+Deutschschweiz,Sa–So,14:45,7.8
+Deutschschweiz,Mo–So,14:45,5.5
+Deutschschweiz,Mo–Fr,15:00,5.06
+Deutschschweiz,Sa–So,15:00,7.84
+Deutschschweiz,Mo–So,15:00,5.85
+Deutschschweiz,Mo–Fr,15:15,5.26
+Deutschschweiz,Sa–So,15:15,7.78
+Deutschschweiz,Mo–So,15:15,5.98
+Deutschschweiz,Mo–Fr,15:30,5.33
+Deutschschweiz,Sa–So,15:30,7.84
+Deutschschweiz,Mo–So,15:30,6.04
+Deutschschweiz,Mo–Fr,15:45,5.58
+Deutschschweiz,Sa–So,15:45,7.94
+Deutschschweiz,Mo–So,15:45,6.25
+Deutschschweiz,Mo–Fr,16:00,5.62
+Deutschschweiz,Sa–So,16:00,8.03
+Deutschschweiz,Mo–So,16:00,6.31
+Deutschschweiz,Mo–Fr,16:15,6.24
+Deutschschweiz,Sa–So,16:15,8.38
+Deutschschweiz,Mo–So,16:15,6.85
+Deutschschweiz,Mo–Fr,16:30,6.36
+Deutschschweiz,Sa–So,16:30,8.59
+Deutschschweiz,Mo–So,16:30,6.99
+Deutschschweiz,Mo–Fr,16:45,6.64
+Deutschschweiz,Sa–So,16:45,8.91
+Deutschschweiz,Mo–So,16:45,7.29
+Deutschschweiz,Mo–Fr,17:00,6.96
+Deutschschweiz,Sa–So,17:00,8.94
+Deutschschweiz,Mo–So,17:00,7.52
+Deutschschweiz,Mo–Fr,17:15,7.24
+Deutschschweiz,Sa–So,17:15,9.08
+Deutschschweiz,Mo–So,17:15,7.77
+Deutschschweiz,Mo–Fr,17:30,7.58
+Deutschschweiz,Sa–So,17:30,9.36
+Deutschschweiz,Mo–So,17:30,8.09
+Deutschschweiz,Mo–Fr,17:45,8.29
+Deutschschweiz,Sa–So,17:45,10.06
+Deutschschweiz,Mo–So,17:45,8.8
+Deutschschweiz,Mo–Fr,18:00,11.96
+Deutschschweiz,Sa–So,18:00,13.17
+Deutschschweiz,Mo–So,18:00,12.31
+Deutschschweiz,Mo–Fr,18:15,11.95
+Deutschschweiz,Sa–So,18:15,12.66
+Deutschschweiz,Mo–So,18:15,12.15
+Deutschschweiz,Mo–Fr,18:30,11.9
+Deutschschweiz,Sa–So,18:30,13.23
+Deutschschweiz,Mo–So,18:30,12.28
+Deutschschweiz,Mo–Fr,18:45,11.94
+Deutschschweiz,Sa–So,18:45,13.6
+Deutschschweiz,Mo–So,18:45,12.41
+Deutschschweiz,Mo–Fr,19:00,15.06
+Deutschschweiz,Sa–So,19:00,14.7
+Deutschschweiz,Mo–So,19:00,14.96
+Deutschschweiz,Mo–Fr,19:15,15.11
+Deutschschweiz,Sa–So,19:15,15.17
+Deutschschweiz,Mo–So,19:15,15.13
+Deutschschweiz,Mo–Fr,19:30,19.73
+Deutschschweiz,Sa–So,19:30,20.61
+Deutschschweiz,Mo–So,19:30,19.98
+Deutschschweiz,Mo–Fr,19:45,19.46
+Deutschschweiz,Sa–So,19:45,20.06
+Deutschschweiz,Mo–So,19:45,19.63
+Deutschschweiz,Mo–Fr,20:00,18.52
+Deutschschweiz,Sa–So,20:00,18.36
+Deutschschweiz,Mo–So,20:00,18.48
+Deutschschweiz,Mo–Fr,20:15,23.59
+Deutschschweiz,Sa–So,20:15,25.3
+Deutschschweiz,Mo–So,20:15,24.08
+Deutschschweiz,Mo–Fr,20:30,23.13
+Deutschschweiz,Sa–So,20:30,24.67
+Deutschschweiz,Mo–So,20:30,23.57
+Deutschschweiz,Mo–Fr,20:45,22.68
+Deutschschweiz,Sa–So,20:45,24.59
+Deutschschweiz,Mo–So,20:45,23.22
+Deutschschweiz,Mo–Fr,21:00,22.09
+Deutschschweiz,Sa–So,21:00,24.64
+Deutschschweiz,Mo–So,21:00,22.82
+Deutschschweiz,Mo–Fr,21:15,22.08
+Deutschschweiz,Sa–So,21:15,24.28
+Deutschschweiz,Mo–So,21:15,22.71
+Deutschschweiz,Mo–Fr,21:30,21.42
+Deutschschweiz,Sa–So,21:30,23.22
+Deutschschweiz,Mo–So,21:30,21.93
+Deutschschweiz,Mo–Fr,21:45,18.65
+Deutschschweiz,Sa–So,21:45,20.68
+Deutschschweiz,Mo–So,21:45,19.23
+Deutschschweiz,Mo–Fr,22:00,18.12
+Deutschschweiz,Sa–So,22:00,19.56
+Deutschschweiz,Mo–So,22:00,18.53
+Deutschschweiz,Mo–Fr,22:15,15.09
+Deutschschweiz,Sa–So,22:15,17.92
+Deutschschweiz,Mo–So,22:15,15.9
+Deutschschweiz,Mo–Fr,22:30,13.74
+Deutschschweiz,Sa–So,22:30,16.14
+Deutschschweiz,Mo–So,22:30,14.42
+Deutschschweiz,Mo–Fr,22:45,12.09
+Deutschschweiz,Sa–So,22:45,14.07
+Deutschschweiz,Mo–So,22:45,12.65
+Deutschschweiz,Mo–Fr,23:00,10.67
+Deutschschweiz,Sa–So,23:00,12.33
+Deutschschweiz,Mo–So,23:00,11.14
+Deutschschweiz,Mo–Fr,23:15,9.21
+Deutschschweiz,Sa–So,23:15,10.47
+Deutschschweiz,Mo–So,23:15,9.57
+Deutschschweiz,Mo–Fr,23:30,7.9
+Deutschschweiz,Sa–So,23:30,9.05
+Deutschschweiz,Mo–So,23:30,8.23
+Deutschschweiz,Mo–Fr,23:45,6.7
+Deutschschweiz,Sa–So,23:45,7.75
+Deutschschweiz,Mo–So,23:45,7.0
+Deutschschweiz,Mo–Fr,00:00,5.79
+Deutschschweiz,Sa–So,00:00,6.82
+Deutschschweiz,Mo–So,00:00,6.08
+Deutschschweiz,Mo–Fr,00:15,4.96
+Deutschschweiz,Sa–So,00:15,5.93
+Deutschschweiz,Mo–So,00:15,5.24
+Deutschschweiz,Mo–Fr,00:30,4.32
+Deutschschweiz,Sa–So,00:30,5.22
+Deutschschweiz,Mo–So,00:30,4.57
+Deutschschweiz,Mo–Fr,00:45,3.77
+Deutschschweiz,Sa–So,00:45,4.58
+Deutschschweiz,Mo–So,00:45,4.0
+Deutschschweiz,Mo–Fr,01:00,3.35
+Deutschschweiz,Sa–So,01:00,4.0
+Deutschschweiz,Mo–So,01:00,3.53
+Deutschschweiz,Mo–Fr,01:15,2.99
+Deutschschweiz,Sa–So,01:15,3.5
+Deutschschweiz,Mo–So,01:15,3.13
+Deutschschweiz,Mo–Fr,01:30,2.6
+Deutschschweiz,Sa–So,01:30,3.03
+Deutschschweiz,Mo–So,01:30,2.72
+Deutschschweiz,Mo–Fr,01:45,2.13
+Deutschschweiz,Sa–So,01:45,2.46
+Deutschschweiz,Mo–So,01:45,2.22
+Suisse romande,Mo–Fr,02:00,1.2
+Suisse romande,Sa–So,02:00,1.48
+Suisse romande,Mo–So,02:00,1.28
+Suisse romande,Mo–Fr,02:15,1.23
+Suisse romande,Sa–So,02:15,1.54
+Suisse romande,Mo–So,02:15,1.32
+Suisse romande,Mo–Fr,02:30,1.18
+Suisse romande,Sa–So,02:30,1.47
+Suisse romande,Mo–So,02:30,1.26
+Suisse romande,Mo–Fr,02:45,1.11
+Suisse romande,Sa–So,02:45,1.4
+Suisse romande,Mo–So,02:45,1.2
+Suisse romande,Mo–Fr,03:00,1.06
+Suisse romande,Sa–So,03:00,1.37
+Suisse romande,Mo–So,03:00,1.15
+Suisse romande,Mo–Fr,03:15,1.02
+Suisse romande,Sa–So,03:15,1.25
+Suisse romande,Mo–So,03:15,1.09
+Suisse romande,Mo–Fr,03:30,0.96
+Suisse romande,Sa–So,03:30,1.16
+Suisse romande,Mo–So,03:30,1.02
+Suisse romande,Mo–Fr,03:45,0.92
+Suisse romande,Sa–So,03:45,1.08
+Suisse romande,Mo–So,03:45,0.96
+Suisse romande,Mo–Fr,04:00,0.88
+Suisse romande,Sa–So,04:00,1.03
+Suisse romande,Mo–So,04:00,0.92
+Suisse romande,Mo–Fr,04:15,0.86
+Suisse romande,Sa–So,04:15,1.0
+Suisse romande,Mo–So,04:15,0.9
+Suisse romande,Mo–Fr,04:30,0.82
+Suisse romande,Sa–So,04:30,0.94
+Suisse romande,Mo–So,04:30,0.86
+Suisse romande,Mo–Fr,04:45,0.81
+Suisse romande,Sa–So,04:45,0.93
+Suisse romande,Mo–So,04:45,0.84
+Suisse romande,Mo–Fr,05:00,0.83
+Suisse romande,Sa–So,05:00,0.94
+Suisse romande,Mo–So,05:00,0.86
+Suisse romande,Mo–Fr,05:15,0.84
+Suisse romande,Sa–So,05:15,0.95
+Suisse romande,Mo–So,05:15,0.87
+Suisse romande,Mo–Fr,05:30,0.89
+Suisse romande,Sa–So,05:30,0.97
+Suisse romande,Mo–So,05:30,0.91
+Suisse romande,Mo–Fr,05:45,0.92
+Suisse romande,Sa–So,05:45,0.96
+Suisse romande,Mo–So,05:45,0.93
+Suisse romande,Mo–Fr,06:00,1.14
+Suisse romande,Sa–So,06:00,1.1
+Suisse romande,Mo–So,06:00,1.13
+Suisse romande,Mo–Fr,06:15,1.16
+Suisse romande,Sa–So,06:15,1.17
+Suisse romande,Mo–So,06:15,1.16
+Suisse romande,Mo–Fr,06:30,1.31
+Suisse romande,Sa–So,06:30,1.34
+Suisse romande,Mo–So,06:30,1.32
+Suisse romande,Mo–Fr,06:45,1.44
+Suisse romande,Sa–So,06:45,1.38
+Suisse romande,Mo–So,06:45,1.42
+Suisse romande,Mo–Fr,07:00,1.77
+Suisse romande,Sa–So,07:00,1.52
+Suisse romande,Mo–So,07:00,1.7
+Suisse romande,Mo–Fr,07:15,1.91
+Suisse romande,Sa–So,07:15,1.65
+Suisse romande,Mo–So,07:15,1.84
+Suisse romande,Mo–Fr,07:30,2.02
+Suisse romande,Sa–So,07:30,1.79
+Suisse romande,Mo–So,07:30,1.95
+Suisse romande,Mo–Fr,07:45,2.09
+Suisse romande,Sa–So,07:45,1.97
+Suisse romande,Mo–So,07:45,2.06
+Suisse romande,Mo–Fr,08:00,2.1
+Suisse romande,Sa–So,08:00,2.25
+Suisse romande,Mo–So,08:00,2.14
+Suisse romande,Mo–Fr,08:15,2.17
+Suisse romande,Sa–So,08:15,2.45
+Suisse romande,Mo–So,08:15,2.25
+Suisse romande,Mo–Fr,08:30,2.23
+Suisse romande,Sa–So,08:30,2.65
+Suisse romande,Mo–So,08:30,2.35
+Suisse romande,Mo–Fr,08:45,2.3
+Suisse romande,Sa–So,08:45,2.89
+Suisse romande,Mo–So,08:45,2.47
+Suisse romande,Mo–Fr,09:00,2.43
+Suisse romande,Sa–So,09:00,3.2
+Suisse romande,Mo–So,09:00,2.65
+Suisse romande,Mo–Fr,09:15,2.51
+Suisse romande,Sa–So,09:15,3.36
+Suisse romande,Mo–So,09:15,2.75
+Suisse romande,Mo–Fr,09:30,2.56
+Suisse romande,Sa–So,09:30,3.74
+Suisse romande,Mo–So,09:30,2.9
+Suisse romande,Mo–Fr,09:45,2.79
+Suisse romande,Sa–So,09:45,3.85
+Suisse romande,Mo–So,09:45,3.09
+Suisse romande,Mo–Fr,10:00,2.94
+Suisse romande,Sa–So,10:00,4.34
+Suisse romande,Mo–So,10:00,3.34
+Suisse romande,Mo–Fr,10:15,2.98
+Suisse romande,Sa–So,10:15,4.75
+Suisse romande,Mo–So,10:15,3.48
+Suisse romande,Mo–Fr,10:30,3.13
+Suisse romande,Sa–So,10:30,5.08
+Suisse romande,Mo–So,10:30,3.69
+Suisse romande,Mo–Fr,10:45,3.27
+Suisse romande,Sa–So,10:45,5.17
+Suisse romande,Mo–So,10:45,3.81
+Suisse romande,Mo–Fr,11:00,3.75
+Suisse romande,Sa–So,11:00,5.49
+Suisse romande,Mo–So,11:00,4.25
+Suisse romande,Mo–Fr,11:15,4.5
+Suisse romande,Sa–So,11:15,5.7
+Suisse romande,Mo–So,11:15,4.84
+Suisse romande,Mo–Fr,11:30,5.38
+Suisse romande,Sa–So,11:30,6.13
+Suisse romande,Mo–So,11:30,5.59
+Suisse romande,Mo–Fr,11:45,6.9
+Suisse romande,Sa–So,11:45,6.86
+Suisse romande,Mo–So,11:45,6.89
+Suisse romande,Mo–Fr,12:00,7.82
+Suisse romande,Sa–So,12:00,8.0
+Suisse romande,Mo–So,12:00,7.87
+Suisse romande,Mo–Fr,12:15,9.05
+Suisse romande,Sa–So,12:15,8.22
+Suisse romande,Mo–So,12:15,8.81
+Suisse romande,Mo–Fr,12:30,9.12
+Suisse romande,Sa–So,12:30,8.78
+Suisse romande,Mo–So,12:30,9.03
+Suisse romande,Mo–Fr,12:45,8.78
+Suisse romande,Sa–So,12:45,9.93
+Suisse romande,Mo–So,12:45,9.1
+Suisse romande,Mo–Fr,13:00,8.28
+Suisse romande,Sa–So,13:00,10.11
+Suisse romande,Mo–So,13:00,8.8
+Suisse romande,Mo–Fr,13:15,7.46
+Suisse romande,Sa–So,13:15,9.58
+Suisse romande,Mo–So,13:15,8.06
+Suisse romande,Mo–Fr,13:30,6.97
+Suisse romande,Sa–So,13:30,9.18
+Suisse romande,Mo–So,13:30,7.6
+Suisse romande,Mo–Fr,13:45,6.29
+Suisse romande,Sa–So,13:45,9.12
+Suisse romande,Mo–So,13:45,7.09
+Suisse romande,Mo–Fr,14:00,6.47
+Suisse romande,Sa–So,14:00,9.14
+Suisse romande,Mo–So,14:00,7.23
+Suisse romande,Mo–Fr,14:15,6.35
+Suisse romande,Sa–So,14:15,9.01
+Suisse romande,Mo–So,14:15,7.11
+Suisse romande,Mo–Fr,14:30,6.43
+Suisse romande,Sa–So,14:30,8.82
+Suisse romande,Mo–So,14:30,7.11
+Suisse romande,Mo–Fr,14:45,6.1
+Suisse romande,Sa–So,14:45,8.73
+Suisse romande,Mo–So,14:45,6.85
+Suisse romande,Mo–Fr,15:00,6.08
+Suisse romande,Sa–So,15:00,8.89
+Suisse romande,Mo–So,15:00,6.88
+Suisse romande,Mo–Fr,15:15,6.13
+Suisse romande,Sa–So,15:15,8.94
+Suisse romande,Mo–So,15:15,6.93
+Suisse romande,Mo–Fr,15:30,6.2
+Suisse romande,Sa–So,15:30,8.96
+Suisse romande,Mo–So,15:30,6.99
+Suisse romande,Mo–Fr,15:45,6.27
+Suisse romande,Sa–So,15:45,8.95
+Suisse romande,Mo–So,15:45,7.03
+Suisse romande,Mo–Fr,16:00,6.13
+Suisse romande,Sa–So,16:00,9.12
+Suisse romande,Mo–So,16:00,6.98
+Suisse romande,Mo–Fr,16:15,6.51
+Suisse romande,Sa–So,16:15,9.48
+Suisse romande,Mo–So,16:15,7.36
+Suisse romande,Mo–Fr,16:30,6.64
+Suisse romande,Sa–So,16:30,9.79
+Suisse romande,Mo–So,16:30,7.54
+Suisse romande,Mo–Fr,16:45,6.84
+Suisse romande,Sa–So,16:45,9.71
+Suisse romande,Mo–So,16:45,7.66
+Suisse romande,Mo–Fr,17:00,7.0
+Suisse romande,Sa–So,17:00,10.08
+Suisse romande,Mo–So,17:00,7.88
+Suisse romande,Mo–Fr,17:15,7.58
+Suisse romande,Sa–So,17:15,10.52
+Suisse romande,Mo–So,17:15,8.42
+Suisse romande,Mo–Fr,17:30,8.85
+Suisse romande,Sa–So,17:30,11.01
+Suisse romande,Mo–So,17:30,9.47
+Suisse romande,Mo–Fr,17:45,10.13
+Suisse romande,Sa–So,17:45,11.71
+Suisse romande,Mo–So,17:45,10.58
+Suisse romande,Mo–Fr,18:00,12.13
+Suisse romande,Sa–So,18:00,12.14
+Suisse romande,Mo–So,18:00,12.13
+Suisse romande,Mo–Fr,18:15,11.67
+Suisse romande,Sa–So,18:15,12.66
+Suisse romande,Mo–So,18:15,11.95
+Suisse romande,Mo–Fr,18:30,11.93
+Suisse romande,Sa–So,18:30,13.39
+Suisse romande,Mo–So,18:30,12.35
+Suisse romande,Mo–Fr,18:45,11.7
+Suisse romande,Sa–So,18:45,13.62
+Suisse romande,Mo–So,18:45,12.25
+Suisse romande,Mo–Fr,19:00,12.77
+Suisse romande,Sa–So,19:00,14.29
+Suisse romande,Mo–So,19:00,13.21
+Suisse romande,Mo–Fr,19:15,13.79
+Suisse romande,Sa–So,19:15,14.58
+Suisse romande,Mo–So,19:15,14.02
+Suisse romande,Mo–Fr,19:30,19.81
+Suisse romande,Sa–So,19:30,20.46
+Suisse romande,Mo–So,19:30,19.99
+Suisse romande,Mo–Fr,19:45,19.65
+Suisse romande,Sa–So,19:45,19.81
+Suisse romande,Mo–So,19:45,19.69
+Suisse romande,Mo–Fr,20:00,18.6
+Suisse romande,Sa–So,20:00,18.61
+Suisse romande,Mo–So,20:00,18.6
+Suisse romande,Mo–Fr,20:15,19.03
+Suisse romande,Sa–So,20:15,19.56
+Suisse romande,Mo–So,20:15,19.19
+Suisse romande,Mo–Fr,20:30,19.05
+Suisse romande,Sa–So,20:30,19.13
+Suisse romande,Mo–So,20:30,19.07
+Suisse romande,Mo–Fr,20:45,18.92
+Suisse romande,Sa–So,20:45,18.38
+Suisse romande,Mo–So,20:45,18.77
+Suisse romande,Mo–Fr,21:00,18.79
+Suisse romande,Sa–So,21:00,18.91
+Suisse romande,Mo–So,21:00,18.82
+Suisse romande,Mo–Fr,21:15,22.06
+Suisse romande,Sa–So,21:15,22.74
+Suisse romande,Mo–So,21:15,22.25
+Suisse romande,Mo–Fr,21:30,21.66
+Suisse romande,Sa–So,21:30,22.08
+Suisse romande,Mo–So,21:30,21.78
+Suisse romande,Mo–Fr,21:45,20.31
+Suisse romande,Sa–So,21:45,20.55
+Suisse romande,Mo–So,21:45,20.38
+Suisse romande,Mo–Fr,22:00,19.22
+Suisse romande,Sa–So,22:00,20.34
+Suisse romande,Mo–So,22:00,19.54
+Suisse romande,Mo–Fr,22:15,18.37
+Suisse romande,Sa–So,22:15,18.96
+Suisse romande,Mo–So,22:15,18.54
+Suisse romande,Mo–Fr,22:30,16.7
+Suisse romande,Sa–So,22:30,17.06
+Suisse romande,Mo–So,22:30,16.8
+Suisse romande,Mo–Fr,22:45,14.02
+Suisse romande,Sa–So,22:45,14.79
+Suisse romande,Mo–So,22:45,14.24
+Suisse romande,Mo–Fr,23:00,12.23
+Suisse romande,Sa–So,23:00,13.12
+Suisse romande,Mo–So,23:00,12.48
+Suisse romande,Mo–Fr,23:15,10.45
+Suisse romande,Sa–So,23:15,11.66
+Suisse romande,Mo–So,23:15,10.79
+Suisse romande,Mo–Fr,23:30,9.08
+Suisse romande,Sa–So,23:30,10.35
+Suisse romande,Mo–So,23:30,9.44
+Suisse romande,Mo–Fr,23:45,7.79
+Suisse romande,Sa–So,23:45,9.1
+Suisse romande,Mo–So,23:45,8.17
+Suisse romande,Mo–Fr,00:00,6.91
+Suisse romande,Sa–So,00:00,8.04
+Suisse romande,Mo–So,00:00,7.23
+Suisse romande,Mo–Fr,00:15,5.91
+Suisse romande,Sa–So,00:15,6.78
+Suisse romande,Mo–So,00:15,6.16
+Suisse romande,Mo–Fr,00:30,5.14
+Suisse romande,Sa–So,00:30,5.97
+Suisse romande,Mo–So,00:30,5.38
+Suisse romande,Mo–Fr,00:45,4.46
+Suisse romande,Sa–So,00:45,5.25
+Suisse romande,Mo–So,00:45,4.69
+Suisse romande,Mo–Fr,01:00,3.93
+Suisse romande,Sa–So,01:00,4.59
+Suisse romande,Mo–So,01:00,4.12
+Suisse romande,Mo–Fr,01:15,3.38
+Suisse romande,Sa–So,01:15,3.92
+Suisse romande,Mo–So,01:15,3.54
+Suisse romande,Mo–Fr,01:30,2.93
+Suisse romande,Sa–So,01:30,3.33
+Suisse romande,Mo–So,01:30,3.04
+Suisse romande,Mo–Fr,01:45,2.39
+Suisse romande,Sa–So,01:45,2.62
+Suisse romande,Mo–So,01:45,2.46
+Svizzera italiana,Mo–Fr,02:00,1.83
+Svizzera italiana,Sa–So,02:00,2.19
+Svizzera italiana,Mo–So,02:00,1.93
+Svizzera italiana,Mo–Fr,02:15,1.88
+Svizzera italiana,Sa–So,02:15,2.25
+Svizzera italiana,Mo–So,02:15,1.98
+Svizzera italiana,Mo–Fr,02:30,1.83
+Svizzera italiana,Sa–So,02:30,2.14
+Svizzera italiana,Mo–So,02:30,1.92
+Svizzera italiana,Mo–Fr,02:45,1.73
+Svizzera italiana,Sa–So,02:45,2.04
+Svizzera italiana,Mo–So,02:45,1.81
+Svizzera italiana,Mo–Fr,03:00,1.65
+Svizzera italiana,Sa–So,03:00,1.96
+Svizzera italiana,Mo–So,03:00,1.74
+Svizzera italiana,Mo–Fr,03:15,1.59
+Svizzera italiana,Sa–So,03:15,1.94
+Svizzera italiana,Mo–So,03:15,1.69
+Svizzera italiana,Mo–Fr,03:30,1.55
+Svizzera italiana,Sa–So,03:30,1.89
+Svizzera italiana,Mo–So,03:30,1.64
+Svizzera italiana,Mo–Fr,03:45,1.51
+Svizzera italiana,Sa–So,03:45,1.86
+Svizzera italiana,Mo–So,03:45,1.61
+Svizzera italiana,Mo–Fr,04:00,1.5
+Svizzera italiana,Sa–So,04:00,1.78
+Svizzera italiana,Mo–So,04:00,1.58
+Svizzera italiana,Mo–Fr,04:15,1.52
+Svizzera italiana,Sa–So,04:15,1.7
+Svizzera italiana,Mo–So,04:15,1.57
+Svizzera italiana,Mo–Fr,04:30,1.45
+Svizzera italiana,Sa–So,04:30,1.64
+Svizzera italiana,Mo–So,04:30,1.5
+Svizzera italiana,Mo–Fr,04:45,1.44
+Svizzera italiana,Sa–So,04:45,1.61
+Svizzera italiana,Mo–So,04:45,1.49
+Svizzera italiana,Mo–Fr,05:00,1.54
+Svizzera italiana,Sa–So,05:00,1.65
+Svizzera italiana,Mo–So,05:00,1.57
+Svizzera italiana,Mo–Fr,05:15,1.65
+Svizzera italiana,Sa–So,05:15,1.68
+Svizzera italiana,Mo–So,05:15,1.66
+Svizzera italiana,Mo–Fr,05:30,1.73
+Svizzera italiana,Sa–So,05:30,1.62
+Svizzera italiana,Mo–So,05:30,1.7
+Svizzera italiana,Mo–Fr,05:45,1.84
+Svizzera italiana,Sa–So,05:45,1.62
+Svizzera italiana,Mo–So,05:45,1.77
+Svizzera italiana,Mo–Fr,06:00,2.17
+Svizzera italiana,Sa–So,06:00,1.86
+Svizzera italiana,Mo–So,06:00,2.08
+Svizzera italiana,Mo–Fr,06:15,2.17
+Svizzera italiana,Sa–So,06:15,1.89
+Svizzera italiana,Mo–So,06:15,2.09
+Svizzera italiana,Mo–Fr,06:30,2.3
+Svizzera italiana,Sa–So,06:30,1.94
+Svizzera italiana,Mo–So,06:30,2.2
+Svizzera italiana,Mo–Fr,06:45,2.36
+Svizzera italiana,Sa–So,06:45,2.07
+Svizzera italiana,Mo–So,06:45,2.28
+Svizzera italiana,Mo–Fr,07:00,2.92
+Svizzera italiana,Sa–So,07:00,2.34
+Svizzera italiana,Mo–So,07:00,2.75
+Svizzera italiana,Mo–Fr,07:15,3.16
+Svizzera italiana,Sa–So,07:15,2.58
+Svizzera italiana,Mo–So,07:15,2.99
+Svizzera italiana,Mo–Fr,07:30,3.07
+Svizzera italiana,Sa–So,07:30,2.81
+Svizzera italiana,Mo–So,07:30,2.99
+Svizzera italiana,Mo–Fr,07:45,3.2
+Svizzera italiana,Sa–So,07:45,3.03
+Svizzera italiana,Mo–So,07:45,3.15
+Svizzera italiana,Mo–Fr,08:00,3.57
+Svizzera italiana,Sa–So,08:00,3.66
+Svizzera italiana,Mo–So,08:00,3.6
+Svizzera italiana,Mo–Fr,08:15,3.63
+Svizzera italiana,Sa–So,08:15,3.95
+Svizzera italiana,Mo–So,08:15,3.72
+Svizzera italiana,Mo–Fr,08:30,3.73
+Svizzera italiana,Sa–So,08:30,4.13
+Svizzera italiana,Mo–So,08:30,3.84
+Svizzera italiana,Mo–Fr,08:45,3.79
+Svizzera italiana,Sa–So,08:45,4.38
+Svizzera italiana,Mo–So,08:45,3.96
+Svizzera italiana,Mo–Fr,09:00,3.97
+Svizzera italiana,Sa–So,09:00,4.83
+Svizzera italiana,Mo–So,09:00,4.21
+Svizzera italiana,Mo–Fr,09:15,3.91
+Svizzera italiana,Sa–So,09:15,5.08
+Svizzera italiana,Mo–So,09:15,4.25
+Svizzera italiana,Mo–Fr,09:30,3.91
+Svizzera italiana,Sa–So,09:30,5.43
+Svizzera italiana,Mo–So,09:30,4.34
+Svizzera italiana,Mo–Fr,09:45,4.23
+Svizzera italiana,Sa–So,09:45,5.74
+Svizzera italiana,Mo–So,09:45,4.66
+Svizzera italiana,Mo–Fr,10:00,4.44
+Svizzera italiana,Sa–So,10:00,6.09
+Svizzera italiana,Mo–So,10:00,4.91
+Svizzera italiana,Mo–Fr,10:15,4.53
+Svizzera italiana,Sa–So,10:15,6.35
+Svizzera italiana,Mo–So,10:15,5.04
+Svizzera italiana,Mo–Fr,10:30,4.6
+Svizzera italiana,Sa–So,10:30,6.72
+Svizzera italiana,Mo–So,10:30,5.2
+Svizzera italiana,Mo–Fr,10:45,4.67
+Svizzera italiana,Sa–So,10:45,6.91
+Svizzera italiana,Mo–So,10:45,5.31
+Svizzera italiana,Mo–Fr,11:00,5.32
+Svizzera italiana,Sa–So,11:00,7.31
+Svizzera italiana,Mo–So,11:00,5.89
+Svizzera italiana,Mo–Fr,11:15,5.84
+Svizzera italiana,Sa–So,11:15,7.61
+Svizzera italiana,Mo–So,11:15,6.35
+Svizzera italiana,Mo–Fr,11:30,6.24
+Svizzera italiana,Sa–So,11:30,7.92
+Svizzera italiana,Mo–So,11:30,6.72
+Svizzera italiana,Mo–Fr,11:45,6.72
+Svizzera italiana,Sa–So,11:45,8.29
+Svizzera italiana,Mo–So,11:45,7.17
+Svizzera italiana,Mo–Fr,12:00,7.84
+Svizzera italiana,Sa–So,12:00,8.98
+Svizzera italiana,Mo–So,12:00,8.16
+Svizzera italiana,Mo–Fr,12:15,8.6
+Svizzera italiana,Sa–So,12:15,9.49
+Svizzera italiana,Mo–So,12:15,8.85
+Svizzera italiana,Mo–Fr,12:30,10.08
+Svizzera italiana,Sa–So,12:30,11.34
+Svizzera italiana,Mo–So,12:30,10.43
+Svizzera italiana,Mo–Fr,12:45,9.21
+Svizzera italiana,Sa–So,12:45,10.88
+Svizzera italiana,Mo–So,12:45,9.68
+Svizzera italiana,Mo–Fr,13:00,9.49
+Svizzera italiana,Sa–So,13:00,11.55
+Svizzera italiana,Mo–So,13:00,10.08
+Svizzera italiana,Mo–Fr,13:15,9.42
+Svizzera italiana,Sa–So,13:15,11.56
+Svizzera italiana,Mo–So,13:15,10.03
+Svizzera italiana,Mo–Fr,13:30,9.15
+Svizzera italiana,Sa–So,13:30,11.32
+Svizzera italiana,Mo–So,13:30,9.77
+Svizzera italiana,Mo–Fr,13:45,8.98
+Svizzera italiana,Sa–So,13:45,11.47
+Svizzera italiana,Mo–So,13:45,9.69
+Svizzera italiana,Mo–Fr,14:00,9.19
+Svizzera italiana,Sa–So,14:00,12.08
+Svizzera italiana,Mo–So,14:00,10.01
+Svizzera italiana,Mo–Fr,14:15,9.26
+Svizzera italiana,Sa–So,14:15,12.16
+Svizzera italiana,Mo–So,14:15,10.09
+Svizzera italiana,Mo–Fr,14:30,9.09
+Svizzera italiana,Sa–So,14:30,11.96
+Svizzera italiana,Mo–So,14:30,9.91
+Svizzera italiana,Mo–Fr,14:45,9.79
+Svizzera italiana,Sa–So,14:45,11.83
+Svizzera italiana,Mo–So,14:45,10.37
+Svizzera italiana,Mo–Fr,15:00,10.16
+Svizzera italiana,Sa–So,15:00,12.26
+Svizzera italiana,Mo–So,15:00,10.76
+Svizzera italiana,Mo–Fr,15:15,10.04
+Svizzera italiana,Sa–So,15:15,12.15
+Svizzera italiana,Mo–So,15:15,10.64
+Svizzera italiana,Mo–Fr,15:30,9.36
+Svizzera italiana,Sa–So,15:30,11.84
+Svizzera italiana,Mo–So,15:30,10.07
+Svizzera italiana,Mo–Fr,15:45,8.92
+Svizzera italiana,Sa–So,15:45,11.85
+Svizzera italiana,Mo–So,15:45,9.76
+Svizzera italiana,Mo–Fr,16:00,8.96
+Svizzera italiana,Sa–So,16:00,11.82
+Svizzera italiana,Mo–So,16:00,9.77
+Svizzera italiana,Mo–Fr,16:15,9.44
+Svizzera italiana,Sa–So,16:15,11.98
+Svizzera italiana,Mo–So,16:15,10.17
+Svizzera italiana,Mo–Fr,16:30,9.65
+Svizzera italiana,Sa–So,16:30,12.39
+Svizzera italiana,Mo–So,16:30,10.43
+Svizzera italiana,Mo–Fr,16:45,9.65
+Svizzera italiana,Sa–So,16:45,12.35
+Svizzera italiana,Mo–So,16:45,10.42
+Svizzera italiana,Mo–Fr,17:00,10.61
+Svizzera italiana,Sa–So,17:00,12.76
+Svizzera italiana,Mo–So,17:00,11.22
+Svizzera italiana,Mo–Fr,17:15,11.35
+Svizzera italiana,Sa–So,17:15,13.24
+Svizzera italiana,Mo–So,17:15,11.89
+Svizzera italiana,Mo–Fr,17:30,11.95
+Svizzera italiana,Sa–So,17:30,13.59
+Svizzera italiana,Mo–So,17:30,12.42
+Svizzera italiana,Mo–Fr,17:45,12.52
+Svizzera italiana,Sa–So,17:45,14.01
+Svizzera italiana,Mo–So,17:45,12.95
+Svizzera italiana,Mo–Fr,18:00,14.27
+Svizzera italiana,Sa–So,18:00,15.52
+Svizzera italiana,Mo–So,18:00,14.62
+Svizzera italiana,Mo–Fr,18:15,14.98
+Svizzera italiana,Sa–So,18:15,15.99
+Svizzera italiana,Mo–So,18:15,15.27
+Svizzera italiana,Mo–Fr,18:30,15.74
+Svizzera italiana,Sa–So,18:30,16.59
+Svizzera italiana,Mo–So,18:30,15.98
+Svizzera italiana,Mo–Fr,18:45,16.97
+Svizzera italiana,Sa–So,18:45,17.64
+Svizzera italiana,Mo–So,18:45,17.16
+Svizzera italiana,Mo–Fr,19:00,21.3
+Svizzera italiana,Sa–So,19:00,21.59
+Svizzera italiana,Mo–So,19:00,21.38
+Svizzera italiana,Mo–Fr,19:15,21.37
+Svizzera italiana,Sa–So,19:15,20.07
+Svizzera italiana,Mo–So,19:15,21.0
+Svizzera italiana,Mo–Fr,19:30,20.99
+Svizzera italiana,Sa–So,19:30,20.44
+Svizzera italiana,Mo–So,19:30,20.83
+Svizzera italiana,Mo–Fr,19:45,20.89
+Svizzera italiana,Sa–So,19:45,20.46
+Svizzera italiana,Mo–So,19:45,20.77
+Svizzera italiana,Mo–Fr,20:00,23.69
+Svizzera italiana,Sa–So,20:00,23.42
+Svizzera italiana,Mo–So,20:00,23.62
+Svizzera italiana,Mo–Fr,20:15,24.06
+Svizzera italiana,Sa–So,20:15,24.0
+Svizzera italiana,Mo–So,20:15,24.04
+Svizzera italiana,Mo–Fr,20:30,23.35
+Svizzera italiana,Sa–So,20:30,22.87
+Svizzera italiana,Mo–So,20:30,23.21
+Svizzera italiana,Mo–Fr,20:45,25.83
+Svizzera italiana,Sa–So,20:45,24.32
+Svizzera italiana,Mo–So,20:45,25.4
+Svizzera italiana,Mo–Fr,21:00,26.82
+Svizzera italiana,Sa–So,21:00,25.31
+Svizzera italiana,Mo–So,21:00,26.39
+Svizzera italiana,Mo–Fr,21:15,27.92
+Svizzera italiana,Sa–So,21:15,27.35
+Svizzera italiana,Mo–So,21:15,27.76
+Svizzera italiana,Mo–Fr,21:30,28.14
+Svizzera italiana,Sa–So,21:30,27.65
+Svizzera italiana,Mo–So,21:30,28.0
+Svizzera italiana,Mo–Fr,21:45,27.47
+Svizzera italiana,Sa–So,21:45,26.8
+Svizzera italiana,Mo–So,21:45,27.28
+Svizzera italiana,Mo–Fr,22:00,26.37
+Svizzera italiana,Sa–So,22:00,26.04
+Svizzera italiana,Mo–So,22:00,26.28
+Svizzera italiana,Mo–Fr,22:15,24.66
+Svizzera italiana,Sa–So,22:15,24.77
+Svizzera italiana,Mo–So,22:15,24.69
+Svizzera italiana,Mo–Fr,22:30,22.55
+Svizzera italiana,Sa–So,22:30,22.95
+Svizzera italiana,Mo–So,22:30,22.67
+Svizzera italiana,Mo–Fr,22:45,20.45
+Svizzera italiana,Sa–So,22:45,21.24
+Svizzera italiana,Mo–So,22:45,20.67
+Svizzera italiana,Mo–Fr,23:00,18.35
+Svizzera italiana,Sa–So,23:00,18.92
+Svizzera italiana,Mo–So,23:00,18.51
+Svizzera italiana,Mo–Fr,23:15,16.31
+Svizzera italiana,Sa–So,23:15,16.75
+Svizzera italiana,Mo–So,23:15,16.44
+Svizzera italiana,Mo–Fr,23:30,14.34
+Svizzera italiana,Sa–So,23:30,14.94
+Svizzera italiana,Mo–So,23:30,14.51
+Svizzera italiana,Mo–Fr,23:45,12.52
+Svizzera italiana,Sa–So,23:45,13.26
+Svizzera italiana,Mo–So,23:45,12.73
+Svizzera italiana,Mo–Fr,00:00,10.93
+Svizzera italiana,Sa–So,00:00,11.74
+Svizzera italiana,Mo–So,00:00,11.16
+Svizzera italiana,Mo–Fr,00:15,9.65
+Svizzera italiana,Sa–So,00:15,10.31
+Svizzera italiana,Mo–So,00:15,9.84
+Svizzera italiana,Mo–Fr,00:30,8.31
+Svizzera italiana,Sa–So,00:30,8.9
+Svizzera italiana,Mo–So,00:30,8.48
+Svizzera italiana,Mo–Fr,00:45,6.97
+Svizzera italiana,Sa–So,00:45,7.53
+Svizzera italiana,Mo–So,00:45,7.13
+Svizzera italiana,Mo–Fr,01:00,5.82
+Svizzera italiana,Sa–So,01:00,6.4
+Svizzera italiana,Mo–So,01:00,5.98
+Svizzera italiana,Mo–Fr,01:15,4.96
+Svizzera italiana,Sa–So,01:15,5.51
+Svizzera italiana,Mo–So,01:15,5.12
+Svizzera italiana,Mo–Fr,01:30,4.23
+Svizzera italiana,Sa–So,01:30,4.66
+Svizzera italiana,Mo–So,01:30,4.35
+Svizzera italiana,Mo–Fr,01:45,3.48
+Svizzera italiana,Sa–So,01:45,3.8
+Svizzera italiana,Mo–So,01:45,3.57
