@@ -17,11 +17,19 @@ import Footer from "../../components/Footer.astro";
         <span aria-hidden="true">·</span>
         <time datetime="2026-11-11">11. November 2026</time>
         <span aria-hidden="true">·</span>
-        <span>8 min Lesezeit</span>
+        <span>10 min Lesezeit</span>
       </div>
       <h1 class="mb-10 max-w-[22ch] font-serif leading-[1.08] text-[var(--color-ink)]" style="font-size: var(--text-display-lg);">Die Altersschere vor dem Fernseher</h1>
       <p class="tv-lede-num mb-6 max-w-[60ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl">2025 lief der Fernseher in der Deutschschweiz im Schnitt <b data-draw="num" data-source="tv_minuten_trend" data-field="minuten" data-where="jahr=2025&amp;region=Deutschschweiz">—</b> Minuten pro Person und Tag – <b data-draw="num" data-source="trend_kennzahlen" data-field="rueckgang_pct" data-row="0" data-fmt="int">—</b>&nbsp;% weniger als im Rekordjahr <b data-draw="num" data-source="trend_kennzahlen" data-field="peak_jahr" data-row="0" data-fmt="raw">—</b>. Eine Geschichte in vier Kapiteln: wie sich das Fernsehen verändert, wann geschaut wird, wer schaut und welche Sender den Bildschirm teilen.</p>
       <p class="mb-16 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]"><strong>Stand:</strong> November 2026 · <strong>Autor:</strong> Thomas Ebermann · Daten: Mediapulse TV Data, Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024. Scrollen, die Grafik rechts wechselt mit dem Text.</p>
+
+      <section class="mb-20 max-w-[65ch] space-y-5 font-sans text-[17px] leading-[1.75] text-[var(--color-ink)]">
+        <h2 class="font-serif text-[1.9rem] leading-tight">Claude kann jetzt Dashboards</h2>
+        <p>Claude baut inzwischen Dashboards. Kein Bild von einem Diagramm, sondern eine interaktive Seite mit Tooltips, Anmerkungen und Quellenangaben zu jeder Zahl. Ich gebe die Daten hinein, sage, was ich sehen will, und bekomme ein Ergebnis, an dem ich im Gespräch weiterarbeite.</p>
+        <p>Für Tableau, Power BI und Co. wird das ungemütlich. Ihr Versprechen war, dass man ohne Programmieren zu guten Grafiken kommt. Dafür zahlt man Lizenzen, schult Leute und baut Dashboards per Drag and Drop. Wenn eine Beschreibung in ganzen Sätzen reicht, fällt dieser Vorteil weg. Für zentrale Kennzahlen, die viele Leute täglich aus demselben Data Warehouse ziehen, bleiben die klassischen BI-Tools stark. Für eine Datenstory, eine Analyse für einen Kunden oder ein Dashboard für das nächste Meeting brauche ich sie nicht mehr.</p>
+        <p>Ausprobiert habe ich es mit einem Datensatz, der öffentlich ist, aber kaum gelesen wird. <a class="underline underline-offset-4" href="https://www.mediapulse.ch/daten/jahresdaten" target="_blank" rel="noopener">Mediapulse</a> misst, wie die Schweiz fernsieht, und stellt die Ergebnisse jedes Jahr auf die eigene Website: als Excel-Datei mit über hundert Tabellenblättern in drei Sprachen und als PDF-Jahresberichte. Alles ist da, aber sehr nüchtern. Wer wissen will, ob die Jungen weniger fernsehen als vor ein paar Jahren, muss sich selbst durch die Tabellen arbeiten.</p>
+        <p>Ich habe Claude die Excel-Datei für 2025 gegeben und um ein Scroll-Dashboard mit Anmerkungen gebeten. Für den Vergleich nach Alter über die Jahre kamen die Jahresberichte 2019 bis 2024 dazu, den 3D-Film habe ich danach noch dazubestellt. Alles, was du unten siehst, einschliesslich dieses Blogposts, hat mich keine Stunde gekostet.</p>
+      </section>
 
 <div class="tv" data-read lang="de-CH">
   
