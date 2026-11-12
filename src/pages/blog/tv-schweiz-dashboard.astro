@@ -1,0 +1,251 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="TV-Dashboard Schweiz 2025 – Datapeople"
+  description="Ein Dashboard zu den Mediapulse-TV-Daten 2025 und dem IGEM-Digimonitor: Sehdauer seit 1985, Tagesverlauf, Alter, Sender und was die Jungen statt Fernsehen nutzen."
+>
+  <main id="main-content" class="db">
+    <header class="db-head">
+      <div class="db-title">
+        <a href="/blog/tv-schweiz-2025/" class="db-back">← Zur Datenstory</a>
+        <h1>Fernsehen in der Schweiz 2025</h1>
+        <p class="db-sub"><span data-k="headline"></span></p>
+      </div>
+      <div class="db-ctrl" role="group" aria-label="Sprachregion">
+        <button type="button" data-region="Deutschschweiz" aria-pressed="true">Deutschschweiz</button>
+        <button type="button" data-region="Suisse romande" aria-pressed="false">Suisse romande</button>
+        <button type="button" data-region="Svizzera italiana" aria-pressed="false">Svizzera italiana</button>
+      </div>
+    </header>
+
+    <section class="db-kpis" aria-label="Kennzahlen">
+      <div class="kpi"><p class="kpi-l">Sehdauer pro Tag 2025</p><p class="kpi-v"><span data-k="sd"></span><small> Min.</small></p><p class="kpi-d" data-k="sd_d"></p></div>
+      <div class="kpi"><p class="kpi-l">Rückgang seit Höchststand</p><p class="kpi-v"><span data-k="peak"></span></p><p class="kpi-d" data-k="peak_d"></p></div>
+      <div class="kpi"><p class="kpi-l">Primetime-Spitze (Mo–So)</p><p class="kpi-v"><span data-k="prime"></span><small> %</small></p><p class="kpi-d" data-k="prime_d"></p></div>
+      <div class="kpi"><p class="kpi-l">60+ gegenüber 15–29</p><p class="kpi-v"><span data-k="ratio"></span><small>×</small></p><p class="kpi-d" data-k="ratio_d"></p></div>
+      <div class="kpi"><p class="kpi-l">Marktanteil SRG-Sender</p><p class="kpi-v"><span data-k="home"></span><small> %</small></p><p class="kpi-d" data-k="home_d"></p></div>
+      <div class="kpi"><p class="kpi-l">Junge täglich: Instagram vs. TV</p><p class="kpi-v"><span data-k="insta"></span><small> vs. </small><span data-k="tv1534"></span></p><p class="kpi-d">% der 15–34-Jährigen, 2026, CH</p></div>
+    </section>
+
+    <section class="db-grid">
+      <article class="card c-trend"><header><h2>Sehdauer 1985–2025</h2><p>Minuten pro Person und Tag, ab 2013 neues Messsystem</p></header><div class="chart" id="ch-trend"></div></article>
+      <article class="card c-set"><header><h2>Was am TV-Gerät läuft</h2><p>Minuten pro Tag, <span data-k="regname"></span></p></header><div class="chart" id="ch-set"></div></article>
+      <article class="card c-day"><header><h2>Tagesverlauf 2025</h2><p>Rating in % pro Viertelstunde, <span data-k="regname"></span></p></header><div class="chart" id="ch-day"></div></article>
+      <article class="card c-age"><header><h2>Sehdauer nach Alter</h2><p class="seg" role="group" aria-label="Ansicht"><button type="button" data-age="2025" aria-pressed="true">2025, <span data-k="regshort"></span></button><button type="button" data-age="trend" aria-pressed="false">Verlauf 2019–2025, DE</button></p></header><div class="chart" id="ch-age"></div></article>
+      <article class="card c-share"><header><h2>Marktanteile 2025</h2><p>% der TV-Nutzungszeit, Deutschschweiz</p></header><div class="chart" id="ch-share"></div></article>
+      <article class="card c-digi"><header><h2>Was täglich genutzt wird</h2><p class="seg" role="group" aria-label="Altersgruppe"><button type="button" data-dg="alter_15_34" aria-pressed="true">15–34</button><button type="button" data-dg="alter_35_54" aria-pressed="false">35–54</button><button type="button" data-dg="alter_55_plus" aria-pressed="false">55+</button><span class="seg-note">% mit täglicher Nutzung, CH, IGEM-Digimonitor</span></p></header><div class="chart" id="ch-digi"></div></article>
+      <article class="card c-home"><header><h2>SRG-Sender und Schweizer Private</h2><p>Marktanteil in der eigenen Region, 1995–2025</p></header><div class="chart" id="ch-home"></div></article>
+    </section>
+    <footer class="db-foot">Quellen: Mediapulse TV Data, Publikation Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024 · IGEM-Digimonitor 2017–2026 (ab 2024 neues Feldinstitut, Werte davor nur bedingt vergleichbar). Gebaut mit Claude von <a href="/">Datapeople</a>.</footer>
+    <div class="db-tip" id="db-tip" role="status" aria-live="polite"></div>
+  </main>
+</Layout>
+
+<style is:global>
+  body:has(.db) { background: var(--color-background); }
+  .db { --ink: var(--color-ink); --mute: var(--color-ink-muted); --rule: var(--color-rule); --panel: oklch(0.99 0.006 70); --grid: oklch(0.91 0.01 110); --axis: oklch(0.72 0.015 110);
+    --c1: #2d6a4f; --c2: #2b8c8c; --c3: #d99a2b; --c4: #a8415b; --c5: #7a5c3e; --c6: #52b788; --muted: #b9bfb2;
+    min-height: 100vh; display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; padding-block: 14px 10px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); font-family: var(--font-sans); color: var(--ink); }
+  .db-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px 24px; }
+  .db-back { font-size: 13px; color: var(--mute); text-decoration: none; }
+  .db-back:hover { color: var(--ink); }
+  .db-head h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.05; margin: 4px 0 4px; text-wrap: balance; }
+  .db-sub { margin: 0; color: var(--mute); font-size: 14px; max-width: 95ch; }
+  .db-ctrl, .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+  .db-ctrl button, .seg button { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--panel); color: var(--mute); cursor: pointer; }
+  .seg button { padding: 3px 10px; font-size: 12px; }
+  .db-ctrl button[aria-pressed="true"], .seg button[aria-pressed="true"] { background: var(--ink); color: var(--color-background); border-color: var(--ink); }
+  .db-ctrl button:focus-visible, .seg button:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+  .seg-note { font-size: 12px; color: var(--mute); align-self: center; margin-left: 6px; }
+  .db-kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+  .kpi { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 8px 12px; min-width: 0; }
+  .kpi-l { margin: 0; font-size: 12px; color: var(--mute); }
+  .kpi-v { margin: 0; font-family: var(--font-serif); font-size: clamp(24px, 2.1vw, 32px); line-height: 1.05; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .kpi-v small { font-family: var(--font-sans); font-size: 14px; color: var(--mute); }
+  .kpi-d { margin: 2px 0 0; font-size: 11.5px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kpi-d .up { color: #2d6a4f; } .kpi-d .down { color: #a8415b; }
+  .db-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(170px, 1fr)); gap: 10px; min-height: 0; }
+  @media (min-width: 1101px) and (min-height: 700px) { .db { height: 100vh; min-height: 0; } }
+  .c-trend { grid-column: span 2; } .c-digi { grid-column: span 2; }
+  .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 10px 14px 8px; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+  .card header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+  .card h2 { margin: 0; font-size: 14px; font-weight: 700; }
+  .card header > p { margin: 0; font-size: 12px; color: var(--mute); }
+  .chart { position: relative; flex: 1; min-height: 120px; }
+  .chart svg { position: absolute; inset: 0; overflow: visible; }
+  .chart text { font-family: var(--font-sans); font-size: 11px; fill: var(--mute); font-variant-numeric: tabular-nums; }
+  .chart .lbl { fill: var(--ink); font-size: 11.5px; paint-order: stroke; stroke: var(--panel); stroke-width: 3px; }
+  .chart .grid line { stroke: var(--grid); } .chart .grid .domain { display: none; }
+  .chart .xax .domain, .chart .xax line { stroke: var(--axis); }
+  .db-foot { font-size: 12px; color: var(--mute); }
+  .db-foot a { color: inherit; }
+  .db-tip { position: fixed; pointer-events: none; z-index: 50; background: var(--panel); border: 1px solid var(--rule); box-shadow: var(--shadow-lift); border-radius: 8px; padding: 6px 9px; font-size: 12px; opacity: 0; transition: opacity .1s; max-width: 260px; }
+  .db-tip b { font-weight: 700; } .db-tip i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; }
+  @media (max-width: 1100px) {
+    .db-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .db-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: 280px; }
+    .c-trend, .c-digi { grid-column: span 2; }
+  }
+  @media (max-width: 640px) {
+    .db-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .db-grid { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 300px; }
+    .c-trend, .c-digi { grid-column: auto; }
+  }
+</style>
+
+<script is:inline src="/tv-schweiz/d3.v7.min.js"></script>
+<script is:inline>
+(function () {
+  const BASE = '/tv-schweiz/data/';
+  const files = {trend: 'tv_minuten_trend.csv', day: 'tagesverlauf.csv', groups: 'sehdauer_gruppen.csv', share: 'marktanteile_deutschschweiz.csv',
+    home: 'heimsender_anteil.csv', set: 'tv_set_komponenten.csv', age: 'sehdauer_alter_trend.csv', digi: 'digimonitor_taeglich.csv'};
+  const REGS = ['Deutschschweiz', 'Suisse romande', 'Svizzera italiana'];
+  const SHORT = {'Deutschschweiz': 'DE', 'Suisse romande': 'FR', 'Svizzera italiana': 'IT'};
+  const HOME = {'Deutschschweiz': 'SRF', 'Suisse romande': 'RTS', 'Svizzera italiana': 'RSI'};
+  const RC = {'Deutschschweiz': '#2d6a4f', 'Suisse romande': '#2b8c8c', 'Svizzera italiana': '#d99a2b'};
+  const MUTED = '#c3c8bb';
+  const DIGI_C = {TV: '#d99a2b', Instagram: '#2d6a4f', Spotify: '#2b8c8c', TikTok: '#a8415b', ChatGPT: '#7a5c3e'};
+  const loc = d3.formatLocale({decimal: '.', thousands: '’', grouping: [3], currency: ['', '']});
+  const f0 = loc.format('.0f'), f1 = loc.format('.1f');
+  const state = {region: 'Deutschschweiz', age: '2025', dg: 'alter_15_34'};
+  const tip = document.getElementById('db-tip');
+  const K = (k, v) => document.querySelectorAll(`[data-k="${k}"]`).forEach((e) => { e.textContent = v; });
+  function showTip(ev, title, rows) {
+    tip.replaceChildren();
+    const t = document.createElement('b'); t.textContent = title; tip.append(t);
+    rows.forEach(([c, n, v]) => { const d = document.createElement('div'); const i = document.createElement('i'); i.style.background = c; d.append(i, document.createTextNode(`${n}: ${v}`)); tip.append(d); });
+    const x = Math.min(window.innerWidth - tip.offsetWidth - 8, ev.clientX + 14), y = Math.max(8, ev.clientY - tip.offsetHeight - 10);
+    tip.style.left = x + 'px'; tip.style.top = y + 'px'; tip.style.opacity = 1;
+  }
+  const hideTip = () => { tip.style.opacity = 0; };
+  function measure(svg, s) { const t = svg.append('text').text(s); const w = t.node().getComputedTextLength(); t.remove(); return w || s.length * 6.5; }
+  function frame(el, o) {
+    d3.select(el).selectAll('*').remove();
+    const w = el.clientWidth, h = el.clientHeight;
+    const svg = d3.select(el).append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.label || '');
+    return {svg, w, h};
+  }
+  function lineChart(el, series, o) {
+    const {svg, w, h} = frame(el, o);
+    const all = series.flatMap((s) => s.values);
+    const y = d3.scaleLinear().domain([0, o.yMax || d3.max(all, (d) => d.y) * 1.12]).nice();
+    const yt = y.ticks(4);
+    const l = d3.max(yt, (t) => measure(svg, (o.yFmt || f0)(t))) + 6;
+    const r = o.right ?? (d3.max(series.filter((s) => s.end), (s) => measure(svg, s.end)) || 0) + 14;
+    const M = {t: 8, r, b: 20, l};
+    const iw = w - M.l - M.r, ih = h - M.t - M.b;
+    const x = (o.x || d3.scaleLinear().domain(d3.extent(all, (d) => d.x))).range([0, iw]);
+    y.range([ih, 0]);
+    const g = svg.append('g').attr('transform', `translate(${M.l},${M.t})`);
+    g.append('g').attr('class', 'grid').call(d3.axisLeft(y).tickValues(yt).tickSize(-iw).tickFormat(o.yFmt || f0)).call((a) => a.selectAll('.tick line').attr('stroke-dasharray', '2 3'));
+    const xa = d3.axisBottom(x).tickSizeOuter(0).ticks(o.xTicks || Math.max(3, Math.floor(iw / 70)));
+    if (o.xFmt) xa.tickFormat(o.xFmt); if (o.xValues) xa.tickValues(o.xValues);
+    g.append('g').attr('class', 'xax').attr('transform', `translate(0,${ih})`).call(xa);
+    (o.refs || []).forEach((rv) => { g.append('line').attr('x1', x(rv.x)).attr('x2', x(rv.x)).attr('y1', 0).attr('y2', ih).attr('stroke', 'var(--axis)').attr('stroke-dasharray', '3 3'); if (rv.label) g.append('text').attr('x', x(rv.x) + 4).attr('y', 10).text(rv.label); });
+    const line = d3.line().defined((d) => d.y != null && !isNaN(d.y)).x((d) => x(d.x)).y((d) => y(d.y));
+    series.forEach((s) => {
+      if (s.area) g.append('path').datum(s.values).attr('fill', s.color).attr('fill-opacity', 0.1).attr('d', d3.area().defined((d) => d.y != null).x((d) => x(d.x)).y0(ih).y1((d) => y(d.y)));
+      g.append('path').datum(s.values).attr('fill', 'none').attr('stroke', s.color).attr('stroke-width', s.w || 2).attr('stroke-dasharray', s.dash || null).attr('stroke-linejoin', 'round').attr('d', line);
+    });
+    const ends = series.filter((s) => s.end).map((s) => { const v = s.values.filter((d) => d.y != null); const p = v[v.length - 1]; return {s, x: x(p.x), y: y(p.y)}; }).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+    ends.forEach((e) => { g.append('circle').attr('cx', e.x).attr('cy', y(e.s.values.filter((d) => d.y != null).slice(-1)[0].y)).attr('r', 3).attr('fill', e.s.color); g.append('text').attr('class', 'lbl').attr('x', iw + 6).attr('y', e.y).attr('dy', '0.32em').text(e.s.end); });
+    const xs = Array.from(new Set(all.map((d) => d.x))).sort((a, b) => a - b);
+    const rule = g.append('line').attr('y1', 0).attr('y2', ih).attr('stroke', 'var(--axis)').style('opacity', 0);
+    g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const xv = x.invert(px); const n = xs.reduce((a, b) => (Math.abs(b - xv) < Math.abs(a - xv) ? b : a)); rule.attr('x1', x(n)).attr('x2', x(n)).style('opacity', 1);
+        const rows = series.map((s) => [s, s.values.find((d) => d.x === n)]).filter(([, p]) => p && p.y != null).sort((a, b) => b[1].y - a[1].y).map(([s, p]) => [s.color, s.name, (o.tipFmt || f1)(p.y)]);
+        showTip(ev, (o.xFmt || String)(n), rows); })
+      .on('pointerleave', () => { rule.style('opacity', 0); hideTip(); });
+  }
+  function barH(el, rows, o) {
+    const {svg, w, h} = frame(el, o);
+    const l = d3.max(rows, (r) => measure(svg, r.name)) + 8, vr = 44;
+    const M = {t: o.ref != null ? 12 : 4, r: vr, b: 4, l};
+    const iw = w - M.l - M.r, ih = h - M.t - M.b;
+    const y = d3.scaleBand().domain(rows.map((r) => r.name)).range([0, ih]).padding(0.22);
+    const x = d3.scaleLinear().domain([0, o.max || d3.max(rows, (r) => r.v)]).range([0, iw]);
+    const g = svg.append('g').attr('transform', `translate(${M.l},${M.t})`);
+    rows.forEach((r) => {
+      g.append('text').attr('x', -6).attr('y', y(r.name) + y.bandwidth() / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r.name);
+      g.append('rect').attr('x', 0).attr('y', y(r.name)).attr('height', y.bandwidth()).attr('width', Math.max(0, x(r.v))).attr('rx', 2).attr('fill', r.color)
+        .on('pointermove', (ev) => showTip(ev, r.name, [[r.color, o.unit || 'Wert', (o.fmt || f1)(r.v)]])).on('pointerleave', hideTip);
+      g.append('text').attr('class', 'lbl').attr('x', x(r.v) + 4).attr('y', y(r.name) + y.bandwidth() / 2).attr('dy', '0.32em').text((o.fmt || f1)(r.v));
+    });
+    if (o.ref != null) { g.append('line').attr('x1', x(o.ref)).attr('x2', x(o.ref)).attr('y1', 0).attr('y2', ih).attr('stroke', 'var(--axis)').attr('stroke-dasharray', '3 3'); g.append('text').attr('x', x(o.ref) + 4).attr('y', -1).text(o.refLabel); }
+  }
+  function stacked(el, rows, o) {
+    const {svg, w, h} = frame(el, o);
+    const M = {t: 22, r: 6, b: 20, l: 30};
+    const iw = w - M.l - M.r, ih = h - M.t - M.b;
+    const x = d3.scaleBand().domain(rows.map((r) => r.jahr)).range([0, iw]).padding(0.22);
+    const y = d3.scaleLinear().domain([0, d3.max(rows, (r) => r.t) * 1.1]).nice().range([ih, 0]);
+    const g = svg.append('g').attr('transform', `translate(${M.l},${M.t})`);
+    g.append('g').attr('class', 'grid').call(d3.axisLeft(y).ticks(4).tickSize(-iw).tickFormat(f0)).call((a) => a.selectAll('.tick line').attr('stroke-dasharray', '2 3'));
+    g.append('g').attr('class', 'xax').attr('transform', `translate(0,${ih})`).call(d3.axisBottom(x).tickSizeOuter(0).tickValues(rows.map((r) => r.jahr).filter((v, i) => (iw > 520 ? true : iw > 300 ? i % 2 === 0 : i % 4 === 0) || i === rows.length - 1)));
+    const lg = svg.append('g').attr('transform', 'translate(0,10)');
+    [['Sender', o.c1], ['Ohne Senderzuordnung', o.c2]].forEach(([n, c], i) => { lg.append('rect').attr('x', i * 78).attr('y', -6).attr('width', 9).attr('height', 9).attr('rx', 2).attr('fill', c); lg.append('text').attr('x', i * 78 + 13).attr('y', 2).text(n); });
+    rows.forEach((r) => {
+      const bx = x(r.jahr), bw = x.bandwidth();
+      g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(r.s)).attr('height', ih - y(r.s)).attr('fill', o.c1);
+      g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(r.t)).attr('height', Math.max(0, y(r.s) - y(r.t) - 1.5)).attr('fill', o.c2);
+      g.append('rect').attr('x', bx).attr('width', bw).attr('y', 0).attr('height', ih).attr('fill', 'transparent')
+        .on('pointermove', (ev) => showTip(ev, String(r.jahr), [[o.c1, 'Sender', f1(r.s) + ' Min.'], [o.c2, 'Ohne Zuordnung', f1(r.n) + ' Min.'], ['var(--mute)', 'Total', f1(r.t) + ' Min.']])).on('pointerleave', hideTip);
+    });
+    const last = rows[rows.length - 1];
+    g.append('text').attr('class', 'lbl').attr('x', x(last.jahr) + x.bandwidth()).attr('y', y(last.t) - 6).attr('text-anchor', 'end').text(`${f0(last.n / last.t * 100)} % ohne Sender`);
+  }
+
+  Promise.all(Object.entries(files).map(([k, f]) => d3.csv(BASE + f).then((rows) => [k, rows]))).then((entries) => {
+    const D = Object.fromEntries(entries);
+    const render = () => {
+      const R = state.region;
+      // KPIs
+      const tr = D.trend.filter((r) => r.region === R).map((r) => ({x: +r.jahr, y: +r.minuten})).sort((a, b) => a.x - b.x);
+      const last = tr[tr.length - 1], prev = tr[tr.length - 2], peak = tr.reduce((a, b) => (b.y > a.y ? b : a));
+      K('sd', f1(last.y)); document.querySelector('[data-k="sd_d"]').innerHTML = '';
+      const sdd = document.querySelector('[data-k="sd_d"]'); const sp = document.createElement('span'); const ch = (last.y / prev.y - 1) * 100; sp.className = ch < 0 ? 'down' : 'up'; sp.textContent = `${ch < 0 ? '−' : '+'}${f1(Math.abs(ch))} %`; sdd.append(sp, document.createTextNode(` gegenüber ${prev.x}`));
+      K('peak', `−${f0((1 - last.y / peak.y) * 100)} %`); K('peak_d', `Höchststand ${peak.x}: ${f1(peak.y)} Min.`);
+      const day = D.day.filter((r) => r.region === R && r.tage === 'Mo–So');
+      const pk = day.reduce((a, b) => (+b.rating_pct > +a.rating_pct ? b : a));
+      K('prime', f1(+pk.rating_pct)); K('prime_d', `um ${pk.zeit} Uhr vor dem TV`);
+      const gA = (g) => +D.groups.find((r) => r.region === R && r.gruppe === g).minuten;
+      K('ratio', f1(gA('60+') / gA('15–29'))); K('ratio_d', `${f0(gA('60+'))} gegenüber ${f0(gA('15–29'))} Min. pro Tag`);
+      const hm = D.home.filter((r) => r.region === R && r.sender === HOME[R]).sort((a, b) => a.jahr - b.jahr);
+      K('home', f1(+hm[hm.length - 1].marktanteil_pct)); K('home_d', `${HOME[R]}, ${SHORT[R]} · 1995: ${f1(+hm[0].marktanteil_pct)} %`);
+      const dg = (a) => +D.digi.find((r) => r.jahr === '2026' && r.angebot === a).alter_15_34;
+      K('insta', f0(dg('Instagram'))); K('tv1534', f0(dg('TV')));
+      K('headline', `${R}: ${f1(last.y)} Minuten Fernsehen pro Person und Tag, ${f0((1 - last.y / peak.y) * 100)} % weniger als ${peak.x}. Bei den Jungen ist Instagram täglich verbreiteter als der Fernseher.`);
+      K('regname', R); K('regshort', SHORT[R]);
+      // charts
+      lineChart(document.getElementById('ch-trend'), REGS.map((r) => ({name: r, color: r === R ? RC[r] : MUTED, w: r === R ? 2.6 : 1.5, end: `${SHORT[r]} ${f1(+D.trend.filter((x) => x.region === r).slice(-1)[0].minuten)}`, values: D.trend.filter((x) => x.region === r).map((x) => ({x: +x.jahr, y: +x.minuten}))})).sort((a, b) => (a.name === R) - (b.name === R)),
+        {label: 'Sehdauer pro Tag 1985 bis 2025 nach Sprachregion', xFmt: d3.format('d'), refs: [{x: 2013, label: 'neues Messsystem'}], tipFmt: (v) => f1(v) + ' Min.'});
+      stacked(document.getElementById('ch-set'), D.set.filter((r) => r.region === R).map((r) => { const t = +r.total_minuten, n = +r.playback_dvd_games_minuten + +r.nicht_identifiziert_minuten; return {jahr: +r.jahr, t, n, s: t - n}; }), {c1: RC[R], c2: '#cfd5c6', label: 'Minuten mit und ohne Senderzuordnung 2013 bis 2025'});
+      const slots = Array.from(new Set(D.day.map((r) => r.zeit))); const ix = new Map(slots.map((s, i) => [s, i]));
+      lineChart(document.getElementById('ch-day'), [['Mo–Fr', RC[R], null], ['Sa–So', '#a8415b', '4 3']].map(([t, c, dash]) => ({name: t, color: c, dash, end: t, values: D.day.filter((r) => r.region === R && r.tage === t).map((r) => ({x: ix.get(r.zeit), y: +r.rating_pct}))})),
+        {label: 'Rating pro Viertelstunde 2025', x: d3.scaleLinear().domain([0, slots.length - 1]), xValues: slots.map((s, i) => i).filter((i) => slots[i].endsWith(':00') && (+slots[i].slice(0, 2) - 2 + 24) % 6 === 0), xFmt: (i) => slots[i], yFmt: (v) => f0(v) + ' %', tipFmt: (v) => f1(v) + ' %'});
+      if (state.age === '2025') {
+        const rows = D.groups.filter((r) => r.region === R && r.merkmal === 'Alter').map((r) => ({name: r.gruppe, v: +r.minuten, color: r.gruppe === '60+' ? RC[R] : r.gruppe === '15–29' ? '#d99a2b' : MUTED}));
+        barH(document.getElementById('ch-age'), rows, {unit: 'Minuten pro Tag', ref: +D.groups.find((r) => r.region === R && r.merkmal === 'Total').minuten, refLabel: 'Ø alle', label: 'Sehdauer nach Altersgruppe 2025'});
+      } else {
+        const gs = Array.from(new Set(D.age.map((r) => r.gruppe))).filter((g) => g !== 'Alle (3+)');
+        lineChart(document.getElementById('ch-age'), gs.map((g) => ({name: g, color: g === '60+' ? '#2d6a4f' : g === '15–29' ? '#d99a2b' : MUTED, w: g === '60+' || g === '15–29' ? 2.6 : 1.4, end: `${g} ${f0(+D.age.filter((r) => r.gruppe === g).slice(-1)[0].minuten)}`, values: D.age.filter((r) => r.gruppe === g).map((r) => ({x: +r.jahr, y: +r.minuten}))})),
+          {label: 'Sehdauer nach Alter 2019 bis 2025, Deutschschweiz', xFmt: d3.format('d'), xTicks: 4, tipFmt: (v) => f1(v) + ' Min.'});
+      }
+      const yr = d3.max(D.share, (r) => +r.jahr); const skip = new Set(['SRF', 'SRG SSR', 'andere SRG SSR']);
+      barH(document.getElementById('ch-share'), D.share.filter((r) => +r.jahr === yr && !skip.has(r.sender) && +r.marktanteil_pct >= 1.4).map((r) => ({name: r.sender === 'Schweizer Private' ? 'Schweizer Private (alle)' : r.sender, v: +r.marktanteil_pct, color: /^SRF/.test(r.sender) ? '#2d6a4f' : r.sender === 'Schweizer Private' ? '#2b8c8c' : MUTED})).sort((a, b) => b.v - a.v), {unit: 'Marktanteil %', fmt: (v) => f1(v) + ' %', label: 'Marktanteile der Sender 2025 in der Deutschschweiz'});
+      const dgk = state.dg; const names = Array.from(new Set(D.digi.map((r) => r.angebot)));
+      lineChart(document.getElementById('ch-digi'), names.map((n) => ({name: n === 'TV' ? 'Fernsehen' : n, color: DIGI_C[n] || MUTED, w: DIGI_C[n] ? 2.4 : 1.3, dash: n === 'ChatGPT' ? '4 3' : null, end: DIGI_C[n] ? `${n === 'TV' ? 'Fernsehen' : n} ${f0(+D.digi.find((r) => r.angebot === n && r.jahr === '2026')[dgk])}` : null, values: D.digi.filter((r) => r.angebot === n).map((r) => ({x: +r.jahr, y: +r[dgk]}))})).sort((a, b) => (a.color !== MUTED) - (b.color !== MUTED)),
+        {label: 'Anteil mit täglicher Nutzung nach Angebot 2017 bis 2026', yMax: 100, yFmt: (v) => v + ' %', xFmt: d3.format('d'), refs: [{x: 2023.5, label: 'Methodenwechsel'}], tipFmt: (v) => f1(v) + ' %'});
+      lineChart(document.getElementById('ch-home'), REGS.flatMap((r) => [HOME[r], 'Schweizer Private'].map((s) => ({name: `${s === 'Schweizer Private' ? 'Private' : s} (${SHORT[r]})`, color: r === R ? RC[r] : MUTED, w: r === R ? 2.4 : 1.2, dash: s === 'Schweizer Private' ? '4 3' : null, end: r === R ? `${s === 'Schweizer Private' ? 'Private' : s} ${f1(+D.home.filter((x) => x.region === r && x.sender === s).slice(-1)[0].marktanteil_pct)}` : null, values: D.home.filter((x) => x.region === r && x.sender === s).map((x) => ({x: +x.jahr, y: +x.marktanteil_pct}))}))).sort((a, b) => (a.color !== MUTED) - (b.color !== MUTED)),
+        {label: 'Marktanteil SRG-Sender und Schweizer Private nach Region', xFmt: d3.format('d'), xTicks: 4, yFmt: (v) => f0(v) + ' %', tipFmt: (v) => f1(v) + ' %'});
+    };
+    const bind = (sel, key, attr) => document.querySelectorAll(sel).forEach((b) => b.addEventListener('click', () => { state[key] = b.dataset[attr]; document.querySelectorAll(sel).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); render(); }));
+    bind('[data-region]', 'region', 'region'); bind('[data-age]', 'age', 'age'); bind('[data-dg]', 'dg', 'dg');
+    let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(render, 80); }).observe(document.querySelector('.db-grid'));
+    render();
+  }).catch((e) => { const p = document.createElement('p'); p.textContent = 'Die Daten konnten nicht geladen werden.'; document.querySelector('.db-grid').prepend(p); console.error(e); });
+})();
+</script>
