@@ -1,0 +1,470 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+
+const Q = {
+  P14: "https://www.igem.ch/pressrelease/das-ipad-ist-ein-ipet/",
+  P15: "https://www.igem.ch/pressrelease/real-life-statt-social-media/",
+  P16: "https://www.igem.ch/pressrelease/igem-digimonitor-2016-junge-nutzen-digitale-medien-mehr-und-anders/",
+  D17: "https://www.igem.ch/wp-content/uploads/Medieninfo-IGEM-digiMONITOR-2017_20171211.pdf",
+  D18: "https://www.igem.ch/wp-content/uploads/Medieninfo-IGEM-digiMONITOR-2018_fuer-21.11.18-um-11h.pdf",
+  D19: "https://www.igem.ch/wp-content/uploads/Medieninfo-IGEM-digiMONITOR-2019_fuer-27.8.19-um-16.30h.pdf",
+  P20: "https://www.igem.ch/pressrelease/digitalisierungsschub-im-corona-jahr-bringt-spitzenwerte-fuer-tv-und-radio/",
+  P21: "https://www.igem.ch/pressrelease/igem-digimonitor-2021-tiktok-ueberholt-facebook-bei-den-jungen/",
+  D22: "https://www.igem.ch/wp-content/uploads/Medienmitteilung-IGEM-Digimonitor-2022-fuer-Do-1.-Sep-2022-um-15.30h.pdf",
+  S23: "https://www.igem.ch/pressrelease/igem-digimonitor-2023/",
+  S24: "https://www.igem.ch/pressrelease/studie-igem-digimonitor-2024/",
+  M25: "https://www.igem.ch/wp-content/uploads/Medienmitteilung-Studie-IGEM-Digimonitor-2025.pdf",
+  G25: "https://www.igem.ch/pressrelease/gaming-immer-beliebter/",
+  S26: "https://www.igem.ch/pressrelease/studie-digimonitor-2026/",
+  TTV: "https://www.igem.ch/mediennutzung-werbemarkt/tv/",
+  TON: "https://www.igem.ch/mediennutzung-werbemarkt/online/",
+  TTT: "https://www.igem.ch/mediennutzung-werbemarkt/trends-technik/",
+  TTYP: "https://www.igem.ch/mediennutzung-werbemarkt/typen/",
+};
+const L = (k: keyof typeof Q, t: string) => `<a class="dg-src" href="${Q[k]}" target="_blank" rel="noopener">${t}</a>`;
+const quellen: [string, string][] = [
+  ["2014", Q.P14], ["2015", Q.P15], ["2016", Q.P16], ["2017", Q.D17], ["2018", Q.D18], ["2019", Q.D19],
+  ["2020", Q.P20], ["2021", Q.P21], ["2022", Q.D22], ["2023", Q.S23], ["2024", Q.S24], ["2025 (Medienmitteilung)", Q.M25],
+  ["2025 (Gaming)", Q.G25], ["2026 (Medienmitteilung)", Q.S26], ["2026 (Themenseite TV)", Q.TTV], ["2026 (Themenseite Online)", Q.TON],
+  ["2026 (Themenseite Trends & Technik)", Q.TTT], ["2026 (Mediennutzungstypen)", Q.TTYP],
+];
+---
+
+<Layout
+  title="Zwölf Jahre digitale Schweiz – Datapeople"
+  description="Eine Scroll-Story aus den öffentlichen Medienmitteilungen des IGEM-Digimonitors 2014–2026: wie die Jungen Facebook verlassen, Streaming das Programm ablöst und KI schneller ankommt als alles davor."
+>
+  <Navigation />
+  <main id="main-content" class="px-6 py-20 md:py-24">
+    <article class="mx-auto max-w-6xl">
+      <a href="/blog/" class="mb-12 inline-flex items-center font-sans text-sm text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"><span aria-hidden="true" class="mr-2">←</span> Zurück zur Schreibwerkstatt</a>
+      <div class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-sm text-[var(--color-ink-muted)]">
+        <span class="text-[var(--color-accent)]">Datenstory</span>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-11-12">12. November 2026</time>
+        <span aria-hidden="true">·</span>
+        <span>8 min Lesezeit</span>
+      </div>
+      <h1 class="mb-10 max-w-[22ch] font-serif leading-[1.08] text-[var(--color-ink)]" style="font-size: var(--text-display-lg);">Zwölf Jahre digitale Schweiz: von Facebook zu KI</h1>
+      <p class="mb-6 max-w-[60ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl">2014 waren vier von fünf Jungen auf Facebook. 2022 war es noch jeder vierte. Netflix brauchte sieben Jahre, um die halbe Schweiz zu erreichen. KI hat sich in zwei Jahren von 40 auf 80 Prozent verdoppelt.</p>
+      <p class="mb-16 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]"><strong>Stand:</strong> November 2026 · <strong>Autor:</strong> Thomas Ebermann · Daten: öffentliche Medienmitteilungen und Themenseiten des IGEM-Digimonitors 2014–2026. Scrollen, die Grafik wechselt mit dem Text.</p>
+
+      <section class="mb-20 max-w-[65ch] space-y-5 font-sans text-[17px] leading-[1.75] text-[var(--color-ink)]">
+        <h2 class="font-serif text-[1.9rem] leading-tight">Was öffentlich ist, reicht für eine Geschichte</h2>
+        <p>Die <a class="underline underline-offset-4" href="https://www.igem.ch/digimonitor/" target="_blank" rel="noopener">Interessengemeinschaft elektronische Medien (IGEM)</a> befragt seit 2014 jedes Jahr rund 2000 Personen, wie sie Medien nutzen. Die vollständigen Tabellenbände sind den Mitgliedern vorbehalten. Öffentlich sind die Medienmitteilungen und die Themenseiten auf igem.ch, und in diesen Texten steckt erstaunlich viel: jedes Jahr ein paar Dutzend Zahlen, sauber in Prosa verpackt.</p>
+        <p>Ich habe Claude alle diese Mitteilungen von 2014 bis 2026 lesen lassen und jede Zahl mit Jahr, Altersgruppe, Messgrösse und Quelle herausziehen lassen. Herausgekommen sind rund 400 Werte. Aus denen, die über die Jahre zusammenpassen, ist diese Geschichte entstanden. Jede Zahl unten verlinkt auf die Mitteilung, aus der sie stammt.</p>
+        <p class="dg-callout"><strong>Ein Vorbehalt vorweg:</strong> 2024 hat der Digimonitor die Methode gewechselt. Bis 2023 befragte das LINK-Institut die Bevölkerung ab 15 Jahren vor allem telefonisch. Seit 2024 befragt Intervista die Internetnutzerinnen und -nutzer von 15 bis 75 Jahren online. Die IGEM schreibt selbst, dass die Werte ab 2024 nicht mit den Vorjahren vergleichbar sind. In den Grafiken ist dieser Bruch markiert, und die Linien sind dort unterbrochen.</p>
+      </section>
+
+<div class="dg" lang="de-CH">
+  <div class="dg-scrolly">
+    <div class="dg-sticky">
+      <figure class="dg-figure">
+        <p class="dg-ctitle" id="dg-title">—<span class="dg-csub" id="dg-sub"></span></p>
+        <div class="dg-stage" id="dg-stage" role="img" aria-label="Diagramm zur aktuellen Textstelle"></div>
+        <p class="dg-legend" id="dg-legend"></p>
+      </figure>
+    </div>
+
+    <div class="dg-steps">
+      <div class="dg-chap"><span>Kapitel 1</span><h2>Die Jungen ziehen um</h2></div>
+
+      <article class="dg-step is-active" data-view="jung" data-show="fb">
+        <p>2014 nutzten <b>82&nbsp;%</b> der 15- bis 24-Jährigen mindestens gelegentlich Facebook. Danach ging es jedes Jahr abwärts: <b>55&nbsp;%</b> im Jahr 2017, <b>36&nbsp;%</b> 2019 und <b>27&nbsp;%</b> 2022.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("D19", "2019")} />, <Fragment set:html={L("D17", "2017")} />, <Fragment set:html={L("D22", "2022")} />. Den Wert 2015 leite ich aus «um zehn Prozentpunkte gesunken» ab (<Fragment set:html={L("P15", "2015")} />).</p>
+      </article>
+
+      <article class="dg-step" data-view="jung" data-show="fb,ig">
+        <p>Die Jungen sind nicht offline gegangen. Sie sind zu Instagram gewechselt, das dem gleichen Konzern gehört. 2016 nutzten es <b>66&nbsp;%</b> der 15- bis 24-Jährigen, 2021 waren es <b>86&nbsp;%</b>.</p>
+        <p>Für 2017 nennt die IGEM nur «Snapchat oder Instagram» zusammen. Spätestens 2018 lag Instagram mit <b>73&nbsp;%</b> klar vor Facebook mit <b>51&nbsp;%</b>.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("P16", "2016")} />, <Fragment set:html={L("D18", "2018")} />, <Fragment set:html={L("P21", "2021")} />.</p>
+      </article>
+
+      <article class="dg-step" data-view="jung" data-show="fb,ig,snap,tt">
+        <p>Daneben wächst eine zweite Reihe. Snapchat hält sich seit 2018 bei rund <b>70&nbsp;%</b> der Jungen. TikTok überholt 2021 mit <b>35&nbsp;%</b> erstmals Facebook, gemessen in Personen: 310'000 gegen 260'000.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("P21", "2021")} />, <Fragment set:html={L("D22", "2022")} />. Ab 2023 nennen die Mitteilungen keine Werte mehr für die 15- bis 24-Jährigen.</p>
+      </article>
+
+      <div class="dg-chap"><span>Kapitel 2</span><h2>Die ganze Schweiz zieht nach</h2></div>
+
+      <article class="dg-step" data-view="plattform" data-show="fb,ig">
+        <p>In der Gesamtbevölkerung blieb Facebook lange stabil bei rund <b>45&nbsp;%</b>. Instagram holte langsam auf: <b>16&nbsp;%</b> 2016, <b>42&nbsp;%</b> 2023. Im Jahr 2023 lag Instagram erstmals knapp vor Facebook.</p>
+        <p>Nach dem Methodenwechsel sind die Werte höher, weil nur noch Internetnutzende bis 75 gezählt werden. Die Reihenfolge bleibt aber gleich: 2026 kommt Instagram auf <b>64&nbsp;%</b> und Facebook auf <b>48&nbsp;%</b>.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("P16", "2016")} />, <Fragment set:html={L("S23", "2023")} />, <Fragment set:html={L("TON", "2026")} />.</p>
+      </article>
+
+      <article class="dg-step" data-view="plattform" data-show="fb,ig,tt">
+        <p>TikTok wächst in der Breite langsamer, als die Schlagzeilen vermuten lassen: von <b>6&nbsp;%</b> 2020 auf <b>25&nbsp;%</b> 2026. Teletext hat 2026 immer noch 210'000 Nutzerinnen und Nutzer mehr als TikTok.</p>
+        <p>Mit den Jungen altern auch die Plattformen. Das Durchschnittsalter auf Instagram stieg von <b>32</b> Jahren (2018) auf <b>39</b> Jahre (2026).</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("P20", "2020")} />, <Fragment set:html={L("TTV", "2026, TV")} />, <Fragment set:html={L("D18", "2018")} />, <Fragment set:html={L("TON", "2026, Online")} />.</p>
+      </article>
+
+      <div class="dg-chap"><span>Kapitel 3</span><h2>Streaming statt Programm</h2></div>
+
+      <article class="dg-step" data-view="streaming" data-show="nf,sp">
+        <p>2015 schauten <b>5&nbsp;%</b> der Bevölkerung ab und zu Netflix. 2022 waren es <b>48&nbsp;%</b>. Spotify wuchs im selben Tempo, von <b>20&nbsp;%</b> 2018 auf <b>41&nbsp;%</b> 2023.</p>
+        <p>Im Corona-Jahr 2020 gewann Netflix 400'000 Zuschauerinnen und Zuschauer, 2021 nochmals 500'000. Seit 2024 liegt Netflix stabil bei <b>54&nbsp;%</b>.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("D19", "2019")} />, <Fragment set:html={L("P20", "2020")} />, <Fragment set:html={L("P21", "2021")} />, <Fragment set:html={L("D22", "2022")} />, <Fragment set:html={L("S23", "2023")} />, <Fragment set:html={L("S26", "2026")} />. Spotify 2025 aus der <Fragment set:html={L("G25", "Gaming-Mitteilung")} />.</p>
+      </article>
+
+      <article class="dg-step" data-view="streaming" data-show="nf,sp,yt">
+        <p>Die grösste Video-Plattform ist aber YouTube. Sie erreicht seit Jahren zwei Drittel bis vier Fünftel der Bevölkerung, 2026 sind es <b>80&nbsp;%</b>.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("D19", "2019")} />, <Fragment set:html={L("P20", "2020")} />, <Fragment set:html={L("S24", "2024")} />, <Fragment set:html={L("S26", "2026")} />. Die TV-Themenseite nennt für 2026 abweichend 76&nbsp;%.</p>
+      </article>
+
+      <div class="dg-chap"><span>Kapitel 4</span><h2>Und das Fernsehen?</h2></div>
+
+      <article class="dg-step" data-view="tv" data-show="tv">
+        <p>Fernsehen ist erstaunlich stabil. Bis 2023 schalteten rund <b>zwei Drittel</b> der Bevölkerung täglich den Fernseher ein, im Corona-Jahr 2020 sogar <b>69&nbsp;%</b>.</p>
+        <p>In der neuen Messung ab 2024 liegt die tägliche Reichweite bei <b>56&nbsp;%</b>, 2026 bei <b>54&nbsp;%</b>. Mindestens gelegentlich schauen 2026 immer noch <b>92&nbsp;%</b> fern.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("P20", "2020")} />, <Fragment set:html={L("S23", "2023")} />, <Fragment set:html={L("S24", "2024")} />, <Fragment set:html={L("TTV", "2026")} />.</p>
+      </article>
+
+      <article class="dg-step" data-view="tvalter" data-show="tv">
+        <p>Der Durchschnitt verdeckt die Kluft zwischen den Generationen. 2024 sahen von den 15- bis 34-Jährigen <b>42&nbsp;%</b> täglich fern, von den 55- bis 75-Jährigen <b>76&nbsp;%</b>.</p>
+        <p>Die Jungen haben den Fernseher trotzdem nicht abgeschafft: <b>89&nbsp;%</b> von ihnen nutzen ihn mindestens gelegentlich.</p>
+        <p class="dg-note">Quelle: <Fragment set:html={L("S24", "Digimonitor 2024")} />.</p>
+      </article>
+
+      <div class="dg-chap"><span>Kapitel 5</span><h2>Nichts kam so schnell wie KI</h2></div>
+
+      <article class="dg-step" data-view="tempo" data-show="nf,ig,tt">
+        <p>Wie schnell setzt sich etwas Neues durch? Hier sind die Kurven auf das Jahr der ersten Messung ausgerichtet.</p>
+        <p>Netflix brauchte sieben Jahre von <b>5&nbsp;%</b> auf <b>48&nbsp;%</b>. Instagram brauchte sieben Jahre von <b>16&nbsp;%</b> auf <b>42&nbsp;%</b>. TikTok kam in drei Jahren von <b>6&nbsp;%</b> auf <b>16&nbsp;%</b>.</p>
+        <p class="dg-note">Jede Kurve bleibt innerhalb einer Messmethode: Netflix, Instagram und TikTok bis 2023.</p>
+      </article>
+
+      <article class="dg-step" data-view="tempo" data-show="nf,ig,tt,ki">
+        <p>KI-Tools nutzten 2024 bereits <b>40&nbsp;%</b>, 2025 <b>60&nbsp;%</b> und 2026 <b>80&nbsp;%</b>. Die Verbreitung hat sich in zwei Jahren verdoppelt. Ein Jahr vorher, 2023, hatte die IGEM für ChatGPT erst <b>15&nbsp;%</b> gemessen, damals noch mit der alten Methode.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("S23", "2023")} />, <Fragment set:html={L("S24", "2024")} />, <Fragment set:html={L("M25", "2025")} />, <Fragment set:html={L("S26", "2026")} />. Die KI-Kurve stammt ganz aus der neuen Methode.</p>
+      </article>
+
+      <article class="dg-step" data-view="kialter" data-show="all">
+        <p>Bei den 15- bis 34-Jährigen ist KI schon Alltag: <b>57&nbsp;%</b> 2024, <b>79&nbsp;%</b> 2025, <b>91&nbsp;%</b> 2026. <b>44&nbsp;%</b> von ihnen nutzen KI täglich.</p>
+        <p>Bei den über 55-Jährigen waren es 2025 erst <b>40&nbsp;%</b>.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("S24", "2024")} />, <Fragment set:html={L("M25", "2025")} />, <Fragment set:html={L("S26", "2026")} />.</p>
+      </article>
+
+      <article class="dg-step" data-view="kitools" data-show="all">
+        <p>Wer KI sagt, meint meistens ChatGPT. Zwei Drittel der Bevölkerung (<b>67&nbsp;%</b>) nutzen es mindestens gelegentlich, 17&nbsp;% täglich. Gemini und Copilot folgen mit deutlichem Abstand.</p>
+        <p>Claude, mit dem diese Seite entstanden ist, liegt mit Perplexity bei <b>10&nbsp;%</b>.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("S26", "2026")} />, <Fragment set:html={L("TTT", "Trends & Technik")} />.</p>
+      </article>
+
+      <div class="dg-chap"><span>Kapitel 6</span><h2>Die Schweiz 2026</h2></div>
+
+      <article class="dg-step" data-view="jung26" data-show="all">
+        <p>So sieht ein Tag der 15- bis 34-Jährigen 2026 aus: <b>72&nbsp;%</b> öffnen täglich Instagram. KI und Snapchat liegen gleichauf bei <b>44&nbsp;%</b>, TikTok bei <b>31&nbsp;%</b>.</p>
+        <p>Für <b>31&nbsp;%</b> ist Social Media täglich eine Nachrichtenquelle, für 13&nbsp;% sogar die einzige.</p>
+        <p class="dg-note">Quellen: <Fragment set:html={L("S26", "2026")} />, <Fragment set:html={L("TON", "Online")} />.</p>
+      </article>
+
+      <article class="dg-step" data-view="typen" data-show="all">
+        <p>Die IGEM teilt die Bevölkerung 2026 in fünf Mediennutzungstypen ein. Die grösste Gruppe sind die <b>Klassischen</b> mit <b>32&nbsp;%</b>. Die <b>Always-on</b> machen <b>19&nbsp;%</b> aus, die <b>Analogen</b> <b>16&nbsp;%</b>.</p>
+        <p>Das Alter erklärt dabei nicht alles: 13&nbsp;% der unter 30-Jährigen sind Analoge, 5&nbsp;% der über 60-Jährigen sind Always-on.</p>
+        <p class="dg-note">Quelle: <Fragment set:html={L("TTYP", "Mediennutzungstypen 2026")} />.</p>
+      </article>
+    </div>
+  </div>
+</div>
+
+      <section class="mt-10 max-w-[65ch] space-y-5 font-sans text-[17px] leading-[1.75] text-[var(--color-ink)]">
+        <h2 class="font-serif text-[1.9rem] leading-tight">Was nehme ich mit?</h2>
+        <p>Die Medien sind in zwölf Jahren nicht verschwunden. Fernsehen, Radio und sogar Teletext haben immer noch ein grosses Publikum. Neu ist, dass sich die Nutzung auf viel mehr Kanäle verteilt, und dass die Jungen jeden neuen Kanal zuerst besetzen.</p>
+        <p>Für die Daten gilt: Wer nur die öffentlichen Mitteilungen hat, bekommt keine sauberen Zeitreihen. Altersgruppen wechseln von 15–24 zu «unter 30» zu 15–34, und 2024 bricht die Methode. Mit etwas Sorgfalt reicht es aber für eine ehrliche Geschichte, solange jede Zahl ihre Quelle behält und jeder Bruch sichtbar bleibt.</p>
+      </section>
+
+      <details class="dg-foot mt-12 max-w-[65ch] font-sans">
+        <summary>Methode und Quellen</summary>
+        <p>Alle Werte stammen aus öffentlich zugänglichen Medienmitteilungen, Medieninfos und Themenseiten der IGEM. Die Tabellenbände für Mitglieder wurden nicht verwendet. Wo die Quelle nur Wörter nennt («zwei Drittel», «ein Viertel», «knapp 70 Prozent»), steht im Tooltip der Originalwortlaut. Werte bis 2023: LINK-Institut, Bevölkerung ab 15 Jahren, Deutsch- und Westschweiz (Tessin 2021 und 2023), meist telefonisch. Werte ab 2024: Intervista, Internetnutzende 15–75 Jahre, alle drei Sprachregionen, online. Gemessen wird meist der weiteste Nutzerkreis («mindestens gelegentlich»), beim Fernsehen die tägliche Nutzung.</p>
+        <dl>
+          {quellen.map(([y, u]) => (<><dt>Digimonitor {y}</dt><dd><a href={u} target="_blank" rel="noopener">{u.replace("https://www.", "")}</a></dd></>))}
+        </dl>
+      </details>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+.dg{container-type:inline-size;font-family:var(--font-sans);color:var(--color-ink);
+  --dg-panel:oklch(0.99 0.006 70);--dg-grid:oklch(0.9 0.012 120);--dg-axis:oklch(0.75 0.015 120);--dg-muted:#b4bcab}
+.dg-callout{border-left:4px solid var(--color-accent);padding:4px 0 4px 18px;color:var(--color-ink-muted)}
+.dg-scrolly{display:grid;grid-template-columns:minmax(260px,36%) 1fr;column-gap:36px;position:relative}
+.dg-steps{grid-column:1;grid-row:1;padding:10vh 0 45vh;position:relative;z-index:1}
+.dg-sticky{grid-column:2;grid-row:1;position:sticky;top:88px;height:calc(100vh - 104px);min-height:420px;display:flex;align-self:start}
+.dg-figure{flex:1;display:flex;flex-direction:column;background:var(--dg-panel);border:1px solid var(--color-rule);border-radius:var(--radius-card);padding:22px;margin:0;min-width:0}
+.dg-ctitle{font-size:16px;font-weight:700;margin:0 0 8px}
+.dg-csub{display:block;font-weight:400;font-size:12.5px;color:var(--color-ink-muted);margin-top:2px}
+.dg-stage{flex:1;position:relative;min-height:260px}
+.dg-stage svg{position:absolute;inset:0;overflow:visible}
+.dg-legend{margin:8px 0 0;font-size:12.5px;color:var(--color-ink-muted);display:flex;flex-wrap:wrap;gap:4px 14px;min-height:18px}
+.dg-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.dg-chap{margin:0 0 22px;padding-top:20vh}
+.dg-chap:first-child{padding-top:0}
+.dg-chap span{display:block;font-size:12.5px;color:var(--color-ink-muted);letter-spacing:.08em;text-transform:uppercase}
+.dg-chap h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.6rem,4cqi,2.3rem);line-height:1.15;margin:4px 0 0}
+.dg-step{margin:0 0 55vh;padding:22px;border-radius:var(--radius-card);border:1px solid var(--color-rule);background:var(--dg-panel);line-height:1.6;font-size:16px;opacity:.35;transition:opacity .4s}
+.dg-step.is-active{opacity:1}
+.dg-step p{margin:0 0 8px}
+.dg-step p:last-child{margin-bottom:0}
+.dg-step b{font-variant-numeric:tabular-nums}
+.dg-note{font-size:12.5px;color:var(--color-ink-muted)}
+.dg-src{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.dg-svg text{font-family:var(--font-sans)}
+.dg-svg .tick text{fill:var(--color-ink-muted);font-size:12.5px}
+.dg-svg .dg-grid line{stroke:var(--dg-grid);stroke-dasharray:2 3}
+.dg-svg .dg-grid .domain,.dg-svg .dg-x .domain{display:none}
+.dg-svg .dg-x line{stroke:var(--dg-axis)}
+.dg-lbl{font-size:12.5px;font-variant-numeric:tabular-nums;paint-order:stroke;stroke:var(--dg-panel);stroke-width:4px;stroke-linejoin:round}
+.dg-brk line{stroke:var(--color-ink-muted);stroke-dasharray:3 4}
+.dg-brk rect{fill:var(--color-ink);opacity:.035}
+.dg-brk text{fill:var(--color-ink-muted);font-size:11.5px}
+.dg-ann text{fill:var(--color-ink);font-size:12.5px;paint-order:stroke;stroke:var(--dg-panel);stroke-width:5px;stroke-linejoin:round}
+.dg-ann line{stroke:var(--color-ink);stroke-width:1}
+.dg-tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--color-rule);box-shadow:var(--shadow-lift);border-radius:var(--radius-card);padding:8px 10px;font-size:12.5px;max-width:240px;opacity:0;z-index:3;transition:opacity .12s;line-height:1.4}
+.dg-tip b{display:block}
+.dg-tip span{color:var(--color-ink-muted)}
+.dg-foot{font-size:14px;color:var(--color-ink-muted);line-height:1.6}
+.dg-foot summary{cursor:pointer;color:var(--color-ink);font-size:17px}
+.dg-foot dt{color:var(--color-ink);font-weight:700;margin-top:8px}
+.dg-foot dd{margin:0;word-break:break-all}
+.dg-foot a{text-decoration:underline;text-underline-offset:2px}
+@container (max-width:720px){
+  .dg-scrolly{grid-template-columns:1fr}
+  .dg-sticky{grid-column:1;top:76px;height:58vh;min-height:340px;z-index:0}
+  .dg-figure{padding:14px}
+  .dg-steps{grid-column:1;padding:58vh 0 40vh;pointer-events:none}
+  .dg-step,.dg-chap{pointer-events:auto}
+  .dg-step{opacity:1;margin-bottom:70vh;box-shadow:var(--shadow-lift)}
+  .dg-chap{padding:14px;margin-bottom:60vh;background:var(--dg-panel);border-radius:var(--radius-card);border:1px solid var(--color-rule)}
+  .dg-chap:first-child{padding-top:14px}
+}
+</style>
+
+<script is:inline src="/tv-schweiz/d3.v7.min.js"></script>
+<script is:inline>
+(function(){
+  if(!window.d3) return;
+  const d3 = window.d3;
+  const loc = d3.formatLocale({decimal:",",thousands:"'",grouping:[3],currency:["",""]});
+  const fmt = v => (Math.round(v*10)/10 === Math.round(v) ? loc.format("d")(Math.round(v)) : loc.format(".1f")(v)) + " %";
+  const MUTED = "#b4bcab";
+  const C = {fb:"#2b8c8c", ig:"#a8415b", snap:"#d99a2b", tt:"#2d6a4f", nf:"#7a5c3e", sp:"#52b788", yt:"#8a8f85", tv:"#2d6a4f", ki:"#d99a2b"};
+  const SRC = {P14:"Digimonitor 2014",P15:"Digimonitor 2015",P16:"Digimonitor 2016",D17:"Medieninfo 2017",D18:"Medieninfo 2018",D19:"Medieninfo 2019",P20:"Medienmitteilung 2020",P21:"Medienmitteilung 2021",D22:"Medienmitteilung 2022",S23:"Medienmitteilung 2023",S24:"Medienmitteilung 2024",M25:"Medienmitteilung 2025",G25:"Gaming-Mitteilung 2025",S26:"Medienmitteilung 2026",TTV:"Themenseite TV 2026",TON:"Themenseite Online 2026",TTT:"Themenseite Trends & Technik 2026",TTYP:"Mediennutzungstypen 2026"};
+  // [jahr, wert, quelle, wortlaut]
+  const JUNG = {
+    fb:{label:"Facebook",pts:[[2014,82,"D19"],[2015,72,"P15","«um zehn Prozentpunkte gesunken»"],[2016,69,"D17","«knapp 70 Prozent»"],[2017,55,"D17"],[2018,51,"D18"],[2019,36,"D19"],[2020,34,"P20","unter 25 Jahren"],[2021,30,"P21"],[2022,27,"D22"]]},
+    ig:{label:"Instagram",pts:[[2016,66,"P16"],[2018,73,"D18"],[2019,80,"D19"],[2020,82,"P20","unter 25 Jahren"],[2021,86,"P21"],[2022,83,"D22"]]},
+    snap:{label:"Snapchat",pts:[[2018,71,"D18"],[2021,65,"P21"],[2022,70,"D22"]]},
+    tt:{label:"TikTok",pts:[[2021,35,"P21"],[2022,43,"D22"]]}
+  };
+  const PLATT = {
+    fb:{label:"Facebook",pts:[[2014,45,"P16","«seit 2014 konstant bei rund 45 Prozent»"],[2016,45,"P16","«rund 45 Prozent»"],[2018,45,"D18"],[2020,46,"P20"],[2021,45,"P21"],[2022,44,"D22"],[2023,41.7,"S23"],[2024,52,"S24"],[2025,51,"M25"],[2026,48,"TON"]]},
+    ig:{label:"Instagram",pts:[[2016,16,"P16"],[2019,27,"D19"],[2020,33,"P20"],[2021,37,"P21"],[2022,39,"D22"],[2023,42.2,"S23"],[2024,60,"S24"],[2025,63,"M25"],[2026,64,"TON"]]},
+    tt:{label:"TikTok",pts:[[2020,6,"P20"],[2021,10.5,"P21"],[2022,13,"D22"],[2023,16,"S23"],[2024,23,"S24"],[2025,22,"M25"],[2026,25,"TON"]]}
+  };
+  const STREAM = {
+    nf:{label:"Netflix",pts:[[2015,5,"D19"],[2016,10,"P16","«rund zehn Prozent»"],[2018,25,"D18","«einem Viertel der Gesamtbevölkerung»"],[2019,28,"D19"],[2020,35,"P20"],[2021,42,"P21"],[2022,48,"D22"],[2023,43,"S23"],[2024,54,"S24"],[2025,54,"M25"],[2026,54,"S26"]]},
+    sp:{label:"Spotify",pts:[[2018,20,"D18","«Ein Fünftel der Bevölkerung»"],[2019,26,"D19"],[2020,31,"P20"],[2021,33,"P21"],[2022,39,"D22"],[2023,41,"S23"],[2025,55,"G25"]]},
+    yt:{label:"YouTube",pts:[[2018,67,"D18","«Zwei Drittel der Bevölkerung»"],[2019,67,"D19"],[2020,74,"P20"],[2021,68,"P21"],[2022,70,"D22"],[2023,64,"S23"],[2024,79,"S24"],[2025,76,"M25"],[2026,80,"S26","Themenseite TV nennt 76 %"]]}
+  };
+  const TV = {tv:{label:"Fernsehen täglich",pts:[[2016,63,"P16"],[2019,67,"D19","«Zwei Drittel»"],[2020,69,"P20"],[2021,65,"P21"],[2022,62,"D22"],[2023,63,"S23"],[2024,56,"S24"],[2025,57,"M25"],[2026,54,"TTV"]]}};
+  const TEMPO = {
+    nf:{label:"Netflix (ab 2015)",pts:[[0,5,"D19","2015"],[1,10,"P16","2016"],[3,25,"D18","2018"],[4,28,"D19","2019"],[5,35,"P20","2020"],[6,42,"P21","2021"],[7,48,"D22","2022"],[8,43,"S23","2023"]]},
+    ig:{label:"Instagram (ab 2016)",pts:[[0,16,"P16","2016"],[3,27,"D19","2019"],[4,33,"P20","2020"],[5,37,"P21","2021"],[6,39,"D22","2022"],[7,42.2,"S23","2023"]]},
+    tt:{label:"TikTok (ab 2020)",pts:[[0,6,"P20","2020"],[1,10.5,"P21","2021"],[2,13,"D22","2022"],[3,16,"S23","2023"]]},
+    ki:{label:"KI-Tools (ab 2024)",pts:[[0,40,"S24","2024"],[1,60,"M25","2025"],[2,80,"S26","2026"]]}
+  };
+  const VIEWS = {
+    jung:{title:"Plattformen bei den 15- bis 24-Jährigen",sub:"mindestens gelegentliche Nutzung in % · 2014–2022",type:"line",data:JUNG,x:[2014,2022],
+      ann:{"fb,ig":[{x:2018,y:62,lo:51,hi:73,t:"22 Punkte Abstand 2018"}]}},
+    plattform:{title:"Social Media in der Gesamtbevölkerung",sub:"mindestens gelegentliche Nutzung in % · 2014–2026",type:"line",data:PLATT,x:[2014,2026],brk:true},
+    streaming:{title:"Streaming in der Gesamtbevölkerung",sub:"mindestens gelegentliche Nutzung in % · 2015–2026",type:"line",data:STREAM,x:[2015,2026],brk:true},
+    tv:{title:"Wer täglich fernsieht",sub:"tägliche Nutzung in % der Bevölkerung · 2016–2026",type:"line",data:TV,x:[2016,2026],brk:true,y:[0,100]},
+    tvalter:{title:"Täglich fernsehen nach Alter",sub:"tägliche Nutzung in % · Internetnutzende 15–75 · 2024",type:"bars",
+      rows:[{l:"15–34 Jahre",v:42,c:"#52b788",s:"S24"},{l:"35–54 Jahre",v:61,c:"#2d6a4f",s:"S24"},{l:"55–75 Jahre",v:76,c:"#1f4a37",s:"S24"},{l:"Alle 15–75",v:56,c:MUTED,s:"S24"}]},
+    tempo:{title:"Wie schnell sich Neues durchsetzt",sub:"mindestens gelegentliche Nutzung in % · Jahre nach der ersten Messung",type:"line",data:TEMPO,x:[0,8],tempo:true},
+    kialter:{title:"KI-Nutzung nach Alter",sub:"mindestens gelegentliche Nutzung in % · Internetnutzende 15–75",type:"cols",
+      cats:["2024","2025","2026"],series:[{k:"Alle 15–75",c:"#d99a2b",v:[[40,"S24"],[60,"M25"],[80,"S26"]]},{k:"15–34 Jahre",c:"#a8415b",v:[[57,"S24"],[79,"M25"],[91,"S26"]]},{k:"über 55 Jahre",c:"#7a5c3e",v:[null,[40,"M25"],null]}]},
+    kitools:{title:"Welche KI-Tools die Schweiz nutzt",sub:"mindestens gelegentliche Nutzung in % · Internetnutzende 15–75 · 2026",type:"bars",
+      rows:[["ChatGPT",67],["Gemini",32],["Copilot",30],["Meta AI",13],["Claude",10],["Perplexity",10],["Mistral",3]].map(([l,v])=>({l,v,c:l==="Claude"?"#a8415b":l==="ChatGPT"?"#d99a2b":"#c9b48a",s:"S26"}))},
+    jung26:{title:"Ein Tag mit 15- bis 34-Jährigen",sub:"tägliche Nutzung in % · 2026",type:"bars",
+      rows:[{l:"Instagram",v:72,c:"#a8415b",s:"S26"},{l:"KI-Tools",v:44,c:"#d99a2b",s:"S26"},{l:"Snapchat",v:44,c:"#d9b02b",s:"S26"},{l:"TikTok",v:31,c:"#2d6a4f",s:"S26"},{l:"Social Media als News",v:31,c:"#2b8c8c",s:"S26"}]},
+    typen:{title:"Fünf Mediennutzungstypen",sub:"Anteil an den Internetnutzenden 15–75 · 2026 · ein Quadrat = 1 %",type:"waffle",
+      rows:[{l:"Klassische",v:32,c:"#2d6a4f"},{l:"Selektive",v:24,c:"#52b788"},{l:"Always-on",v:19,c:"#a8415b"},{l:"Analoge",v:16,c:"#7a5c3e"},{l:"Technikaffine",v:9,c:"#d99a2b"}]}
+  };
+
+  const stage = document.getElementById("dg-stage");
+  const titleEl = document.getElementById("dg-title");
+  const legEl = document.getElementById("dg-legend");
+  const tip = document.createElement("div"); tip.className = "dg-tip"; stage.appendChild(tip);
+  let cur = {view:null, show:[]};
+
+  function showTip(ev, html){
+    const r = stage.getBoundingClientRect();
+    tip.innerHTML = html; tip.style.opacity = 1;
+    let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12;
+    if (x + 240 > r.width) x = ev.clientX - r.left - 250;
+    tip.style.left = Math.max(0,x) + "px"; tip.style.top = y + "px";
+  }
+  const hideTip = () => tip.style.opacity = 0;
+
+  function setLegend(items){
+    legEl.innerHTML = items.map(([l,c]) => `<span><i style="background:${c}"></i>${l}</span>`).join("");
+  }
+
+  function svgBase(){
+    stage.querySelectorAll("svg").forEach(s => s.remove());
+    const w = stage.clientWidth, h = stage.clientHeight;
+    const svg = d3.select(stage).insert("svg", ".dg-tip").attr("class","dg-svg").attr("width",w).attr("height",h);
+    return {svg,w,h};
+  }
+
+  function drawLine(v, show, prevShow){
+    const {svg,w,h} = svgBase();
+    const narrow = w < 480;
+    const m = {t:18, r:narrow?74:118, b:30, l:38};
+    const x = d3.scaleLinear().domain(v.x).range([m.l, w-m.r]);
+    const y = d3.scaleLinear().domain(v.y || [0,100]).range([h-m.b, m.t]);
+    svg.append("g").attr("class","dg-grid").attr("transform",`translate(${m.l},0)`)
+      .call(d3.axisLeft(y).ticks(5).tickSize(-(w-m.l-m.r)).tickFormat(d => d + (d===100?" %":"")));
+    const span = v.x[1]-v.x[0];
+    svg.append("g").attr("class","dg-x").attr("transform",`translate(0,${h-m.b})`)
+      .call(d3.axisBottom(x).ticks(narrow ? Math.min(span,6) : span).tickFormat(d => v.tempo ? (d===0?"Start":"+"+d) : (narrow ? "’"+String(d).slice(2) : d)));
+    if (v.brk){
+      const bx = x(2023.5), g = svg.append("g").attr("class","dg-brk");
+      g.append("rect").attr("x",bx).attr("y",m.t).attr("width",x(v.x[1])-bx+8).attr("height",h-m.t-m.b);
+      g.append("line").attr("x1",bx).attr("x2",bx).attr("y1",m.t-6).attr("y2",h-m.b);
+      g.append("text").attr("x",bx+5).attr("y",m.t+4).text(narrow?"neue Methode":"neue Methode ab 2024");
+    }
+    const line = d3.line().x(p => x(p[0])).y(p => y(p[1]));
+    const labels = [];
+    show.forEach(k => {
+      const s = v.data[k]; if (!s) return;
+      const col = C[k], isNew = !prevShow.includes(k);
+      const segs = v.brk ? [s.pts.filter(p => p[0] < 2024), s.pts.filter(p => p[0] >= 2024)] : [s.pts];
+      segs.forEach(seg => {
+        if (seg.length < 2) return;
+        const p = svg.append("path").attr("d", line(seg)).attr("fill","none").attr("stroke",col).attr("stroke-width",2.5).attr("stroke-linejoin","round");
+        if (isNew){ const L = p.node().getTotalLength(); p.attr("stroke-dasharray",L).attr("stroke-dashoffset",L).transition().duration(900).ease(d3.easeCubicOut).attr("stroke-dashoffset",0); }
+      });
+      if (v.brk && segs[0].length && segs[1].length){
+        const a = segs[0][segs[0].length-1], b = segs[1][0];
+        svg.append("line").attr("x1",x(a[0])).attr("y1",y(a[1])).attr("x2",x(b[0])).attr("y2",y(b[1])).attr("stroke",col).attr("stroke-width",1.5).attr("stroke-dasharray","2 4").attr("opacity",.7);
+      }
+      svg.append("g").selectAll("circle").data(s.pts).join("circle")
+        .attr("cx",p=>x(p[0])).attr("cy",p=>y(p[1])).attr("r",3.6).attr("fill","#fff").attr("stroke",col).attr("stroke-width",2)
+        .attr("opacity", isNew ? 0 : 1).call(sel => isNew && sel.transition().delay(500).duration(400).attr("opacity",1));
+      svg.append("g").selectAll("circle").data(s.pts).join("circle")
+        .attr("cx",p=>x(p[0])).attr("cy",p=>y(p[1])).attr("r",12).attr("fill","transparent").style("cursor","default")
+        .on("mousemove",(ev,p)=>showTip(ev,`<b>${s.label} · ${v.tempo ? p[3] : p[0]}</b>${fmt(p[1])}${p[3] && !v.tempo ? `<br><span>${p[3]}</span>` : ""}<br><span>${SRC[p[2]]}</span>`))
+        .on("mouseleave",hideTip);
+      const last = s.pts[s.pts.length-1];
+      labels.push({k, col, x:x(last[0]), y:y(last[1]), t: narrow ? fmt(last[1]) : `${s.label.replace(/ \(.*\)/,"")} ${fmt(last[1])}`});
+    });
+    // Labels gegen Überlappung verschieben
+    labels.sort((a,b)=>a.y-b.y);
+    for (let i=1;i<labels.length;i++) if (labels[i].y - labels[i-1].y < 15) labels[i].y = labels[i-1].y + 15;
+    svg.append("g").selectAll("text").data(labels).join("text").attr("class","dg-lbl")
+      .attr("x",d=>d.x+8).attr("y",d=>d.y+4).attr("fill",d=>d.col).attr("font-weight",700).text(d=>d.t);
+    const ann = v.ann && v.ann[show.join(",")];
+    if (ann && !narrow) ann.forEach(a => {
+      const g = svg.append("g").attr("class","dg-ann").attr("opacity",0);
+      g.append("line").attr("x1",x(a.x)).attr("x2",x(a.x)).attr("y1",y(a.lo)-5).attr("y2",y(a.hi)+5).attr("stroke-dasharray","2 2");
+      g.append("text").attr("x",x(a.x)+6).attr("y",y(a.y)+4).text(a.t);
+      g.transition().delay(800).duration(400).attr("opacity",1);
+    });
+    setLegend(show.filter(k=>v.data[k]).map(k => [v.data[k].label, C[k]]));
+  }
+
+  function drawBars(v){
+    const {svg,w,h} = svgBase();
+    const narrow = w < 480;
+    const m = {t:6, r:56, b:6, l: narrow ? 118 : 160};
+    const y = d3.scaleBand().domain(v.rows.map(r=>r.l)).range([m.t, Math.min(h-m.b, m.t + v.rows.length*56)]).padding(.28);
+    const x = d3.scaleLinear().domain([0,100]).range([m.l, w-m.r]);
+    svg.append("g").selectAll("text").data(v.rows).join("text").attr("x",m.l-10).attr("y",r=>y(r.l)+y.bandwidth()/2+4)
+      .attr("text-anchor","end").attr("font-size",14).attr("fill","var(--color-ink)").text(r=>r.l);
+    svg.append("g").selectAll("rect.bg").data(v.rows).join("rect").attr("x",m.l).attr("y",r=>y(r.l)).attr("height",y.bandwidth()).attr("width",x(100)-m.l).attr("fill","oklch(0.94 0.01 120)").attr("rx",3);
+    svg.append("g").selectAll("rect.v").data(v.rows).join("rect").attr("x",m.l).attr("y",r=>y(r.l)).attr("height",y.bandwidth()).attr("rx",3)
+      .attr("fill",r=>r.c).attr("width",0).on("mousemove",(ev,r)=>showTip(ev,`<b>${r.l}</b>${fmt(r.v)}<br><span>${SRC[r.s]}</span>`)).on("mouseleave",hideTip)
+      .transition().duration(800).ease(d3.easeCubicOut).attr("width",r=>x(r.v)-m.l);
+    svg.append("g").selectAll("text.v").data(v.rows).join("text").attr("class","dg-lbl").attr("font-weight",700)
+      .attr("x",r=>x(r.v)+6).attr("y",r=>y(r.l)+y.bandwidth()/2+4).attr("fill","var(--color-ink)").attr("opacity",0).text(r=>fmt(r.v))
+      .transition().delay(600).duration(300).attr("opacity",1);
+    setLegend([]);
+  }
+
+  function drawCols(v){
+    const {svg,w,h} = svgBase();
+    const m = {t:18, r:10, b:30, l:38};
+    const x0 = d3.scaleBand().domain(v.cats).range([m.l, w-m.r]).padding(.22);
+    const x1 = d3.scaleBand().domain(v.series.map(s=>s.k)).range([0,x0.bandwidth()]).padding(.08);
+    const y = d3.scaleLinear().domain([0,100]).range([h-m.b,m.t]);
+    svg.append("g").attr("class","dg-grid").attr("transform",`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(w-m.l-m.r)).tickFormat(d=>d+(d===100?" %":"")));
+    svg.append("g").attr("class","dg-x").attr("transform",`translate(0,${h-m.b})`).call(d3.axisBottom(x0).tickSize(0)).selectAll("text").attr("dy","1.2em");
+    v.series.forEach(s => {
+      const pts = v.cats.map((c,i)=>s.v[i] ? {c, v:s.v[i][0], s:s.v[i][1]} : null).filter(Boolean);
+      const g = svg.append("g");
+      g.selectAll("rect").data(pts).join("rect").attr("x",d=>x0(d.c)+x1(s.k)).attr("width",x1.bandwidth()).attr("y",y(0)).attr("height",0).attr("rx",3).attr("fill",s.c)
+        .on("mousemove",(ev,d)=>showTip(ev,`<b>${s.k} · ${d.c}</b>${fmt(d.v)}<br><span>${SRC[d.s]}</span>`)).on("mouseleave",hideTip)
+        .transition().duration(800).ease(d3.easeCubicOut).attr("y",d=>y(d.v)).attr("height",d=>y(0)-y(d.v));
+      g.selectAll("text").data(pts).join("text").attr("class","dg-lbl").attr("text-anchor","middle").attr("font-weight",700).attr("fill","var(--color-ink)")
+        .attr("x",d=>x0(d.c)+x1(s.k)+x1.bandwidth()/2).attr("y",d=>y(d.v)-6).attr("opacity",0).text(d=>d.v)
+        .transition().delay(600).attr("opacity",1);
+    });
+    setLegend(v.series.map(s=>[s.k,s.c]));
+  }
+
+  function drawWaffle(v){
+    const {svg,w,h} = svgBase();
+    const narrow = w < 520;
+    const side = Math.min(narrow ? w : w*0.58, h - (narrow ? 120 : 10));
+    const cell = side/10, gap = Math.max(2, cell*0.12);
+    const cells = []; v.rows.forEach((r,ri) => { for (let i=0;i<r.v;i++) cells.push({r,ri}); });
+    const ox = narrow ? (w-side)/2 : 0, oy = 4;
+    svg.append("g").selectAll("rect").data(cells).join("rect")
+      .attr("x",(d,i)=>ox + (i%10)*cell).attr("y",(d,i)=>oy + Math.floor(i/10)*cell).attr("width",cell-gap).attr("height",cell-gap).attr("rx",2)
+      .attr("fill",d=>d.r.c).attr("opacity",0).on("mousemove",(ev,d)=>showTip(ev,`<b>${d.r.l}</b>${fmt(d.r.v)}<br><span>${SRC.TTYP}</span>`)).on("mouseleave",hideTip)
+      .transition().delay((d,i)=>i*8).duration(250).attr("opacity",1);
+    const lx = narrow ? 8 : side + 28, ly = narrow ? side + 22 : 20;
+    const lg = svg.append("g");
+    v.rows.forEach((r,i) => {
+      const yy = narrow ? ly + Math.floor(i/2)*22 : ly + i*34, xx = narrow ? lx + (i%2)*(w/2) : lx;
+      lg.append("rect").attr("x",xx).attr("y",yy-11).attr("width",12).attr("height",12).attr("rx",2).attr("fill",r.c);
+      lg.append("text").attr("x",xx+20).attr("y",yy).attr("font-size",narrow?13:15).attr("fill","var(--color-ink)").html(`<tspan font-weight="700">${r.v} %</tspan> ${r.l}`);
+    });
+    setLegend([]);
+  }
+
+  function render(view, show, animate){
+    const v = VIEWS[view]; if (!v) return;
+    titleEl.firstChild.nodeValue = v.title;
+    document.getElementById("dg-sub").textContent = v.sub;
+    const prev = (animate && cur.view === view) ? cur.show : (animate ? [] : show);
+    hideTip();
+    if (v.type === "line") drawLine(v, show, prev);
+    else if (v.type === "bars") drawBars(v);
+    else if (v.type === "cols") drawCols(v);
+    else if (v.type === "waffle") drawWaffle(v);
+    cur = {view, show};
+  }
+
+  window.dgRender = (v, show) => render(v, show, false);
+  const steps = Array.from(document.querySelectorAll(".dg-step"));
+  function activate(el){
+    if (el.classList.contains("is-active") && cur.view) return;
+    steps.forEach(s => s.classList.toggle("is-active", s === el));
+    render(el.dataset.view, el.dataset.show.split(","), true);
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) activate(e.target); });
+  }, {rootMargin: window.matchMedia("(max-width: 760px)").matches ? "-78% 0px -12% 0px" : "-45% 0px -45% 0px"});
+  steps.forEach(s => io.observe(s));
+  activate(steps[0]);
+  let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => cur.view && render(cur.view, cur.show, false), 120); }).observe(stage);
+})();
+</script>
