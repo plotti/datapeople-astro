@@ -3,6 +3,7 @@ import romanHofmann from "../assets/team/roman-hofmann.png";
 import thomasMassie from "../assets/team/thomas-massie.png";
 import paschalisDimitriou from "../assets/team/paschalis-dimitriou.png";
 import philippEgli from "../assets/team/philipp-egli.jpg";
+import siriFischer from "../assets/team/siri-fischer.jpg";
 import logo3Plus from "../assets/logos/logo-3plus.svg";
 import logoOmnicom from "../assets/logos/logo-omnicom.png";
 import logoOneplus from "../assets/logos/logo-oneplus.png";
@@ -217,6 +218,12 @@ export const team: { title: string; intro: string; members: TeamMember[] } = {
       role: "Strategie & Veränderung",
       desc: "Bringt strategische Klarheit in komplexe Datenprojekte. Verbindet geschäftliche Anforderungen mit technischer Umsetzung.",
       photo: philippEgli,
+    },
+    {
+      name: "Siri Fischer",
+      role: "Medienforschung & Werbemarkt",
+      desc: "Leitet seit 2017 die IGEM und ist Expertin für Mediennutzungsforschung sowie den Schweizer Medien- und Werbemarkt – mit Fokus auf die Auswirkungen von Digitalisierung und KI.",
+      photo: siriFischer,
     },
   ],
 };
