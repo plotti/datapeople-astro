@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout
   title="TV-Dashboard Schweiz 2025 – Datapeople"
-  description="Ein Dashboard zu den Mediapulse-TV-Daten 2025 und dem IGEM-Digimonitor: Sehdauer seit 1985, Tagesverlauf, Alter, Sender und was die Jungen statt Fernsehen nutzen."
+  description="Ein Dashboard zu den Mediapulse-TV-Daten 2025: Sehdauer seit 1985, Tagesverlauf, Alter, Sender und zeitversetztes Fernsehen."
 >
   <main id="main-content" class="db">
     <header class="db-head">
@@ -26,7 +26,7 @@ import Layout from "../../layouts/Layout.astro";
       <div class="kpi"><p class="kpi-l">Primetime-Spitze (Mo–So)</p><p class="kpi-v"><span data-k="prime"></span><small> %</small></p><p class="kpi-d" data-k="prime_d"></p></div>
       <div class="kpi"><p class="kpi-l">60+ gegenüber 15–29</p><p class="kpi-v"><span data-k="ratio"></span><small>×</small></p><p class="kpi-d" data-k="ratio_d"></p></div>
       <div class="kpi"><p class="kpi-l">Marktanteil SRG-Sender</p><p class="kpi-v"><span data-k="home"></span><small> %</small></p><p class="kpi-d" data-k="home_d"></p></div>
-      <div class="kpi"><p class="kpi-l">Junge täglich: Instagram vs. TV</p><p class="kpi-v"><span data-k="insta"></span><small> vs. </small><span data-k="tv1534"></span></p><p class="kpi-d">% der 15–34-Jährigen, 2026, CH</p></div>
+      <div class="kpi"><p class="kpi-l">Zeitversetzt pro Tag 2025</p><p class="kpi-v"><span data-k="tsv"></span><small> Min.</small></p><p class="kpi-d" data-k="tsv_d"></p></div>
     </section>
 
     <section class="db-grid">
@@ -35,10 +35,10 @@ import Layout from "../../layouts/Layout.astro";
       <article class="card c-day"><header><h2>Tagesverlauf 2025</h2><p>Rating in % pro Viertelstunde, <span data-k="regname"></span></p></header><div class="chart" id="ch-day"></div></article>
       <article class="card c-age"><header><h2>Sehdauer nach Alter</h2><p class="seg" role="group" aria-label="Ansicht"><button type="button" data-age="2025" aria-pressed="true">2025, <span data-k="regshort"></span></button><button type="button" data-age="trend" aria-pressed="false">Verlauf 2019–2025, DE</button></p></header><div class="chart" id="ch-age"></div></article>
       <article class="card c-share"><header><h2>Marktanteile 2025</h2><p>% der TV-Nutzungszeit, Deutschschweiz</p></header><div class="chart" id="ch-share"></div></article>
-      <article class="card c-digi"><header><h2>Was täglich genutzt wird</h2><p class="seg" role="group" aria-label="Altersgruppe"><button type="button" data-dg="alter_15_34" aria-pressed="true">15–34</button><button type="button" data-dg="alter_35_54" aria-pressed="false">35–54</button><button type="button" data-dg="alter_55_plus" aria-pressed="false">55+</button><span class="seg-note">% mit täglicher Nutzung, CH, IGEM-Digimonitor</span></p></header><div class="chart" id="ch-digi"></div></article>
+      <article class="card c-digi"><header><h2>Zeitversetzt fernsehen 2013–2025</h2><p>Minuten pro Person und Tag, Deutschschweiz</p></header><div class="chart" id="ch-digi"></div></article>
       <article class="card c-home"><header><h2>SRG-Sender und Schweizer Private</h2><p>Marktanteil in der eigenen Region, 1995–2025</p></header><div class="chart" id="ch-home"></div></article>
     </section>
-    <footer class="db-foot">Quellen: Mediapulse TV Data, Publikation Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024 · IGEM-Digimonitor 2017–2026 (ab 2024 neues Feldinstitut, Werte davor nur bedingt vergleichbar). Gebaut mit Claude von <a href="/">Datapeople</a>.</footer>
+    <footer class="db-foot">Quellen: Mediapulse TV Data, Publikation Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024. Gebaut mit Claude von <a href="/">Datapeople</a>.</footer>
     <div class="db-tip" id="db-tip" role="status" aria-live="polite"></div>
   </main>
 </Layout>
@@ -100,16 +100,15 @@ import Layout from "../../layouts/Layout.astro";
 (function () {
   const BASE = '/tv-schweiz/data/';
   const files = {trend: 'tv_minuten_trend.csv', day: 'tagesverlauf.csv', groups: 'sehdauer_gruppen.csv', share: 'marktanteile_deutschschweiz.csv',
-    home: 'heimsender_anteil.csv', set: 'tv_set_komponenten.csv', age: 'sehdauer_alter_trend.csv', digi: 'digimonitor_taeglich.csv'};
+    home: 'heimsender_anteil.csv', set: 'tv_set_komponenten.csv', age: 'sehdauer_alter_trend.csv', tsv: 'zeitversetzt_trend.csv'};
   const REGS = ['Deutschschweiz', 'Suisse romande', 'Svizzera italiana'];
   const SHORT = {'Deutschschweiz': 'DE', 'Suisse romande': 'FR', 'Svizzera italiana': 'IT'};
   const HOME = {'Deutschschweiz': 'SRF', 'Suisse romande': 'RTS', 'Svizzera italiana': 'RSI'};
   const RC = {'Deutschschweiz': '#2d6a4f', 'Suisse romande': '#2b8c8c', 'Svizzera italiana': '#d99a2b'};
   const MUTED = '#c3c8bb';
-  const DIGI_C = {TV: '#d99a2b', Instagram: '#2d6a4f', Spotify: '#2b8c8c', TikTok: '#a8415b', ChatGPT: '#7a5c3e'};
   const loc = d3.formatLocale({decimal: '.', thousands: '’', grouping: [3], currency: ['', '']});
   const f0 = loc.format('.0f'), f1 = loc.format('.1f');
-  const state = {region: 'Deutschschweiz', age: '2025', dg: 'alter_15_34'};
+  const state = {region: 'Deutschschweiz', age: '2025'};
   const tip = document.getElementById('db-tip');
   const K = (k, v) => document.querySelectorAll(`[data-k="${k}"]`).forEach((e) => { e.textContent = v; });
   function showTip(ev, title, rows) {
@@ -215,9 +214,9 @@ import Layout from "../../layouts/Layout.astro";
       K('ratio', f1(gA('60+') / gA('15–29'))); K('ratio_d', `${f0(gA('60+'))} gegenüber ${f0(gA('15–29'))} Min. pro Tag`);
       const hm = D.home.filter((r) => r.region === R && r.sender === HOME[R]).sort((a, b) => a.jahr - b.jahr);
       K('home', f1(+hm[hm.length - 1].marktanteil_pct)); K('home_d', `${HOME[R]}, ${SHORT[R]} · 1995: ${f1(+hm[0].marktanteil_pct)} %`);
-      const dg = (a) => +D.digi.find((r) => r.jahr === '2026' && r.angebot === a).alter_15_34;
-      K('insta', f0(dg('Instagram'))); K('tv1534', f0(dg('TV')));
-      K('headline', `${R}: ${f1(last.y)} Minuten Fernsehen pro Person und Tag, ${f0((1 - last.y / peak.y) * 100)} % weniger als ${peak.x}. Bei den Jungen ist Instagram täglich verbreiteter als der Fernseher.`);
+      const ts = D.tsv.map((r) => ({x: +r.jahr, y: +r.minuten})).sort((a, b) => a.x - b.x);
+      K('tsv', f1(ts[ts.length - 1].y)); K('tsv_d', `DE · ${f1(ts[ts.length - 1].y / ts[0].y)}-mal so viel wie ${ts[0].x}`);
+      K('headline', `${R}: ${f1(last.y)} Minuten Fernsehen pro Person und Tag, ${f0((1 - last.y / peak.y) * 100)} % weniger als ${peak.x}. Personen ab 60 schauen ${f1(gA('60+') / gA('15–29'))}-mal so lange wie 15- bis 29-Jährige.`);
       K('regname', R); K('regshort', SHORT[R]);
       // charts
       lineChart(document.getElementById('ch-trend'), REGS.map((r) => ({name: r, color: r === R ? RC[r] : MUTED, w: r === R ? 2.6 : 1.5, end: `${SHORT[r]} ${f1(+D.trend.filter((x) => x.region === r).slice(-1)[0].minuten)}`, values: D.trend.filter((x) => x.region === r).map((x) => ({x: +x.jahr, y: +x.minuten}))})).sort((a, b) => (a.name === R) - (b.name === R)),
@@ -236,14 +235,13 @@ import Layout from "../../layouts/Layout.astro";
       }
       const yr = d3.max(D.share, (r) => +r.jahr); const skip = new Set(['SRF', 'SRG SSR', 'andere SRG SSR']);
       barH(document.getElementById('ch-share'), D.share.filter((r) => +r.jahr === yr && !skip.has(r.sender) && +r.marktanteil_pct >= 1.4).map((r) => ({name: r.sender === 'Schweizer Private' ? 'Schweizer Private (alle)' : r.sender, v: +r.marktanteil_pct, color: /^SRF/.test(r.sender) ? '#2d6a4f' : r.sender === 'Schweizer Private' ? '#2b8c8c' : MUTED})).sort((a, b) => b.v - a.v), {unit: 'Marktanteil %', fmt: (v) => f1(v) + ' %', label: 'Marktanteile der Sender 2025 in der Deutschschweiz'});
-      const dgk = state.dg; const names = Array.from(new Set(D.digi.map((r) => r.angebot)));
-      lineChart(document.getElementById('ch-digi'), names.map((n) => ({name: n === 'TV' ? 'Fernsehen' : n, color: DIGI_C[n] || MUTED, w: DIGI_C[n] ? 2.4 : 1.3, dash: n === 'ChatGPT' ? '4 3' : null, end: DIGI_C[n] ? `${n === 'TV' ? 'Fernsehen' : n} ${f0(+D.digi.find((r) => r.angebot === n && r.jahr === '2026')[dgk])}` : null, values: D.digi.filter((r) => r.angebot === n).map((r) => ({x: +r.jahr, y: +r[dgk]}))})).sort((a, b) => (a.color !== MUTED) - (b.color !== MUTED)),
-        {label: 'Anteil mit täglicher Nutzung nach Angebot 2017 bis 2026', yMax: 100, yFmt: (v) => v + ' %', xFmt: d3.format('d'), refs: [{x: 2023.5, label: 'Methodenwechsel'}], tipFmt: (v) => f1(v) + ' %'});
+      lineChart(document.getElementById('ch-digi'), [{name: 'Zeitversetzt', color: '#2b8c8c', w: 2.6, area: true, end: `${f1(D.tsv.slice(-1)[0].minuten)} Min.`, values: D.tsv.map((r) => ({x: +r.jahr, y: +r.minuten}))}],
+        {label: 'Zeitversetzte Fernsehnutzung 2013 bis 2025, Deutschschweiz', xFmt: d3.format('d'), tipFmt: (v) => f1(v) + ' Min.'});
       lineChart(document.getElementById('ch-home'), REGS.flatMap((r) => [HOME[r], 'Schweizer Private'].map((s) => ({name: `${s === 'Schweizer Private' ? 'Private' : s} (${SHORT[r]})`, color: r === R ? RC[r] : MUTED, w: r === R ? 2.4 : 1.2, dash: s === 'Schweizer Private' ? '4 3' : null, end: r === R ? `${s === 'Schweizer Private' ? 'Private' : s} ${f1(+D.home.filter((x) => x.region === r && x.sender === s).slice(-1)[0].marktanteil_pct)}` : null, values: D.home.filter((x) => x.region === r && x.sender === s).map((x) => ({x: +x.jahr, y: +x.marktanteil_pct}))}))).sort((a, b) => (a.color !== MUTED) - (b.color !== MUTED)),
         {label: 'Marktanteil SRG-Sender und Schweizer Private nach Region', xFmt: d3.format('d'), xTicks: 4, yFmt: (v) => f0(v) + ' %', tipFmt: (v) => f1(v) + ' %'});
     };
     const bind = (sel, key, attr) => document.querySelectorAll(sel).forEach((b) => b.addEventListener('click', () => { state[key] = b.dataset[attr]; document.querySelectorAll(sel).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); render(); }));
-    bind('[data-region]', 'region', 'region'); bind('[data-age]', 'age', 'age'); bind('[data-dg]', 'dg', 'dg');
+    bind('[data-region]', 'region', 'region'); bind('[data-age]', 'age', 'age'); 
     let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(render, 80); }).observe(document.querySelector('.db-grid'));
     render();
   }).catch((e) => { const p = document.createElement('p'); p.textContent = 'Die Daten konnten nicht geladen werden.'; document.querySelector('.db-grid').prepend(p); console.error(e); });
