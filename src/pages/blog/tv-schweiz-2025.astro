@@ -6,7 +6,7 @@ import Footer from "../../components/Footer.astro";
 
 <Layout
   title="Claude kann jetzt Dashboards – und zwar richtig gut – Datapeople"
-  description="Eine Scroll-Story zu den Mediapulse-TV-Daten 2025: Wie sich das Schweizer Fernsehen seit 1985 verändert, wann geschaut wird, wer schaut und welche Sender den Bildschirm teilen. Mit einem 3D-Film zur Altersschere."
+  description="Eine Scroll-Story zu den Mediapulse-TV-Daten 2025: Wie sich das Schweizer Fernsehen seit 1985 verändert, wann geschaut wird, wer schaut und welche Sender den Bildschirm teilen. Mit einem scrollbaren 3D-Fächer zu dem, was die Jungen stattdessen nutzen."
 >
   <Navigation />
   <main id="main-content" class="px-6 py-20 md:py-24">
@@ -21,7 +21,7 @@ import Footer from "../../components/Footer.astro";
       </div>
       <h1 class="mb-10 max-w-[22ch] font-serif leading-[1.08] text-[var(--color-ink)]" style="font-size: var(--text-display-lg);">Claude kann jetzt Dashboards – und zwar richtig gut</h1>
       <p class="tv-lede-num mb-6 max-w-[60ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl">Die Welt der Visualisierung und Dashboards hat sich verändert. Wer einen strukturierten Datensatz hat, kann daraus heute wunderbare interaktive Geschichten erzählen, ohne BI-Tool und ohne Programmierprojekt. Ich zeige das am Beispiel des Jahresberichts von Mediapulse.</p>
-      <p class="mb-16 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]"><strong>Stand:</strong> November 2026 · <strong>Autor:</strong> Thomas Ebermann · Daten: Mediapulse TV Data, Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024. Scrollen, die Grafik rechts wechselt mit dem Text.</p>
+      <p class="mb-16 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]"><strong>Stand:</strong> November 2026 · <strong>Autor:</strong> Thomas Ebermann · Daten: Mediapulse TV Data, Jahresdaten 2025 und Jahresberichte Deutschschweiz 2019–2024, IGEM-Digimonitor 2017–2026. Scrollen, die Grafik rechts wechselt mit dem Text.</p>
 
       <section class="mb-20 max-w-[65ch] space-y-5 font-sans text-[17px] leading-[1.75] text-[var(--color-ink)]">
         <h2 class="font-serif text-[1.9rem] leading-tight">Claude kann jetzt Dashboards</h2>
@@ -33,7 +33,7 @@ import Footer from "../../components/Footer.astro";
           <img src="/tv-schweiz/mediapulse-jahresbericht-tabelle.png" width="1709" height="731" loading="lazy" alt="Ausschnitt aus dem Mediapulse-Jahresbericht 2024 Deutschschweiz: eine Tabelle mit Publikumsanteilen in Prozent pro Viertelstunde und nach Geschlecht, Alter und Ausbildung." class="w-full rounded-[var(--radius-md)] border border-[var(--color-rule)]" />
           <figcaption class="font-sans text-sm text-[var(--color-ink-muted)]">So liegen die Daten heute vor: als Downloads auf der Jahresdaten-Seite von Mediapulse und als Tabellen im PDF-Jahresbericht, hier ein Ausschnitt aus dem Bericht 2024 für die Deutschschweiz. Quelle: <a class="underline underline-offset-4" href="https://www.mediapulse.ch/daten/jahresdaten" target="_blank" rel="noopener">mediapulse.ch</a>, Screenshots vom 11. November 2026.</figcaption>
         </figure>
-        <p>Ich habe Claude die Excel-Datei für 2025 gegeben und um ein Scroll-Dashboard mit Anmerkungen gebeten. Für den Vergleich nach Alter über die Jahre kamen die Jahresberichte 2019 bis 2024 dazu, den 3D-Film habe ich danach noch dazubestellt. Alles, was du unten siehst, einschliesslich dieses Blogposts, hat mich keine Stunde gekostet.</p>
+        <p>Ich habe Claude die Excel-Datei für 2025 gegeben und um ein Scroll-Dashboard mit Anmerkungen gebeten. Für den Vergleich nach Alter über die Jahre kamen die Jahresberichte 2019 bis 2024 dazu, und für die Frage, was die Jungen stattdessen tun, die Tabellenbände des IGEM-Digimonitors 2017 bis 2026. Alles, was du unten siehst, einschliesslich dieses Blogposts, hat mich keine Stunde gekostet.</p>
         <p>Der Prompt dazu war, ehrlich gesagt, ziemlich armselig:</p>
         <p class="!mt-4 border-l-4 border-[var(--color-accent)] py-2 pl-5 font-serif text-2xl italic leading-snug text-[var(--color-ink)]">«mach mir da ein cooles scrollify dashboard draus mit annotation»</p>
         <p>Das war alles. Mehr Anleitung bekam Claude nicht.</p>
@@ -55,7 +55,6 @@ import Footer from "../../components/Footer.astro";
         <p class="tv-ctitle" data-for="alter_de" hidden>Sehdauer nach Alter<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz 2025</span></p>
         <p class="tv-ctitle" data-for="alter_trend" hidden>Sehdauer nach Alter, 2019–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
         <p class="tv-ctitle" data-for="alter_index" hidden>Veränderung seit 2019 nach Alter<span class="tv-csub">Sehdauer, Index 2019 = 100 · Deutschschweiz</span></p>
-        <p class="tv-ctitle" data-for="alter_3d" hidden>Die Altersschere in 3D<span class="tv-csub">Sehdauer in Minuten pro Tag, 2019–2025 · Deutschschweiz</span></p>
         <p class="tv-ctitle" data-for="alter_regionen" hidden>Sehdauer nach Alter und Sprachregion<span class="tv-csub">Minuten pro Person und Tag · 2025</span></p>
         <p class="tv-ctitle" data-for="sender_2025" hidden>Marktanteile der Sender<span class="tv-csub">% der gesamten TV-Nutzungszeit · Deutschschweiz 2025</span></p>
         <p class="tv-ctitle" data-for="heimsender" hidden>SRG-Sender und Schweizer Private, 1995–2025<span class="tv-csub">Marktanteil in % in der eigenen Sprachregion</span></p>
@@ -117,12 +116,6 @@ import Footer from "../../components/Footer.astro";
         <p>Der Rückgang des Fernsehens ist vor allem ein Rückgang bei den Jüngeren.</p>
       </article>
 
-      <article class="tv-step" data-view="alter_3d" id="s-alter-3d">
-        <p>Alles auf einmal, in drei Dimensionen. Jede Wand ist eine Altersgruppe, vorne die Jüngsten, hinten Personen ab 60. Von links nach rechts laufen die Jahre 2019 bis 2025, die Höhe ist die Sehdauer.</p>
-        <p>Vorne sinkt die ockerfarbene Wand der 15- bis 29-Jährigen fast auf den Boden, hinten bleibt die grüne Wand der über 60-Jährigen stehen.</p>
-        <p class="tv-note">Mit der Maus ziehen dreht die Ansicht. <a class="tv-link" href="#film">Zum animierten 3D-Film ↓</a></p>
-      </article>
-
       <article class="tv-step" data-view="alter_regionen" id="s-alter-regionen">
         <p>Das Muster gilt in allen Regionen. In der Svizzera italiana kommen über 60-Jährige auf <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Svizzera%20italiana&amp;gruppe=60+">—</b> Minuten, in der Suisse romande auf <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Suisse%20romande&amp;gruppe=60+">—</b>.</p>
         <p>Frauen schauen in der Deutschschweiz <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Deutschschweiz&amp;gruppe=Frauen">—</b> Minuten, Männer <b data-draw="num" data-source="sehdauer_gruppen" data-field="minuten" data-where="region=Deutschschweiz&amp;gruppe=Männer">—</b>.</p>
@@ -131,11 +124,26 @@ import Footer from "../../components/Footer.astro";
     </div>
   </div>
 
-  <section class="tv-blogfilm" id="film">
-    <p class="tv-film-kicker">Zwischenspiel</p>
-    <h2>Die Altersschere als 3D-Film</h2>
-    <p>Dieselben Zahlen wie oben, als animierte Kamerafahrt in sechs Kapiteln. Play startet den Film, die Knöpfe springen zu einem Kapitel, und mit der Maus über den Wänden siehst du die Werte.</p>
-    <iframe src="/tv-schweiz/altersschere.html" title="Die Altersschere: 3D-Animation der Sehdauer nach Alter 2019–2025" loading="lazy"></iframe>
+  <section class="fx" id="faecher" aria-label="Was die Jungen statt Fernsehen nutzen: scrollbarer 3D-Fächer">
+    <div class="fx-intro">
+      <p class="tv-film-kicker">Kapitel 3b</p>
+      <h2>Was die Jungen stattdessen tun</h2>
+      <p>Mediapulse misst nur das Fernsehen. Was die 15- bis 34-Jährigen sonst täglich nutzen, fragt der IGEM-Digimonitor seit 2014 jedes Jahr ab. Scroll weiter: Jede Säule ist der Anteil der Jungen, die ein Angebot täglich nutzen, und mit jedem Scrollschritt läuft ein Jahr ab.</p>
+    </div>
+    <div class="fx-sticky">
+      <div class="fx-stage" id="faecher-stage" role="img" aria-label="3D-Säulen im Halbkreis: Anteil der 15- bis 34-Jährigen mit täglicher Nutzung von 2017 bis 2026. Fernsehen fällt von 50 auf 35 Prozent, Instagram steigt von 36 auf 72, Spotify von 23 auf 61, TikTok von 2 auf 31, ChatGPT erreicht 24 Prozent.">
+        <canvas></canvas>
+        <div class="fx-labels" aria-hidden="true"></div>
+        <div class="fx-shade" aria-hidden="true"></div>
+        <p class="fx-kick" aria-hidden="true">Tägliche Nutzung · 15- bis 34-Jährige · Schweiz</p>
+        <p class="fx-year" aria-hidden="true">2017</p>
+        <div class="fx-cap" aria-live="polite"><h3></h3><p></p></div>
+        <p class="fx-src">Quelle: IGEM-Digimonitor 2017–2026, Anteil mit täglicher oder mehrmals täglicher Nutzung. Ab 2024 neues Feldinstitut, Werte davor nur bedingt vergleichbar. Säulen erscheinen, sobald die Umfrage ein Angebot erfasst.</p>
+        <div class="fx-tip" aria-hidden="true"></div>
+        <p class="fx-fallback" hidden></p>
+      </div>
+    </div>
+    <p class="fx-after">Lieber als Video? <a class="tv-link" href="/tv-schweiz/medienfaecher.mp4">Der Fächer als 42-Sekunden-Film (MP4)</a></p>
   </section>
 
   <div class="tv-scrolly" data-view="sender_2025">
@@ -150,7 +158,6 @@ import Footer from "../../components/Footer.astro";
         <p class="tv-ctitle" data-for="alter_de" hidden>Sehdauer nach Alter<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz 2025</span></p>
         <p class="tv-ctitle" data-for="alter_trend" hidden>Sehdauer nach Alter, 2019–2025<span class="tv-csub">Minuten pro Person und Tag · Deutschschweiz</span></p>
         <p class="tv-ctitle" data-for="alter_index" hidden>Veränderung seit 2019 nach Alter<span class="tv-csub">Sehdauer, Index 2019 = 100 · Deutschschweiz</span></p>
-        <p class="tv-ctitle" data-for="alter_3d" hidden>Die Altersschere in 3D<span class="tv-csub">Sehdauer in Minuten pro Tag, 2019–2025 · Deutschschweiz</span></p>
         <p class="tv-ctitle" data-for="alter_regionen" hidden>Sehdauer nach Alter und Sprachregion<span class="tv-csub">Minuten pro Person und Tag · 2025</span></p>
         <p class="tv-ctitle" data-for="sender_2025">Marktanteile der Sender<span class="tv-csub">% der gesamten TV-Nutzungszeit · Deutschschweiz 2025</span></p>
         <p class="tv-ctitle" data-for="heimsender" hidden>SRG-Sender und Schweizer Private, 1995–2025<span class="tv-csub">Marktanteil in % in der eigenen Sprachregion</span></p>
@@ -269,6 +276,31 @@ import Footer from "../../components/Footer.astro";
 }
 
 .tv-blogfilm{margin:0 0 12vh}
+.fx{position:relative;height:640vh;margin:0 0 10vh}
+.fx-intro{max-width:62ch;margin:0 0 28px}
+.fx-intro h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.6rem,4cqi,2.3rem);line-height:1.15;margin:4px 0 10px}
+.fx-intro p{color:var(--color-ink-muted);margin:0}
+.fx-sticky{position:sticky;top:84px;height:calc(100vh - 100px);min-height:440px}
+.fx-stage{position:relative;width:100%;height:100%;border-radius:var(--radius-card);overflow:hidden;background:#0b100c;color:#f0efec;font-family:var(--font-sans)}
+.fx-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fx-labels{position:absolute;inset:0;pointer-events:none}
+.fx-lbl{position:absolute;left:0;top:0;white-space:nowrap;text-align:center;line-height:1.15;text-shadow:0 0 8px #0b100c,0 0 3px #0b100c}
+.fx-lbl b{display:block;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.fx-lbl span{font-size:12.5px;color:#c9cec4}
+.fx-shade{position:absolute;left:0;bottom:0;width:min(760px,100%);height:300px;pointer-events:none;background:radial-gradient(ellipse 620px 290px at 0% 100%,rgba(11,16,12,.95) 0%,rgba(11,16,12,.8) 55%,rgba(11,16,12,0) 100%)}
+.fx-kick{position:absolute;left:32px;top:26px;margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9fb29f}
+.fx-year{position:absolute;right:32px;top:14px;margin:0;font-family:var(--font-serif);font-size:clamp(48px,8cqi,92px);line-height:1;color:#f0efec;font-variant-numeric:tabular-nums}
+.fx-cap{position:absolute;left:32px;bottom:58px;width:min(480px,calc(100% - 64px))}
+.fx-cap h3{font-family:var(--font-serif);font-weight:400;font-size:clamp(22px,3.2cqi,36px);line-height:1.12;margin:0 0 8px;color:#f0efec}
+.fx-cap p{margin:0;font-size:16px;line-height:1.45;color:#d7dbd2}
+@media (prefers-reduced-motion:no-preference){.fx-cap.fx-in{animation:fxin .45s ease-out}}
+@keyframes fxin{from{opacity:.2;transform:translateY(10px)}to{opacity:1;transform:none}}
+.fx-src{position:absolute;left:32px;right:32px;bottom:14px;margin:0;font-size:11px;line-height:1.35;color:#8f9a8c}
+.fx-tip{position:absolute;pointer-events:none;background:#182018;border:1px solid #2f3b2f;border-radius:8px;padding:6px 9px;font-size:12.5px;opacity:0;white-space:nowrap}
+.fx-fallback{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:24px;text-align:center;color:#c9cec4}
+.fx-after{margin:14px 0 0;font-size:14px;color:var(--color-ink-muted)}
+@container (max-width:720px){.fx-sticky{top:72px;height:calc(100vh - 84px)}.fx-kick{left:16px;top:16px;right:110px}.fx-year{right:16px}.fx-cap{left:16px;bottom:64px;width:calc(100% - 32px)}.fx-cap p{font-size:14px}.fx-src{left:16px;right:16px;font-size:10px}.fx-lbl b{font-size:16px}.fx-lbl span{font-size:10.5px}.fx-shade{width:100%;height:40%;background:linear-gradient(to top,rgba(11,16,12,.96) 0%,rgba(11,16,12,.85) 55%,rgba(11,16,12,0) 100%)}}
+
 .tv-blogfilm h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.6rem,4cqi,2.3rem);line-height:1.15;margin:4px 0 10px}
 .tv-blogfilm p{max-width:62ch;color:var(--color-ink-muted);margin:0 0 18px}
 .tv-blogfilm iframe{display:block;width:100%;height:880px;border:1px solid var(--color-rule);border-radius:var(--radius-card);background:#f2f5ec}
@@ -279,6 +311,8 @@ import Footer from "../../components/Footer.astro";
 </style>
 
 <script is:inline src="/tv-schweiz/d3.v7.min.js"></script>
+<script is:inline src="/tv-schweiz/three.min.js"></script>
+<script is:inline src="/tv-schweiz/faecher.js"></script>
 <script is:inline>
 
 // Small stand-in for the dashboard runtime: loads the CSV files, works out calculations
