@@ -45,16 +45,24 @@ const quellen: [string, string][] = [
         <span aria-hidden="true">·</span>
         <time datetime="2026-11-12">12. November 2026</time>
         <span aria-hidden="true">·</span>
-        <span>8 min Lesezeit</span>
+        <span>9 min Lesezeit</span>
       </div>
       <h1 class="mb-10 max-w-[22ch] font-serif leading-[1.08] text-[var(--color-ink)]" style="font-size: var(--text-display-lg);">Zwölf Jahre digitale Schweiz: von Facebook zu KI</h1>
       <p class="mb-6 max-w-[60ch] font-serif text-xl italic leading-relaxed text-[var(--color-ink-muted)] md:text-2xl">2014 waren vier von fünf Jungen auf Facebook. 2022 war es noch jeder vierte. Netflix brauchte sieben Jahre, um die halbe Schweiz zu erreichen. KI hat sich in zwei Jahren von 40 auf 80 Prozent verdoppelt.</p>
       <p class="mb-16 max-w-[60ch] font-sans text-[17px] leading-relaxed text-[var(--color-ink-muted)]"><strong>Stand:</strong> November 2026 · <strong>Autor:</strong> Thomas Ebermann · Daten: öffentliche Medienmitteilungen und Themenseiten des IGEM-Digimonitors 2014–2026. Scrollen, die Grafik wechselt mit dem Text.</p>
 
       <section class="mb-20 max-w-[65ch] space-y-5 font-sans text-[17px] leading-[1.75] text-[var(--color-ink)]">
-        <h2 class="font-serif text-[1.9rem] leading-tight">Was öffentlich ist, reicht für eine Geschichte</h2>
-        <p>Die <a class="underline underline-offset-4" href="https://www.igem.ch/digimonitor/" target="_blank" rel="noopener">Interessengemeinschaft elektronische Medien (IGEM)</a> befragt seit 2014 jedes Jahr rund 2000 Personen, wie sie Medien nutzen. Die vollständigen Tabellenbände sind den Mitgliedern vorbehalten. Öffentlich sind die Medienmitteilungen und die Themenseiten auf igem.ch, und in diesen Texten steckt erstaunlich viel: jedes Jahr ein paar Dutzend Zahlen, sauber in Prosa verpackt.</p>
-        <p>Ich habe Claude alle diese Mitteilungen von 2014 bis 2026 lesen lassen und jede Zahl mit Jahr, Altersgruppe, Messgrösse und Quelle herausziehen lassen. Herausgekommen sind rund 400 Werte. Aus denen, die über die Jahre zusammenpassen, ist diese Geschichte entstanden. Jede Zahl unten verlinkt auf die Mitteilung, aus der sie stammt.</p>
+        <h2 class="font-serif text-[1.9rem] leading-tight">Ein Dashboard ohne Datensatz</h2>
+        <p>Für meinen <a class="underline underline-offset-4" href="/blog/tv-schweiz-2025/">letzten Beitrag</a> hatte ich wenigstens eine Excel-Datei. Diesmal wollte ich wissen, was für ein Dashboard man bauen kann, wenn man nicht einmal die Daten hat, sondern nur sagt: Ich glaube, die bei der IGEM machen spannende Sachen.</p>
+        <p>Die <a class="underline underline-offset-4" href="https://www.igem.ch/digimonitor/" target="_blank" rel="noopener">Interessengemeinschaft Elektronische Medien (IGEM)</a> befragt seit 2014 jedes Jahr rund 2000 Personen, wie sie Medien nutzen. Die vollständigen Ergebnisse, Tabellenbände und Zeitreihen sind den Mitgliedern und Käufern vorbehalten. Öffentlich gibt es Medienmitteilungen, Themenseiten und ein paar PDF-Zusammenfassungen zum Herunterladen. Ein Datensatz ist nicht dabei.</p>
+        <figure class="!mt-8 space-y-3">
+          <img src="/digimonitor/igem-digimonitor-website.png" width="1800" height="770" loading="lazy" alt="Die Digimonitor-Seite auf igem.ch: Titel «Mediennutzung in der Schweiz: Studie IGEM-Digimonitor», rechts das Inhaltsverzeichnis mit «Kostenlose Ergebnisse &amp; Downloads» und «Detailergebnisse für IGEM-Mitglieder &amp; Käufer»." class="w-full rounded-[var(--radius-md)] border border-[var(--color-rule)]" />
+          <img src="/digimonitor/igem-downloads.png" width="1505" height="1370" loading="lazy" alt="Der Download-Bereich der Digimonitor-Seite: kostenlos gibt es Zusammenfassungen 2026 auf Deutsch, Englisch und Französisch, ein Factsheet zur Methode und Gaming-Zusammenfassungen 2025. Präsentation, Tabellenband, Auswertungstool und Archiv sind für IGEM-Mitglieder und Käufer." class="w-full rounded-[var(--radius-md)] border border-[var(--color-rule)]" />
+          <figcaption class="font-sans text-sm text-[var(--color-ink-muted)]">So sieht das öffentliche Material aus: eine Projektseite und eine Liste von PDF-Downloads. Die Detailergebnisse liegen hinter dem Login für Mitglieder. Quelle: <a class="underline underline-offset-4" href="https://www.igem.ch/digimonitor/" target="_blank" rel="noopener">igem.ch/digimonitor</a>, Screenshots vom 12. November 2026.</figcaption>
+        </figure>
+        <p>Mein Prompt dazu war wieder genau ein Satz:</p>
+        <p class="!mt-4 border-l-4 border-[var(--color-accent)] py-2 pl-5 font-serif text-2xl italic leading-snug text-[var(--color-ink)]">«hol dir alle öffentlichen daten die du von der igem finden kannst du mach mir ein scrollify blogpost draus»</p>
+        <p>Claude hat daraufhin alle Medienmitteilungen von 2014 bis 2026 und die Themenseiten auf igem.ch gelesen und jede Zahl mit Jahr, Altersgruppe, Messgrösse und Quelle herausgezogen. Herausgekommen sind rund 400 Werte, die vorher nur als Fliesstext im Netz standen. Aus denen, die über die Jahre zusammenpassen, ist diese Geschichte entstanden. Ich finde es verrückt, wie wir Daten heute so aufbereiten können. Jede Zahl unten verlinkt auf die Mitteilung, aus der sie stammt.</p>
         <p class="dg-callout"><strong>Ein Vorbehalt vorweg:</strong> 2024 hat der Digimonitor die Methode gewechselt. Bis 2023 befragte das LINK-Institut die Bevölkerung ab 15 Jahren vor allem telefonisch. Seit 2024 befragt Intervista die Internetnutzerinnen und -nutzer von 15 bis 75 Jahren online. Die IGEM schreibt selbst, dass die Werte ab 2024 nicht mit den Vorjahren vergleichbar sind. In den Grafiken ist dieser Bruch markiert, und die Linien sind dort unterbrochen.</p>
       </section>
 
@@ -171,9 +179,10 @@ const quellen: [string, string][] = [
 </div>
 
       <section class="mt-10 max-w-[65ch] space-y-5 font-sans text-[17px] leading-[1.75] text-[var(--color-ink)]">
-        <h2 class="font-serif text-[1.9rem] leading-tight">Was nehme ich mit?</h2>
-        <p>Die Medien sind in zwölf Jahren nicht verschwunden. Fernsehen, Radio und sogar Teletext haben immer noch ein grosses Publikum. Neu ist, dass sich die Nutzung auf viel mehr Kanäle verteilt, und dass die Jungen jeden neuen Kanal zuerst besetzen.</p>
-        <p>Für die Daten gilt: Wer nur die öffentlichen Mitteilungen hat, bekommt keine sauberen Zeitreihen. Altersgruppen wechseln von 15–24 zu «unter 30» zu 15–34, und 2024 bricht die Methode. Mit etwas Sorgfalt reicht es aber für eine ehrliche Geschichte, solange jede Zahl ihre Quelle behält und jeder Bruch sichtbar bleibt.</p>
+        <h2 class="font-serif text-[1.9rem] leading-tight">Lesson learned</h2>
+        <p>Selbst wenn man ein solches Scrollytelling am Ende gar nicht publiziert, ist es eine schöne Linse, durch die man Websites, Datenbestände, Studien und Berichte jagen kann. Das Resultat ist jedes Mal relativ gut konsumierbar, auch wenn das Ausgangsmaterial eine Liste von PDFs war.</p>
+        <p>Ich finde es spannend, was man damit anstellen könnte. In der Werbebranche liefern Kundenberaterinnen und Kundenberater ihren Kunden heute vor allem Dashboards. Gefragt wären eigentlich Insights: Was hat sich verändert, wen betrifft es, was heisst das für die nächste Kampagne? Ist das vielleicht die Maschine, die die Branche braucht? Eine, die aus Mediastudien, Kampagnenreports und Marktdaten in einer Stunde eine Geschichte macht, die der Kunde auch liest. Es fühlt sich ziemlich danach an.</p>
+        <p>Ein Haken bleibt: Wer nur die öffentlichen Mitteilungen hat, bekommt keine sauberen Zeitreihen. Die Altersgruppen wechseln von 15–24 zu «unter 30» zu 15–34, und 2024 bricht die Methode. Das muss ein Mensch prüfen. Mit etwas Sorgfalt reicht es aber für eine ehrliche Geschichte, solange jede Zahl ihre Quelle behält und jeder Bruch sichtbar bleibt.</p>
       </section>
 
       <details class="dg-foot mt-12 max-w-[65ch] font-sans">
