@@ -258,154 +258,154 @@ Wer das systematisch vergleichen will, findet bei [benchlm.ai](https://benchlm.a
 Jetzt wird aus dem Preis pro Million eine Monatsrechnung, und zwar für jede Route einzeln. Mein Vergleichsvolumen sind 352 Millionen Token, also 320 Millionen Input und 32 Millionen Output.
 
 <details class="anb">
-<summary><a href="https://www.darkbloom.dev">Darkbloom</a> <span class="meta">3 Modelle · ab 10 USD</span></summary>
+<summary><img class="logo" src="/logos/darkbloom.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.darkbloom.dev">Darkbloom</a> <span class="meta">3 Modelle · ab 10 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp4</em></td><td>0.07 / 0.18</td><td>10 USD</td><td>27 USD</td></tr><tr><td>MiMo V2.6-Flash <em>fp4</em></td><td>0.10 / 0.28</td><td>26 USD</td><td>41 USD</td></tr><tr><td>Qwen3.8-27B <em>fp4</em></td><td>0.04 / 1.50</td><td>54 USD</td><td>59 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://paretoinference.com">Pareto</a> <span class="meta">3 Modelle · ab 11 USD</span></summary>
+<summary><img class="logo" src="/logos/pareto.png" alt="" width="20" height="20" loading="lazy"><a href="https://paretoinference.com">Pareto</a> <span class="meta">3 Modelle · ab 11 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>MiMo V2.6-Flash</td><td>0.13 / 0.25</td><td>11 USD</td><td>48 USD</td></tr><tr><td>GLM-5.3-Flash</td><td>0.06 / 0.20</td><td>11 USD</td><td>26 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>off-peak</em></td><td>0.10 / 0.42</td><td>16 USD</td><td>47 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.primeintellect.ai">PrimeIntellect</a> <span class="meta">4 Modelle · ab 12 USD</span></summary>
+<summary><img class="logo" src="/logos/primeintellect.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.primeintellect.ai">PrimeIntellect</a> <span class="meta">4 Modelle · ab 12 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>unknown</em></td><td>0.05 / 0.25</td><td>12 USD</td><td>25 USD</td></tr><tr><td>Qwen3.8-27B <em>fp8</em></td><td>0.05 / 0.33</td><td>13 USD</td><td>25 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>unknown</em></td><td>0.04 / 1.20</td><td>39 USD</td><td>51 USD</td></tr><tr><td>GLM-5.3 <em>unknown</em></td><td>0.40 / 2.46</td><td>108 USD</td><td>207 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://deepinfra.com">DeepInfra</a> <span class="meta">9 Modelle · ab 12 USD</span></summary>
+<summary><img class="logo" src="/logos/deepinfra.png" alt="" width="20" height="20" loading="lazy"><a href="https://deepinfra.com">DeepInfra</a> <span class="meta">9 Modelle · ab 12 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>MiMo V2.6-Flash <em>fp8</em></td><td>0.14 / 0.28</td><td>12 USD</td><td>54 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>fp8</em></td><td>0.11 / 0.34</td><td>14 USD</td><td>47 USD</td></tr><tr><td>GLM-5.3-Flash <em>fp4</em></td><td>0.15 / 0.50</td><td>28 USD</td><td>64 USD</td></tr><tr><td>GLM-4.7 <em>fp4</em></td><td>0.32 / 1.40</td><td>69 USD</td><td>147 USD</td></tr><tr><td>Qwen3.8-27B <em>bf16</em></td><td>0.15 / 1.88</td><td>74 USD</td><td>108 USD</td></tr><tr><td>GLM-5.3 <em>fp4</em></td><td>0.56 / 2.50</td><td>127 USD</td><td>260 USD</td></tr><tr><td>DeepSeek V4-Pro <em>fp8</em></td><td>1.30 / 2.60</td><td>134 USD</td><td>499 USD</td></tr><tr><td>Kimi K3.1 Pro <em>bf16</em></td><td>1.90 / 9.50</td><td>392 USD</td><td>912 USD</td></tr><tr><td>Kimi K3 <em>mxfp4</em></td><td>2.85 / 14.25</td><td>588 USD</td><td>1368 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.relace.ai">Relace</a> <span class="meta">6 Modelle · ab 12 USD</span></summary>
+<summary><img class="logo" src="/logos/relace.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.relace.ai">Relace</a> <span class="meta">6 Modelle · ab 12 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp4</em></td><td>0.04 / 0.08</td><td>12 USD</td><td>15 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>fp4</em></td><td>0.01 / 0.50</td><td>18 USD</td><td>18 USD</td></tr><tr><td>DeepSeek V4-Pro <em>fp4</em></td><td>0.90 / 1.50</td><td>138 USD</td><td>336 USD</td></tr><tr><td>GLM-5.3 <em>fp4</em></td><td>0.07 / 4.38</td><td>163 USD</td><td>163 USD</td></tr><tr><td>Kimi K3.1 Pro <em>fp4</em></td><td>0.26 / 8.38</td><td>333 USD</td><td>350 USD</td></tr><tr><td>Kimi K3 <em>fp4</em></td><td>0.18 / 9.34</td><td>356 USD</td><td>357 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://novita.ai">Novita</a> <span class="meta">6 Modelle · ab 15 USD</span></summary>
+<summary><img class="logo" src="/logos/novita.png" alt="" width="20" height="20" loading="lazy"><a href="https://novita.ai">Novita</a> <span class="meta">6 Modelle · ab 15 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp8</em></td><td>0.08 / 0.28</td><td>15 USD</td><td>36 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>fp8</em></td><td>0.20 / 0.78</td><td>29 USD</td><td>87 USD</td></tr><tr><td>GLM-5.3 <em>fp8</em></td><td>0.63 / 1.98</td><td>109 USD</td><td>265 USD</td></tr><tr><td>GLM-4.7 <em>fp8</em></td><td>0.60 / 2.20</td><td>113 USD</td><td>262 USD</td></tr><tr><td>Qwen3.8-27B <em>unknown</em></td><td>0.42 / 3.00</td><td>129 USD</td><td>230 USD</td></tr><tr><td>DeepSeek V4-Pro <em>fp8</em></td><td>1.60 / 3.20</td><td>169 USD</td><td>614 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.alibabacloud.com/en/product/modelstudio">Alibaba</a> <span class="meta">8 Modelle · ab 18 USD</span></summary>
+<summary><img class="logo" src="/logos/alibaba.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.alibabacloud.com/en/product/modelstudio">Alibaba</a> <span class="meta">8 Modelle · ab 18 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>DeepSeek V4.1-Flash <em>unknown</em></td><td>0.10 / 0.42</td><td>18 USD</td><td>47 USD</td></tr><tr><td>Qwen3.8-Flash <em>unknown</em></td><td>0.15 / 0.47</td><td>22 USD</td><td>63 USD</td></tr><tr><td>Qwen3.8-27B <em>unknown</em></td><td>0.42 / 2.55</td><td>114 USD</td><td>218 USD</td></tr><tr><td>DeepSeek V4-Pro <em>fp8</em></td><td>1.42 / 2.83</td><td>149 USD</td><td>544 USD</td></tr><tr><td>GLM-5.3 <em>unknown</em></td><td>1.19 / 3.74</td><td>211 USD</td><td>500 USD</td></tr><tr><td>Qwen3.8-Max <em>unknown</em></td><td>2.00 / 6.00</td><td>300 USD</td><td>832 USD</td></tr><tr><td>Kimi K3.1 Pro <em>unknown</em></td><td>2.30 / 11.50</td><td>475 USD</td><td>1104 USD</td></tr><tr><td>Kimi K3 <em>unknown</em></td><td>3.45 / 17.25</td><td>712 USD</td><td>1656 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.wafer.ai">Wafer</a> <span class="meta">6 Modelle · ab 19 USD</span></summary>
+<summary><img class="logo" src="/logos/wafer.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.wafer.ai">Wafer</a> <span class="meta">6 Modelle · ab 19 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>nvfp4</em></td><td>0.04 / 0.18</td><td>19 USD</td><td>19 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>mxfp4</em></td><td>0.05 / 0.57</td><td>24 USD</td><td>34 USD</td></tr><tr><td>GLM-5.3 <em>fp4</em></td><td>0.07 / 1.40</td><td>67 USD</td><td>67 USD</td></tr><tr><td>Qwen3.8-27B <em>fp8</em></td><td>0.06 / 2.30</td><td>92 USD</td><td>93 USD</td></tr><tr><td>Kimi K3 <em>mxfp4</em></td><td>0.28 / 9.60</td><td>351 USD</td><td>396 USD</td></tr><tr><td>Kimi K3.1 Pro <em>mxfp4</em></td><td>1.80 / 9.00</td><td>372 USD</td><td>864 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.openinference.ai">OpenInference</a> <span class="meta">2 Modelle · ab 20 USD</span></summary>
+<summary><img class="logo" src="/logos/openinference.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.openinference.ai">OpenInference</a> <span class="meta">2 Modelle · ab 20 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp4</em></td><td>0.06 / 0.30</td><td>20 USD</td><td>29 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>fp4</em></td><td>0.05 / 0.80</td><td>28 USD</td><td>42 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.deepseek.com">DeepSeek</a> <span class="meta">2 Modelle · ab 23 USD</span></summary>
+<summary><img class="logo" src="/logos/deepseek.ico" alt="" width="20" height="20" loading="lazy"><a href="https://www.deepseek.com">DeepSeek</a> <span class="meta">2 Modelle · ab 23 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>DeepSeek V4.1-Flash <em>off-peak</em></td><td>0.15 / 0.60</td><td>23 USD</td><td>67 USD</td></tr><tr><td>DeepSeek V4-Pro <em>off-peak</em></td><td>0.66 / 1.98</td><td>81 USD</td><td>275 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://siliconflow.com">SiliconFlow</a> <span class="meta">4 Modelle · ab 28 USD</span></summary>
+<summary><img class="logo" src="/logos/siliconflow.png" alt="" width="20" height="20" loading="lazy"><a href="https://siliconflow.com">SiliconFlow</a> <span class="meta">4 Modelle · ab 28 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp8</em></td><td>0.15 / 0.50</td><td>28 USD</td><td>64 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>fp8</em></td><td>0.30 / 1.20</td><td>45 USD</td><td>134 USD</td></tr><tr><td>DeepSeek V4-Pro <em>fp8</em></td><td>1.00 / 1.50</td><td>105 USD</td><td>368 USD</td></tr><tr><td>GLM-5.3 <em>fp8</em></td><td>0.70 / 2.20</td><td>121 USD</td><td>294 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://fireworks.ai">Fireworks</a> <span class="meta">5 Modelle · ab 28 USD</span></summary>
+<summary><img class="logo" src="/logos/fireworks.png" alt="" width="20" height="20" loading="lazy"><a href="https://fireworks.ai">Fireworks</a> <span class="meta">5 Modelle · ab 28 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>unknown</em></td><td>0.15 / 0.50</td><td>28 USD</td><td>64 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>unknown</em></td><td>0.21 / 0.84</td><td>32 USD</td><td>94 USD</td></tr><tr><td>GLM-5.3 <em>unknown</em></td><td>0.98 / 3.08</td><td>170 USD</td><td>412 USD</td></tr><tr><td>Kimi K3.1 Pro <em>unknown</em></td><td>2.00 / 10.00</td><td>413 USD</td><td>960 USD</td></tr><tr><td>Kimi K3 <em>unknown</em></td><td>3.00 / 15.00</td><td>619 USD</td><td>1440 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://nebius.com">Nebius</a> <span class="meta">4 Modelle · ab 28 USD</span></summary>
+<summary><img class="logo" src="/logos/nebius.png" alt="" width="20" height="20" loading="lazy"><a href="https://nebius.com">Nebius</a> <span class="meta">4 Modelle · ab 28 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp4</em></td><td>0.15 / 0.50</td><td>28 USD</td><td>64 USD</td></tr><tr><td>Qwen3.8-27B <em>fp4</em></td><td>0.45 / 3.00</td><td>134 USD</td><td>240 USD</td></tr><tr><td>GLM-5.3 <em>fp4</em></td><td>1.40 / 4.40</td><td>242 USD</td><td>589 USD</td></tr><tr><td>Kimi K3.1 Pro <em>fp4</em></td><td>2.00 / 10.00</td><td>413 USD</td><td>960 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.together.ai">Together AI</a> <span class="meta">5 Modelle · ab 28 USD</span></summary>
+<summary><img class="logo" src="/logos/together.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.together.ai">Together AI</a> <span class="meta">5 Modelle · ab 28 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>unknown</em></td><td>0.15 / 0.50</td><td>28 USD</td><td>64 USD</td></tr><tr><td>DeepSeek V4.1-Flash <em>unknown</em></td><td>0.30 / 1.20</td><td>45 USD</td><td>134 USD</td></tr><tr><td>GLM-5.3 <em>unknown</em></td><td>1.40 / 4.40</td><td>242 USD</td><td>589 USD</td></tr><tr><td>Kimi K3.1 Pro <em>unknown</em></td><td>2.00 / 10.00</td><td>413 USD</td><td>960 USD</td></tr><tr><td>Kimi K3 <em>unknown</em></td><td>3.00 / 15.00</td><td>619 USD</td><td>1440 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://z.ai">Z.ai</a> <span class="meta">3 Modelle · ab 28 USD</span></summary>
+<summary><img class="logo" src="/logos/zai.png" alt="" width="20" height="20" loading="lazy"><a href="https://z.ai">Z.ai</a> <span class="meta">3 Modelle · ab 28 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>fp8</em></td><td>0.15 / 0.50</td><td>28 USD</td><td>64 USD</td></tr><tr><td>GLM-4.7 <em>fp4</em></td><td>0.60 / 2.20</td><td>113 USD</td><td>262 USD</td></tr><tr><td>GLM-5.3 <em>fp8</em></td><td>1.40 / 4.40</td><td>242 USD</td><td>589 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://tensorx.ai">TensorX</a> <span class="meta">5 Modelle · ab 34 USD</span></summary>
+<summary><img class="logo" src="/logos/tensorx.png" alt="" width="20" height="20" loading="lazy"><a href="https://tensorx.ai">TensorX</a> <span class="meta">5 Modelle · ab 34 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>EU</em></td><td>0.20 / 0.50</td><td>34 USD</td><td>80 USD</td></tr><tr><td>GLM-5.3 <em>EU</em></td><td>1.75 / 4.50</td><td>306 USD</td><td>704 USD</td></tr><tr><td>Qwen3.8-Max <em>EU</em></td><td>2.50 / 6.00</td><td>424 USD</td><td>992 USD</td></tr><tr><td>Kimi K3 <em>EU</em></td><td>3.00 / 15.00</td><td>756 USD</td><td>1440 USD</td></tr><tr><td>Kimi K3.1 Pro <em>EU</em></td><td>3.00 / 15.00</td><td>756 USD</td><td>1440 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://nano-gpt.com">Nano-GPT</a> <span class="meta">6 Modelle · ab 42 USD</span></summary>
+<summary><img class="logo" src="/logos/nano-gpt.png" alt="" width="20" height="20" loading="lazy"><a href="https://nano-gpt.com">Nano-GPT</a> <span class="meta">6 Modelle · ab 42 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash</td><td>0.10 / 0.30</td><td>wie Input</td><td>42 USD</td></tr><tr><td>Qwen3.8-Flash</td><td>0.14 / 0.42</td><td>wie Input</td><td>58 USD</td></tr><tr><td>GLM-5.3</td><td>0.60 / 1.10</td><td>wie Input</td><td>227 USD</td></tr><tr><td>Kimi K3</td><td>0.45 / 9.60</td><td>wie Input</td><td>451 USD</td></tr><tr><td>Qwen3.8-Max</td><td>2.00 / 6.00</td><td>wie Input</td><td>832 USD</td></tr><tr><td>Kimi K3.1 Pro</td><td>2.00 / 10.00</td><td>wie Input</td><td>960 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://chutes.ai">Chutes</a> <span class="meta">2 Modelle · ab 42 USD</span></summary>
+<summary><img class="logo" src="/logos/chutes.png" alt="" width="20" height="20" loading="lazy"><a href="https://chutes.ai">Chutes</a> <span class="meta">2 Modelle · ab 42 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>Qwen3.8-27B <em>fp8</em></td><td>0.04 / 1.25</td><td>42 USD</td><td>52 USD</td></tr><tr><td>Kimi K3 <em>mxfp4</em></td><td>1.85 / 9.50</td><td>390 USD</td><td>896 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://sference.com">Sference</a> <span class="meta">3 Modelle · ab 44 USD</span></summary>
+<summary><img class="logo" src="/logos/sference.png" alt="" width="20" height="20" loading="lazy"><a href="https://sference.com">Sference</a> <span class="meta">3 Modelle · ab 44 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>GLM-5.3-Flash <em>EU</em></td><td>0.20 / 0.60</td><td>44 USD</td><td>83 USD</td></tr><tr><td>GLM-5.3 <em>EU</em></td><td>1.20 / 4.20</td><td>233 USD</td><td>518 USD</td></tr><tr><td>Kimi K3 <em>EU</em></td><td>3.00 / 15.00</td><td>665 USD</td><td>1440 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.cerebras.ai">Cerebras</a> <span class="meta">1 Modell · ab 364 USD</span></summary>
+<summary><img class="logo" src="/logos/cerebras.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.cerebras.ai">Cerebras</a> <span class="meta">1 Modell · ab 364 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>Qwen3.8-27B <em>fp16</em></td><td>0.99 / 1.49</td><td>364 USD</td><td>364 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://www.moonshot.ai">Moonshot</a> <span class="meta">2 Modelle · ab 413 USD</span></summary>
+<summary><img class="logo" src="/logos/moonshot.png" alt="" width="20" height="20" loading="lazy"><a href="https://www.moonshot.ai">Moonshot</a> <span class="meta">2 Modelle · ab 413 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>Kimi K3.1 Pro <em>mxfp4</em></td><td>2.00 / 10.00</td><td>413 USD</td><td>960 USD</td></tr><tr><td>Kimi K3 <em>unknown</em></td><td>3.00 / 15.00</td><td>619 USD</td><td>1440 USD</td></tr></tbody>
 </table>
 </details>
 <details class="anb">
-<summary><a href="https://paretoalphainference.com">Pareto Alpha</a> <span class="meta">1 Modell · ab 444 USD</span></summary>
+<summary><img class="logo" src="/logos/pareto-alpha.png" alt="" width="20" height="20" loading="lazy"><a href="https://paretoalphainference.com">Pareto Alpha</a> <span class="meta">1 Modell · ab 444 USD</span></summary>
 <table>
 <thead><tr><th>Modell</th><th>USD / Mio. In / Out</th><th>352 Mio. mit Cache</th><th>352 Mio. ohne Cache</th></tr></thead>
 <tbody><tr><td>Kimi K3 <em>unknown</em></td><td>1.00 / 11.25</td><td>444 USD</td><td>680 USD</td></tr></tbody>
@@ -548,29 +548,29 @@ Alle Anbieter aus diesem Text, mit dem, was sie verkaufen und wo sie sitzen. Die
 
 | Anbieter | Abrechnung | Sitz |
 |---|---|---|
-| [OpenRouter](https://openrouter.ai) | Pay per Token, rund 5 Prozent Aufschlag | USA |
-| [Requesty](https://requesty.ai/pricing) | Pay per Token, 5 Prozent Aufschlag | EU-Datenresidenz |
-| [ElectronHub](https://www.electronhub.ai/pricing) | Abo in Wochencredits und DevPass ohne Tokenzähler | keine Firma angegeben |
-| [Nano-GPT](https://nano-gpt.com) | Abo (12 USD/Monat) und Pay per Token | NanoGPT LLC, Dover (USA) |
-| [Pareto Inference](https://paretoinference.com) | Pay per Token, Mindestumsatz | New York (USA) |
-| [Sference](https://sference.com) | Pay per Token | London, GPUs in der EU |
-| [TensorX](https://tensorx.ai) | Pay per Token | Irland (EU) |
-| [Nebius AI Studio](https://nebius.com) | Pay per Token | Niederlande (EU) |
-| [Helmcode](https://helmcode.com) | Abo pro API-Schlüssel | EU |
-| [Chutes](https://chutes.ai) | Pay per Token und GPU pro Stunde, kein Abo | USA |
-| [Hyper](https://hyper.charm.land) | Abo in Credits, Prepaid möglich | – |
-| [Z.ai](https://z.ai) | Abo (Coding Plan) und Pay per Token | Knowledge Atlas Technology, Peking |
-| [Moonshot](https://platform.moonshot.ai) | Pay per Token, kein Abo | Peking |
-| [DeepSeek](https://platform.deepseek.com) | Pay per Token, Peak und Nebenzeit | Hangzhou |
-| [Alibaba Model Studio](https://www.alibabacloud.com/en/product/modelstudio) | Pay per Token, Token- und Coding-Plan | Hangzhou |
-| [SiliconFlow](https://siliconflow.com) | Pay per Token | Peking |
-| [DeepInfra](https://deepinfra.com) | Pay per Token | USA |
-| [Together AI](https://www.together.ai) | Pay per Token | USA |
-| [Fireworks AI](https://fireworks.ai) | Pay per Token | USA |
-| [Novita](https://novita.ai) | Pay per Token | USA |
-| [Groq](https://groq.com) | Pay per Token | USA |
-| [Cerebras](https://www.cerebras.ai/code) | Abo (Code) | Sunnyvale (USA) |
-| [OVHcloud AI Endpoints](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/) | Pay per Token | Frankreich (EU) |
+| <img class="logo" src="/logos/openrouter.png" alt="" width="20" height="20" loading="lazy">[OpenRouter](https://openrouter.ai) | Pay per Token, rund 5 Prozent Aufschlag | USA |
+| <img class="logo" src="/logos/requesty.ico" alt="" width="20" height="20" loading="lazy">[Requesty](https://requesty.ai/pricing) | Pay per Token, 5 Prozent Aufschlag | EU-Datenresidenz |
+| <img class="logo" src="/logos/electronhub.png" alt="" width="20" height="20" loading="lazy">[ElectronHub](https://www.electronhub.ai/pricing) | Abo in Wochencredits und DevPass ohne Tokenzähler | keine Firma angegeben |
+| <img class="logo" src="/logos/nano-gpt.png" alt="" width="20" height="20" loading="lazy">[Nano-GPT](https://nano-gpt.com) | Abo (12 USD/Monat) und Pay per Token | NanoGPT LLC, Dover (USA) |
+| <img class="logo" src="/logos/pareto.png" alt="" width="20" height="20" loading="lazy">[Pareto Inference](https://paretoinference.com) | Pay per Token, Mindestumsatz | New York (USA) |
+| <img class="logo" src="/logos/sference.png" alt="" width="20" height="20" loading="lazy">[Sference](https://sference.com) | Pay per Token | London, GPUs in der EU |
+| <img class="logo" src="/logos/tensorx.png" alt="" width="20" height="20" loading="lazy">[TensorX](https://tensorx.ai) | Pay per Token | Irland (EU) |
+| <img class="logo" src="/logos/nebius.png" alt="" width="20" height="20" loading="lazy">[Nebius AI Studio](https://nebius.com) | Pay per Token | Niederlande (EU) |
+| <img class="logo" src="/logos/helmcode.png" alt="" width="20" height="20" loading="lazy">[Helmcode](https://helmcode.com) | Abo pro API-Schlüssel | EU |
+| <img class="logo" src="/logos/chutes.png" alt="" width="20" height="20" loading="lazy">[Chutes](https://chutes.ai) | Pay per Token und GPU pro Stunde, kein Abo | USA |
+| <img class="logo" src="/logos/hyper.png" alt="" width="20" height="20" loading="lazy">[Hyper](https://hyper.charm.land) | Abo in Credits, Prepaid möglich | – |
+| <img class="logo" src="/logos/zai.png" alt="" width="20" height="20" loading="lazy">[Z.ai](https://z.ai) | Abo (Coding Plan) und Pay per Token | Knowledge Atlas Technology, Peking |
+| <img class="logo" src="/logos/moonshot.png" alt="" width="20" height="20" loading="lazy">[Moonshot](https://platform.moonshot.ai) | Pay per Token, kein Abo | Peking |
+| <img class="logo" src="/logos/deepseek.ico" alt="" width="20" height="20" loading="lazy">[DeepSeek](https://platform.deepseek.com) | Pay per Token, Peak und Nebenzeit | Hangzhou |
+| <img class="logo" src="/logos/alibaba.png" alt="" width="20" height="20" loading="lazy">[Alibaba Model Studio](https://www.alibabacloud.com/en/product/modelstudio) | Pay per Token, Token- und Coding-Plan | Hangzhou |
+| <img class="logo" src="/logos/siliconflow.png" alt="" width="20" height="20" loading="lazy">[SiliconFlow](https://siliconflow.com) | Pay per Token | Peking |
+| <img class="logo" src="/logos/deepinfra.png" alt="" width="20" height="20" loading="lazy">[DeepInfra](https://deepinfra.com) | Pay per Token | USA |
+| <img class="logo" src="/logos/together.png" alt="" width="20" height="20" loading="lazy">[Together AI](https://www.together.ai) | Pay per Token | USA |
+| <img class="logo" src="/logos/fireworks.png" alt="" width="20" height="20" loading="lazy">[Fireworks AI](https://fireworks.ai) | Pay per Token | USA |
+| <img class="logo" src="/logos/novita.png" alt="" width="20" height="20" loading="lazy">[Novita](https://novita.ai) | Pay per Token | USA |
+| <img class="logo" src="/logos/groq.png" alt="" width="20" height="20" loading="lazy">[Groq](https://groq.com) | Pay per Token | USA |
+| <img class="logo" src="/logos/cerebras.png" alt="" width="20" height="20" loading="lazy">[Cerebras](https://www.cerebras.ai/code) | Abo (Code) | Sunnyvale (USA) |
+| <img class="logo" src="/logos/ovhcloud.png" alt="" width="20" height="20" loading="lazy">[OVHcloud AI Endpoints](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/) | Pay per Token | Frankreich (EU) |
 
 [Relace](https://openrouter.ai) und Wafer sind keine eigenen Anbieter, sondern Promo-Routen, die über OpenRouter laufen.
 
