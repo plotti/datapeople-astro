@@ -1,103 +1,78 @@
 ---
-title: "Vom Thema zum Rohschnitt: ein Claude-Skill für Erklärvideos, in denen jede Zahl belegt ist"
-description: "Für ein YouTube-Video über die Krise der liberalen Demokratie habe ich Claude Recherche, Faktencheck, Teleprompter, Studien-Slides, O-Töne, Schnitt-Mockup, Preview und 1080p-Clips machen lassen. Daraus ist ein Open-Source-Skill geworden, den man in Claude Code oder in der Claude-App installiert und dann einfach benutzt, indem man mit Claude redet."
+title: "Vom Think Tank zur One-Man-Show: wie ich mit einem Claude-Skill faktenbasierte YouTube-Videos mache"
+description: "Für ein recherchiertes Erklärvideo hätte man früher ein ganzes Team gebraucht: Leute, die Studien lesen und verdichten, Grafiker, Faktenchecker, eine Autorin fürs Skript, jemanden für die O-Töne, einen Cutter für den Rohschnitt. Heute mache ich das allein, mit einem generischen Claude-Skill, den ich als Open Source veröffentlicht habe. Ein Erfahrungsbericht darüber, wie stark sich Arbeit gerade verändert."
 pubDate: 2026-11-17T21:30:00+01:00
-readTime: 9
+readTime: 8
 category: "KI Tools"
-tags: ["Claude","Claude Code","Skills","Video","Faktencheck","Piper TTS","yt-dlp"]
+tags: ["Claude","Claude Code","Skills","Video","Faktencheck","Zukunft der Arbeit"]
 cover: "../../assets/blog/studien-video-cover.png"
 ---
 
-**Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 9 Minuten
+**Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 8 Minuten
 
-Ich mache nebenbei Videos für den YouTube-Kanal Losdemokratie. Das Format ist simpel: Ich stehe rechts im Bild und rede, links läuft eine Folie mit der Studie, die meine Aussage belegt. Dazwischen O-Töne von Politikerinnen, Forschern oder Bürgern. Der Anspruch ist genauso simpel: **Jede Behauptung im Video muss durch eine Studie belegt sein.** Keine gefühlten Wahrheiten, keine Zahl aus einem Zeitungsartikel, der eine Pressemitteilung zusammenfasst, die eine Studie zusammenfasst.
+Ich mache nebenbei YouTube-Videos zu Politik und Demokratie. Das Format: Ich rede, neben mir läuft eine Folie mit der Studie, die meine Aussage belegt, dazwischen kommen O-Töne von Politikerinnen, Forschern oder Bürgern. Jede Behauptung soll belegt sein. Keine gefühlten Wahrheiten.
 
-Das Problem an diesem Anspruch ist der Aufwand. Für ein Video von gut zwölf Minuten kommen schnell zwanzig Studien, zwei Dutzend Folien und zwanzig O-Töne zusammen. Jede Zahl muss ich im Original finden, jede Grafik nachbauen, jeden O-Ton auf die Zehntelsekunde schneiden. Und bevor ich überhaupt vor die Kamera stehe, will ich wissen, ob das Ganze als Video funktioniert.
+Mein letztes Video, «Krise der liberalen Demokratie?», hat gut zwölf Minuten. Darin stecken 20 Studien, 26 Folien und 19 O-Töne. Gemacht habe ich das allein, zusammen mit Claude. Und als ich danach zurückgeschaut habe, ist mir erst klar geworden, wie viele Leute man für so etwas vor ein paar Jahren gebraucht hätte.
 
-Beim letzten Video, «Krise der liberalen Demokratie?», habe ich das komplett mit Claude gemacht. Daraus ist ein Skill geworden, den ich jetzt [auf GitHub veröffentlicht](https://github.com/plotti/ai-video-toolkit) habe.
+## Früher: ein ganzer Think Tank
 
-## 1. Was am Ende rauskommt
+Spielen wir einmal durch, wie so ein Video klassisch entstanden wäre.
 
-Ich gebe Claude das Thema, meine Thesen und eine lose Ideensammlung mit Links. Am Ende habe ich:
+**Die Recherche.** Am Anfang braucht es Leute, die das Thema kennen. Sie suchen die relevanten Studien zusammen, lesen die Papers, verdichten sie auf ein paar Kernaussagen und bereiten einzelne Grafiken aus den Papers neu auf, damit man sie überhaupt zeigen kann. Das ist schon eine ganze Mannschaft, im Grunde ein kleiner Think Tank.
 
-- einen **Teleprompter** als Dokument, in dem vor jedem belegten Satz steht, welche Folie eingeblendet wird, dazu eine Quellentabelle mit exakter Fundstelle (Seite, Tabelle, Abbildung),
-- ein **Foliendeck** mit 26 Folien, die Grafiken aus den Studien als echte, editierbare Diagramme nachgebaut,
-- einen Ordner mit den **20 Originalstudien** als PDF, nummeriert wie die Folien,
-- **19 O-Töne**, die im Skript an der richtigen Stelle stehen,
-- einen klickbaren **Schnitt-Mockup** im Browser, in dem eine Computerstimme meinen Text vorliest,
-- ein **Preview-Video** von zwölfeinhalb Minuten, bevor ich eine einzige Aufnahme gemacht habe,
-- alle O-Töne als **1080p-Clips mit fünf Sekunden Vor- und Nachlauf** und eine Schnittliste für das Schnittprogramm,
-- eine **Rechte-Ampel** pro O-Ton: Darf ich das zeigen?
+**Die Idee fürs Video.** Dann kommt jemand und sagt: Mit diesen Beobachtungen will ich ein Video machen. Das ist eine andere Person mit einem anderen Blick. Sie denkt nicht in Studien, sondern in einer Geschichte.
 
-![Ein Ausschnitt aus dem Foliendeck: Edelman Trust Barometer, Iyengar et al. zur Polarisierung, Healy & Malhotra zur Katastrophenvorsorge](../../assets/blog/studien-video-slides.jpg)
+**Der Faktencheck.** Die nächste Person muss das alles noch einmal prüfen. Stimmt die Zahl wirklich so im Paper, oder nur in der Pressemitteilung? Gilt der Durchschnitt über zwanzig Länder auch für Deutschland? Ist «sinkendes Vertrauen» eine Zeitreihe oder ein Eindruck? Das dauert wieder ewig, und es ist undankbare Arbeit, weil man am Ende vor allem Dinge streicht.
 
-## 2. Die wichtigste Regel: Nichts aus der Ideensammlung ist geprüft
+**Das Skript.** Dann schreibt jemand den Teleprompter-Text. Was will ich erzählen, in welcher Reihenfolge, mit welchem Bogen? Und vor allem: Wie verheirate ich das Material aus der Recherche mit der Story, die ich erzählen will? Welche Folie kommt bei welchem Satz?
 
-Der Teil, der mir am meisten bringt, ist nicht die Technik, sondern der Faktencheck. Im Skill steht eine Regel ganz oben: Jede Zahl, jedes Zitat und jede Studienaussage aus meinen Notizen gilt als ungeprüft, bis sie wörtlich im Original gefunden ist. Claude lädt dafür das PDF der Studie herunter, wandelt es in Text um und sucht die exakte Zahl.
+**Die O-Töne.** Die nächste Person sucht Soundbytes. Wo gibt es einen Politiker, der genau das sagt? Einen Forscher, der es erklärt? Einen Bürger, der es erlebt? Das heisst stundenlang Videos schauen, Zeitstempel notieren, Ausschnitte schneiden.
 
-Das klingt pedantisch. Beim ersten Testlauf hat Claude aber in **9 von rund 15 Aussagen** Abweichungen gefunden. Nicht, weil meine Notizen erfunden waren, sondern weil Zahlen auf dem Weg vom Paper bis in meine Sammlung kleine Veränderungen durchmachen. Ein paar Beispiele, die ich so nie selbst gefunden hätte:
+**Review und Rohschnitt.** Dann muss das Ganze zusammengesetzt werden, damit man sieht, ob es funktioniert. Jemand baut einen Rohschnitt oder zumindest ein Storyboard. Man schaut es an, merkt, dass Kapitel drei zu lang ist und zwei O-Töne hintereinander nicht tragen, und iteriert. Dann rendert man es nochmals raus, schaut, wie lang das Video wird, und erst dann geht man vor die Kamera.
 
-- **Presseseite und Bericht sagen etwas anderes.** Bei der irischen Bürgerversammlung steht auf der Presseseite 98 Prozent, im Final Report 97 Prozent (73 von 75 Anwesenden). Es gilt der Bericht.
-- **Der Durchschnitt stimmt, aber nicht für Deutschland.** Eine Studie findet über viele Länder einen negativen Effekt. Für Deutschland ist er positiv. Wenn ich das Video für ein deutsches Publikum mache, gehört das offen auf die Folie.
-- **Die Richtung ist falsch.** «Das Vertrauen sinkt» braucht eine Zeitreihe. Beim Edelman Trust Barometer ist der Wert für Deutschland 2026 gestiegen. Gewachsen ist nur der Abstand zwischen hohen und tiefen Einkommen, und genau das zeigt jetzt die Folie.
-- **Die Quelle existiert so nicht.** Eine Zahl, die einer Stiftung zugeschrieben wurde, war im Original nicht auffindbar. Claude hat sie durch eine Studie ersetzt, die das Gleiche belegt und die man nachlesen kann.
+**Rechte und Schnitt.** Und zum Schluss klärt jemand, ob man die Ausschnitte überhaupt zeigen darf, und bereitet das Material für den Cutter auf.
 
-Jede dieser Abweichungen landet in einer Tabelle «Korrekturen gegenüber der Ideensammlung»: was ich hatte, was im Original steht, was jetzt im Skript steht. So sehe ich auf einen Blick, wo mein Bauchgefühl danebenlag.
+Rechercheure, Grafikerin, Faktenchecker, Autorin, O-Ton-Rechercheur, Cutter, jemand für die Rechte. Sechs, sieben Rollen, Wochen an Arbeit. Für ein YouTube-Video.
 
-## 3. Das Skript ist die Quelle der Wahrheit
+## Heute: eine Person und ein Gespräch
 
-Der Teleprompter ist ein normales Dokument, in dem ich auch selbst schreibe. Damit Claude daraus später einen Schnitt bauen kann, hat er eine ganz einfache Syntax:
+Aus diesem ganzen Kram ist eine One-Man-Show geworden. Alle diese Rollen gibt es noch, aber sie sind in einem Gespräch mit Claude zusammengefallen. Ich gebe das Thema, meine Thesen und eine lose Ideensammlung mit Links, und dann arbeiten wir das zusammen durch.
 
-```
-## 3. Spaltung
-▶ EINBLENDEN 9 · Iyengar et al. 2012
-1960 wären in den USA nur 4 Prozent der Demokraten und 5 Prozent der Republikaner unglücklich gewesen, wenn ihr Kind jemanden von der Gegenseite heiratet. 2010 waren es 33 und 49 Prozent.
-■ O-TON Mehr Demokratie · 5:21,8–5:33,3 · «… redet kaum jemand mit jemand anderem, der nicht seiner Meinung ist.»
-```
+**Recherche und Faktencheck in einem.** Claude lädt jede Studie im Original herunter und sucht die Zahl im PDF, nicht in der Zusammenfassung. Schon beim ersten Testlauf haben in 9 von rund 15 Aussagen aus meinen Notizen Details nicht gestimmt. Eine Zahl stand auf der Presseseite anders als im offiziellen Bericht. Ein Effekt, der im Länderdurchschnitt negativ ist, war für Deutschland positiv. Ein «sinkendes» Vertrauen war im neusten Bericht gestiegen. Alles landet in einer Korrekturtabelle, und das Skript sagt, was im Original steht.
 
-Kapitel, Folienwechsel, Sprechtext, O-Ton mit Zeitstempel im Quellvideo. Das ist alles. Den Rest der Zusammenarbeit führe ich im Chat, und zwar so, wie ich mit einem Cutter reden würde:
+**Grafiken neu aufbereitet.** Für jede Kernaussage baut Claude eine Folie mit der Grafik aus der Studie nach, als echtes, editierbares Diagramm in meinem Design, mit Fundstelle in den Notizen.
 
-- «OT 11 raus, OT 8 auch raus.»
-- «Schieb den O-Ton aus dem Film zu Problem 1.»
-- «Nimm die 52 Prozent bei Grossbritannien raus, das ist zu polemisch.»
-- «Ich will Zwischenüberschriften für die einzelnen Probleme.»
-- «Geh den Teleprompter durch und sag mir, welches die schwächste Stelle ist.»
+![Drei Folien aus dem Deck: Edelman Trust Barometer, Iyengar et al. zur Polarisierung, Healy & Malhotra zur Katastrophenvorsorge](../../assets/blog/studien-video-slides.jpg)
 
-Gerade die letzte Frage stelle ich inzwischen bei jedem Video. Claude sucht dann Brüche in der Logik, Stellen, an denen ein Beispiel für ein deutsches Publikum nicht trägt, oder einen O-Ton, der dem Sprechtext davor eigentlich widerspricht, und schlägt konkret eine neue Formulierung vor.
+**Skript und Material verheiratet.** Der Teleprompter ist ein Dokument, in dem bei jedem Satz steht, welche Folie gerade läuft und wo ein O-Ton kommt. Ich lese, streiche, schreibe um und sage im Chat Dinge wie «Nimm die 52 Prozent bei Grossbritannien raus, das ist zu polemisch» oder «Ich will Zwischenüberschriften für die einzelnen Probleme». Und regelmässig: «Was ist die schwächste Stelle im Skript?»
 
-## 4. O-Töne finden und schneiden
+**O-Töne.** Claude sucht pro Kapitel passende Ausschnitte, schlägt mir eine Tabelle mit Sprecher, Zitat und Zeitstempel vor, und ich wähle aus. Geschnitten wird auf die Zehntelsekunde.
 
-Für die O-Töne nutze ich ein eigenes Tool, das ich vor einiger Zeit gebaut habe: Es hat die Transkripte vieler YouTube-Videos zu Demokratie und Politik und eine semantische Suche darüber. Claude stellt pro Folie zwei, drei Suchanfragen, schaut sich das Transkript rund um die Treffer an und schlägt mir eine Tabelle mit Sprecher, Zitat und Link mit Zeitmarke vor. Ich suche aus.
+**Review vor dem Dreh.** Aus dem Skript entsteht ein klickbarer Schnitt-Mockup: links die Folie, rechts ein Platzhalter für mich, eine Computerstimme liest meinen Text, die O-Töne laufen im Vollbild. Daraus wird ein Preview-Video. So habe ich mein Video gesehen, bevor ich es aufgenommen habe, und wusste, dass es 12 Minuten 42 lang wird.
 
-Der Skill ist aber bewusst **nicht an dieses Tool gebunden**. Ohne eigenes Archiv sucht Claude direkt auf YouTube und schneidet über die automatischen Untertitel, die Zeitmarken für jedes einzelne Wort haben. Man kann auch eigene Aufnahmen oder Material aus einer Mediathek als Datei angeben.
+![Der Schnitt-Mockup: Folie links, Sprecher rechts, darunter Zeitleiste und Skript](../../assets/blog/studien-video-mockup.png)
 
-Ein praktisches Detail: YouTube blockiert Downloads aus Rechenzentren. Die O-Töne hat Claude deshalb nicht in der Cloud geholt, sondern auf meinem Mac, über die Verbindung der Claude-Desktop-App. Bei einem O-Ton aus einem Dokumentarfilm, der auf der Film-Website als Vimeo-Stream eingebettet ist, war die signierte Video-URL nach ein paar Stunden abgelaufen. Claude hat sie mit einem Befehl neu geholt, und der Download lief weiter.
+**Iterieren.** Wenn mir beim Durchklicken etwas nicht gefällt, sage ich es, und ein paar Minuten später ist der neue Rohschnitt da. Diese Schleife, die früher Tage zwischen Autorin und Cutter gedauert hat, dauert jetzt so lange, wie ich brauche, um den Satz zu tippen.
 
-## 5. Der Schnitt-Mockup: das Video sehen, bevor es gedreht ist
+**Rechte und Schnitt-Material.** Am Ende bekomme ich alle O-Töne als 1080p-Clips mit Vor- und Nachlauf für das Schnittprogramm und eine Rechte-Ampel pro Ausschnitt nach Schweizer und deutschem Zitatrecht. Keine Rechtsberatung, aber eine Liste, mit der ich weiss, wen ich anfragen muss.
 
-Das ist der Teil, der mich am meisten überrascht hat, wie nützlich er ist. Claude liest jeden Satz aus dem Teleprompter mit [Piper](https://github.com/rhasspy/piper) vor, einer freien Text-to-Speech-Engine, die lokal läuft. Daraus entsteht eine Webseite: links die Folie, rechts ein Platzhalter für mich, unten die Zeitleiste und das Skript. Bei einem O-Ton läuft der Clip im Vollbild mit Originalton und Bauchbinde.
+![Ein Bild aus dem Preview-Video, das vor dem Dreh entstanden ist](../../assets/blog/studien-video-preview.jpg)
 
-![Der Schnitt-Mockup: Folie links, Sprecher rechts, darunter Zeitleiste und Drehfassung](../../assets/blog/studien-video-mockup.png)
+## Was sich dabei wirklich verändert
 
-Man merkt dabei Dinge, die man auf Papier nicht merkt. Dass eine Folie zwei Minuten stehen bleibt, während ich rede. Dass zwei O-Töne direkt hintereinander zu viel sind. Dass ein Kapitel viel länger ist als die anderen. Ändere ich etwas im Skript, wird nur der geänderte Satz neu vertont, und der Mockup ist in Sekunden wieder aktuell.
+Der offensichtliche Teil ist die Zeit. Spannender finde ich aber, was mit den Rollen passiert.
 
-Wer den Mockup nicht im Browser anschauen will, bekommt das Ganze auch als MP4. Für das Demokratie-Video waren das 12 Minuten 42 Sekunden.
+**Die Übergaben fallen weg.** In einem Team geht bei jeder Übergabe etwas verloren. Die Rechercheurin weiss, dass die Zahl nur für Leute über 40 gilt, aber im Skript steht es nicht mehr. Wenn Recherche, Faktencheck und Skript im selben Gespräch passieren, wandert dieses Wissen mit.
 
-![Ein Bild aus dem Preview-Video](../../assets/blog/studien-video-preview.jpg)
+**Die mühsamen Rollen werden plötzlich gemacht.** Ehrlich gesagt hätte ich als Einzelperson nie jede Zahl im Original-PDF nachgeschlagen. Und ich hätte nie einen Rohschnitt gebaut, bevor ich drehe. Das waren genau die Rollen, die man sich in einem kleinen Projekt spart. Jetzt sind sie billig genug, dass ich sie immer mache. Das Video wird dadurch nicht nur schneller fertig, sondern besser.
 
-## 6. Schnitt-Assets und Rechte-Ampel
+**Meine Rolle ist die des Chefredakteurs.** Ich entscheide, welche These ich vertreten will, welche Zahl zu polemisch ist, welcher O-Ton bleibt und wo die Geschichte hängt. Das Handwerk dazwischen macht Claude. Die Verantwortung für das, was am Ende im Video gesagt wird, bleibt bei mir.
 
-Wenn das Skript steht, sage ich: «Render mir alle Videos, die im Video benutzt werden, in einen Ordner, 1080p und vorne und hinten fünf Sekunden mehr.» Dann kommt ein Ordner mit `OT01_….mp4` bis `OT19_….mp4` und eine `Schnittliste.csv`, in der für jeden Clip steht, wo der O-Ton in der Datei beginnt und endet und woher er stammt. Das ziehe ich ins Schnittprogramm, fertig.
+## Der Skill: generisch und für jedes Thema
 
-Die Frage, die danach immer kommt: Darf ich das überhaupt zeigen? In der Schweiz und in Deutschland gibt es ein Zitatrecht (Art. 25 URG, § 51 UrhG). Es deckt fremdes Material, wenn ich mich im Video damit auseinandersetze, es nicht länger ist als nötig und die Quelle genannt wird. Claude ordnet dafür jeden O-Ton ein: Wem gehört er (Sender, Parlament, Partei, Filmproduktion)? Wird er zitiert und eingeordnet, oder läuft er nur als Bebilderung unter meinem Text?
+Den ganzen Ablauf habe ich in einen **Claude-Skill** gepackt und [auf GitHub veröffentlicht](https://github.com/plotti/ai-video-toolkit). Er ist nicht an mein Thema und nicht an meine Werkzeuge gebunden. Er funktioniert für jedes YouTube-Video, das auf Belegen aufbaut, ob es um Klimapolitik, Ernährung oder Wirtschaftsgeschichte geht, und in jeder Sprache. Die O-Töne kommen standardmässig von YouTube; wer ein eigenes Video-Archiv hat, kann es anbinden.
 
-Für das Demokratie-Video kam heraus: **13 gelb, 6 rot, keiner grün.** Gelb heisst: Zitatrecht trägt wahrscheinlich, wenn ich mich wirklich damit befasse. Rot waren vier Ausschnitte aus einem Dokumentarfilm, für die ich die Produktion um Erlaubnis fragen sollte, und zwei Schnittbilder von Politikern im Hochwassergebiet, die ich nur als Bebilderung verwende. Das ist keine Rechtsberatung, aber es ist eine Liste, mit der ich konkret weiss, wen ich anschreiben muss.
-
-## 7. Warum ein Skill und kein Tool
-
-Meine erste Version auf GitHub war eine Sammlung von Python-Skripten mit einer langen Anleitung: Projektordner anlegen, Stimme herunterladen, diesen Befehl ausführen, dann jenen. Technisch korrekt, aber am Thema vorbei. Ich habe keinen einzigen dieser Befehle selbst eingetippt. Ich habe mit Claude geredet.
-
-Darum ist das Ganze jetzt als **Claude-Skill** verpackt. Ein Skill ist im Kern ein Ordner mit einer Anleitung, die Claude liest, wenn sie zur Aufgabe passt, plus den Skripten, die Claude dafür braucht. Die Anleitung beschreibt den ganzen Ablauf, inklusive der Faktencheck-Regeln und der Dinge, die ich unterwegs gelernt habe. Die Skripte für Stimme, Mockup, Preview, Clips und Rechte liegen daneben, und Claude ruft sie selbst auf.
+Ein Skill ist im Kern eine Anleitung, die Claude liest, wenn sie zur Aufgabe passt, plus die Skripte, die Claude dafür braucht: Faktencheck-Regeln, Ablauf, Text-to-Speech, Mockup, Preview, Clip-Export und Rechte-Ampel. Bedient wird er nicht über Befehle, sondern indem man mit Claude redet.
 
 **In Claude Code:**
 
@@ -106,15 +81,14 @@ Darum ist das Ganze jetzt als **Claude-Skill** verpackt. Ein Skill ist im Kern e
 /plugin install ai-video-toolkit@ai-video-toolkit
 ```
 
-**In der Claude-App:** die ZIP-Datei aus dem Ordner `dist/` im [Repository](https://github.com/plotti/ai-video-toolkit) herunterladen und unter *Customize → Skills* hochladen. Dafür muss in den Einstellungen die Code-Ausführung aktiviert sein.
+**In der Claude-App:** die ZIP-Datei aus dem Ordner `dist/` im [Repository](https://github.com/plotti/ai-video-toolkit) unter *Customize → Skills* hochladen. Dafür muss in den Einstellungen die Code-Ausführung aktiviert sein.
 
-Danach reicht ein Satz wie: «Mach mir ein Video von acht Minuten darüber, warum das Vertrauen in Parlamente sinkt. Meine Notizen und die Studien hängen an.» Der Skill ist auf Deutsch geschrieben, weil mein Kanal deutsch ist, funktioniert aber für Videos in jeder Sprache. Ein kleines Demo-Projekt und das komplette Demokratie-Projekt mit allen O-Ton-Zeitmarken und Rechte-Einträgen liegen als Beispiele dabei, ohne das Videomaterial selbst.
+Danach reicht ein Satz wie: «Mach mir ein Video von acht Minuten darüber, warum das Vertrauen in Parlamente sinkt. Meine Notizen hängen an.» Das komplette Demokratie-Projekt liegt als Beispiel dabei.
 
 ## Was nehme ich mit?
 
-1. **Der Faktencheck ist der eigentliche Gewinn.** Folien bauen und Clips schneiden spart Zeit. Dass jede Zahl im PDF gegengeprüft wird, macht das Video besser. Ohne diese Regel hätte ich mehrere Zahlen gesagt, die so nicht stimmen.
-2. **Den Ablauf sehen ändert die Dramaturgie.** Beim Durchklicken im Mockup habe ich O-Töne geparkt, umgestellt und neue Folien eingefügt, was mir auf Papier nicht aufgefallen wäre.
-3. **Das Skript muss die einzige Quelle bleiben.** Alles, also Mockup, Preview, Schnittliste und Rechte-Ampel, wird aus dem Teleprompter erzeugt. Sobald man an zwei Stellen ändert, laufen sie auseinander.
-4. **Wer das Werkzeug benutzt, ist Claude, nicht ich.** Deshalb gehört die Anleitung in den Skill und nicht in ein README, das Befehle erklärt.
+1. **Aus einem Team wird ein Gespräch.** Recherche, Faktencheck, Grafik, Skript, O-Töne, Rohschnitt und Rechte waren früher sechs, sieben Rollen. Heute sind es Abschnitte in einem Chat.
+2. **Billig heisst nicht schlechter.** Weil Faktencheck und Rohschnitt fast nichts mehr kosten, mache ich sie immer. Das hätte ich allein früher nie gemacht.
+3. **Die Arbeit verschiebt sich zum Urteil.** Was bleibt, ist die Frage, was man erzählen will und was man verantworten kann. Das ist der Teil, den ich nicht abgeben will.
 
 Der Code steht unter MIT-Lizenz auf [GitHub](https://github.com/plotti/ai-video-toolkit). Ich freue mich auf eure Kommentare, und vor allem auf Erfahrungen, falls jemand den Skill für ein ganz anderes Thema ausprobiert.
