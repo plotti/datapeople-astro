@@ -1,15 +1,17 @@
 ---
 title: "Tabular Foundation Models – der kleine Bruder der LLMs für tabellarische Daten"
 description: "Ich habe für über 10 tausend echte Hausinserate untersucht, welches Machine-Learning-Modell am besten die Preise voraussagen kann. Sogenannte Tabular Foundation Models schlagen die alten Machine-Learning-Modelle um Längen – eine kleine Revolution. Lesen Sie weiter, wenn Sie dies für Ihre Daten nachmachen möchten."
-pubDate: 2026-10-01
-readTime: 14
+pubDate: 2026-11-18T21:00:00+01:00
+readTime: 18
 category: "Machine Learning"
-tags: ["Machine Learning", "TabPFN", "XGBoost", "scikit-learn", "Foundation Models", "Immobilien", "Benchmark"]
+tags: ["Machine Learning", "TabPFN", "XGBoost", "scikit-learn", "Foundation Models", "Immobilien", "Benchmark", "19th"]
 cover: "../../assets/blog/tabular-models-cover.jpg"
 series: "Foundation Models"
 ---
 
-**Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
+**Stand:** Oktober 2026, Update November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 18 Minuten
+
+> **Update, 18. November 2026:** Es gibt einen neuen Herausforderer. **19th** trainiert in der Cloud ein kleines Modell, das danach ohne GPU auf jeder CPU läuft, und liegt im Ultra-Modus auf diesem Datensatz gleichauf mit TabPFN. Alle Zahlen und die offenen Fragen zu Preis und Lizenz stehen im [Update am Ende des Posts](#update-18-november-2026-neuer-herausforderer-19th).
 
 ## Die Frage
 
@@ -132,6 +134,44 @@ Mein persönliches Fazit für die kleinanzeigen-Karte lautet also: **HistGradien
 
 ---
 
+## Update, 18. November 2026: Neuer Herausforderer 19th
+
+Kaum war dieser Post draussen, ist mir ein neuer Anbieter über den Weg gelaufen: **19th** ([19th.com](https://19th.com)), ein junges Startup, das noch in der Beta steckt. Das Versprechen auf der Startseite: „Microsecond decision models. On any CPU or via API." Lustigerweise ist das im Grunde das Gegenteil der Foundation Models oben. TabPFN und TabICL schleppen bei jeder Vorhersage den ganzen Trainingssatz als Kontext mit und wollen deshalb eine GPU. 19th trainiert dagegen auf den eigenen Servern ein kleines, spezialisiertes Modell, das man herunterlädt und dann lokal laufen lässt, ganz ohne GPU.
+
+Gesteuert wird das Ganze entweder über einen MCP-Server, also direkt aus einem KI-Agenten heraus, oder über eine Training API. Ich wollte natürlich den MCP-Weg ausprobieren und bin prompt gescheitert: Claude Code hat mir zwar die Lese-Tools angeboten, aber ausgerechnet die beiden zum Hochladen und Trainieren nicht. Also doch die Training API. Das heisst: ein einziger `curl`-Aufruf mit der CSV-Datei, und am Ende liegt ein fertiges Modell zum Download bereit.
+
+### Wie fair ist der Vergleich?
+
+Ich habe exakt denselben Split wie im Benchmark oben verwendet, mit denselben Seeds. Fold 1 mit 2'234 Häusern habe ich zurückgehalten, 19th hat nur die übrigen 8'934 gesehen. Dabei gibt es einen Haken: Die Zahlen im Blog sind 5-Fold-Mittelwerte, meine 19th-Läufe sind ein einzelner Fold. Deshalb habe ich HistGradientBoosting zur Kontrolle auf genau diesem Fold nachgerechnet. Es landet mit 59'860 € fast exakt auf seinem 5-Fold-Wert von 59'447 €, Fold 1 ist also ein fairer Ausschnitt.
+
+19th kennt vier Trainingsmodi, von „Instant" bis „Ultra". Ich habe zwei davon laufen lassen: „Standard", den Default, und „Ultra", das genaueste Modell, das 19th baut.
+
+| Modell | Median AE | R² (log) | MdAPE | Training | Basis |
+|---|---:|---:|---:|---:|---|
+| **19th *(Ultra)*** | **45'512 €** | **0.793** | **11.3 %** | ca. 16 min | Fold 1 |
+| TabPFN v3.5 *(API)* | 45'061 € | 0.784 | 11.4 % | 46 s | 5-Fold |
+| TabICL | 49'708 € | 0.760 | 12.6 % | 47 s | 5-Fold |
+| 19th *(Standard)* | 57'361 € | 0.765 | 14.3 % | < 1.5 min | Fold 1 |
+| HistGradientBoosting | 59'860 € | 0.741 | 15.4 % | 9 s | Fold 1 |
+
+*Die Trainingszeiten sind nicht direkt vergleichbar: TabPFN und TabICL gelten für alle fünf Folds im Benchmark-Notebook, 19th für ein einzelnes Modell inklusive Hochladen und Verpacken, HistGradientBoosting für einen Fold auf meinem Mac.*
+
+Ehrlich gesagt hatte ich nach dem Standard-Lauf schon mit 19th abgeschlossen: besser als die Bäume, aber 12'000 € pro Haus hinter TabPFN. Ultra hat mich dann eines Besseren belehrt. Beim Median-Fehler liegt es 450 € hinter TabPFN, bei R² und MdAPE sogar leicht vorne. Bevor jetzt jemand „19th schlägt TabPFN" schreibt: Wenn etwas zu gut klingt, um wahr zu sein, schaut man besser zweimal hin. 450 € auf einem einzelnen Fold sind Rauschen, kein Sieg. Die ehrliche Formulierung ist: gleichauf.
+
+Spannend ist deshalb weniger der Tabellenplatz als das, was nach dem Training passiert. Das Ultra-Modell ist eine Datei von 9.1 MB, mein Mac hat damit alle 2'234 Häuser in 585 Millisekunden durchgerechnet, ohne GPU und ohne Internet. Zu jedem Preis liefert es gleich eine Spanne mit, und die 80-%-Spanne enthielt bei 82.5 % der Häuser den echten Angebotspreis. Das ist genau die TabPFN-Genauigkeit, für die ich oben noch eine GPU oder die gehostete API gebraucht habe. Der Preis dafür ist die Trainingszeit: Standard war in unter anderthalb Minuten fertig, Ultra hat rund 16 Minuten gebraucht.
+
+### Was kostet das, und darf ich es benutzen?
+
+Genau das war beim Abschnitt zur Lizenz von TabPFN oben mein grösster Ärger. Die ehrliche Antwort bei 19th lautet: Ich weiss es nicht. Es gibt keine öffentliche Preisseite, keine veröffentlichten Nutzungsbedingungen und keine Aussage dazu, wem das trainierte Modell gehört oder ob man es kommerziell einsetzen darf. In der Antwort der API steht nichts zu Kosten, und alles Weitere liegt hinter dem Login im Dashboard. Das ist bei einer Beta nicht ungewöhnlich, aber es heisst eben auch: Hinter meine Haus-Karte würde ich es heute noch nicht stellen. Und wie bei der TabPFN-API verlassen die Trainingsdaten dabei meine Maschine. Die Vorhersagen danach laufen dafür komplett lokal.
+
+### Was nehme ich mit?
+
+1. **19th ist kein drittes TabPFN, sondern ein anderer Ansatz:** einmal in der Cloud trainieren, dann ein kleines Modell, das auf jeder CPU läuft. Im Ultra-Modus liegt es auf diesem Datensatz gleichauf mit TabPFN.
+2. **Den Unterschied macht der Betrieb:** kein GPU-Server, keine API-Kosten pro Vorhersage, Antworten in Millisekunden und Preisspannen gratis dazu. Bezahlt wird mit Trainingszeit: Ultra hat für ein einziges Modell rund 16 Minuten gebraucht.
+3. **Solange Preise und Lizenz nicht öffentlich sind, bleibt es ein Experiment.** Sobald es dazu etwas Offizielles gibt, ergänze ich den Post.
+
+---
+
 ### Quellen
 
 - [TabPFN Non-Commercial License (Prior-Labs/tabpfn_3.5, Hugging Face)](https://huggingface.co/Prior-Labs/tabpfn_3_5/blob/main/LICENSE)
@@ -139,3 +179,6 @@ Mein persönliches Fazit für die kleinanzeigen-Karte lautet also: **HistGradien
 - [Prior Labs – Pricing (Free / Pro / Max / Commercial, „Contact Sales")](https://priorlabs.ai/pricing)
 - [TabICL – BSD-3-Clause-Lizenz (soda-inria/tabicl)](https://github.com/soda-inria/tabicl/blob/main/LICENSE)
 - [AutoGluon-Doku – Tabular Foundation Models frei für kommerzielle Nutzung](https://auto.gluon.ai/dev/tutorials/tabular/tabular-foundational-models.html)
+- [19th – Startseite](https://19th.com)
+- [19th – MCP-Doku](https://19th.com/docs/mcp)
+- [19th – Training API](https://19th.com/docs/training)
