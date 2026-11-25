@@ -6,6 +6,7 @@ readTime: 30
 category: "KI Tools"
 tags: ["Claude Code","Z.ai","OpenRouter","DeepSeek","Kostenoptimierung"]
 cover: "../../assets/blog/claude-pro-optionen.svg"
+draft: true
 ---
 
 **Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 30 Minuten

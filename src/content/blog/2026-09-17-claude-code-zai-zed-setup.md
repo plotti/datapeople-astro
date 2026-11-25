@@ -6,6 +6,7 @@ readTime: 7
 category: "KI Tools"
 tags: ["Claude Code","Z.ai","Zed","Kostenoptimierung"]
 cover: "../../assets/blog/claude-code-zai-zed.svg"
+draft: true
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 7 Minuten

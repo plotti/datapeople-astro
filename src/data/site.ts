@@ -266,7 +266,7 @@ export const footerNav = {
     { label: "Leistungen", href: "/#services" },
     { label: "Team", href: "/#team" },
     { label: "Blog", href: "/blog/" },
-    { label: "AI Landscape", href: "/blog/ai-agent-tooling-landscape/" },
+    // { label: "AI Landscape", href: "/blog/ai-agent-tooling-landscape/" },  // Seite vorübergehend versteckt
   ],
   contact: [
     { label: "Kontakt", href: "/#contact" },

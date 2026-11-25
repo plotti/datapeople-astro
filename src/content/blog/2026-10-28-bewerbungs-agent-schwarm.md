@@ -8,6 +8,7 @@ tags: ["Claude", "Managed Agents", "Multi-Agent", "Agenten", "Automatisierung", 
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-schwarm.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-schwarm.png"
 series: "Agenten 2026"
+draft: true
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten

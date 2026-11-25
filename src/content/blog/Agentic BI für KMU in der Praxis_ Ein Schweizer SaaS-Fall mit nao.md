@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["Agentic BI","AI","Interface","LLM"]
 cover: "../../assets/blog/nao-title.jpg"
 series: "Agenten-Dashboards"
+draft: true
 ---
 
 **Stand:** Mai 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 18 Minuten

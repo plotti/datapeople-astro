@@ -7,6 +7,7 @@ category: "AI Integration"
 tags: ["DeepSeek", "Super-Agent", "FirstMate", "Multi-Agent", "Claude Code", "Pi", "Agenten", "Coding Agents", "Benchmark"]
 cover: "../../assets/blog/freizeitkarte-cover.jpg"
 series: "Agenten 2026"
+draft: true
 ---
 
 **Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten

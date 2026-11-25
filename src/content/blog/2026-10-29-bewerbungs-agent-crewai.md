@@ -8,6 +8,7 @@ tags: ["CrewAI", "Flows", "Open Source", "DeepSeek", "Qwen", "Multi-Agent", "Age
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-crewai.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-crewai.png"
 series: "Agenten 2026"
+draft: true
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 28 Minuten
