@@ -10,6 +10,8 @@ cover: "../../assets/blog/lokale-llm-cover.png"
 
 **Stand:** November 2026, Update 25. November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
 
+> **Update, 25. November 2026:** Ich habe das neue **Inkling 2 Mini** von Thinking Machines Lab nachgetestet. Auf Strata läuft es schlecht, mit llama.cpp deutlich besser, aber gegenüber meinem Champion Qwen3.8-Flash-Next ist es auf 10 Aufgaben langsamer und löst weniger. Die Zahlen stehen im [Update am Ende des Posts](#update-25-november-2026-inkling-2-mini).
+
 Lokale KI ist gerade überall. c't 3003 hat vor gut einer Woche ein ausführliches Video dazu gemacht, [„Lokale KI: Das läuft auf deinem Rechner“](https://www.heise.de/news/Lokale-KI-Das-laeuft-auf-deinem-Rechner-11515316.html) (das Video gibt es auch direkt [auf YouTube](https://www.youtube.com/watch?v=a__Rva9Wqek)). Die Kernaussage dort: Ein Modell wie Qwen 3.8-27B erreicht lokal inzwischen ungefähr das, was die Frontier-Modelle aus der Cloud vor acht Monaten konnten, und die Hardware dafür wird gleichzeitig immer teurer. Als relevanteste lokale Modelle nennt das Video Qwen 3.8-27B und Qwen 3.8 Flash Next.
 
 Ich hatte bei der Hardware nicht die grosse Auswahl. Ich bin durch ziemlich viel Glück an die Möglichkeit gekommen, eine **NVIDIA RTX 6000 Ada mit 48 GB Grafikspeicher** lokal zu betreiben. Dazu ein i9-10900K und 32 GB RAM, unter Windows, wassergekühlt. Wenn so eine Karte schon im Haus steht, will ich auch wissen, was das Beste ist, das ich aus ihr rausholen kann. Und zwar nicht im Chat, sondern dort, wo ich die Modelle wirklich brauche: beim Coden.
