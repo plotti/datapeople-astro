@@ -8,7 +8,7 @@ tags: ["Lokale LLMs","Claude Code","SWE-bench","Strata","llama.cpp","Qwen"]
 cover: "../../assets/blog/lokale-llm-cover.png"
 ---
 
-**Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
+**Stand:** November 2026, Update 25. November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten
 
 Lokale KI ist gerade überall. c't 3003 hat vor gut einer Woche ein ausführliches Video dazu gemacht, [„Lokale KI: Das läuft auf deinem Rechner“](https://www.heise.de/news/Lokale-KI-Das-laeuft-auf-deinem-Rechner-11515316.html) (das Video gibt es auch direkt [auf YouTube](https://www.youtube.com/watch?v=a__Rva9Wqek)). Die Kernaussage dort: Ein Modell wie Qwen 3.8-27B erreicht lokal inzwischen ungefähr das, was die Frontier-Modelle aus der Cloud vor acht Monaten konnten, und die Hardware dafür wird gleichzeitig immer teurer. Als relevanteste lokale Modelle nennt das Video Qwen 3.8-27B und Qwen 3.8 Flash Next.
 
@@ -160,5 +160,24 @@ Damit fallen zwei Dinge weg, die mich heute nerven: Ich muss nicht mehr darauf a
 2. **Kleiner kann besser sein.** Die Q2_0-Variante, laut Strata-Doku mit rund 38 GB Speicherbedarf, war gleichzeitig die schnellste und gleichauf mit der besten. Ich hätte vorher auf die grösste getippt, die gerade noch passt.
 3. **Die Cloud ist schneller, nicht automatisch besser.** Opus 5.5 hat 40 von 50 Aufgaben gelöst, das lokale Q2_0 47, aber Opus brauchte nur gut ein Drittel der Zeit. Wer lokal arbeitet, tauscht Tempo gegen Kontrolle, und auf diesem Benchmark nicht gegen Qualität.
 4. **Der Kontext ist das eigentliche Nadelöhr.** Nicht die Token pro Sekunde beim Schreiben, sondern das Einlesen von 100'000 Token bei jedem einzelnen Schritt entscheidet, ob sich lokales Coden flüssig anfühlt.
+
+## Update, 25. November 2026: Inkling 2 Mini
+
+Kaum war der Post draussen, kam das nächste Modell: [Inkling 2 Mini](https://thinkingmachines.ai/news/inkling-2-mini/) von Thinking Machines Lab. 26,4 Milliarden Parameter, davon 3,4 Milliarden pro Token aktiv, und ein sogenannter Looped Transformer: Die mittleren Layer laufen für jedes Token dreimal durch. Der Hersteller meldet 79,2 Prozent auf SWE-bench Verified. Klingt nach einem Herausforderer für meinen Champion, also habe ich es auf denselben Aufbau losgelassen, allerdings nur auf die ersten 10 der 50 Aufgaben.
+
+Auf Strata lief es ehrlich gesagt überhaupt nicht gut. Ich habe das [offizielle Strata-Pack](https://huggingface.co/strata-engine/Inkling-2-Mini-Strata) in der grössten Variante genommen, die laut Strata identisch zum Original rechnet. Trotzdem hat sich Inkling ständig im Kreis gedreht: Bei einer Django-Aufgabe hatte es den richtigen Fix nach wenigen Minuten drin und hat danach 91-mal denselben Testbefehl abgesetzt, bis das Zeitlimit kam. Beim Nachgraben habe ich zwei Gründe gefunden. Strata schaltet das Denken bei Inkling fest ab, und weil Claude Code keine Temperatur mitschickt, nimmt Strata immer das wahrscheinlichste Token. Genau in diesem Modus bleibt Inkling laut Bugreports in Schleifen hängen. Lustigerweise hat Strata für Qwen empfohlene Sampling-Werte eingebaut, für Inkling nicht. Auch mit Temperatur 1.0 und eingeschaltetem Denken wurde es nicht wirklich besser. Mit [llama.cpp](https://github.com/ggml-org/llama.cpp) und denselben Einstellungen sah das gleiche Modell plötzlich ganz anders aus:
+
+| Setup (10 Aufgaben) | Gelöst | Zeitlimit erreicht | Ø pro Aufgabe |
+|---|---:|---:|---:|
+| Inkling 2 Mini, Strata, Standard | 2 / 9 | 6 | ca. 30 min |
+| Inkling 2 Mini, Strata, Temperatur 1.0 + Denken | 3 / 10 | 5 | ca. 27 min |
+| Inkling 2 Mini, llama.cpp Q8_0 | 7 / 10 | 0 | 5,7 min |
+| **Qwen3.8-Flash-Next Q2_0 (Strata)** | **10 / 10** | **0** | **ca. 2 min** |
+
+*Den Standard-Lauf habe ich nach 9 Aufgaben abgebrochen. Eine weitere Aufgabe darin ist abgebrochen, weil eine einzelne Antwort über 32'000 Token lang wurde.*
+
+Und wirklich schnell ist Inkling auch nicht. Die wenigen aktiven Parameter täuschen: Weil die mittleren Layer dreimal laufen, schreibt es auf Strata bei 20'000 Token Kontext 89 Token pro Sekunde, Qwen schafft 184. Mit llama.cpp sind es nur noch 54.
+
+Das heisst: Mein Champion bleibt Qwen3.8-Flash-Next. Inkling ist langsamer und löst auf denselben Aufgaben weniger. Zehn Aufgaben sind natürlich nur eine Stichprobe, da kann eine einzelne Aufgabe das Bild schon verschieben. Die eigentliche Lektion ist für mich aber eine andere: Dasselbe Modell kommt auf 3 oder auf 7 von 10, je nachdem, welche Engine darunter läuft und welche Standardwerte sie stillschweigend setzt. Ich glaube, bei ganz neuen Modellen sollte man deshalb erst ein paar Wochen warten, bis die Engines nachgezogen haben, bevor man ein Urteil fällt.
 
 Ich freue mich auf eure Kommentare und Anregungen! Vor allem, wenn jemand Ornith oder Nemotron mit einem anderen Harness deutlich besser zum Laufen gebracht hat.
