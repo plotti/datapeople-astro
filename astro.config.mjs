@@ -8,8 +8,8 @@ import react from '@astrojs/react';
 export default defineConfig({
   // Serie „Agenten 2026“ auf einen Monat verteilt: alte Adressen der schon veröffentlichten Posts
   redirects: {
-    // Ziel vorübergehend versteckt: '/blog/2026-10-25-bewerbungs-agent-n8n': '/blog/2026-09-29-bewerbungs-agent-n8n/',
-    // Ziel vorübergehend versteckt: '/blog/2026-10-27-n8n-vs-activepieces': '/blog/2026-10-06-n8n-vs-activepieces/',
+    '/blog/2026-10-25-bewerbungs-agent-n8n': '/blog/2026-09-29-bewerbungs-agent-n8n/',
+    '/blog/2026-10-27-n8n-vs-activepieces': '/blog/2026-10-06-n8n-vs-activepieces/',
   },
 
   vite: {

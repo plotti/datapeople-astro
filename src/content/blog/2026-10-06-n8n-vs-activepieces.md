@@ -8,7 +8,6 @@ tags: ["n8n", "Activepieces", "Agenten", "Automatisierung", "Open Source", "Verg
 cover: "../../assets/blog/serie-cover-n8n-vs-activepieces.png"
 thumb: "../../assets/blog/serie-karte-n8n-vs-activepieces.png"
 series: "Agenten 2026"
-draft: true
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 7 Minuten

@@ -7,7 +7,6 @@ category: "AI Integration"
 tags: ["MotherDuck", "DuckDB", "Dashboards", "LLM", "Embedded Analytics"]
 cover: "../../assets/blog/motherduck-dives-cover.png"
 series: "Agenten-Dashboards"
-draft: true
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten

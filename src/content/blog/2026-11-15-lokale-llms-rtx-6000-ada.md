@@ -6,7 +6,6 @@ readTime: 14
 category: "KI Tools"
 tags: ["Lokale LLMs","Claude Code","SWE-bench","Strata","llama.cpp","Qwen"]
 cover: "../../assets/blog/lokale-llm-cover.png"
-draft: true
 ---
 
 **Stand:** November 2026, Update 25. November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten

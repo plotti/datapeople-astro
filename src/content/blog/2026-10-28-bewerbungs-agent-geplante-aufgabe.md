@@ -8,7 +8,6 @@ tags: ["Claude", "Geplante Aufgaben", "Agenten", "Automatisierung", "Google Driv
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-geplante-aufgabe.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-geplante-aufgabe.png"
 series: "Agenten 2026"
-draft: true
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 14 Minuten

@@ -7,7 +7,6 @@ category: "Machine Learning"
 tags: ["Machine Learning", "Jev", "Klassifikation", "YouTube", "Kalibrierung", "Python", "KI"]
 cover: "../../assets/blog/jev-youtube-kids-cover.jpg"
 series: "Foundation Models"
-draft: true
 ---
 
 **Stand:** Oktober 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 15 Minuten

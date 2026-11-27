@@ -8,7 +8,6 @@ tags: ["n8n", "Agenten", "Automatisierung", "OpenRouter", "Firecrawl", "ntfy", "
 cover: "../../assets/blog/serie-cover-bewerbungs-agent-n8n.png"
 thumb: "../../assets/blog/serie-karte-bewerbungs-agent-n8n.png"
 series: "Agenten 2026"
-draft: true
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 16 Minuten

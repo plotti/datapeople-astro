@@ -6,7 +6,6 @@ readTime: 17
 category: "KI & Strategie"
 tags: ["KI", "OpenStreetMap", "Data Engineering", "Machine Learning", "Immobilien", "User Interface"]
 cover: "../../assets/blog/immo-map-germany.png"
-draft: true
 ---
 
 **Stand:** September 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 17 Minuten

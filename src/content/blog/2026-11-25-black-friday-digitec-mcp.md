@@ -6,7 +6,7 @@ readTime: 9
 category: "KI Tools"
 tags: ["MCP", "Claude Code", "Digitec", "Galaxus", "Black Friday", "Preisverlauf", "GraphQL"]
 cover: "../../assets/blog/digitec-mcp-black-friday-cover.png"
-draft: true
+draft: false
 ---
 
 **Stand:** November 2026 · **Autor:** Thomas Ebermann · **Lesedauer:** ca. 9 Minuten

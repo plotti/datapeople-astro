@@ -13,9 +13,7 @@ const collectionPosts = (await getCollection("blog", ({ data }) => !data.draft))
   href: `/blog/${p.id}/`,
 }));
 
-// Vorübergehend versteckt: Die zugehörigen Seiten liegen als _*.astro in src/pages/blog/ und werden nicht gebaut.
-// Zum Wiederherstellen: Unterstrich entfernen und den Eintrag wieder in manualPosts aufnehmen.
-const hiddenManualPosts = [
+const manualPosts = [
   {
     id: "digitale-schweiz-digimonitor",
     href: "/blog/digitale-schweiz-digimonitor/",
@@ -59,7 +57,6 @@ const hiddenManualPosts = [
     },
   },
 ];
-const manualPosts: typeof hiddenManualPosts = [];
 
 const posts = [...manualPosts, ...collectionPosts].sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
