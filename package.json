@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "stats": "python3 scripts/blog-stats.py"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.3",

@@ -15,11 +15,11 @@ Black Friday ist die Woche, in der jedes zweite Preisschild rot wird. «-50%», 
 
 Meine Regel war simpel: **Ein Produkt muss mindestens drei Monate lang einen stabilen Preis gehabt haben und jetzt mehr als 30 Prozent darunter liegen.** Das heisst, kein Preis, der im Oktober kurz hochgeschraubt wurde, damit der Rabatt im November schöner aussieht.
 
-Von Hand geht das nicht. Digitec zeigt zwar zu jedem Produkt einen Preisverlauf, aber niemand klickt sich durch ein paar tausend Produktseiten. Also habe ich es Claude Code machen lassen, über ein MCP. Und lustigerweise war der Weg dorthin spannender als das Ergebnis.
+Von Hand geht das nicht. Digitec zeigt zwar zu jedem Produkt einen Preisverlauf, aber niemand klickt sich durch ein paar tausend Produktseiten. Also habe ich es Claude Code machen lassen, über ein MCP. Der Weg dorthin hat am Ende mehr hergegeben als das Ergebnis.
 
 ## Erster Versuch: das offizielle Galaxus-MCP
 
-Kurz zur Einordnung: Ein MCP-Server (Model Context Protocol) gibt einem KI-Assistenten Werkzeuge in die Hand, hier also «suche Produkte», «hole Produktdetails», «zeig mir den Preis». Und lustigerweise gibt es seit ein paar Wochen ein offizielles: Galaxus hat eine [MCP-Schnittstelle für KI-Assistenten](https://www.digitec.ch/de/page/galaxus-startet-mcp-schnittstelle-fuer-ki-assistenten-44216) gestartet, auf derselben Datenbank wie der Shop. Kein Konto nötig, vorerst nur für den Schweizer Shop, in Claude über Einstellungen → Connectors → Discovery → «Galaxus» hinzuzufügen.
+Kurz zur Einordnung: Ein MCP-Server (Model Context Protocol) gibt einem KI-Assistenten Werkzeuge in die Hand, hier also «suche Produkte», «hole Produktdetails», «zeig mir den Preis». Seit ein paar Wochen gibt es tatsächlich ein offizielles: Galaxus hat eine [MCP-Schnittstelle für KI-Assistenten](https://www.digitec.ch/de/page/galaxus-startet-mcp-schnittstelle-fuer-ki-assistenten-44216) gestartet, auf derselben Datenbank wie der Shop. Kein Konto nötig, vorerst nur für den Schweizer Shop, in Claude über Einstellungen → Connectors → Discovery → «Galaxus» hinzuzufügen.
 
 Die Einrichtung ist tatsächlich in einer Minute erledigt, ohne Klonen, ohne Build, ohne Konfiguration. Der Server bietet genau ein Werkzeug: `search_products`, mit Suchbegriff, optionalem Preisbereich und bis zu 50 Treffern pro Anfrage. Ein Test mit dem Samsung QE75QN800C kommt mit dem aktuellen Preis von 2'006 Franken zurück, dazu Beschreibung, Bewertungen und eine Zusammenfassung der Pro- und Contra-Punkte aus den Reviews. Für «zeig mir 65-Zoll-Fernseher unter 1'000 Franken mit guten Bewertungen» ist das im Grunde alles, was man braucht.
 
@@ -51,7 +51,7 @@ cd galaxus-mcp && npm install && npm run build
 claude mcp add -s user galaxus -e GALAXUS_SITE=digitec.ch -e GALAXUS_LANGUAGE=de -- node "$PWD/dist/index.js"
 ```
 
-Vorher habe ich kurz in den Code geschaut, weil man fremde Server ja nicht blind laufen lässt: zwei Abhängigkeiten (MCP-SDK und zod), keine Shell-Aufrufe, keine Dateizugriffe, Netzwerk nur Richtung Digitec. `claude mcp get galaxus` meldet «Connected». Schön.
+Vorher habe ich kurz in den Code geschaut, weil man fremde Server ja nicht blind laufen lässt: zwei Abhängigkeiten (MCP-SDK und zod), keine Shell-Aufrufe, keine Dateizugriffe, Netzwerk nur Richtung Digitec. `claude mcp get galaxus` meldet «Connected», so weit also alles gut.
 
 Der erste echte Aufruf, eine Suche nach «kopfhörer», kam dann so zurück:
 
@@ -59,7 +59,7 @@ Der erste echte Aufruf, eine Suche nach «kopfhörer», kam dann so zurück:
 The specified persisted operation key is invalid.
 ```
 
-Und zwar bei jedem Tool. Was ist da los? Nun, die kurze Antwort: Der Shop schickt keine GraphQL-Abfragen im Klartext, sondern nur einen Hash, der auf eine bei Digitec hinterlegte Abfrage zeigt (Relay «persisted queries»). Wenn Digitec den Shop neu ausrollt, ändern sich diese Hashes, und der MCP-Server klopft mit einem Schlüssel an, den es nicht mehr gibt. Das README warnt sogar davor. Der letzte Commit war vom 30. Oktober, seither hatte Digitec offenbar deployt.
+Und zwar bei jedem Tool. Der Grund: Der Shop schickt keine GraphQL-Abfragen im Klartext, sondern nur einen Hash, der auf eine bei Digitec hinterlegte Abfrage zeigt (Relay «persisted queries»). Wenn Digitec den Shop neu ausrollt, ändern sich diese Hashes, und der MCP-Server klopft mit einem Schlüssel an, den es nicht mehr gibt. Das README warnt sogar davor. Der letzte Commit war vom 30. Oktober, seither hatte Digitec offenbar deployt.
 
 ## Die Reparatur: einfach dem Shop zuschauen
 
@@ -125,7 +125,7 @@ Drei Monate flach bei gut 4'300 Franken, kurz vor Black Friday eine Stufe auf 4'
 
 ## Und was davon steht auf der Black-Friday-Seite?
 
-Die nächste Frage lag nahe: Finde ich diese Produkte einfach unter [digitec.ch/de/promotion](https://www.digitec.ch/de/promotion)? Die Seite listet 3'343 Aktionsprodukte. Lädt man die Liste über dieselbe Schnittstelle, die die Seite selbst benutzt, ist lustigerweise nach rund 2'060 Produkten Schluss mit Blättern. Mit drei Sortierungen (Relevanz, Preis auf- und absteigend) kam ich auf 3'345, also vollständig.
+Die nächste Frage lag nahe: Finde ich diese Produkte einfach unter [digitec.ch/de/promotion](https://www.digitec.ch/de/promotion)? Die Seite listet 3'343 Aktionsprodukte. Lädt man die Liste über dieselbe Schnittstelle, die die Seite selbst benutzt, ist nach rund 2'060 Produkten Schluss mit Blättern. Mit drei Sortierungen (Relevanz, Preis auf- und absteigend) kam ich auf 3'345, also vollständig.
 
 Das Ergebnis hat mich zweimal überrascht:
 

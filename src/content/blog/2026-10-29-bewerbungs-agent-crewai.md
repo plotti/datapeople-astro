@@ -27,9 +27,9 @@ series: "Agenten 2026"
 
 In den letzten zwei Beiträgen hat mein Bewerbungs-Schwarm immer auf der Plattform eines grossen Anbieters gelebt: zuerst auf [Claude Managed Agents](/blog/2026-10-28-bewerbungs-agent-schwarm/), danach im [Vergleich mit Gemini und OpenAI](/blog/2026-10-29-bewerbungs-agent-vergleich/). Jedes Mal hat mir jemand die Sandbox, den Tresor für die Zugangsdaten, das Gedächtnis und den Zeitplan fix und fertig hingestellt. Bequem, aber man ist dabei immer auch Gast im Haus eines anderen.
 
-Heute drehe ich den Spiess um. Derselbe Schwarm, dieselben Rollen, dieselben Regeln, aber diesmal mit **CrewAI**, also Open Source, und mit **offenen Modellen**. Die spannende Frage: Wie viel von dem, was die Plattformen mir abgenommen haben, vermisse ich wirklich? Und was kostet es, wenn man alles selbst macht?
+Heute drehe ich den Spiess um. Derselbe Schwarm, dieselben Rollen, dieselben Regeln, aber diesmal mit **CrewAI**, also Open Source, und mit **offenen Modellen**. Die eigentliche Frage: Wie viel von dem, was die Plattformen mir abgenommen haben, vermisse ich wirklich? Und was kostet es, wenn man alles selbst macht?
 
-Vorweg, damit du weisst, wohin die Reise geht: Mein erster Versuch ist ziemlich holprig geworden, und zwar weil ich CrewAI genau so benutzt habe wie Claude. Erst als ich nachgelesen habe, wie CrewAI eigentlich gedacht ist, wurde es richtig gut. Am Ende habe ich den Schwarm dreimal gebaut: mit einem eigenen Lead, als Flow und als Crew, wie CrewAI sie meint. So gut, dass es am Ende die günstigste Variante der ganzen Serie ist. Und unterwegs bin ich bei der Frage gelandet, die ich inzwischen für die wichtigste Design-Entscheidung bei solchen Systemen halte: Braucht es überhaupt einen Lead?
+Vorweg, damit du weisst, worauf es hinausläuft: Mein erster Versuch ist ziemlich holprig geworden, und zwar weil ich CrewAI genau so benutzt habe wie Claude. Erst als ich nachgelesen habe, wie CrewAI eigentlich gedacht ist, wurde es richtig gut. Am Ende habe ich den Schwarm dreimal gebaut: mit einem eigenen Lead, als Flow und als Crew, wie CrewAI sie meint. So gut, dass es am Ende die günstigste Variante der ganzen Serie ist. Und unterwegs bin ich bei der Frage gelandet, die ich inzwischen für die wichtigste Design-Entscheidung bei solchen Systemen halte: Braucht es überhaupt einen Lead?
 
 ## Was ist CrewAI?
 
@@ -211,7 +211,7 @@ Wenn ich aus dieser Serie bisher eine Sache mitnehme, dann diese: Ob es einen Le
 
 Für meinen Job-Radar ist die Sache klar. Der Ablauf ist jeden Tag derselbe, die Regeln sind bekannt, und das Unerwartete ist selten. Da ist das Gerüst die bessere Wahl, und das wäre es auch bei Claude gewesen. Bei einer Aufgabe, deren Ablauf ich vorher nicht kenne, etwa einer offenen Recherche, würde ich mich anders entscheiden. Und dazwischen gibt es einen Mittelweg, den CrewAI ausdrücklich vorsieht: ein festes Gerüst, in dem einzelne Schritte einer kleinen Crew mit eigenem Lead überlassen werden, genau dort, wo es Planung braucht.
 
-Für die Serie ist das eine spannende Pointe. Der Lead, der selbst plant, also das eigentliche Thema von Teil 2, ist nicht immer die beste Idee. Was bei CrewAI übrig bleibt, ist im Grunde ein fester Ablauf wie in Teil 1, mit Agenten an genau den Stellen, wo es Urteilsvermögen braucht.
+Für die Serie ist das die eigentliche Pointe. Der Lead, der selbst plant, also das eigentliche Thema von Teil 2, ist nicht immer die beste Idee. Was bei CrewAI übrig bleibt, ist im Grunde ein fester Ablauf wie in Teil 1, mit Agenten an genau den Stellen, wo es Urteilsvermögen braucht.
 
 ## Exkurs: Und wo läuft das Ganze?
 
@@ -308,7 +308,7 @@ Den Code habe ich wie bei den anderen Schwärmen in einem eigenen Repo abgelegt,
 
 Eine naheliegende Frage: Warum gerade CrewAI? OpenAI und Google haben mit dem Agents SDK und dem Agent Development Kit (ADK) ja ebenfalls offene Frameworks für Agenten-Teams. Und nein, die zwingen einen nicht zu ihren eigenen Modellen: Beide lassen sich laut Doku über LiteLLM oder eine OpenAI-kompatible Adresse auch mit DeepSeek, Qwen oder einem lokalen Modell betreiben.
 
-Für mich gab es trotzdem drei Gründe. Erstens hatte ich OpenAI und Google gerade im letzten Beitrag mit ihren eigenen Plattformen verglichen, und ich wollte diesmal bewusst ein Framework, hinter dem kein Modellanbieter steht. Zweitens sind beide auf die eigenen Modelle zugeschnitten: Die Übergaben zwischen Agenten verlassen sich stark auf Function Calling, wie es GPT- und Gemini-Modelle liefern, und vieles drumherum, etwa Tracing, Auswertungen oder die Web-Oberfläche des ADK, spielt am besten mit dem eigenen Ökosystem zusammen. Mit einem kleineren offenen Modell, das schon bei CrewAI über Tool-Calls gestolpert ist, wäre ich da vermutlich nicht weiter gekommen. Und drittens passt das Denkmodell von CrewAI, ein Team aus Rollen mit Ziel und Hintergrundgeschichte, eins zu eins zu meinem Schwarm.
+Für mich gab es trotzdem drei Gründe. Erstens hatte ich OpenAI und Google gerade im letzten Beitrag mit ihren eigenen Plattformen verglichen, und ich wollte diesmal bewusst ein Framework, hinter dem kein Modellanbieter steht. Zweitens sind beide auf die eigenen Modelle zugeschnitten: Die Übergaben zwischen Agenten verlassen sich stark auf Function Calling, wie es GPT- und Gemini-Modelle liefern, und vieles drumherum, etwa Tracing, Auswertungen oder die Web-Oberfläche des ADK, spielt am besten mit den eigenen Diensten zusammen. Mit einem kleineren offenen Modell, das schon bei CrewAI über Tool-Calls gestolpert ist, wäre ich da vermutlich nicht weiter gekommen. Und drittens passt das Denkmodell von CrewAI, ein Team aus Rollen mit Ziel und Hintergrundgeschichte, eins zu eins zu meinem Schwarm.
 
 Ausprobiert habe ich die beiden für diesen Beitrag nicht, das ist also eine Begründung und kein Testergebnis. Zusammen mit LangGraph wären sie bestimmt einen eigenen Vergleich wert.
 

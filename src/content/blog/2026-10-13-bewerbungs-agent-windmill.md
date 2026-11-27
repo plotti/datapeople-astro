@@ -25,7 +25,7 @@ In den ersten beiden Beiträgen dieser Serie habe ich meinen Bewerbungs-Agenten 
 
 Ich glaube trotzdem nicht, dass die visuellen Werkzeuge damit überflüssig sind. Ihr grösster Vorteil liegt aus meiner Sicht woanders, nämlich in der Transparenz: Eine Kette aus Knoten, in der man jeden Schritt sieht und anklicken kann, verstehen auch Leute, die nie eine Zeile Code lesen würden, und genau das macht einen Prozess für das ganze Team nachvollziehbar.
 
-Für mich als jemanden, der den Code ohnehin lesen will, stellt sich aber die umgekehrte Frage: Was passiert, wenn der Agent nicht Knoten, sondern **ganz normalen Python-Code** schreibt? Derselbe Agent – Newsletter lesen, Stellen gegen meinen Lebenslauf bewerten, ab 7 von 10 ein Anschreiben in meine Vorlage setzen, auf meine Freigabe warten – diesmal als Skripte, und die Plattform, die drumherum Zeitplan, Wiederholungen, Zwischenergebnisse und die Freigabe übernimmt, heisst **Windmill**.
+Für mich als jemanden, der den Code ohnehin lesen will, stellt sich aber die umgekehrte Frage: Was passiert, wenn der Agent nicht Knoten, sondern **ganz normalen Python-Code** schreibt? Derselbe Agent: Newsletter lesen, Stellen gegen meinen Lebenslauf bewerten, ab 7 von 10 ein Anschreiben in meine Vorlage setzen, auf meine Freigabe warten, diesmal als Skripte, und die Plattform, die drumherum Zeitplan, Wiederholungen, Zwischenergebnisse und die Freigabe übernimmt, heisst **Windmill**.
 
 ## Die Idee: Code, aber mit Oberfläche
 
@@ -54,7 +54,7 @@ So sieht der Flow in Windmill aus. Schön finde ich die kleinen Kästchen dazwis
 
 ![Der Flow „bewerbung“ in Windmill: fünf Schritte, dazwischen die Zugriffe auf die Datentabelle](../../assets/blog/bewerbungs-agent-windmill-wm-flow.png)
 
-Und so sieht ein Schritt aus – kein Knoten mit Formularfeldern, sondern eine Datei, die ich genauso gut in meinem Editor öffnen könnte:
+Und so sieht ein Schritt aus, kein Knoten mit Formularfeldern, sondern eine Datei, die ich genauso gut in meinem Editor öffnen könnte:
 
 ![Der Schritt „bewerten“ als Python-Skript im Windmill-Editor](../../assets/blog/bewerbungs-agent-windmill-wm-script.png)
 
@@ -66,7 +66,7 @@ Die Module importieren sich gegenseitig wie in jedem Python-Projekt, mit `from .
 
 Jeder Schritt kann bei einem Fehler wiederholen, bei mir dreimal mit zehn Sekunden Abstand. Das ist wichtig, weil DeepSeek als Reasoning-Modell gelegentlich so lange nachdenkt, dass die Antwort leer bleibt.
 
-Noch eleganter finde ich den „Early Stop“. Dazu muss man wissen, dass Windmill die Schritte eines Flows mit Buchstaben benennt: Bei mir ist **a** das Bewerten, **b** das Schreiben des Anschreibens, **c** das Google-Doc mit PDF, **d** der Push mit der Freigabe und **e** der Abschluss. Der Schritt a gibt als Ergebnis unter anderem den Score zurück und ein Feld `passed`, das nur dann wahr ist, wenn die Stelle mindestens 70 Punkte hat und kein K.-o.-Kriterium greift.
+Noch besser gefällt mir der „Early Stop“. Dazu muss man wissen, dass Windmill die Schritte eines Flows mit Buchstaben benennt: Bei mir ist **a** das Bewerten, **b** das Schreiben des Anschreibens, **c** das Google-Doc mit PDF, **d** der Push mit der Freigabe und **e** der Abschluss. Der Schritt a gibt als Ergebnis unter anderem den Score zurück und ein Feld `passed`, das nur dann wahr ist, wenn die Stelle mindestens 70 Punkte hat und kein K.-o.-Kriterium greift.
 
 In der Flow-Definition steht beim Schritt a dann eine einzige zusätzliche Zeile:
 
@@ -95,7 +95,7 @@ Diese 2 Minuten 47 sind übrigens fast komplett meine eigene Reaktionszeit. Die 
 
 ### 3. Mehrere Sprachen in einem Flow
 
-Den Schritt, der den Brief in meine Google-Docs-Vorlage setzt, habe ich nicht in Python geschrieben, sondern in TypeScript. Der Grund: Die Logik dafür existierte schon als JavaScript-Datei, die auch n8n und Activepieces nutzen. Windmill führt den Schritt einfach mit Bun aus, mitten zwischen den Python-Schritten. Drei Werkzeuge, ein und derselbe Code für die Briefe – das gefällt mir.
+Den Schritt, der den Brief in meine Google-Docs-Vorlage setzt, habe ich nicht in Python geschrieben, sondern in TypeScript. Der Grund: Die Logik dafür existierte schon als JavaScript-Datei, die auch n8n und Activepieces nutzen. Windmill führt den Schritt einfach mit Bun aus, mitten zwischen den Python-Schritten. Drei Werkzeuge, ein und derselbe Code für die Briefe, das gefällt mir.
 
 ## Wo es weh tat
 
@@ -142,7 +142,7 @@ Wenn du dagegen nie Code anfassen willst, bleibt n8n oder Activepieces die besse
 
 ## Was kommt als Nächstes?
 
-Windmill macht aus Klicks Code, aber der Ablauf selbst bleibt eine Kette von Skripten. Im nächsten Beitrag geht es noch einen Schritt weiter: Mit **Kestra** wird der ganze Ablauf deklarativ in YAML beschrieben, und jeder Schritt läuft in seinem eigenen Container – eine Ebene mehr Infrastruktur, aber auch eine Ebene mehr Kontrolle. Danach kommt der reine Code ohne Plattform, und dann wechseln wir die Seite und lassen den Agenten selbst planen.
+Windmill macht aus Klicks Code, aber der Ablauf selbst bleibt eine Kette von Skripten. Im nächsten Beitrag geht es noch einen Schritt weiter: Mit **Kestra** wird der ganze Ablauf deklarativ in YAML beschrieben, und jeder Schritt läuft in seinem eigenen Container, eine Ebene mehr Infrastruktur, aber auch eine Ebene mehr Kontrolle. Danach kommt der reine Code ohne Plattform, und dann wechseln wir die Seite und lassen den Agenten selbst planen.
 
 <!-- serie:next -->
 **Weiter in der Serie:** [Braucht es einen Orchestrierer? Der Bewerbungs-Agent mit Kestra](/blog/2026-10-20-bewerbungs-agent-kestra/)

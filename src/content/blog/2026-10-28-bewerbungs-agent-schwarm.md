@@ -57,7 +57,7 @@ Das gemeinsame Gedächtnis ist ein Speicher namens „Bewerbungen“, der in jed
 
 ## Der Lead schreibt sein Programm selbst
 
-Jetzt wird es spannend. Der Lead bekommt keine Liste von Schritten, die er abarbeiten soll, sondern Regeln: höchstens 15 neue Stellen pro Lauf, höchstens drei Anschreiben, eine Empfehlung erst ab Score 7 und mit allen vier Kriterien erfüllt, und kein Urteil des Skeptikers gilt für eine Fassung, die er nicht gesehen hat. Daraus schreibt er jeden Morgen selbst kleine Programme, sogenannte **dynamische Workflows**, die seine Spezialisten parallel starten und ihre Ergebnisse einsammeln ([Doku](https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration)).
+Jetzt zum Teil, um den es eigentlich geht. Der Lead bekommt keine Liste von Schritten, die er abarbeiten soll, sondern Regeln: höchstens 15 neue Stellen pro Lauf, höchstens drei Anschreiben, eine Empfehlung erst ab Score 7 und mit allen vier Kriterien erfüllt, und kein Urteil des Skeptikers gilt für eine Fassung, die er nicht gesehen hat. Daraus schreibt er jeden Morgen selbst kleine Programme, sogenannte **dynamische Workflows**, die seine Spezialisten parallel starten und ihre Ergebnisse einsammeln ([Doku](https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration)).
 
 Bei meinem Testlauf mit einer passenden Stelle hat er fünf solcher Läufe nacheinander gestartet und jeweils selbst benannt: „Abgleichen“, „Schreiben“, „Prüfen“, „Überarbeiten“ und „Nachprüfen“. Dazwischen hat er selbst gearbeitet, also ausgewählt, Prüfsummen berechnet und kontrolliert, ob die Dateien seiner Spezialisten das verlangte Format haben.
 

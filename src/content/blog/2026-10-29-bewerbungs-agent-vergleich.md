@@ -50,7 +50,7 @@ Auf dem Papier sehen die drei Angebote fast gleich aus. Alle drei betreiben die 
 | Netz pro Teil | drei Umgebungen, je eigenes Netz | eine Umgebung, jede Stufe setzt ihr Netz beim Start neu | eine Umgebung, ein Netz für alles |
 | Zeitplan | Deployments mit Budget | Trigger, **höchstens 10 Minuten** | Automations, ohne Budget |
 
-Schauen wir uns die spannenden Zeilen genauer an.
+Schauen wir uns die Zeilen genauer an, auf die es ankommt.
 
 ## Gemini: Spezialisten zum Selbermachen
 
@@ -115,9 +115,9 @@ Ehrlich gesagt waren alle drei gut, und zwar besser, als ich nach den ganzen Sto
 
 Welche Plattform würde ich nehmen? Für meinen Bewerbungs-Agenten ganz klar weiterhin **Claude**, und zwar nicht wegen der Geschwindigkeit oder der Kosten, sondern weil es die einzige der drei Plattformen ist, auf der ich den Schwarm so bauen kann, wie ich ihn haben will: mit einem eigenen Modell pro Rolle, einem stärkeren Skeptiker, drei sauber getrennten Sandboxen, einem Budget pro Zeitplan und einem Gedächtnis, das nicht nach sieben Tagen ohne Nutzung mitsamt der Umgebung gelöscht wird, wie bei Gemini.
 
-**OpenAI** ist die angenehmste Überraschung. Am schnellsten, am günstigsten pro Lauf, meine Skills liefen ohne Änderung, und ich kann live zuschauen. Wenn OpenAI Tresore pro Sitzung und vordefinierte Subagenten nachliefert, wird es richtig spannend. Bis dahin würde ich dort keinen Agenten fremde Webseiten lesen lassen, der gleichzeitig an mein Postfach kommt. Ausserdem läuft die Agents API nur in den USA und ohne Zero Data Retention, das muss man für persönliche Daten wie einen Lebenslauf mögen.
+**OpenAI** ist die angenehmste Überraschung. Am schnellsten, am günstigsten pro Lauf, meine Skills liefen ohne Änderung, und ich kann live zuschauen. Wenn OpenAI Tresore pro Sitzung und vordefinierte Subagenten nachliefert, schaue ich noch einmal hin. Bis dahin würde ich dort keinen Agenten fremde Webseiten lesen lassen, der gleichzeitig an mein Postfach kommt. Ausserdem läuft die Agents API nur in den USA und ohne Zero Data Retention, das muss man für persönliche Daten wie einen Lebenslauf mögen.
 
-**Gemini** hat die eleganteste Lösung für Zugangsdaten und die günstigsten Modelle. Es fühlt sich aber noch am meisten nach Preview an: keine Subagenten, Trigger mit zehn Minuten Limit, kein Mitschauen während des Laufs und ein Lead, der eine halbe Stunde braucht und dabei in meiner Shell-History stöbert :)
+**Gemini** hat die sauberste Lösung für Zugangsdaten und die günstigsten Modelle. Es fühlt sich aber noch am meisten nach Preview an: keine Subagenten, Trigger mit zehn Minuten Limit, kein Mitschauen während des Laufs und ein Lead, der eine halbe Stunde braucht und dabei in meiner Shell-History stöbert :)
 
 Was mich am meisten überrascht hat: Bei allen dreien war der teuerste und langsamste Agent nicht der Writer und auch nicht der Skeptiker, sondern der Lead. Wer koordiniert, liest ständig alles wieder, und das kostet. Ich vermute, dass genau da in den nächsten Monaten am meisten passieren wird.
 

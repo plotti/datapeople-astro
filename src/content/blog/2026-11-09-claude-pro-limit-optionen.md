@@ -164,7 +164,7 @@ Input, gecachter Input und Output werden gewichtet, für GLM-5.3 mit 6.9, 1.7 un
 
 Z.ai gibt für Lite 208 bis 420 Millionen Token im Monat an, gerechnet mit einem Output-Anteil unter einem Prozent. Bei mir liegt der Output wegen des Denkmodus bei neun Prozent, damit reicht Lite für 109 bis 219 Millionen und deckt nur die Hälfte bis zwei Drittel meines Vergleichsmonats. Eine [Messung auf dem Max-Plan](https://news.ycombinator.com/item?id=49300713) bestätigt die Richtung mit 97.9 Prozent Cache-Treffern.
 
-**Vibe-Check.** r/ZaiGLM ist das aktivste Anbieter-Subreddit, und die Stimmung spaltet sich am Tarif. Kunden zum heutigen Preis klagen über die Limits – [„The daily and weekly limits are ***way*** too small“](https://reddit.com/r/ZaiGLM/comments/1uqmy76/stay_away_from_glm_coding_lite_plan/) – und über das Tempo. Mehrere Langzeitnutzer mit den [alten Preisen](https://reddit.com/r/ZaiGLM/comments/1w0qlyh/is_the_coding_plan_that_bad/) reissen die Fünf-Stunden-Grenze dagegen selten. Das deckt sich mit meiner Rechnung oben.
+**Vibe-Check.** r/ZaiGLM ist das aktivste Anbieter-Subreddit, und die Stimmung spaltet sich am Tarif. Kunden zum heutigen Preis klagen über die Limits: [„The daily and weekly limits are ***way*** too small“](https://reddit.com/r/ZaiGLM/comments/1uqmy76/stay_away_from_glm_coding_lite_plan/), und über das Tempo. Mehrere Langzeitnutzer mit den [alten Preisen](https://reddit.com/r/ZaiGLM/comments/1w0qlyh/is_the_coding_plan_that_bad/) reissen die Fünf-Stunden-Grenze dagegen selten. Das deckt sich mit meiner Rechnung oben.
 
 ### Wie die Tarife abschneiden
 
@@ -481,7 +481,7 @@ Die preiswerten Routen rechnen mit vier statt acht Bit Genauigkeit. Gemeint ist,
 
 GLM-5.3 für 0.56 Dollar Input bei DeepInfra ist deshalb nicht zwingend dieselbe Ausführung wie GLM-5.3 für 1.40 Dollar bei Z.ai. Wenn ich dadurch mehr korrigieren muss, verschwindet ein Teil der Ersparnis.
 
-Dass derselbe Modellname je nach Route zwischen 0.07 und 2.80 Dollar pro Million Input auftaucht, ist schon verrückt. Bei GLM-5.3 sind die billigsten Routen Wafer und Relace mit rund sieben Cent, die teuerste ist [Alibaba](https://www.alibabacloud.com/en/product/modelstudio) mit 2.80 Dollar – alles unter demselben Modellnamen. Ein Teil davon ist die Genauigkeit der Gewichte, der Rest sind Aktionen. Der Name allein reicht nicht für den Vergleich.
+Dass derselbe Modellname je nach Route zwischen 0.07 und 2.80 Dollar pro Million Input auftaucht, ist schon verrückt. Bei GLM-5.3 sind die billigsten Routen Wafer und Relace mit rund sieben Cent, die teuerste ist [Alibaba](https://www.alibabacloud.com/en/product/modelstudio) mit 2.80 Dollar, alles unter demselben Modellnamen. Ein Teil davon ist die Genauigkeit der Gewichte, der Rest sind Aktionen. Der Name allein reicht nicht für den Vergleich.
 
 ### Europa: Der Backend-Wechsel ändert den Empfänger
 
@@ -518,7 +518,7 @@ Cerebras ist der Gegensatz in jeder Hinsicht: ein amerikanisches Chipunternehmen
 
 ### Verlässlichkeit: Kann ich den Tarif morgen noch nutzen?
 
-Lustigerweise ist gerade das Geschwindigkeitsangebot von Cerebras derzeit nicht kaufbar: Beide Code-Tarife sind ausverkauft, die Warteliste hat keinen Termin. Auf Hacker News berichtet jemand, seit über einem Jahr Zugang zu suchen. Verfügbar sei er nur über einen Discord-Drop, der in Sekunden vergriffen sei. Das spricht für Nachfrage, hilft mir aber bei der nächsten Coding-Sitzung nicht.
+Ausgerechnet das Geschwindigkeitsangebot von Cerebras derzeit nicht kaufbar: Beide Code-Tarife sind ausverkauft, die Warteliste hat keinen Termin. Auf Hacker News berichtet jemand, seit über einem Jahr Zugang zu suchen. Verfügbar sei er nur über einen Discord-Drop, der in Sekunden vergriffen sei. Das spricht für Nachfrage, hilft mir aber bei der nächsten Coding-Sitzung nicht.
 
 Bei Z.ai gibt es eine andere Unsicherheit: Im April 2026 wurden die Preise der Coding-Pläne verdoppelt, ohne die Limits zu erhöhen. Die [Diskussion zur Preisänderung von April 2026](https://news.ycombinator.com/item?id=47756002) gehört deshalb zur Kaufentscheidung. Der heutige Preis sagt mir nicht, was ich in einem Jahr zahle.
 

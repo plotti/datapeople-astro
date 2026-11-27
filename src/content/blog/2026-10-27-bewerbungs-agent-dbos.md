@@ -146,7 +146,7 @@ Kein Overhead pro Schritt, weil es keinen gibt: Ein Schritt ist ein Funktionsauf
 
 ## Und auf einem Server?
 
-Für den Betrieb auf einem Server reicht ein einziger Container. Das Dockerfile installiert die Abhängigkeiten mit uv und dazu node für die Google-Docs-Vorlage, und das fertige Image ist mit 649 MB ungefähr ein Zehntel so gross wie das von Windmill. Der ganze Zustand liegt in der SQLite-Datei auf einem Volume, und ein Backup ist damit nichts anderes als eine Kopie dieser einen Datei. Wichtig ist nur, dass die Prüfseite nicht offen im Internet hängt: Der Port bindet deshalb an die Adresse im privaten Tailscale-Netz, über das Handy und Mac die Seite erreichen, während sie für den Rest der Welt unsichtbar bleibt.
+Für den Betrieb auf einem Server reicht ein einziger Container. Das Dockerfile installiert die Abhängigkeiten mit uv und dazu node für die Google-Docs-Vorlage, und das fertige Image ist mit 649 MB ungefähr ein Zehntel so gross wie das von Windmill. Der ganze Zustand liegt in der SQLite-Datei auf einem Volume, und ein Backup ist damit nichts anderes als eine Kopie dieser einen Datei. Nur eines muss stimmen: Die Prüfseite darf nicht offen im Internet hängen. Der Port bindet deshalb an die Adresse im privaten Tailscale-Netz, über das Handy und Mac die Seite erreichen, während sie für den Rest der Welt unsichtbar bleibt.
 
 ## Fünf Werkzeuge, ein Agent
 

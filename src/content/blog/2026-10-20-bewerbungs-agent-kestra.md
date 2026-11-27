@@ -21,7 +21,7 @@ series: "Agenten 2026"
 > - Teil 2: [Agenten, die selbst planen](/blog/2026-10-28-bewerbungs-agent-geplante-aufgabe/)
 <!-- serie:end -->
 
-Im [letzten Beitrag](/blog/2026-10-13-bewerbungs-agent-windmill/) habe ich meinen Bewerbungs-Agenten von Klicks auf Code umgestellt: Windmill, normale Python-Skripte, und die Plattform kümmert sich um Zeitplan, Wiederholungen und Freigabe. Heute setze ich noch eine Ebene drauf. Mit **Kestra** beschreibe ich nicht mehr nur die einzelnen Schritte als Code, sondern den ganzen Ablauf deklarativ in YAML – und jeder Schritt läuft in seinem eigenen Container.
+Im [letzten Beitrag](/blog/2026-10-13-bewerbungs-agent-windmill/) habe ich meinen Bewerbungs-Agenten von Klicks auf Code umgestellt: Windmill, normale Python-Skripte, und die Plattform kümmert sich um Zeitplan, Wiederholungen und Freigabe. Heute setze ich noch eine Ebene drauf. Mit **Kestra** beschreibe ich nicht mehr nur die einzelnen Schritte als Code, sondern den ganzen Ablauf deklarativ in YAML, und jeder Schritt läuft in seinem eigenen Container.
 
 Klingt nach Overkill für einen Agenten, der ein paar Newsletter liest? Ein bisschen schon :) Aber genau an so einem überschaubaren Beispiel sieht man gut, was ein Orchestrierer wie Kestra anders macht, und was das kostet.
 
@@ -33,7 +33,7 @@ Wer schon mit [Vertex AI Pipelines](https://cloud.google.com/vertex-ai/docs/pipe
 
 Daraus folgen drei Unterschiede:
 
-- **Der Ablauf ist eine YAML-Datei.** Welche Schritte es gibt, in welcher Reihenfolge, mit welchen Wiederholungen, Bedingungen und Wartezeiten – das steht deklarativ in einer Datei. Die Python-Skripte enthalten nur noch die eigentliche Arbeit.
+- **Der Ablauf ist eine YAML-Datei.** Welche Schritte es gibt, in welcher Reihenfolge, mit welchen Wiederholungen, Bedingungen und Wartezeiten, das steht deklarativ in einer Datei. Die Python-Skripte enthalten nur noch die eigentliche Arbeit.
 - **Jeder Schritt ist isoliert.** Python-Schritte laufen in `python:3.13-slim`, der Brief-Schritt in `node:22-slim`. Kein Schritt kann einem anderen die Pakete kaputtmachen.
 - **Kestra ist für mehr gebaut als für meinen Agenten.** Hunderte Plugins, Ereignis-Auslöser, Dashboards, Revisionen jeder Flow-Version. Ein Orchestrierer für Datenpipelines, der meinen Agenten eben auch kann.
 
@@ -64,7 +64,7 @@ Beantwortet wird die Frage allerdings nicht in der Push-Nachricht selbst, sonder
 
 ## Was der Container-Ansatz kostet
 
-Jetzt wird es spannend. Hier ist ein kompletter Lauf für eine Stelle, die 84 Punkte bekam, im Gantt-Diagramm von Kestra:
+Jetzt zum Teil, um den es eigentlich geht. Hier ist ein kompletter Lauf für eine Stelle, die 84 Punkte bekam, im Gantt-Diagramm von Kestra:
 
 ![Ein Lauf im Gantt-Diagramm: jeder Schritt mit seiner Dauer, die Pause ist meine Bedenkzeit](../../assets/blog/bewerbungs-agent-kestra-ks-run.png)
 

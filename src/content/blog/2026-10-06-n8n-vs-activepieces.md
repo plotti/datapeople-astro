@@ -23,7 +23,7 @@ series: "Agenten 2026"
 
 Im [ersten Teil dieser Serie](/blog/2026-09-29-bewerbungs-agent-n8n/) habe ich einen Bewerbungs-Agenten mit n8n gebaut: Er liest jeden Morgen meine Job-Newsletter, bewertet jede Stelle gegen meinen Lebenslauf und entwirft nur für die passenden ein Anschreiben. Die Frage, die mir danach sofort gestellt wurde: Und wie sieht das mit der Konkurrenz aus?
 
-Also habe ich genau denselben Agenten noch einmal gebaut, diesmal mit **Activepieces**. Gleiche Newsletter, gleiche Modelle, gleiche Schwelle von 7 von 10, gleiche Briefvorlage. Was sich unterscheidet, ist nur der Baukasten. Und genau darum geht es in diesem Beitrag: nicht noch einmal die ganze Bauanleitung, sondern was anders ist – und was ich dabei gelernt habe.
+Also habe ich genau denselben Agenten noch einmal gebaut, diesmal mit **Activepieces**. Gleiche Newsletter, gleiche Modelle, gleiche Schwelle von 7 von 10, gleiche Briefvorlage. Was sich unterscheidet, ist nur der Baukasten. Und genau darum geht es in diesem Beitrag: nicht noch einmal die ganze Bauanleitung, sondern was anders ist, und was ich dabei gelernt habe.
 
 ## Was ist Activepieces überhaupt?
 
@@ -65,7 +65,7 @@ Und das Ergebnis? Praktisch gleich. Dieselben Stellen wurden gefunden, die Score
 
 ## Lessons learned
 
-### 1. Google mit einem Klick – das ist der grösste Unterschied
+### 1. Google mit einem Klick, das ist der grösste Unterschied
 
 Erinnerst du dich an die Google-Cloud-Console aus dem n8n-Beitrag? Projekt anlegen, vier APIs aktivieren, Zustimmungsbildschirm, OAuth-Client, App veröffentlichen, und das alles in einer Oberfläche, die sich gefühlt jeden Tag ändert.
 
@@ -124,7 +124,7 @@ Ich persönlich würde es so zusammenfassen:
 
 - du Google, Microsoft und Co. ohne eigenes OAuth-Projekt anbinden willst,
 - echte Open-Source-Lizenz für dich zählt, etwa weil du das Ganze in ein eigenes Produkt einbauen willst,
-- du in der Cloud starten willst und nur ein paar Flows brauchst – dann ist es gratis.
+- du in der Cloud starten willst und nur ein paar Flows brauchst, dann ist es gratis.
 
 **Nimm n8n, wenn …**
 
@@ -142,4 +142,4 @@ Beide Werkzeuge sind sich am Ende ähnlicher, als ich gedacht hätte. Richtig an
 **Weiter in der Serie:** [Was bringt echter Code? Der Bewerbungs-Agent mit Windmill](/blog/2026-10-13-bewerbungs-agent-windmill/)
 <!-- serie:next-end -->
 
-Ich freue mich auf eure Kommentare und Anregungen – und falls du einen der beiden Baukästen schon produktiv einsetzt, erzähl mir gern, wie es dir damit geht!
+Ich freue mich auf eure Kommentare und Anregungen, und falls du einen der beiden Baukästen schon produktiv einsetzt, erzähl mir gern, wie es dir damit geht!

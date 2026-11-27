@@ -25,7 +25,7 @@ series: "Agenten 2026"
 > Teil 1, Bewerbungs-Agenten mit festem Ablauf: [von n8n](/blog/2026-09-29-bewerbungs-agent-n8n/) bis [DBOS](/blog/2026-10-27-bewerbungs-agent-dbos/)
 <!-- serie:end -->
 
-Im letzten Beitrag stand am Ende ein ziemlich unspektakuläres Fazit: Für meinen Job-Radar bringt der Schwarm nichts, ein einzelner Agent mit guten Skills reicht. Pi und Hermes haben das beide gezeigt. Eine Frage blieb aber offen, und die stand schon in meinem ursprünglichen Plan für diese Serie: Was macht eigentlich Microsoft? Neben CrewAI ist das **Microsoft Agent Framework** das zweite grosse Open-Source-Framework, mit dem man Agenten selbst programmiert. Und weil ich das Fazit nicht auf zwei Kandidaten stützen wollte, habe ich den Radar ein drittes Mal gebaut — einmal als einzelner Agent und einmal als Schwarm, sonst alles gleich.
+Im letzten Beitrag stand am Ende ein ziemlich unspektakuläres Fazit: Für meinen Job-Radar bringt der Schwarm nichts, ein einzelner Agent mit guten Skills reicht. Pi und Hermes haben das beide gezeigt. Eine Frage blieb aber offen, und die stand schon in meinem ursprünglichen Plan für diese Serie: Was macht eigentlich Microsoft? Neben CrewAI ist das **Microsoft Agent Framework** das zweite grosse Open-Source-Framework, mit dem man Agenten selbst programmiert. Und weil ich das Fazit nicht auf zwei Kandidaten stützen wollte, habe ich den Radar ein drittes Mal gebaut, einmal als einzelner Agent und einmal als Schwarm, sonst alles gleich.
 
 Vorweg die kurze Antwort: Das Ergebnis ist dasselbe, nur noch deutlicher. Der einzelne Agent schreibt zwei Briefe in gut 13 Minuten für 16 Cent. Der Schwarm braucht fast 50 Minuten, kostet das Zweieinhalbfache und liefert einen Brief.
 
@@ -35,11 +35,11 @@ Das [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) is
 
 Spannend für unsere Serie ist, was seit dem Sommer dazugekommen ist. Microsoft liefert nicht mehr nur Bausteine, sondern einen fertigen **Harness-Agenten**, also das, was bei Pi und Hermes das ganze Produkt ist: eine Werkzeug-Schleife mit Aufgabenliste, Verdichtung langer Gespräche, Datei-Werkzeugen, Skills und Hintergrund-Agenten. Eine Funktion, `create_harness_agent`, und man hat einen Agenten, der sich anfühlt wie ein kleiner Claude Code. Nur eben als Bibliothek, die ich in mein eigenes Programm einbaue.
 
-Und genau deshalb ist es der perfekte dritte Kandidat. Pi und Hermes sind fertige Programme, die ich konfiguriere. CrewAI ist ein Framework, in dem ich alles selbst zusammensetze. Das Agent Framework liegt dazwischen: fertige Bordmittel, aber in meinem Code.
+Und genau deshalb ist es der richtige dritte Kandidat. Pi und Hermes sind fertige Programme, die ich konfiguriere. CrewAI ist ein Framework, in dem ich alles selbst zusammensetze. Das Agent Framework liegt dazwischen: fertige Bordmittel, aber in meinem Code.
 
 ## Gleiche Skills, ohne eine Zeile zu ändern
 
-Die schönste Überraschung zuerst: Das Framework spricht dasselbe Skill-Format wie Pi und Hermes, das offene [Agent-Skills-Format](https://agentskills.io/specification). Ich habe den Skill-Ordner aus dem letzten Beitrag einfach angegeben — `radar-regeln` mit den Skripten für Anlegen, Auswahl, Briefprüfung und Abschluss, dazu `anzeige-laden` und `websuche` — und er lief **unverändert**. Der dritte Agent in Folge, der denselben Ordner versteht. Das ist für mich die eigentliche gute Nachricht dieses Jahres: Skills sind portabel geworden.
+Die schönste Überraschung zuerst: Das Framework spricht dasselbe Skill-Format wie Pi und Hermes, das offene [Agent-Skills-Format](https://agentskills.io/specification). Ich habe den Skill-Ordner aus dem letzten Beitrag einfach angegeben, `radar-regeln` mit den Skripten für Anlegen, Auswahl, Briefprüfung und Abschluss, dazu `anzeige-laden` und `websuche`, und er lief **unverändert**. Der dritte Agent in Folge, der denselben Ordner versteht. Das ist für mich die eigentliche gute Nachricht dieses Jahres: Skills sind portabel geworden.
 
 Einen Unterschied gibt es: Wer die Skripte ausführt, entscheide ich. Pi und Hermes starten Skripte über ihre Shell. Beim Agent Framework gebe ich einen kleinen **Script-Runner** mit, eine Python-Funktion, die das Framework aufruft, wenn der Agent ein Skript starten will. Und weil das mein Code ist, kann ich darin Regeln durchsetzen, zum Beispiel, dass der Pfad zum Gedächtnis immer von mir kommt und nicht vom Agenten:
 
@@ -53,11 +53,11 @@ def runner(skill, script, args=None):
     return r.stdout
 ```
 
-## Kein Sandkasten nötig — weil es keine Shell gibt
+## Kein Sandkasten nötig, weil es keine Shell gibt
 
 Bei Pi und Hermes war die Sandbox der Teil, den ich selbst bauen musste, weil beide eine echte Shell auf meinem Mac haben. Hier stellt sich die Frage gar nicht: Der Harness-Agent hat **keine Shell**, solange ich ihm keine gebe. Er bekommt Datei-Werkzeuge, und die sind an einen Ordner gebunden (`FileSystemAgentFileStore`). Pfade mit `..` lehnt schon das Framework ab, Symlinks ebenso. Ich habe es probiert: „Lies `../geheim.txt`“ endet mit *Paths must not contain '.' or '..' segments.*
 
-Bleibt die Frage aus dem letzten Beitrag: Was, wenn der Agent eine Datei löscht, die ihm nicht gehört — so wie Hermes, der den Zähler der Prüfrunden gelöscht hat? Dafür hat das Framework **Middleware**: eine Funktion, die vor jedem Werkzeugaufruf läuft und ihn ablehnen kann. Meine ist zwölf Zeilen lang und lässt den Agenten genau drei Dateien schreiben, nämlich seine eigene Arbeit:
+Bleibt die Frage aus dem letzten Beitrag: Was, wenn der Agent eine Datei löscht, die ihm nicht gehört, so wie Hermes, der den Zähler der Prüfrunden gelöscht hat? Dafür hat das Framework **Middleware**: eine Funktion, die vor jedem Werkzeugaufruf läuft und ihn ablehnen kann. Meine ist zwölf Zeilen lang und lässt den Agenten genau drei Dateien schreiben, nämlich seine eigene Arbeit:
 
 ```python
 ERLAUBT = re.compile(r"^bewerbungen/stellen/[^/]+/(match\.json|recherche\.md|entwurf\.md)$")
@@ -72,7 +72,7 @@ async def schreibschutz(ctx, call_next):
     await call_next()
 ```
 
-Status, Prüfzähler, Protokoll: alles, was über Erfolg oder Misserfolg entscheidet, schreiben nur noch die Skripte. Das ist genau die Lehre aus dem Hermes-Kapitel, und hier ist sie in zwölf Zeilen eingebaut statt in einer Hoffnung im Prompt. Ein Detail, das mich beim ersten Versuch einen Lauf gekostet hat: Ich hatte die Ablehnung zuerst mit `MiddlewareTermination` gemacht, und das beendet nicht nur den Werkzeugaufruf, sondern gleich die ganze Schleife des Agenten :)
+Status, Prüfzähler, Protokoll: alles, was über Erfolg oder Misserfolg entscheidet, schreiben nur noch die Skripte. Das ist genau die Lehre aus dem Hermes-Kapitel, und hier ist sie in zwölf Zeilen eingebaut statt in einer Hoffnung im Prompt. Ein Detail, das mich beim ersten Versuch einen Lauf gekostet hat: Ich hatte die Ablehnung zuerst mit `MiddlewareTermination` gemacht, und das beendet den Werkzeugaufruf und gleich die ganze Schleife des Agenten mit :)
 
 Der Agent selbst ist dann nur noch ein Aufruf:
 
@@ -107,7 +107,7 @@ Und das Drumherum hatte es an Tag zwei in sich. Der Lead startete die drei Match
 
 Warum ist der Schwarm so viel teurer? Jeder Hintergrund-Agent fängt bei null an: Er liest sein Profil, seine Rolle, die Anzeige, und der Lead muss danach alles wieder einlesen, um weiterzumachen. An Tag zwei waren das fast acht Millionen Input-Tokens, beim einzelnen Agenten anderthalb Millionen. Die meisten davon kommen zwar aus dem Cache und sind billig, aber eben nicht gratis.
 
-Und warum ist der einzelne Agent hier teurer als bei Pi? Der Harness bringt viel mit — Aufgabenliste, Anleitungen für alle Werkzeuge, Skill-Beschreibungen —, und das steckt in jedem Aufruf drin. Pi hat bewusst den kürzesten Systemprompt der Szene. Bei Microsoft zahlt man für die mitgelieferten Bordmittel, ein paar Cent pro Tag.
+Und warum ist der einzelne Agent hier teurer als bei Pi? Der Harness bringt viel mit, Aufgabenliste, Anleitungen für alle Werkzeuge, Skill-Beschreibungen, und das steckt in jedem Aufruf drin. Pi hat bewusst den kürzesten Systemprompt der Szene. Bei Microsoft zahlt man für die mitgelieferten Bordmittel, ein paar Cent pro Tag.
 
 ## Zuschauen: so arbeiten die beiden
 
@@ -119,7 +119,7 @@ Der einzelne Agent arbeitet brav von oben nach unten: anlegen, vorfiltern, bewer
 
 ![Der Schwarm: Der Lead startet acht Matcher gleichzeitig, wartet, liest ihre Ergebnisse, versucht mehrmals Status-Dateien zu überschreiben und wird jedes Mal vom Schreibschutz abgelehnt; am Ende lehnt das Skeptiker-Skript eine dritte Prüfrunde ab](/blog/bewerbungs-agent-microsoft-schwarm.gif)
 
-Beim Schwarm ist mehr los, und das ist nicht nur gut. Schön zu sehen ist der Moment, in dem der Lead acht Matcher auf einmal startet (gelb) und dann wartet. Weniger schön: Die Matcher haben in diesem Lauf das Feld `frueher_beworben` vergessen, das Auswahl-Skript hat deshalb vier Stellen auf „fehler“ gesetzt, und dann hat der Lead versucht, das selbst zu reparieren. **Siebenmal** wollte er Status-Dateien überschreiben, ändern oder löschen, einmal auch ein Matcher, und jedes Mal kam die rote Zeile: abgelehnt. Am Ende wollte er noch eine dritte Prüfrunde, und das Skeptiker-Skript hat Nein gesagt. Das ist exakt das Verhalten, das Hermes im letzten Beitrag gezeigt hat — nur dass es hier im Code endet statt im Ergebnis. Bilanz dieses Laufs: knapp 15 Minuten, 24 Cent, kein einziger Brief.
+Beim Schwarm ist mehr los, und das ist nicht nur gut. Schön zu sehen ist der Moment, in dem der Lead acht Matcher auf einmal startet (gelb) und dann wartet. Weniger schön: Die Matcher haben in diesem Lauf das Feld `frueher_beworben` vergessen, das Auswahl-Skript hat deshalb vier Stellen auf „fehler“ gesetzt, und dann hat der Lead versucht, das selbst zu reparieren. **Siebenmal** wollte er Status-Dateien überschreiben, ändern oder löschen, einmal auch ein Matcher, und jedes Mal kam die rote Zeile: abgelehnt. Am Ende wollte er noch eine dritte Prüfrunde, und das Skeptiker-Skript hat Nein gesagt. Das ist exakt das Verhalten, das Hermes im letzten Beitrag gezeigt hat, nur dass es hier im Code endet statt im Ergebnis. Bilanz dieses Laufs: knapp 15 Minuten, 24 Cent, kein einziger Brief.
 
 Noch ein Bordmittel, das ich für diese Aufnahmen gebraucht habe: Beim ersten Versuch hat DeepSeek einen Werkzeugaufruf als Text statt als echten Aufruf geschrieben, und der Agent hielt sich nach einer Minute für fertig. Der Harness hat dafür eine Schleife mit einer Prüffunktion. Meine sagt: fertig ist der Lauf erst, wenn `abschluss.py` das Tagesprotokoll geschrieben hat, sonst geht es weiter mit „Du bist noch nicht fertig“. Drei Zeilen, und das Problem ist weg.
 
@@ -143,7 +143,7 @@ Derselbe Fehler steckte auch hinter einem Teil des Hermes-Dramas im letzten Beit
 
 ## Was bleibt?
 
-Drei Agenten-Systeme, dreimal dasselbe Ergebnis: Für eine Aufgabe wie meinen Job-Radar — ein paar Stellen am Tag, klarer Ablauf, feste Regeln — ist **ein Agent mit Skills** die bessere Wahl. Er ist schneller, billiger und robuster, weil es weniger Übergaben gibt, bei denen etwas verloren gehen kann. Der Schwarm hat nirgends besser geurteilt, er hat nur mehr gekostet.
+Drei Agenten-Systeme, dreimal dasselbe Ergebnis: Für eine Aufgabe wie meinen Job-Radar, ein paar Stellen am Tag, klarer Ablauf, feste Regeln, ist **ein Agent mit Skills** die bessere Wahl. Er ist schneller, billiger und stabiler, weil es weniger Übergaben gibt, bei denen etwas verloren gehen kann. Der Schwarm hat nirgends besser geurteilt, er hat nur mehr gekostet.
 
 Was ich am Microsoft Agent Framework mag: Die Regeln, die bei Pi und Hermes Konfiguration und Hoffnung waren, sind hier Code. Keine Shell, Dateien an einen Ordner gebunden, Middleware vor jedem Werkzeug, ein Script-Runner, den ich selbst schreibe. Wer einen Agenten in eine eigene Anwendung einbauen will, statt ein fertiges Programm zu betreiben, hat hier das solideste Fundament der Serie. Was ich weniger mag: Vieles im Harness ist noch als experimentell markiert und gibt bei jedem Start eine Warnung aus, und der Harness ist spürbar schwerer als Pi.
 
